@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,8 +63,8 @@ public class PersonalCenter_ChangeNicknameActivity extends BaseActivity
     /**
      * 保存文案
      */
-    @ViewInject(R.id.head_right_text)
-    private TextView head_right_text;
+    @ViewInject(R.id.bt_nickname_confirm_edit)
+    private Button bt_nickname_confirm_edit;
     /**
      * 修改名字输入框
      */
@@ -78,9 +79,8 @@ public class PersonalCenter_ChangeNicknameActivity extends BaseActivity
     @Override
     public void initView() {
         head_title.setText(getResources().getString(R.string.label_nickname));
-        head_right_text.setText(getResources().getString(R.string.label_save));
         head_back_relative.setOnClickListener(this);
-        head_right_relative.setOnClickListener(this);
+        bt_nickname_confirm_edit.setOnClickListener(this);
         et_change_nickname.setOnFocusChangeListener(this);
 
     }
@@ -152,7 +152,7 @@ public class PersonalCenter_ChangeNicknameActivity extends BaseActivity
             case R.id.head_back_relative://返回
                 this.finish();
                 break;
-            case R.id.head_right_relative://保存
+            case R.id.bt_nickname_confirm_edit://保存
                 if (InputValidate.checkNickname(et_change_nickname.getText()
                         .toString())) {
                     // 请求后，打印toast，finish

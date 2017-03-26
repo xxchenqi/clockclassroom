@@ -12,6 +12,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.bean.WorkingPayResult;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -140,7 +141,7 @@ public class EjuPaySDKUtil {
         builder.setCipherKey(workingPayResult.getCipherKey());
         builder.setPartnerToken(workingPayResult.getPartner_id() + "");
         builder.setBaseUrl(UrlUtils.EJU_PAY_URL);//sdk请求地址
-        builder.setStyleColor(Color.parseColor("#1eb482"));              //风格颜色
+        builder.setStyleColor(UIUtils.getColor(R.color.app_theme_color));              //风格颜色
         EjuPayManager.getInstance().init(builder, new SdkInitLister() {
             @Override
             public void initStart() {

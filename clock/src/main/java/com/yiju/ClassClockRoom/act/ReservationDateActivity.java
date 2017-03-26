@@ -40,6 +40,7 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
     private Date nowDate;
     private boolean reservation_flag;
     private Date singleDate;
+    private List<Date> reservationDates;
 
     /**
      * 初始化页面
@@ -57,7 +58,7 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
 
         Intent mReservationIntent = getIntent();
         if (null != mReservationIntent) {
-            List<Date> reservationDates = (ArrayList<Date>) mReservationIntent.
+            reservationDates = (ArrayList<Date>) mReservationIntent.
                     getSerializableExtra("reservationHaveDate");
             reservation_flag = mReservationIntent.getBooleanExtra("reservation_flag", true);
             if(reservation_flag){
@@ -129,9 +130,9 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
         if(null != mDates && mDates.size() >0 &&mDates.get(0).getTime() < System.currentTimeMillis()){
             calendar_view.init(new Date(), nextYear.getTime()) // 设置显示的年月
                     .inMode(CalendarPickerView.SelectionMode.RANGE); // 设置多选
-            calendar_view.setOldDates(mDates);
+            calendar_view.setOldDates(reservationDates);
             oldDates.clear();
-            oldDates.addAll(mDates);
+            oldDates.addAll(reservationDates);
         }else {
             calendar_view.init(new Date(), nextYear.getTime()) // 设置显示的年月
                     .inMode(CalendarPickerView.SelectionMode.RANGE) // 设置多选

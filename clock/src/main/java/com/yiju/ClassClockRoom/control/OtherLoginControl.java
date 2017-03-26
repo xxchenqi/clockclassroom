@@ -13,12 +13,14 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.PersonalCenter_BindingThreeWayAccountActivity;
+import com.yiju.ClassClockRoom.act.SplashActivity;
 import com.yiju.ClassClockRoom.bean.WorkingPayResult;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
 import com.yiju.ClassClockRoom.receiver.PushClockReceiver;
@@ -131,6 +133,13 @@ public class OtherLoginControl {
                                 SharedPreferencesConstant.Shared_Login_Cid,
                                 "");
                     }
+                    if (StringUtils.isNullString(SplashActivity.youYunUDid)) {
+                        SplashActivity.youYunUDid = SharedPreferencesUtils.getString(
+                                BaseApplication
+                                        .getmForegroundActivity(),
+                                SharedPreferencesConstant.Shared_Login_Udid,
+                                "");
+                    }
                     int timestamp = (int) (System.currentTimeMillis() / 1000);
                     String uid;
                     String name;
@@ -165,7 +174,7 @@ public class OtherLoginControl {
 
                         PostOtherLogin(third_source, uid, unionId, timestamp,
                                 name, icon, sign, deviceId,
-                                PushClockReceiver.cid);
+                                PushClockReceiver.cid,SplashActivity.youYunUDid);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -181,7 +190,7 @@ public class OtherLoginControl {
 
     private static void PostOtherLogin(final int third_source, final String third_id, String third_id_old,
                                        int timestamp, final String nickname, final String avatar,
-                                       String sign, String device_token, String cid) {
+                                       String sign, String device_token, String cid,String udid) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "third_login");
@@ -196,7 +205,10 @@ public class OtherLoginControl {
         params.addBodyParameter("sign", sign);
         params.addBodyParameter("device_token", device_token);
         if (StringUtils.isNotNullString(cid)) {
-            params.addBodyParameter("cid", cid);
+            params.addBodyParameter("cid", cid);//个推推送码
+        }
+        if (StringUtils.isNotNullString(udid)) {
+            params.addBodyParameter("udid", udid);//游云推送码
         }
 
         httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
@@ -215,6 +227,16 @@ public class OtherLoginControl {
                             if (code == 1) {
                                 String id = jsonObject.getString("id");
                                 if (StringUtils.isNotNullString(id)) {
+                                    String provider = "";
+                                    if (third_source == 1){
+                                        provider = "QQ";
+                                    }else if (third_source == 2){
+                                        provider = "WX";
+                                    }else if (third_source == 3){
+                                        provider = "Sina";
+                                    }
+                                    //um 第三方登录账号统计
+                                    MobclickAgent.onProfileSignIn(provider,id);
 //                                    boolean isRuning = SharedPreferencesUtils.getBoolean(
 //                                            UIUtils.getContext(),
 //                                            SharedPreferencesConstant.Shared_Count_IsRunningForeground,

@@ -73,6 +73,8 @@ public class SchemeControl {
     public static final String COURSE_FLAG = "course_flag";
     //ID
     public static final String ID = "id";
+    //供应商ID
+    public static final String SUPPLIER_ID = "supplier_id";
     //============================内部传参===========================================
     //路径
     public static final String PATH = "path";

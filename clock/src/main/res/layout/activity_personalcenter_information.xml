@@ -56,7 +56,7 @@
                     android:layout_height="@dimen/DIMEN_80DP"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/iv_arrow"
-                    android:src="@drawable/user_unload"
+                    android:src="@drawable/personal_center_logo"
                     app:border_color="@color/white"
                     app:border_width="@dimen/DIMEN_1DP"
                     tools:ignore="ContentDescription" />

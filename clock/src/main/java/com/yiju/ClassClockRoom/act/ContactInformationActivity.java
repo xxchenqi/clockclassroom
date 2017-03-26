@@ -65,7 +65,7 @@ public class ContactInformationActivity extends BaseActivity implements
      * 新建联系人
      */
     @ViewInject(R.id.rl_contact)
-    private RelativeLayout rl_contact;
+    private TextView rl_contact;
     /**
      * 适配器
      */

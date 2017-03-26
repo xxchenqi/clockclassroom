@@ -35,11 +35,11 @@ import com.yiju.ClassClockRoom.common.constant.RequestCodeConstant;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.map.NavigationUtils;
+import com.yiju.ClassClockRoom.control.share.ShareDialog;
 import com.yiju.ClassClockRoom.util.PermissionsChecker;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.widget.dialog.CustomDialog;
-import com.yiju.ClassClockRoom.widget.dialog.ProgressDialog;
 import com.yiju.ClassClockRoom.widget.windows.NavigationWindow;
 
 import java.util.HashMap;
@@ -470,12 +470,46 @@ public class NetWebViewClient extends WebViewClient {
         } else if (url.contains("#contentType")) {
             //由主题首页跳转至其他页面
             skipThemeDetail(url, "contentType", "id", "title");
-        } else if (url.contains("#id")) {
+        } else if (url.contains("#theme_detail")) {
             //由往期主题列表跳转到往期主题首页
             skipPastTheme(url, "id");
-        } else if (url.contains("#themeact")) {
-            skipThemeact(url, "themeact");
+        } else if (url.contains("#themeact_id")) {
+            skipThemeact(url, "themeact_id");
+        } else if (url.contains("#share_theme")) {//分享主题
+            skipThemeShare(url, ShareDialog.Type_Share_Theme);
+        } else if (url.contains("#share_past_theme")) {//分享主题
+            skipThemeShare(url, ShareDialog.Type_Share_Past_Theme);
+        } else if (url.contains("#themeact_url")) {
+            skipThemeAct(url, "themeact_url");
         }
+    }
+
+    /**
+     * 跳转活动页
+     *
+     * @param url
+     * @param value
+     */
+    public void skipThemeAct(String url, String value) {
+        Intent intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
+        intent.putExtra(UIUtils.getString(R.string.redirect_open_url), getAnchorId(url, value));
+        intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_splash_news_Page);
+        UIUtils.startActivity(intent);
+    }
+
+    /**
+     * 分享
+     *
+     * @param url
+     * @param type
+     */
+    public void skipThemeShare(String url, int type) {
+        ShareDialog
+                .getInstance()
+                .setCurrent_Type(type)
+                .setTheme_id(getAnchorId(url, "id"))
+                .setTheme_title(getAnchorId(url, "title"))
+                .showDialog();
     }
 
     /**
@@ -526,6 +560,14 @@ public class NetWebViewClient extends WebViewClient {
             Intent intent;
             if ("1".equals(contentType)) {
                 //不跳
+                intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
+                String title_url = getAnchorId(url, "title_url");
+                if(!title_url.startsWith("https://")){
+                    title_url = "https://"+title_url;
+                }
+                intent.putExtra(UIUtils.getString(R.string.redirect_open_url), title_url);
+                intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_splash_news_Page);
+                UIUtils.startActivity(intent);
             } else if ("2".equals(contentType)) {
                 //资讯
                 intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);

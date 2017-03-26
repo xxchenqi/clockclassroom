@@ -42,6 +42,9 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
     @ViewInject(R.id.tv_add_time)
     private TextView tv_add_time;
 
+    @ViewInject(R.id.tv_use_time)
+    private TextView tv_use_time;
+
     @ViewInject(R.id.list_time)
     private ListView list_time;
     private String[] minutes = new String[]{"00", "15", "30", "45"};
@@ -62,7 +65,8 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
         tv_reservation_start_time.setOnClickListener(this);
         tv_reservation_end_time.setOnClickListener(this);
         tv_add_time.setOnClickListener(this);
-        tv_add_time.setEnabled(false);
+//        tv_add_time.setEnabled(false);
+        buttonUnUse();
 
     }
 
@@ -95,6 +99,9 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
         if (null != reservationHaveTimes && reservationHaveTimes.size() > 0) {
             mList.clear();
             mList.addAll(reservationHaveTimes);
+            tv_use_time.setVisibility(View.VISIBLE);
+        }else{
+            tv_use_time.setVisibility(View.GONE);
         }
 
         String reservationHaveTime = mReservationIntent.getStringExtra("reservationHaveTime");
@@ -180,14 +187,16 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
                             tv_reservation_start_time.getText().toString(),
                             tv_reservation_end_time.getText().toString()
                     );
+                    tv_use_time.setVisibility(View.VISIBLE);
                     mList.add(reservationTime);
                     adapter.notifyDataSetChanged();
                     tv_reservation_start_time.setText(UIUtils.getString(reservation_start_time));
                     tv_reservation_end_time.setText(UIUtils.getString(R.string.reservation_end_time));
                     tv_reservation_start_time.setTextColor(UIUtils.getColor(R.color.color_gay_99));
                     tv_reservation_end_time.setTextColor(UIUtils.getColor(R.color.color_gay_99));
-                    tv_add_time.setTextColor(UIUtils.getColor(R.color.color_gay_99));
-                    tv_add_time.setEnabled(false);
+                    buttonUnUse();
+//                    tv_add_time.setEnabled(false);
+//                    tv_add_time.setTextColor(UIUtils.getColor(R.color.color_gay_99));
                 } else {
                     UIUtils.showToastSafe("已达到增加上限");
                 }
@@ -245,8 +254,7 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
                 tv_reservation_start_time.setText(time.length() == 4 ? ("0" + time) : time);
                 tv_reservation_end_time.setText(String.format(UIUtils.getString(R.string.colon),
                         String.valueOf(h + 1).length() == 1 ? ("0" + (h + 1)) : String.valueOf(h + 1), hms[1]));
-                tv_add_time.setEnabled(true);
-                tv_add_time.setTextColor(UIUtils.getColor(R.color.color_green_30AA44));
+                buttonUse();
                 tv_reservation_start_time.setTextColor(UIUtils.getColor(R.color.color_black_33));
                 tv_reservation_end_time.setTextColor(UIUtils.getColor(R.color.color_black_33));
 
@@ -299,17 +307,25 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
                 tv_reservation_end_time.setTextColor(UIUtils.getColor(R.color.color_black_33));
                 tv_reservation_end_time.setText(time.length() == 4 ? ("0" + time) : time);
                 if (tv_reservation_start_time.getText().toString().equals(UIUtils.getString(R.string.reservation_choose))) {
-                    tv_add_time.setEnabled(false);
-                    tv_add_time.setTextColor(UIUtils.getColor(R.color.color_gay_99));
+                    buttonUnUse();
                 } else {
-                    tv_add_time.setEnabled(true);
-                    tv_add_time.setTextColor(UIUtils.getColor(R.color.color_green_30AA44));
+                    buttonUse();
                     tv_reservation_start_time.setTextColor(UIUtils.getColor(R.color.color_black_33));
                     tv_reservation_end_time.setTextColor(UIUtils.getColor(R.color.color_black_33));
                 }
             }
         });
         bDialog.DrawLayout();
+    }
+
+    private void buttonUnUse() {
+        tv_add_time.setEnabled(false);
+        tv_add_time.setBackgroundResource(R.drawable.background_gray_radius_20);
+    }
+
+    private void buttonUse() {
+        tv_add_time.setEnabled(true);
+        tv_add_time.setBackgroundResource(R.drawable.background_green_1eb482_radius_20);
     }
 
     /**
@@ -322,6 +338,9 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
             public void onAnimationEnd(Animation arg0) {
                 mList.remove(index);
                 adapter.notifyDataSetChanged();
+                if(mList.size() == 0){
+                    tv_use_time.setVisibility(View.GONE);
+                }
             }
 
             @Override

@@ -1,10 +1,13 @@
 package com.yiju.ClassClockRoom.act;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,8 +53,8 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
     /**
      * 保存文案
      */
-    @ViewInject(R.id.head_right_text)
-    private TextView head_right_text;
+    @ViewInject(R.id.bt_email_confirm_bind)
+    private Button bt_email_confirm_bind;
     /**
      * email输入框
      */
@@ -74,9 +77,10 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
 
     @Override
     public void initView() {
+
         head_title.setText(getResources().getString(R.string.label_modify_mail));
         head_back_relative.setOnClickListener(this);
-        head_right_text.setOnClickListener(this);
+        bt_email_confirm_bind.setOnClickListener(this);
         et_change_email.setOnFocusChangeListener(this);
 
         if (!"-1".equals(StringUtils.getUid())) {
@@ -88,10 +92,32 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
         email = SharedPreferencesUtils.getString(this,
                 UIUtils.getString(R.string.shared_email), "");
         if ("".equals(email)) {
-            head_right_text.setText(R.string.txt_binding);
+            bt_email_confirm_bind.setText(R.string.txt_affirm_bind);
         } else {
-            head_right_text.setText(R.string.txt_change);
+            bt_email_confirm_bind.setText(R.string.txt_change);
         }
+        et_change_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (StringUtils.isNullString(s.toString())){
+                    bt_email_confirm_bind.setEnabled(false);
+                    bt_email_confirm_bind.setBackgroundResource(R.drawable.background_gray_dddddd_radius_70);
+                }else{
+                    bt_email_confirm_bind.setEnabled(true);
+                    bt_email_confirm_bind.setBackgroundResource(R.drawable.background_green_1eb482_radius_70);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -102,6 +128,13 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
         } else {
             //本地邮箱为空，就设置接口返回的邮箱
             et_change_email.setText(email);
+        }
+        if (StringUtils.isNullString(et_change_email.getText().toString().replaceAll(" ",""))){
+            bt_email_confirm_bind.setEnabled(false);
+            bt_email_confirm_bind.setBackgroundResource(R.drawable.background_gray_dddddd_radius_70);
+        }else {
+            bt_email_confirm_bind.setEnabled(true);
+            bt_email_confirm_bind.setBackgroundResource(R.drawable.background_green_1eb482_radius_70);
         }
     }
 
@@ -126,7 +159,7 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         UIUtils.showToastSafe(R.string.fail_network_request);
-                        head_right_text.setClickable(true);
+                        bt_email_confirm_bind.setClickable(true);
                     }
 
                     @Override
@@ -146,7 +179,7 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
             return;
         }
         if ("1".equals(mineOrder.getCode())) {
-            head_right_text.setClickable(true);
+            bt_email_confirm_bind.setClickable(true);
             UIUtils.showToastSafe(mineOrder.getMsg());
             if (!"-1".equals(StringUtils.getUid())) {
                 SharedPreferencesUtils.saveString(this,
@@ -156,7 +189,7 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
             this.setResult(2);
             this.finish();
         } else {
-            head_right_text.setClickable(true);
+            bt_email_confirm_bind.setClickable(true);
             UIUtils.showToastSafe(mineOrder.getMsg());
         }
 
@@ -168,10 +201,10 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
             case R.id.head_back_relative://返回
                 this.finish();
                 break;
-            case R.id.head_right_text://保存
+            case R.id.bt_email_confirm_bind://保存
                 if (InputValidate.checkedIsEmail(et_change_email.getText()
                         .toString())) {
-                    head_right_text.setClickable(false);
+                    bt_email_confirm_bind.setClickable(false);
                     // 请求
                     getHttpUtils();
 
@@ -192,6 +225,8 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
                 case R.id.et_change_nickname:
                     et_change_email.setText("");
                     imm.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
+                    bt_email_confirm_bind.setEnabled(false);
+                    bt_email_confirm_bind.setBackgroundResource(R.drawable.background_gray_dddddd_radius_70);
                     break;
                 default:
                     break;

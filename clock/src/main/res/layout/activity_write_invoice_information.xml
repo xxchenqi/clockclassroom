@@ -5,129 +5,145 @@
     android:layout_height="match_parent"
     android:background="@color/color_gay_f5"
     android:orientation="vertical">
-
+    <!--标题-->
     <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+    <!--发票类型-->
+    <LinearLayout
+        android:id="@+id/ll_invoice_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:gravity="center_vertical"
+            android:text="@string/invoice_type"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP" />
+
+
+        <TextView
+            android:id="@+id/tv_type_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/DIMEN_10DP"
+            android:drawableRight="@drawable/arrow_down"
+            android:gravity="right"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:text="电子普通发票" />
+    </LinearLayout>
+    <!--发票抬头-->
+    <LinearLayout
+        android:id="@+id/ll_invoice_head"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:gravity="center_vertical"
+            android:text="@string/invoice_head"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP" />
+
+
+        <TextView
+            android:id="@+id/tv_head_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/DIMEN_10DP"
+            android:drawableRight="@drawable/arrow_down"
+            android:gravity="right"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:text="个人" />
+    </LinearLayout>
+    <!--公司名称-->
+    <LinearLayout
+        android:id="@+id/ll_company_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:gravity="center_vertical"
+            android:text="@string/company_name"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP" />
+
+        <EditText
+            android:id="@+id/et_write_company"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/please_input_company_name"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_16DP"
+            tools:text="公司名称" />
+
+    </LinearLayout>
+    <!--发票内容-->
+    <FrameLayout
+        android:id="@+id/fl_invoice_info"
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_50DP"
         android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white"
-        android:gravity="center_vertical"
-        android:padding="@dimen/DIMEN_12DP"
-        android:text="@string/invoice_type"
-        android:textColor="@color/color_gay_99"
-        android:textSize="@dimen/DIMEN_15DP" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_30DP"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/DIMEN_10DP"
+        android:paddingRight="@dimen/DIMEN_10DP">
 
         <TextView
-            android:id="@+id/tv_paper_invoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:text="@string/invoice_paper"
+            android:layout_gravity="center_vertical"
+            android:text="@string/invoice_content"
             android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_14DP" />
+            android:textSize="@dimen/DIMEN_16DP" />
 
         <TextView
-            android:id="@+id/tv_electron_invoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_36DP"
-            android:text="@string/invoice_electron"
-            android:textColor="@color/color_black_33"
+            android:layout_gravity="right|center_vertical"
+            android:text="@string/invoice_rental_fee"
+            android:textColor="@color/black66"
             android:textSize="@dimen/DIMEN_14DP" />
-
-        <TextView
-            android:id="@+id/tv_special_invoice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_36DP"
-            android:text="@string/invoice_special"
-            android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_14DP" />
-    </LinearLayout>
-
-
+    </FrameLayout>
+    <!--专用发票内容-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white">
-
-        <LinearLayout
-            android:id="@+id/ll_invoice_common"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_1DP"
-                android:background="@color/gray" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_50DP"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_invoice_head"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/invoice_head"
-                    android:textColor="@color/color_gay_99"
-                    android:textSize="@dimen/DIMEN_15DP" />
-
-                <TextView
-                    android:id="@+id/tv_invoice_personal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/DIMEN_60DP"
-                    android:text="@string/invoice_personal"
-                    android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_14DP" />
-
-                <TextView
-                    android:id="@+id/tv_invoice_company"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/DIMEN_93DP"
-                    android:text="@string/company"
-                    android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_14DP" />
-
-            </LinearLayout>
-
-
-            <EditText
-                android:id="@+id/et_write_company"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_24DP"
-                android:background="@null"
-                android:hint="@string/please_write_true_company"
-                android:textColor="@color/color_black_33"
-                android:textColorHint="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
-                android:visibility="gone" />
-
-            <View
-                android:id="@+id/v_invoice_divider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_1DP"
-                android:layout_marginBottom="@dimen/DIMEN_16DP"
-                android:background="@color/gray"
-                android:visibility="gone" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_invoice_special_no"
@@ -187,20 +203,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="增票资质"
-                    android:textColor="@color/black66"
-                    android:textSize="@dimen/DIMEN_15DP"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_16DP"
                     tools:ignore="HardcodedText" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
                     android:layout_weight="1"
+                    android:drawablePadding="@dimen/DIMEN_10DP"
                     android:drawableRight="@drawable/arrow"
                     android:gravity="right"
                     android:text="@string/person_modify"
-                    android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_15DP" />
+                    android:textColor="@color/black66"
+                    android:textSize="@dimen/DIMEN_14DP" />
             </LinearLayout>
 
             <TextView
@@ -266,32 +283,7 @@
         </LinearLayout>
 
     </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_50DP"
-        android:layout_marginTop="@dimen/DIMEN_10DP"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/DIMEN_12DP">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/invoice_content"
-            android:textColor="@color/color_gay_99"
-            android:textSize="@dimen/DIMEN_15DP" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_60DP"
-            android:text="@string/invoice_rental_fee"
-            android:textColor="@color/color_gay_99"
-            android:textSize="@dimen/DIMEN_14DP" />
-    </LinearLayout>
-
+    <!--领取方式-->
     <TextView
         android:id="@+id/tv_invoice_info"
         android:layout_width="wrap_content"

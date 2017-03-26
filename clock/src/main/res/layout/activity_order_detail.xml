@@ -233,7 +233,6 @@
                         android:ellipsize="end"
                         android:gravity="right"
                         android:hint="暂无备注"
-                        android:maxLines="2"
                         android:textColor="@color/color_gay_8f"
                         android:textSize="@dimen/DIMEN_14DP" />
                 </LinearLayout>
@@ -631,7 +630,7 @@
                         android:layout_marginLeft="@dimen/DIMEN_12DP"
                         android:text="温馨提示：到店需另付押金"
                         android:textColor="@color/color_gay_99"
-                        android:textSize="@dimen/DIMEN_16DP"
+                        android:textSize="@dimen/DIMEN_12DP"
                         tools:ignore="HardcodedText" />
 
                     <ImageView

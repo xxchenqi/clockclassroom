@@ -31,6 +31,10 @@
         <item name="android:textColor">@color/color_black_33</item>
         <item name="android:textSize">@dimen/DIMEN_12DP</item>
     </style>
+    <style name="textstyle_11p_gay_66">
+        <item name="android:textColor">@color/color_black_login</item>
+        <item name="android:textSize">@dimen/DIMEN_11DP</item>
+    </style>
 
     <style name="textstyle_13p_gay_8f" parent="@style/textstyle_parent">
         <item name="android:textColor">@color/color_gay_8f</item>

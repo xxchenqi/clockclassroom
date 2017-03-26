@@ -28,7 +28,7 @@
                 android:layout_height="@dimen/DIMEN_85DP"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/DIMEN_16DP"
-                android:background="@drawable/personal_center_logo"
+                android:src="@drawable/personal_center_logo"
                 android:contentDescription="@string/app_name"
                 app:border_color="@color/color_lucency_white"
                 app:border_overlay="false"

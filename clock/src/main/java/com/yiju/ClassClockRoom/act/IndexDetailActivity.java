@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
@@ -25,13 +24,14 @@ import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.map.NavigationUtils;
 import com.yiju.ClassClockRoom.control.share.ShareDialog;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
-import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 
 import java.io.Serializable;
 import java.util.List;
+
+
 
 /**
  * 首页跳转到的详情页
@@ -58,9 +58,6 @@ public class IndexDetailActivity extends BaseActivity implements
     //webview
     @ViewInject(R.id.wv_room_detail)
     private WebView wv_room_detail;
-    //购物车
-    @ViewInject(R.id.iv_root_detail_cart)
-    private ImageView iv_root_detail_cart;
     //预订按钮
     @ViewInject(R.id.btn_room_detail_reserve)
     private Button btn_room_detail_reserve;
@@ -139,7 +136,6 @@ public class IndexDetailActivity extends BaseActivity implements
         head_right_image.setImageResource(R.drawable.new_share);
         head_back_relative.setOnClickListener(this);
         head_right_relative.setOnClickListener(this);
-        iv_root_detail_cart.setOnClickListener(this);
         head_gradual_back_relative.setOnClickListener(this);
         btn_no_wifi_refresh.setOnClickListener(this);
         btn_broken_refresh.setOnClickListener(this);
@@ -312,25 +308,6 @@ public class IndexDetailActivity extends BaseActivity implements
                         .setCurrent_Type(ShareDialog.Type_Share_ClassRoom_Info)
                         .setAddress(address).setSchool_name(sname).setSid(sid)
                         .setTags(tags).showDialog();
-                break;
-
-            case R.id.iv_root_detail_cart:
-                String uid = SharedPreferencesUtils.getString(UIUtils.getContext(),
-                        "id", null);
-                if (null != uid) {
-                    Intent intentShopCart = new Intent(UIUtils.getContext(),
-                            ShopCartActivity.class);
-                    intentShopCart.putExtra("uid", uid);
-                    BaseApplication context = (BaseApplication) UIUtils
-                            .getContext().getApplicationContext();
-                    context.setCheck(true);
-                    UIUtils.startActivity(intentShopCart);
-                } else {
-                    Intent intentLogin = new Intent(UIUtils.getContext(),
-                            LoginActivity.class);
-                    UIUtils.startActivity(intentLogin);
-                }
-
                 break;
             case R.id.btn_no_wifi_refresh:
             case R.id.btn_broken_refresh:

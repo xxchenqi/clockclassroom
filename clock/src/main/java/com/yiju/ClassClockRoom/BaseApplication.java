@@ -10,11 +10,13 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.bugtags.library.Bugtags;
 import com.eju.cysdk.collection.CYConfig;
 import com.eju.cysdk.collection.CYIO;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.PlatformConfig;
 import com.yiju.ClassClockRoom.bean.ReservationTwo.DataEntity;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
@@ -32,7 +34,7 @@ import java.util.Map;
 
 public class BaseApplication extends MultiDexApplication {
     //环境 1:线下环境 2:线上测试 3:正式环境
-    public static final int FORMAL_ENVIRONMENT = 3;
+    public static Integer FORMAL_ENVIRONMENT = BuildConfig.ENVIRONMENT;
     public static boolean BugTagsFlag;
     public static boolean LogFlag;
 
@@ -53,7 +55,6 @@ public class BaseApplication extends MultiDexApplication {
     private static Thread mMainThread;
 
     private static int mMainThreadId;
-    private int maxCount;
 
     private static Looper mMainThreadLooper;
 
@@ -114,42 +115,64 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        switch (FORMAL_ENVIRONMENT) {
-            case 1:
-                //线下
-                LogFlag = true;
-                BugTagsFlag = true;
-                break;
-            case 2:
-                //线上测试
-                LogFlag = true;
-                BugTagsFlag = true;
-                break;
-            case 3:
-                //正式
-                LogFlag = false;
-                BugTagsFlag = false;
-                break;
-        }
+        String processName = getProcessName(this);
+        if (processName!= null) {
+            if(processName.equals("com.yiju.ClassClockRoom")){
+                switch (FORMAL_ENVIRONMENT) {
+                    case 1:
+                        //线下
+                        LogFlag = true;
+                        BugTagsFlag = true;
+                        break;
+                    case 2:
+                        //线上测试
+                        LogFlag = true;
+                        BugTagsFlag = true;
+                        break;
+                    case 3:
+                        //正式
+                        LogFlag = false;
+                        BugTagsFlag = false;
+                        break;
+                }
 
-        // 百度地图初始化
-        SDKInitializer.initialize(getApplicationContext());
-        mContext = (BaseApplication) getApplicationContext();
-        mMainHandler = new Handler();
-        mMainThread = Thread.currentThread();
-        mMainThreadId = android.os.Process.myTid();
-        mMainThreadLooper = getMainLooper();
-        // BugTags初始化
-        if (BugTagsFlag) {
-            Bugtags.start(BugTagsId, this, Bugtags.BTGInvocationEventBubble);
-        }
+                // 百度地图初始化
+                SDKInitializer.initialize(getApplicationContext());
+                mContext = (BaseApplication) getApplicationContext();
+                mMainHandler = new Handler();
+                mMainThread = Thread.currentThread();
+                mMainThreadId = android.os.Process.myTid();
+                mMainThreadLooper = getMainLooper();
+                // BugTags初始化
+                if (BugTagsFlag) {
+                    Bugtags.start(BugTagsId, this, Bugtags.BTGInvocationEventBubble);
+                }
 //        initCeash();
-        // 初始化友盟
-        initUmeng();
-        // 统计初始化
-        initCount();
-        EjuPaySDKUtil.initEjuPaySDK(null);
+                // 初始化友盟
+                initUmeng();
+                // 统计初始化
+                initCount();
+                EjuPaySDKUtil.initEjuPaySDK(null);
 
+            }
+        }
+    }
+
+
+    private String getProcessName(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo proInfo : runningApps) {
+            if (proInfo.pid == android.os.Process.myPid()) {
+                if (proInfo.processName != null) {
+                    return proInfo.processName;
+                }
+            }
+        }
+        return null;
     }
 
     private void initUmeng() {
@@ -164,6 +187,12 @@ public class BaseApplication extends MultiDexApplication {
      * 初始化统计
      */
     private void initCount() {
+        //umeng bi
+        // SDK在统计Fragment时，需要关闭Activity自带的页面统计，
+        // 然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。
+        MobclickAgent.openActivityDurationTrack(false);
+        //场景类型设置(普通统计场景类型)
+        MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
         /*String channelId = getMetaDataValue("CHANNEL_NAME");//渠道号
         if (StringUtils.isNullString(channelId)) {
             channelId = "2010031003";                       //默认web渠道
@@ -176,12 +205,6 @@ public class BaseApplication extends MultiDexApplication {
         WeimiCount.getInstance().init(builder.build());*/
         if (!isInitCYSDK) {
             //新的BI数据统计初始化
-            CYIO.startTracing(getApplicationContext(), "1066663095");
-            if (!"-1".equals(StringUtils.getUid())) {
-                CYIO.getInstance().setUid(StringUtils.getUid());
-            }else{
-                CYIO.getInstance().setUid("");
-            }
             switch (FORMAL_ENVIRONMENT) {
                 case 1:
                 case 2:
@@ -190,6 +213,12 @@ public class BaseApplication extends MultiDexApplication {
                 case 3:
                     CYConfig.isTest = false;//true 为发送到测试地址，false为发送到证书地址
                     break;
+            }
+            CYIO.startTracing(getApplicationContext(), "1066663095");
+            if (!"-1".equals(StringUtils.getUid())) {
+                CYIO.getInstance().setUid(StringUtils.getUid());
+            }else{
+                CYIO.getInstance().setUid("");
             }
             isInitCYSDK = true;
         }

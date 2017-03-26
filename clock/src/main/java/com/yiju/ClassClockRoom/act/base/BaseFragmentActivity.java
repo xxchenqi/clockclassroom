@@ -8,10 +8,10 @@ import android.view.WindowManager;
 
 import com.bugtags.library.Bugtags;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
-import com.yiju.ClassClockRoom.control.CountControl;
 import com.yiju.ClassClockRoom.control.LockScreenControl;
 import com.yiju.ClassClockRoom.fragment.BaseFragment;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -67,6 +67,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         if (BaseApplication.BugTagsFlag) {
             Bugtags.onResume(this);
         }
+        //um session统计
+        MobclickAgent.onPageStart(getLocalClassName());//页面统计
+        MobclickAgent.onResume(this);//时长统计
     }
 
     @Override
@@ -76,6 +79,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         if (BaseApplication.BugTagsFlag) {
             Bugtags.onPause(this);
         }
+        //um session统计
+        MobclickAgent.onPageEnd(getLocalClassName());
+        MobclickAgent.onPause(this);
     }
 
     @Override

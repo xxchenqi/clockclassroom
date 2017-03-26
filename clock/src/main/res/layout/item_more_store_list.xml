@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_100DP"
+        android:layout_height="@dimen/DIMEN_75DP"
         android:layout_marginLeft="@dimen/DIMEN_10DP"
         android:layout_marginRight="@dimen/DIMEN_10DP"
         android:layout_marginTop="@dimen/DIMEN_10DP"
@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/iv_item_index_store_pic"
             android:layout_width="@dimen/DIMEN_100DP"
-            android:layout_height="@dimen/DIMEN_100DP"
+            android:layout_height="@dimen/DIMEN_75DP"
             android:layout_marginRight="@dimen/DIMEN_10DP"
             android:background="@drawable/clock_wait"
             android:scaleType="centerCrop"
@@ -27,7 +27,7 @@
         <TextView
             android:id="@+id/tv_item_index_store_booking"
             android:layout_width="@dimen/DIMEN_100DP"
-            android:layout_height="@dimen/DIMEN_100DP"
+            android:layout_height="@dimen/DIMEN_75DP"
             android:layout_marginRight="@dimen/DIMEN_10DP"
             android:alpha="0.4"
             android:background="@color/color_lucency_0"
@@ -40,7 +40,6 @@
             android:id="@+id/tv_item_index_store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_10DP"
             android:layout_toRightOf="@id/iv_item_index_store_pic"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -54,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_item_index_store_name"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
             android:layout_toRightOf="@id/iv_item_index_store_pic"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -67,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_item_index_store_tag"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
             android:layout_toRightOf="@id/iv_item_index_store_pic"
             android:gravity="center_vertical"
             android:orientation="horizontal">

@@ -19,7 +19,6 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.AvailableWifiStoreActivity;
-import com.yiju.ClassClockRoom.act.InvoiceOrderActivity;
 import com.yiju.ClassClockRoom.act.LoginActivity;
 import com.yiju.ClassClockRoom.act.MemberDetailActivity;
 import com.yiju.ClassClockRoom.act.Messages_Activity;
@@ -38,7 +37,6 @@ import com.yiju.ClassClockRoom.act.PublishActivity;
 import com.yiju.ClassClockRoom.act.accompany.AccompanyReadActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
 import com.yiju.ClassClockRoom.bean.MessageBoxNoRead;
-import com.yiju.ClassClockRoom.bean.result.MineOrder;
 import com.yiju.ClassClockRoom.bean.result.UserInfo;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
@@ -49,10 +47,6 @@ import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.CircleImageView;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * ----------------------------------------
@@ -151,6 +145,8 @@ public class PersonalCenterFragment extends BaseFragment implements
     private String org_auth;
     //是否订过课室
     private String is_pay;
+    //头像
+    private String headUrl;
 
     @Override
     public int setContentViewId() {
@@ -277,27 +273,17 @@ public class PersonalCenterFragment extends BaseFragment implements
             String name = StringUtils.getNickName();
             if (StringUtils.isNotNullString(name)) {
                 txt_nickname.setText(name);
-            } else {
-                if ("0".equals(StringUtils.getThirdSource())) {
-                    // 手机登录
-                    //则自动取用户手机号为昵称，同时第4位到第7位以“*”展示
-                    StringBuilder sb = new StringBuilder(StringUtils.getMobile());
-                    sb.replace(3, 7, "****");
-                    txt_nickname.setText(sb.toString());
-                } else {
-                    // 三方登录
-                    //无法获取用户昵称则生成随机昵称“用户yymmddxxx”（yy为年份后两位，mm为月份，dd为日期，xxx为随机数，由数字或大小写字母组成）；
-                    String nickname = new SimpleDateFormat("yyMMdd", Locale.CHINESE)
-                            .format(Calendar.getInstance().getTime()) + StringUtils.randomStr(3);
-                    txt_nickname.setText(nickname);
-                    //不需要请求
-//                    getHttpNickName(nickname);
-                }
             }
-            String headUrl = SharedPreferencesUtils.getString(UIUtils.getContext(), getResources()
-                    .getString(R.string.shared_avatar), null);
-            if (headUrl != null) {
-                Glide.with(UIUtils.getContext()).load(headUrl).diskCacheStrategy(DiskCacheStrategy.SOURCE).error(R.drawable.personal_center_logo).into(iv_avatar);
+            headUrl = SharedPreferencesUtils.getString(UIUtils.getContext(), getResources()
+                    .getString(R.string.shared_avatar), "");
+            if (StringUtils.isNotNullString(headUrl)) {
+                Glide.with(UIUtils.getContext())
+                        .load(headUrl)
+                        .dontAnimate()
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .placeholder(R.drawable.personal_center_logo)
+                        .error(R.drawable.personal_center_logo)
+                        .into(iv_avatar);
             } else {
                 iv_avatar.setImageResource(R.drawable.personal_center_logo);
             }
@@ -315,6 +301,13 @@ public class PersonalCenterFragment extends BaseFragment implements
 
         // 设置优惠券数量
         tv_person_center_discount.setText("");
+        //课室待支付数量
+        tv_classroom_order_count.setText(UIUtils.getString(R.string.label_checkAllOrder));
+        tv_classroom_order_count.setTextColor(UIUtils.getColor(R.color.color_gay_99));
+        //课程待支付数量
+        tv_course_order_count.setText(UIUtils.getString(R.string.label_checkAllOrder));
+        tv_course_order_count.setTextColor(UIUtils.getColor(R.color.color_gay_99));
+
         // 隐藏订单数量
 //        badgeView.hide();
         //隐藏我的老师、我的机构、我的课程、发布课程、
@@ -364,7 +357,7 @@ public class PersonalCenterFragment extends BaseFragment implements
             UserInfo.Data data = userInfo.getData();
             if (StringUtils.isNotNullString(data.getMobile())) {
                 txt_nickname_visa.setVisibility(View.VISIBLE);
-                txt_nickname_visa.setText("已绑定");
+                txt_nickname_visa.setText(UIUtils.getString(R.string.label_has_binding));
             }
             if (!destroyFlag) {
                 //存取到数据库所有信息(其实这步骤没用，可以直接获取)
@@ -411,43 +404,11 @@ public class PersonalCenterFragment extends BaseFragment implements
                 String nickName = data.getNickname();
                 if (StringUtils.isNotNullString(nickName)) {
                     txt_nickname.setText(nickName);
-                } else {
-                    if ("0".equals(StringUtils.getThirdSource())) {
-                        // 手机登录
-                        //则自动取用户手机号为昵称，同时第4位到第7位以“*”展示
-                        StringBuilder sb = new StringBuilder(StringUtils.getMobile());
-                        sb.replace(3, 7, "****");
-                        txt_nickname.setText(sb.toString());
-                        //请求
-                        getHttpNickName(sb.toString());
-                    } else {
-                        // 三方登录
-                        //无法获取用户昵称则生成随机昵称“用户yymmddxxx”（yy为年份后两位，mm为月份，dd为日期，xxx为随机数，由数字或大小写字母组成）；
-                        String nickname = new SimpleDateFormat("yyMMdd", Locale.CHINESE)
-                                .format(Calendar.getInstance().getTime()) + StringUtils.randomStr(3);
-                        txt_nickname.setText(nickname);
-                        //请求
-                        getHttpNickName(nickname);
-                    }
                 }
-
-                //设置简介
-//                String teacher_info = data.getTeacher_info();
-//                if (teacher_info != null && !"".equals(teacher_info)) {
-//                    txt_nickname_visa.setVisibility(View.VISIBLE);
-//                    txt_nickname_visa.setText(teacher_info);
-//                } else {
-//                    txt_nickname_visa.setVisibility(View.GONE);
-//                }
 
                 //设置头像
-                String headUrl = data.getAvatar();
-                // 根据头像地址加载图像
-                if (headUrl != null && !"".equals(headUrl)) {
-                    Glide.with(UIUtils.getContext()).load(headUrl).diskCacheStrategy(DiskCacheStrategy.SOURCE).error(R.drawable.user_unload).into(iv_avatar);
-                } else {
-                    iv_avatar.setImageResource(R.drawable.user_unload);
-                }
+
+
                 //初始化老师信息
                 teacher_id = data.getTeacher_id();
                 show_teacher = data.getShow_teacher();
@@ -677,53 +638,6 @@ public class PersonalCenterFragment extends BaseFragment implements
         }
     }
 
-
-    /**
-     * 修改昵称请求
-     */
-    private void getHttpNickName(final String name) {
-
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("action", "modifyInfo");
-        params.addBodyParameter("type", "nickname");
-        params.addBodyParameter("value", name);
-        if (!"-1".equals(StringUtils.getUid())) {
-            params.addBodyParameter("uid", StringUtils.getUid());
-        }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
-
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
-                new RequestCallBack<String>() {
-
-                    @Override
-                    public void onFailure(HttpException arg0, String arg1) {
-                        UIUtils.showToastSafe(R.string.fail_network_request);
-                    }
-
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        // 处理返回的数据
-                        processDataNickName(arg0.result, name);
-
-                    }
-                });
-    }
-
-    private void processDataNickName(String result, String name) {
-        MineOrder mineOrder = GsonTools.changeGsonToBean(result,
-                MineOrder.class);
-        if (mineOrder == null) {
-            return;
-        }
-        if ("1".equals(mineOrder.getCode())) {
-            SharedPreferencesUtils.saveString(getActivity(),
-                    getResources().getString(R.string.shared_nickname), name);
-        }
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -822,7 +736,6 @@ public class PersonalCenterFragment extends BaseFragment implements
                 break;*/
             case R.id.rl_myinvoice_arrow:
                 //发票
-                startActivityPage(InvoiceOrderActivity.class, true);
                 break;
             case R.id.rl_mywallet_arrow:
                 //我的钱包

@@ -148,27 +148,27 @@ public class CommonUtil {
      * @param url url
      * @return s
      */
-    public static String jointHeadUrl(String url) {
-        return jointHeadUrl(url, "_350X350_0_0_0");
+    public static String jointHeadUrl(String url, int width, int height) {
+        return url + ".jpeg@imageView2/1/w/" + width + "/h/" + height;
     }
 
 
-    /**
-     * 拼接图片链接(如果没有后缀添加后缀)
-     *
-     * @param url url
-     * @param replace 替换大小 ："_350X350_0_0_0"
-     * @return s
-     */
-    public static String jointHeadUrl(String url, String replace) {
-        if (url.matches(".*(\\d{1,3}X\\d{1,3}).*") || StringUtils.isNullString(url)) {
-            return url;
-        } else {
-            StringBuilder sb = new StringBuilder(url);
-            url = sb.insert(sb.length() - 4, replace).toString();
-        }
-        return url;
-    }
+//    /**废弃
+//     * 拼接图片链接(如果没有后缀添加后缀)
+//     *
+//     * @param url     url
+//     * @param replace 替换大小 ："_350X350_0_0_0"
+//     * @return s
+//     */
+//    public static String jointHeadUrl(String url, String replace) {
+//        if (url.matches(".*(\\d{1,3}X\\d{1,3}).*") || StringUtils.isNullString(url)) {
+//            return url;
+//        } else {
+//            StringBuilder sb = new StringBuilder(url);
+//            url = sb.insert(sb.length() - 4, replace).toString();
+//        }
+//        return url;
+//    }
 
 
     /**

@@ -190,10 +190,7 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
         btn_change_mobile_get_verify.setOnClickListener(this);
         btn_change_mobile_commit.setOnClickListener(this);
         //更换按钮不可按
-        btn_change_mobile_commit.setClickable(false);
-//        btn_change_mobile_commit
-//                .setBackgroundResource(R.drawable.regist_noclick_btn);
-        btn_change_mobile_commit.setTextColor(UIUtils.getColor(R.color.color_lucency_white));
+        btn_change_mobile_commit.setEnabled(false);
         cb_change_mobile_password_isshow.setOnCheckedChangeListener(this);
 
         //隐藏密码布局
@@ -218,17 +215,13 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
                                       int count) {
 
                 verifyCode = s.toString();
-                if (s.length() == 4) {
+                if (s.length() > 0
+                        && StringUtils.isNotNullString(et_change_mobile_new_mobile.getText().toString())) {
                     //更换按钮可以按
-                    btn_change_mobile_commit.setClickable(true);
-//                    btn_change_mobile_commit.setBackgroundResource(R.drawable.background_green_1eb482_radius_5);
-                    btn_change_mobile_commit.setTextColor(UIUtils.getColor(R.color.white));
+                    btn_change_mobile_commit.setEnabled(true);
                 } else {
                     //更换按钮不可按
-                    btn_change_mobile_commit.setClickable(false);
-//                    btn_change_mobile_commit
-//                            .setBackgroundResource(R.drawable.regist_noclick_btn);
-                    btn_change_mobile_commit.setTextColor(UIUtils.getColor(R.color.color_lucency_white));
+                    btn_change_mobile_commit.setEnabled(false);
                 }
             }
 
@@ -249,8 +242,11 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                if (s != null) {
-                    phoneNumber = s.toString();
+                if (s != null
+                        && StringUtils.isNotNullString(et_change_mobile_verify.getText().toString())) {
+                    btn_change_mobile_commit.setEnabled(true);
+                }else {
+                    btn_change_mobile_commit.setEnabled(false);
                 }
             }
 
@@ -273,6 +269,9 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
                                       int count) {
                 if (s != null) {
                     password = s.toString();
+                    btn_change_mobile_commit.setEnabled(true);
+                }else {
+                    btn_change_mobile_commit.setEnabled(false);
                 }
             }
 
@@ -510,6 +509,7 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
                 }
                 break;
             case R.id.btn_change_mobile_commit: //更换手机
+                phoneNumber = et_change_mobile_new_mobile.getText().toString();
                 if (null != phoneNumber && !phoneNumber.equals("")
                         && phoneNumber.length() == 11
                         && InputValidate.checkedIsTelephone(phoneNumber)) {

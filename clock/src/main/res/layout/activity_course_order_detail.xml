@@ -228,7 +228,7 @@
                         android:layout_height="match_parent"
                         android:gravity="end|center_vertical"
                         android:paddingRight="@dimen/DIMEN_12DP"
-                        android:textColor="@color/color_blue_1a"
+                        android:textColor="@color/blue"
                         android:textSize="@dimen/DIMEN_14DP"
                         tools:ignore="HardcodedText"
                         tools:text="¥1234" />
@@ -307,6 +307,15 @@
         android:layout_alignParentBottom="true"
         android:background="@color/white">
 
+        <TextView
+            android:id="@+id/tv_pay_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:ignore="HardcodedText" />
         <TextView
             android:id="@+id/tv_pay_order"
             android:layout_width="@dimen/DIMEN_80DP"

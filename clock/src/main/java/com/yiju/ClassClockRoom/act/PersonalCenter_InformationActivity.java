@@ -15,16 +15,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ejupay.sdk.EjuPayManager;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
-import com.yiju.ClassClockRoom.bean.PictureWrite;
+import com.yiju.ClassClockRoom.bean.UploadImageBean;
 import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.common.DataManager;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
-import com.yiju.ClassClockRoom.common.constant.ParamConstant;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
 import com.yiju.ClassClockRoom.control.CountControl;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
@@ -33,14 +38,17 @@ import com.yiju.ClassClockRoom.control.camera.CameraImage;
 import com.yiju.ClassClockRoom.control.camera.ResultCameraHandler;
 import com.yiju.ClassClockRoom.control.camera.ResultCameraHandler.CameraResult;
 import com.yiju.ClassClockRoom.util.CommonUtil;
+import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.PermissionsChecker;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.ClassEvent;
+import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.util.net.api.HttpPhotoApi;
 import com.yiju.ClassClockRoom.util.net.api.HttpUserApi;
 import com.yiju.ClassClockRoom.widget.CircleImageView;
+import com.yiju.ClassClockRoom.widget.dialog.ProgressDialog;
 import com.yiju.ClassClockRoom.widget.windows.SexPopUpWindow;
 
 import java.io.File;
@@ -285,10 +293,13 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
         String headUrl = SharedPreferencesUtils.getString(UIUtils.getContext(),
                 getResources().getString(R.string.shared_avatar), "");
         // 根据头像地址加载图像
-        if (headUrl != null && !"".equals(headUrl)) {
-            Glide.with(this).load(headUrl)
-                    .placeholder(R.drawable.user_unload)
-                    .error(R.drawable.user_unload)
+        if (StringUtils.isNotNullString(headUrl)) {
+            Glide.with(this)
+                    .load(headUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .dontAnimate()
+                    .placeholder(R.drawable.personal_center_logo)
+                    .error(R.drawable.personal_center_logo)
                     .into(iv_avatar_info);
         }
 
@@ -643,35 +654,77 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
      */
     private void uploadingHeadImage(File imageUri) {
         // 3次请求,获取授权码及key,请求内部写接口和上传头像
-        HttpPhotoApi.getInstance().uploadPhoto(imageUri);
+//        HttpPhotoApi.getInstance().uploadPhoto(imageUri);
+        ProgressDialog.getInstance().show();
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "up_image");
+        params.addBodyParameter("data", imageUri);
+
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
+                new RequestCallBack<String>() {
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        ProgressDialog.getInstance().dismiss();
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        ProgressDialog.getInstance().dismiss();
+                        processData(arg0.result);
+                    }
+                }
+        );
+
+
+    }
+
+    private void processData(String result) {
+        UploadImageBean uploadImageBean = GsonTools.changeGsonToBean(result,
+                UploadImageBean.class);
+        if (uploadImageBean == null) {
+            return;
+        }
+
+        if ("1".equals(uploadImageBean.getCode())) {
+            headUrl = CommonUtil.jointHeadUrl(uploadImageBean.getUrl(), 350, 350);
+            HttpPhotoApi.getInstance().saveUploadPhotoUrl(StringUtils.getUid(),
+                    StringUtils.getUsername(), StringUtils.getPassword(), StringUtils.getThirdSource(), headUrl);                 //保存图片地址
+
+        }
     }
 
     @Override
     public void onRefreshEvent(ClassEvent<Object> event) {
         super.onRefreshEvent(event);
         if (DataManager.UPLOAD_PHOTO_DATA == event.getType()) {                         //上传图片返回数据
-            PictureWrite pictureWrite = (PictureWrite) event.getData();
-            if (pictureWrite != null
-                    && pictureWrite.getResult() != null
-                    && pictureWrite.getResult().getPic_id() != null) {                  //拼接图片地址
-                headUrl = CommonUtil.jointHeadUrl(ParamConstant.PHOTO_LOAD_DOMAIN_NAME
-                        + pictureWrite.getResult().getPic_id());
-                if ("-1".equals(StringUtils.getUid())) {
-                    return;
-                }
-                HttpPhotoApi.getInstance().saveUploadPhotoUrl(StringUtils.getUid(),
-                        StringUtils.getUsername(), StringUtils.getPassword(), StringUtils.getThirdSource(), headUrl);                 //保存图片地址
-            }
+//            PictureWrite pictureWrite = (PictureWrite) event.getData();
+//            if (pictureWrite != null
+//                    && pictureWrite.getResult() != null
+//                    && pictureWrite.getResult().getPic_id() != null) {                  //拼接图片地址
+//                headUrl = CommonUtil.jointHeadUrl(UrlUtils.PHOTO_LOAD_DOMAIN_NAME
+//                        + pictureWrite.getResult().getPic_id(), 350, 350);
+//                if ("-1".equals(StringUtils.getUid())) {
+//                    return;
+//                }
+//                HttpPhotoApi.getInstance().saveUploadPhotoUrl(StringUtils.getUid(),
+//                        StringUtils.getUsername(), StringUtils.getPassword(), StringUtils.getThirdSource(), headUrl);                 //保存图片地址
+//            }
         } else if (DataManager.SAVE_PHOTO_URL == event.getType()) {                        //保存图片地址返回数据
-            if (headUrl != null && !"".equals(headUrl)) {                               //根据头像地址加载图像
+            if (StringUtils.isNotNullString(headUrl)) {                               //根据头像地址加载图像
                 if (!destroyFlag) {
-                    Glide.with(BaseApplication.getmForegroundActivity())
-                            .load(CommonUtil.jointHeadUrl(headUrl))
-                            .placeholder(R.drawable.user_unload)
-                            .error(R.drawable.user_unload)
+                    Glide.with(this)
+                            .load(headUrl)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .placeholder(R.drawable.personal_center_logo)
+                            .error(R.drawable.personal_center_logo)
                             .into(iv_avatar_info);
                     SharedPreferencesUtils.saveString(getApplicationContext(),
-                            getResources().getString(R.string.shared_avatar), CommonUtil.jointHeadUrl(headUrl));         //更新图片，更改数据库的头像url
+                            getResources().getString(R.string.shared_avatar), headUrl);         //更新图片，更改数据库的头像url
                 }
             }
         } else if (DataManager.SWITCH_TEACHER_INFO == event.getType()) {                   //更改是否展示我的老师信息

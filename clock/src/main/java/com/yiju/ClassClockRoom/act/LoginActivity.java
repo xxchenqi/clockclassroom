@@ -36,6 +36,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yiju.ClassClockRoom.BaseApplication;
@@ -62,6 +63,7 @@ import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
+import com.yiju.ClassClockRoom.widget.FireworkView;
 import com.yiju.ClassClockRoom.widget.circular.CircularProgressButton;
 
 
@@ -131,6 +133,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
      */
     @ViewInject(R.id.cb_password_is_show)
     private CheckBox cb_password_is_show;
+    @ViewInject(R.id.fire_work)
+    private FireworkView fire_work;
     //吐司
     private Toast msg;
     //是否登录
@@ -204,6 +208,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
         //动画初始化
         shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake_x);
         tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        circular_button_login.setEnabled(false);
+        fire_work.bindEditText(et_username);
     }
 
     @Override
@@ -220,7 +226,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
         login_sina_img.setOnClickListener(this);
         cb_password_is_show.setOnCheckedChangeListener(this);
 //        textview_other_login.setOnClickListener(this);
-        circular_button_login.setClickable(false);
+        circular_button_login.setEnabled(false);
         //以334显示
         et_username.addTextChangedListener(new TextWatcher() {
             @Override
@@ -234,14 +240,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                 int length = contents.length();
                 if (!"".equals(contents)) {
                     iv_login_delete.setVisibility(View.VISIBLE);
-                    circular_button_login.setTextColor(UIUtils.getColor(R.color.white));
-                    circular_button_login.setClickable(true);
                 } else {
                     iv_login_delete.setVisibility(View.GONE);
-                    circular_button_login.setTextColor(UIUtils.getColor(R.color.color_lucency_white));
-                    circular_button_login.setClickable(false);
                 }
-
                 if (length == 4) {
                     if (contents.substring(3).equals(" ")) {
                         contents = contents.substring(0, 3);
@@ -263,6 +264,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                         et_username.setSelection(contents.length());
                     }
                 }
+                if (contents.replaceAll(" ", "").length() == 11
+                        && et_password.getText().toString().replaceAll(" ", "").length() >= 6) {
+                    circular_button_login.setEnabled(true);
+                } else {
+                    circular_button_login.setEnabled(false);
+                }
             }
 
             @Override
@@ -271,6 +278,42 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
             }
         });
 
+        et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (StringUtils.isNullString(et_username.getText().toString().trim())) {
+                        UIUtils.showToastSafe("请先输入手机号");
+                        et_username.setFocusable(true);
+                        return;
+                    }
+                    if (et_username.getText().toString().replaceAll(" ", "").length() != 11) {
+                        UIUtils.showToastSafe(UIUtils.getString(R.string.label_login_beUse));
+                        return;
+                    }
+                }
+            }
+        });
+        et_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 6 && s.length() <= 18) {
+                    circular_button_login.setEnabled(true);
+                } else {
+                    circular_button_login.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -306,7 +349,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                     circular_button_login.setProgress(50);
                     Message m = new Message();
                     mHandler.sendMessageDelayed(m, 1000);
-                    circular_button_login.setClickable(false);
                 } else {
                     PermissionsChecker.requestPermissions(
                             this,
@@ -318,7 +360,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                     Intent register = new Intent(this, RegisterActivity.class);
                     register.putExtra("title", getString(R.string.account_register));//标题
                     startActivity(register);
-                }else {
+                } else {
                     PermissionsChecker.requestPermissions(
                             this,
                             PermissionsChecker.READ_PHONE_STATE_PERMISSIONS);
@@ -329,7 +371,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                     Intent forgotpassword = new Intent(this, RegisterActivity.class);
                     forgotpassword.putExtra("title", getString(R.string.forget_password));
                     startActivity(forgotpassword);
-                }else {
+                } else {
                     PermissionsChecker.requestPermissions(
                             this,
                             PermissionsChecker.READ_PHONE_STATE_PERMISSIONS);
@@ -405,7 +447,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
             msg.show();
             circular_button_login.setProgress(0);
             circular_button_login.startAnimation(shake);
-            circular_button_login.setClickable(true);
+            circular_button_login.setEnabled(true);
             return;
         }
 
@@ -415,25 +457,30 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                     R.string.label_login_beUse));
             circular_button_login.setProgress(0);
             circular_button_login.startAnimation(shake);
-            circular_button_login.setClickable(true);
+            circular_button_login.setEnabled(true);
         } else {
             if (!InputValidate.checkPassword(password)) {
                 UIUtils.showToastSafe(getResources().getString(
                         R.string.label_login_bePassword));
                 circular_button_login.setProgress(0);
                 circular_button_login.startAnimation(shake);
-                circular_button_login.setClickable(true);
+                circular_button_login.setEnabled(true);
             } else {
                 if (StringUtils.isNullString(PushClockReceiver.cid)) {
                     PushClockReceiver.cid = SharedPreferencesUtils.getString(
                             LoginActivity.this,
                             SharedPreferencesConstant.Shared_Login_Cid, "");
-                    circular_button_login.setProgress(0);
-                    circular_button_login.startAnimation(shake);
-                    circular_button_login.setClickable(true);
                 }
+                if (StringUtils.isNullString(SplashActivity.youYunUDid)) {
+                    SplashActivity.youYunUDid = SharedPreferencesUtils.getString(
+                            LoginActivity.this,
+                            SharedPreferencesConstant.Shared_Login_Udid, "");
+                }
+                circular_button_login.setProgress(0);
+                circular_button_login.startAnimation(shake);
+                circular_button_login.setEnabled(true);
 
-                requestLogin(PushClockReceiver.cid);
+                requestLogin(PushClockReceiver.cid, SplashActivity.youYunUDid);
             }
         }
 
@@ -445,7 +492,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
      * @param cid 设备识别码
      */
     @SuppressLint("HardwareIds")
-    private void requestLogin(String cid) {
+    private void requestLogin(String cid, String udid) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "login");
@@ -454,7 +501,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
         params.addBodyParameter("device_token", tm.getDeviceId());
         if (StringUtils.isNotNullString(cid)) {
             params.addBodyParameter("cid", cid);//个推推送码
-//            params.addBodyParameter("udid", cid);//游云推送码
+        }else{
+            params.addBodyParameter("cid", "");//个推推送码
+        }
+        if (StringUtils.isNotNullString(udid)) {
+            params.addBodyParameter("udid", udid);//游云推送码
+        }else{
+            params.addBodyParameter("udid", "");//游云推送码
         }
 
         httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
@@ -464,7 +517,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                         UIUtils.showToastSafe(getResources().getString(R.string.network_anomaly));
                         circular_button_login.setProgress(0);
                         circular_button_login.startAnimation(shake);
-                        circular_button_login.setClickable(true);
+                        circular_button_login.setEnabled(true);
                     }
 
                     @Override
@@ -477,10 +530,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
 
     private void processData(String result) {
         UserInfo userInfo = GsonTools.fromJson(result, UserInfo.class);
-
+        if(userInfo==null){
+            return;
+        }
         if ("1".equals(userInfo.getCode())) {
+            //umeng账号统计
+            MobclickAgent.onProfileSignIn(userInfo.getData().getId());
             circular_button_login.setProgress(0);
-            circular_button_login.setClickable(true);
+            circular_button_login.setEnabled(true);
             // Login success
             praseUserInfo(userInfo.getData());
             // 登陆成功返回()
@@ -501,7 +558,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
         } else {
             circular_button_login.setProgress(0);
             circular_button_login.startAnimation(shake);
-            circular_button_login.setClickable(true);
+            circular_button_login.setEnabled(true);
             UIUtils.showToastSafe(userInfo.getMsg());
         }
     }
@@ -541,6 +598,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
         SharedPreferencesUtils.saveString(getApplicationContext(),
                 getResources().getString(R.string.shared_nickname),
                 userInfo.getNickname());
+        SharedPreferencesUtils.saveString(getApplicationContext(),
+                getResources().getString(R.string.shared_avatar),
+                userInfo.getAvatar());
         SharedPreferencesUtils.saveString(this,
                 getResources().getString(R.string.shared_mobile), userInfo.getMobile());
         //获取支付所需的工作密钥

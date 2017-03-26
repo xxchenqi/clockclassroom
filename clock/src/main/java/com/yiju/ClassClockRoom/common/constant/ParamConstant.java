@@ -13,7 +13,7 @@ public class ParamConstant {
     public static final int RESULT_CODE_REMIND_FAIL = 20019;                   //加入提醒失败
     public static final int ERROR_FAIL = 4444;                                      //数据错误
 
-    public static final String PHOTO_LOAD_DOMAIN_NAME = "http://get.file.dc.cric.com/";    //图片查阅域名
+
 
 }
 

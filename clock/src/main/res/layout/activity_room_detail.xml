@@ -38,23 +38,6 @@
             layout="@layout/include_head_transparentbg_left_icon_right_icon_layout" />
     </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="@dimen/DIMEN_44DP"
-        android:layout_height="@dimen/DIMEN_44DP"
-        android:layout_alignBottom="@id/fl_wv_and_back"
-        android:layout_marginBottom="@dimen/DIMEN_12DP"
-        android:layout_marginLeft="@dimen/DIMEN_6DP"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/iv_root_detail_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/index_cart_btn"
-            tools:ignore="ContentDescription" />
-    </FrameLayout>
-
-
     <Button
         android:id="@+id/btn_room_detail_reserve"
         android:layout_width="match_parent"

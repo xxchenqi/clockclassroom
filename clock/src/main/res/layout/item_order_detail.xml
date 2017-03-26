@@ -31,10 +31,10 @@
             android:id="@+id/tv_item_detail_sname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/DIMEN_4DP"
+            android:drawableRight="@drawable/arrow"
             android:gravity="center_vertical"
             android:textColor="@color/color_black_33"
-            android:drawableRight="@drawable/arrow"
-            android:drawablePadding="@dimen/DIMEN_4DP"
             android:textSize="@dimen/DIMEN_16DP"
             tools:ignore="HardcodedText"
             tools:text="闵行中心店" />
@@ -110,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/DIMEN_14DP">
+
                 <TextView
                     android:layout_width="@dimen/DIMEN_26DP"
                     android:layout_height="@dimen/DIMEN_16DP"
@@ -131,9 +132,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/DIMEN_4DP"
                         android:maxLines="1"
-                        tools:text="¥135/"
                         android:textColor="@color/app_theme_color"
-                        android:textSize="@dimen/DIMEN_13DP" />
+                        android:textSize="@dimen/DIMEN_13DP"
+                        tools:text="¥135/" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -144,6 +145,7 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -166,9 +168,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/DIMEN_4DP"
                     android:maxLines="1"
-                    tools:text="¥145/"
                     android:textColor="@color/app_theme_color"
-                    android:textSize="@dimen/DIMEN_13DP" />
+                    android:textSize="@dimen/DIMEN_13DP"
+                    tools:text="¥145/" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -267,6 +269,7 @@
             android:textSize="@dimen/DIMEN_15DP" />
 
         <View style="@style/linestyle_h_unfocused" />
+
         <TextView
             android:id="@+id/tv_item_detail_date"
             android:layout_width="wrap_content"
@@ -278,6 +281,16 @@
             tools:text="使用日期: 2015-9-13 ~ 2015/9/13" />
 
         <TextView
+            android:id="@+id/tv_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_8DP"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText"
+            tools:text="循环方式:周一、周二" />
+
+        <TextView
             android:id="@+id/tv_item_detail_repeat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -285,14 +298,14 @@
             android:textColor="@color/color_black_33"
             android:textSize="@dimen/DIMEN_12DP"
             tools:ignore="HardcodedText"
-            tools:text="使用天数: 周一" />
+            tools:text="使用天数: 1天(周末一天)" />
 
         <TextView
             android:id="@+id/tv_item_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_8DP"
             android:layout_marginBottom="@dimen/DIMEN_16DP"
+            android:layout_marginTop="@dimen/DIMEN_8DP"
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/color_black_33"
@@ -301,6 +314,7 @@
             tools:text="使用时段: 13:00 ~ 19:00" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_all_up_down"
         android:layout_width="match_parent"
@@ -332,7 +346,7 @@
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/desc"
                 android:src="@drawable/more_btn_up"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -349,21 +363,6 @@
             <View style="@style/linestyle_h_unfocused" />
 
             <TextView
-                android:id="@+id/tv_cancel_classroom"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/DIMEN_35DP"
-                android:gravity="center_vertical"
-                android:text="取消课室"
-                android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP" />
-
-            <LinearLayout
-                android:id="@+id/ll_cancel_classroom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
-            <TextView
                 android:id="@+id/tv_add_classroom"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/DIMEN_35DP"
@@ -372,12 +371,29 @@
                 android:textColor="@color/color_gay_99"
                 android:textSize="@dimen/DIMEN_14DP" />
 
-            <LinearLayout
-                android:id="@+id/ll_add_classroom"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_add_classroom_info"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/DIMEN_10DP" />
+                android:lineSpacingExtra="@dimen/DIMEN_10DP"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP" />
+            <TextView
+                android:id="@+id/tv_cancel_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_35DP"
+                android:gravity="center_vertical"
+                android:text="取消课室"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <TextView
+                android:id="@+id/tv_cancel_classroom_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="@dimen/DIMEN_10DP"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP" />
 
         </LinearLayout>
     </LinearLayout>
@@ -413,69 +429,69 @@
 
     </LinearLayout>
 
-    <View style="@style/linestyle_h_unfocused" />
+    <!--    <View style="@style/linestyle_h_unfocused" />
 
-    <!-- 课室布置 -->
-    <LinearLayout
-        android:id="@+id/ll_set_classroom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/DIMEN_12DP"
-        android:paddingRight="@dimen/DIMEN_12DP">
-
+        &lt;!&ndash; 课室布置 &ndash;&gt;
         <LinearLayout
-            android:id="@+id/ll_set_classroom_top"
+            android:id="@+id/ll_set_classroom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_40DP"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:paddingRight="@dimen/DIMEN_12DP">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/order_classroom_arrangement"
-                android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_15DP" />
+            <LinearLayout
+                android:id="@+id/ll_set_classroom_top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_40DP"
+                android:gravity="center_vertical">
 
-            <!-- 点击进入课室布置页面-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/order_classroom_arrangement"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_15DP" />
+
+                &lt;!&ndash; 点击进入课室布置页面&ndash;&gt;
+                <TextView
+                    android:id="@+id/tv_edit_classroom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/DIMEN_12DP"
+                    android:drawableRight="@drawable/arrow"
+                    android:gravity="center_vertical"
+                    android:text="修改"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_12DP" />
+
+            </LinearLayout>
+
+            <View style="@style/linestyle_h_unfocused" />
+
+            &lt;!&ndash; 课室布置 列表头&ndash;&gt;
             <TextView
-                android:id="@+id/tv_edit_classroom"
+                android:id="@+id/tv_dec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/DIMEN_12DP"
-                android:drawableRight="@drawable/arrow"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
                 android:gravity="center_vertical"
-                android:text="修改"
-                android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_12DP" />
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <LinearLayout
+                android:id="@+id/ll_classroom_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/DIMEN_12DP" />
+
 
         </LinearLayout>
 
-        <View style="@style/linestyle_h_unfocused" />
-
-        <!-- 课室布置 列表头-->
-        <TextView
-            android:id="@+id/tv_dec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_gay_99"
-            android:textSize="@dimen/DIMEN_14DP" />
-
-        <LinearLayout
-            android:id="@+id/ll_classroom_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/DIMEN_12DP" />
-
-
-    </LinearLayout>
-
-    <View style="@style/linestyle_h_unfocused" />
+        <View style="@style/linestyle_h_unfocused" />-->
 
 </LinearLayout>

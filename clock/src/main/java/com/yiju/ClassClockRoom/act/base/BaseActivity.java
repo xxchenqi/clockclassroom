@@ -10,11 +10,11 @@ import android.view.WindowManager;
 import com.bugtags.library.Bugtags;
 import com.lidroid.xutils.ViewUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.common.callback.InitView;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
-import com.yiju.ClassClockRoom.control.CountControl;
 import com.yiju.ClassClockRoom.control.LockScreenControl;
 import com.yiju.ClassClockRoom.util.CommonUtil;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -110,6 +110,9 @@ public abstract class BaseActivity extends Activity implements InitView {
         if (BaseApplication.BugTagsFlag) {
             Bugtags.onResume(this);
         }
+        //umeng session统计
+        MobclickAgent.onPageStart(getLocalClassName());//页面统计
+        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -119,6 +122,9 @@ public abstract class BaseActivity extends Activity implements InitView {
         if (BaseApplication.BugTagsFlag) {
             Bugtags.onPause(this);
         }
+        //umeng session统计
+        MobclickAgent.onPageEnd(getLocalClassName());//页面统计
+        MobclickAgent.onPause(this);
     }
 
     @Override

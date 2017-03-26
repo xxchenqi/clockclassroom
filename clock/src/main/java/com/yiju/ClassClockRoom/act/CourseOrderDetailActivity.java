@@ -100,6 +100,9 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
     //实付
     @ViewInject(R.id.tv_course_price_should)
     private TextView tv_course_price_should;
+    //左下角金额
+    @ViewInject(R.id.tv_pay_price)
+    private TextView tv_pay_price;
     //订单费用
     @ViewInject(R.id.ll_pay_way)
     private RelativeLayout ll_pay_way;
@@ -140,7 +143,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                      */
                     if (time >= 0) {
                         handler.sendEmptyMessageDelayed(0, 1000);
-                        tv_tip.setText("订单已完成确认请在" + time / (60) + "分" + time % 60 + "秒内完成支付，超时自动关闭");
+                        tv_tip.setText("请在" + time / (60) + "分" + time % 60 + "秒内完成付款，订单超时自动关闭");
                     } else {
                         changeCloseStatus();
                         closeFlag = true;
@@ -168,6 +171,18 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        boolean refresh = intent.getBooleanExtra(ExtraControl.EXTRA_REFRESH_FLAG, false);
+        if (refresh) {
+            if (handler != null) {
+                handler.removeMessages(0);
+            }
+            getHttpUtils();
+        }
+    }
+
+    @Override
     protected void initView() {
     }
 
@@ -187,6 +202,9 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
         rl_order_detail_pay.setOnClickListener(this);
         ll_course_detial_store.setOnClickListener(this);
         ll_course.setOnClickListener(this);
+        tv_pay_order.setOnClickListener(this);
+        tv_close_order.setOnClickListener(this);
+        tv_change_order.setOnClickListener(this);
 
     }
 
@@ -230,11 +248,11 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
         }
         if ("1".equals(courseOrderDetailBean.getCode())) {
             data = courseOrderDetailBean.getData();
-            if(!StringUtils.isNullString(data.getFee())){
+            if (!StringUtils.isNullString(data.getFee())) {
                 tv_course_price_total.setText(String.format(
                         UIUtils.getString(R.string.how_much_money), data.getFee()));
             }
-            if(!StringUtils.isNullString(data.getReal_fee())){
+            if (!StringUtils.isNullString(data.getReal_fee())) {
                 tv_course_price_should.setText(String.format(
                         UIUtils.getString(R.string.how_much_money), data.getReal_fee()));
             }
@@ -242,13 +260,16 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
             switch (Integer.valueOf(data.getStatus())) {
                 case 0://未支付
                     tv_tip.setVisibility(View.VISIBLE);
-                    ll_order_total.setVisibility(View.VISIBLE);
+                    ll_order_total.setVisibility(View.GONE);
                     ll_pay_way.setVisibility(View.GONE);
                     rl_order_detail_pay.setVisibility(View.VISIBLE);
                     tv_close_order.setVisibility(View.VISIBLE);
                     tv_pay_order.setVisibility(View.VISIBLE);
                     tv_change_order.setVisibility(View.GONE);
+                    tv_pay_price.setVisibility(View.VISIBLE);
                     tv_order_detail_status.setText(UIUtils.getString(R.string.label_wait_pay));
+                    tv_pay_price.setText(String.format(
+                            UIUtils.getString(R.string.how_much_money), data.getReal_fee()));
                     if (data.getExpire_time() != null) {
                         expireTime = Integer.valueOf(data.getExpire_time());
                     }
@@ -258,7 +279,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                     // 开启倒计时
                     time = expireTime - serverTime;
                     if (time >= 0) {
-                        tv_tip.setText("订单已完成确认请在" + time / (60) + "分" + time % 60 + "秒内完成支付，超时自动关闭");
+                        tv_tip.setText("请在" + time / (60) + "分" + time % 60 + "秒内完成付款，订单超时自动关闭");
                         handler.sendEmptyMessage(0);
                     } else {
                         changeCloseStatus();
@@ -270,6 +291,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_pay_way.setVisibility(View.VISIBLE);
                     rl_order_detail_pay.setVisibility(View.GONE);
+                    tv_pay_price.setVisibility(View.GONE);
                     tv_order_detail_status.setText(UIUtils.getString(R.string.sign_up_success));
                     break;
                 case 100://已取消
@@ -277,6 +299,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_pay_way.setVisibility(View.VISIBLE);
                     rl_order_detail_pay.setVisibility(View.GONE);
+                    tv_pay_price.setVisibility(View.GONE);
                     tv_order_detail_status.setText(UIUtils.getString(R.string.status_cancel));
                     break;
                 case 102://已关闭
@@ -290,29 +313,29 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                             getString(R.string.txt_order_create_time),
                             second2Date(data.getCreate_time())
                     ));
-            if(!StringUtils.isNullString(data.getSchool_type())){
-                if("1".equals(data.getSchool_type())){
+            if (!StringUtils.isNullString(data.getSchool_type())) {
+                if ("1".equals(data.getSchool_type())) {
                     iv_item_detail_type.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     iv_item_detail_type.setVisibility(View.GONE);
                 }
             }
             course_id = data.getCourse_id();
             sname = data.getSname();
-            if(!StringUtils.isNullString(sname)){
+            if (!StringUtils.isNullString(sname)) {
                 tv_course_address.setText(sname);
             }
-            if(!StringUtils.isNullString(data.getPic())){
+            if (!StringUtils.isNullString(data.getPic())) {
                 Glide.with(this).load(data.getPic()).into(iv_course_pic);
             }
-            if(!StringUtils.isNullString(data.getCourse_name())){
+            if (!StringUtils.isNullString(data.getCourse_name())) {
                 tv_course_name.setText(data.getCourse_name());
             }
-            if(!StringUtils.isNullString(data.getCourse_str())){
+            if (!StringUtils.isNullString(data.getCourse_str())) {
                 tv_course_desc.setText(data.getCourse_str());
             }
-            if(!StringUtils.isNullString(data.getContact_name()) && !StringUtils.isNullString(data.getContact_mobile()) ){
-                tv_contact_name.setText(data.getContact_name()+" "+ data.getContact_mobile() );
+            if (!StringUtils.isNullString(data.getContact_name()) && !StringUtils.isNullString(data.getContact_mobile())) {
+                tv_contact_name.setText(data.getContact_name() + " " + data.getContact_mobile());
             }
         } else {
             UIUtils.showToastSafe(courseOrderDetailBean.getMsg());
@@ -328,6 +351,9 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
         tv_close_order.setVisibility(View.GONE);
         tv_pay_order.setVisibility(View.GONE);
         tv_change_order.setVisibility(View.VISIBLE);
+        tv_pay_price.setVisibility(View.VISIBLE);
+        tv_pay_price.setText(String.format(
+                UIUtils.getString(R.string.how_much_money), data.getReal_fee()));
     }
 
     @Override
@@ -348,7 +374,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.ll_course_detial_store://门店
                 Intent intent = new Intent(UIUtils.getContext(), StoreDetailActivity.class);
-                intent.putExtra(ExtraControl.EXTRA_STORE_ID,data.getSid());
+                intent.putExtra(ExtraControl.EXTRA_STORE_ID, data.getSid());
                 UIUtils.startActivity(intent);
                 break;
             case R.id.ll_course://课程
@@ -425,6 +451,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                             Intent intent = new Intent(CourseOrderDetailActivity.this, SignUpResultActivity.class);
                             //课程名
                             intent.putExtra(ExtraControl.EXTRA_COURSE_NAME, data.getCourse_name());
+                            intent.putExtra(ExtraControl.EXTRA_ENTRANCE, SignUpResultActivity.ENTRANCE_DETAIL);
                             //订单id
                             intent.putExtra(ExtraControl.EXTRA_ORDER_ONE_ID, data.getId());
                             if (code == EjuPayResultCode.PAY_SUCCESS_CODE.getCode()) {
@@ -474,7 +501,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
             params.addBodyParameter("uid", StringUtils.getUid());
         }
         params.addBodyParameter("oid", oid);
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_COURSE, params,
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -503,18 +530,9 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
             tv_order_detail_status.setText(UIUtils.getString(R.string.status_close));
             changeCloseStatus();
             closeFlag = true;
-            CustomDialog customDialog = new CustomDialog(
-                    CourseOrderDetailActivity.this,
-                    mineOrder.getMsg());
-            customDialog.setOnClickListener(new IOnClickListener() {
-                @Override
-                public void oncClick(boolean isOk) {
-                    if (isOk) {
-                        CourseOrderDetailActivity.this.setResult(RESULT_OK);
-                        finish();
-                    }
-                }
-            });
+            UIUtils.showToastSafe(UIUtils.getString(R.string.toast_show_close_success));
+            CourseOrderDetailActivity.this.setResult(RESULT_OK);
+            finish();
 
         } else {
             UIUtils.showToastSafe(mineOrder.getMsg());
@@ -555,7 +573,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
         }
         params.addBodyParameter("oid", oid);
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_COURSE, params,
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -580,18 +598,9 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
         }
         if ("1".equals(mineOrder.getCode())) {
             //刷新
-            CustomDialog customDialog = new CustomDialog(
-                    CourseOrderDetailActivity.this,
-                    mineOrder.getMsg());
-            customDialog.setOnClickListener(new IOnClickListener() {
-                @Override
-                public void oncClick(boolean isOk) {
-                    if (isOk) {
-                        CourseOrderDetailActivity.this.setResult(RESULT_OK);
-                        finish();
-                    }
-                }
-            });
+            UIUtils.showToastSafe(UIUtils.getString(R.string.toast_show_delete_success));
+            CourseOrderDetailActivity.this.setResult(RESULT_OK);
+            finish();
         } else {
             UIUtils.showToastSafe(mineOrder.getMsg());
         }
@@ -616,9 +625,17 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        if(closeFlag){
+        if (closeFlag) {
             CourseOrderDetailActivity.this.setResult(RESULT_OK);
         }
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (handler != null) {
+            handler.removeMessages(0);
+        }
+        super.onDestroy();
     }
 }

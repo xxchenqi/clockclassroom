@@ -35,6 +35,8 @@ class ShareGetData {
     private String course_name;
     private boolean isVisiblePass;
     private String special_id;
+    private String theme_title;
+    private String theme_id;
 
     private IShareDateReturn shareDateReturn;
 
@@ -74,8 +76,19 @@ class ShareGetData {
     public ShareGetData(int current_Type, int current_Way, String teacher_id, String teacher_name) {
         this.current_Type = current_Type;
         this.current_Way = current_Way;
-        this.teacher_id = teacher_id;
-        this.teacher_name = teacher_name;
+        if (current_Type == ShareDialog.Type_Share_Theme) {
+            //主题
+            theme_id = teacher_id;
+            theme_title = teacher_name;
+        } else if (current_Type == ShareDialog.Type_Share_Past_Theme) {
+            //往期主题详情
+            theme_id = teacher_id;
+            theme_title = teacher_name;
+        } else {
+            //活动等
+            this.teacher_id = teacher_id;
+            this.teacher_name = teacher_name;
+        }
         getShareContent();
     }
 
@@ -96,6 +109,7 @@ class ShareGetData {
         this.special_id = special_id;
         getShareContent();
     }
+
 
     private void initBaseData(int type, int Way, String school_name, boolean isVisiblePass) {
         this.current_Type = type;
@@ -165,6 +179,16 @@ class ShareGetData {
             //活动分享
             params.addBodyParameter("activity_id", teacher_id);
             params.addBodyParameter("activity_title", teacher_name);
+        }
+        if (current_Type == ShareDialog.Type_Share_Theme) {
+            //主题分享
+            params.addBodyParameter("theme_title", theme_title);
+            params.addBodyParameter("theme_id", theme_id);
+        }
+        if (current_Type == ShareDialog.Type_Share_Past_Theme) {
+            //主题分享
+            params.addBodyParameter("pasttheme_title", theme_title);
+            params.addBodyParameter("pasttheme_id", theme_id);
         }
         httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
                 new RequestCallBack<String>() {

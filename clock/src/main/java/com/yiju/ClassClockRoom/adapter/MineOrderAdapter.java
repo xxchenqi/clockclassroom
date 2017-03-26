@@ -34,21 +34,16 @@ import java.util.List;
  */
 public class MineOrderAdapter extends CommonBaseAdapter<MineOrderData> {
     private OrderClickListener orderClickListener;
-    private boolean cbShow;
-    private boolean cbChoose = true;
 
     public MineOrderAdapter(Context context, List<MineOrderData> datas, int layoutId,
                             OrderClickListener orderClickListener, boolean cbShow) {
         super(context, datas, layoutId);
         this.orderClickListener = orderClickListener;
-//        this.cbShow = cbShow;
     }
 
 
     public interface OrderClickListener {
         void orderClick(View view, int position);
-
-        void cbClick(boolean isChecked, String real_fee);
     }
 
     @SuppressLint("ResourceAsColor")
@@ -64,18 +59,10 @@ public class MineOrderAdapter extends CommonBaseAdapter<MineOrderData> {
         RelativeLayout rl_mine_order = holder.getView(R.id.rl_mine_order);
         Button btn_mine_order_left = holder.getView(R.id.btn_mine_order_left);
         Button btn_mine_order_right = holder.getView(R.id.btn_mine_order_right);
-//        CheckBox cb_order_choose = holder.getView(R.id.cb_order_choose);
         TextView tv_status = holder.getView(R.id.tv_mineorder_status);//待支付
         TextView tv_time = holder.getView(R.id.tv_order_need_time);//0分0秒 内须提交
         ImageView iv_self_support = holder.getView(R.id.iv_self_support);//自营门店图标
         ImageView iv_item_mineorder_pic = holder.getView(R.id.iv_item_mineorder_pic);
-
-//        if (cbShow) {
-//            cb_order_choose.setVisibility(View.VISIBLE);
-//        }
-//        cbChoose = false;
-//        cb_order_choose.setChecked(data.isCbChoose());
-//        cbChoose = true;
 
         btn_mine_order_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,12 +151,12 @@ public class MineOrderAdapter extends CommonBaseAdapter<MineOrderData> {
         } else if ("1".equals(status)) {//进行中
             tv_status.setText(mContext.getResources().getString(
                     R.string.status_ing));
-            rl_mine_order.setVisibility(View.VISIBLE);
-            btn_mine_order_right.setVisibility(View.VISIBLE);
-            btn_mine_order_left.setVisibility(View.GONE);
-            btn_mine_order_right.setText(UIUtils.getString(R.string.order_classroom_arrangement));
-            btn_mine_order_right.setTextColor(UIUtils.getColor(R.color.app_theme_color));
-            btn_mine_order_right.setBackgroundResource(R.drawable.background_green_1eb482_stroke);
+            rl_mine_order.setVisibility(View.GONE);
+//            btn_mine_order_right.setVisibility(View.VISIBLE);
+//            btn_mine_order_left.setVisibility(View.GONE);
+//            btn_mine_order_right.setText(UIUtils.getString(R.string.order_classroom_arrangement));
+//            btn_mine_order_right.setTextColor(UIUtils.getColor(R.color.app_theme_color));
+//            btn_mine_order_right.setBackgroundResource(R.drawable.background_green_1eb482_stroke);
         } else if ("2".equals(status) || "4".equals(status) || "8".equals(status)) { //已关闭
             tv_status.setText(mContext.getResources().getString(
                     R.string.status_close));
@@ -233,17 +220,6 @@ public class MineOrderAdapter extends CommonBaseAdapter<MineOrderData> {
                 tv_time.setVisibility(View.GONE);
             }
         }
-
-//        cb_order_choose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (cbChoose) {
-//                    data.setCbChoose(isChecked);
-//                    orderClickListener.cbClick(isChecked, data.getReal_fee());
-//                }
-//            }
-//        });
 
     }
 }

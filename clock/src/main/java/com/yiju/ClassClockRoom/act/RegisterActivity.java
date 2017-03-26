@@ -30,6 +30,7 @@ import com.yiju.ClassClockRoom.bean.UserVerifyInfo;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.InputValidate;
+import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.circular.CircularProgressButton;
@@ -136,7 +137,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
         rl_register_back.setOnClickListener(this);
         btn_get_verify.setOnClickListener(this);
         circular_button_next.setOnClickListener(this);
-        circular_button_next.setClickable(false);
+        circular_button_next.setEnabled(false);
         tv_protocol.setOnClickListener(this);
         iv_register_delete.setOnClickListener(this);
         et_register_username.addTextChangedListener(new TextWatcher() {
@@ -152,12 +153,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
                 if (!"".equals(contents)) {
                     iv_register_delete.setVisibility(View.VISIBLE);
-                    circular_button_next.setClickable(true);
-                    circular_button_next.setTextColor(UIUtils.getColor(R.color.white));
                 } else {
                     iv_register_delete.setVisibility(View.GONE);
-                    circular_button_next.setClickable(false);
-                    circular_button_next.setTextColor(UIUtils.getColor(R.color.color_lucency_white));
                 }
 
                 if (length == 4) {
@@ -180,6 +177,49 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
                         et_register_username.setText(contents);
                         et_register_username.setSelection(contents.length());
                     }
+                }
+
+                if (contents.replaceAll(" ", "").length() == 11
+                        && et_register_verify.getText().toString().replaceAll(" ", "").length() >= 4) {
+                    circular_button_next.setEnabled(true);
+                } else {
+                    circular_button_next.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        et_register_verify.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (StringUtils.isNullString(et_register_username.getText().toString().trim())) {
+                        UIUtils.showToastSafe("请先输入手机号");
+                        et_register_username.setFocusable(true);
+                        return;
+                    }
+                    if (et_register_username.getText().toString().replaceAll(" ", "").length() != 11) {
+                        UIUtils.showToastSafe(UIUtils.getString(R.string.label_login_beUse));
+                        return;
+                    }
+                }
+            }
+        });
+        et_register_verify.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 4) {
+                    circular_button_next.setEnabled(true);
+                } else {
+                    circular_button_next.setEnabled(false);
                 }
             }
 

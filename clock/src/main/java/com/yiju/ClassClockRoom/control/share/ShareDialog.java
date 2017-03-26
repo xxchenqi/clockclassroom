@@ -2,13 +2,18 @@ package com.yiju.ClassClockRoom.control.share;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.SwitchCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +21,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.bean.ShareBean;
+import com.yiju.ClassClockRoom.bean.ShareLocalModel;
 import com.yiju.ClassClockRoom.bean.StoreShareBean;
 import com.yiju.ClassClockRoom.control.ShareControl;
 import com.yiju.ClassClockRoom.util.CommonUtil;
@@ -23,6 +29,9 @@ import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 分享弹出框
@@ -38,6 +47,8 @@ public class ShareDialog implements OnClickListener {
     public static final int Type_Share_Supplier_Detail = 8;//供应商分享
     public static final int Type_Share_Theme_News = 9;//资讯分享
     public static final int Type_Share_Theme_Activity = 10;//活动分享
+    public static final int Type_Share_Theme = 11;//主题分享
+    public static final int Type_Share_Past_Theme = 12;//往期主题分享
     public static final int Type_Share_Course_Detail = 5;
     public static final int Type_Share_Store_Detail = 6;
     public static final int Type_Share_Special = -1;
@@ -61,11 +72,11 @@ public class ShareDialog implements OnClickListener {
     // 是否分享陪读密码框
     private RelativeLayout accompany_pwd_layout;
 
-    private TextView share_wechat;
+    /*private TextView share_wechat;
     private TextView share_wechat_circle;
     private TextView share_qq;
     private TextView share_sina;
-    private TextView share_sms;
+    private TextView share_sms;*/
     private TextView share_cancel;
     private SwitchCompat accompany_pwd_switch;
 
@@ -98,6 +109,24 @@ public class ShareDialog implements OnClickListener {
     private String news_title;
     private String activity_id;
     private String activity_title;
+
+    private String theme_title;
+    private String theme_id;
+
+    public static int[] mShareWayIcon = new int[]{
+            R.drawable.wechat_share_icon,
+            R.drawable.circle_share_icon,
+            R.drawable.qq_share_icon,
+            R.drawable.weibo_share_icon,
+            R.drawable.sms_share_icon};
+    public static String[] mShareWayName = new String[]{
+            UIUtils.getString(R.string.wechat),
+            UIUtils.getString(R.string.wechat_circle),
+            UIUtils.getString(R.string.qq),
+            UIUtils.getString(R.string.sina),
+            UIUtils.getString(R.string.sms)
+    };
+
 
     private ShareDialog() {
         mActivity = BaseApplication.getmForegroundActivity();
@@ -135,30 +164,73 @@ public class ShareDialog implements OnClickListener {
             dialog.setContentView(view, lp);
         }
 
-        share_wechat = (TextView) view.findViewById(R.id.share_wechat);
+        final List<ShareLocalModel> shareLocalModels = new ArrayList<>();
+        for (int i = 0; i < mShareWayName.length; i++) {
+            ShareLocalModel shareLocalModel = new ShareLocalModel();
+            if (current_Type == Type_Share_Accompany_Key || current_Type == Type_Share_Accompany_Video) {
+                if (i == 3) {
+                    continue;
+                }
+            }
+            shareLocalModel.setName(mShareWayName[i]);
+            shareLocalModel.setImg(mShareWayIcon[i]);
+            shareLocalModels.add(shareLocalModel);
+        }
+
+        GridView gv_share_way = (GridView) view.findViewById(R.id.gv_share_way);
+
         accompany_pwd_layout = (RelativeLayout) view
                 .findViewById(R.id.accompany_pwd_layout);
-        share_wechat_circle = (TextView) view
-                .findViewById(R.id.share_wechat_circle);
-        share_qq = (TextView) view.findViewById(R.id.share_qq);
-        share_sina = (TextView) view.findViewById(R.id.share_sina);
-        share_sms = (TextView) view.findViewById(R.id.share_sms);
-        share_cancel = (TextView) view.findViewById(R.id.share_cancel);
         accompany_pwd_switch = (SwitchCompat) view
                 .findViewById(R.id.accompany_pwd_switch);
+//        share_wechat = (TextView) view.findViewById(R.id.share_wechat);
+//        share_wechat_circle = (TextView) view
+//                .findViewById(R.id.share_wechat_circle);
+//        share_qq = (TextView) view.findViewById(R.id.share_qq);
+//        share_sina = (TextView) view.findViewById(R.id.share_sina);
+//        share_sms = (TextView) view.findViewById(R.id.share_sms);
+        share_cancel = (TextView) view.findViewById(R.id.share_cancel);
 
-        share_wechat.setOnClickListener(this);
+        /*share_wechat.setOnClickListener(this);
         share_wechat_circle.setOnClickListener(this);
         share_qq.setOnClickListener(this);
         share_sina.setOnClickListener(this);
-        share_sms.setOnClickListener(this);
+        share_sms.setOnClickListener(this);*/
+        gv_share_way.setAdapter(new ShareWayGridViewAdapter(shareLocalModels));
+        gv_share_way.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SHARE_MEDIA share_MEDIA = null;
+                if (UIUtils.getString(R.string.wechat).equals(shareLocalModels.get(position).getName())) {
+                    share_MEDIA = SHARE_MEDIA.WEIXIN;
+                } else if (UIUtils.getString(R.string.wechat_circle).equals(shareLocalModels.get(position).getName())) {
+                    share_MEDIA = SHARE_MEDIA.WEIXIN_CIRCLE;
+                } else if (UIUtils.getString(R.string.qq).equals(shareLocalModels.get(position).getName())) {
+                    share_MEDIA = SHARE_MEDIA.QQ;
+                } else if (UIUtils.getString(R.string.sina).equals(shareLocalModels.get(position).getName())) {
+                    share_MEDIA = SHARE_MEDIA.SINA;
+                } else if (UIUtils.getString(R.string.sms).equals(shareLocalModels.get(position).getName())) {
+                    share_MEDIA = SHARE_MEDIA.SMS;
+                }
+                if (share_MEDIA == null) {
+                    return;
+                }
+                if (current_Type == Type_Share_Store_Detail) {
+                    goShare(share_MEDIA);
+                } else {
+                    ShareGetDate(share_MEDIA);
+
+                }
+                dialog.dismiss();
+            }
+        });
         share_cancel.setOnClickListener(this);
 
-        if (current_Type == Type_Share_Accompany_Key || current_Type == Type_Share_Accompany_Video) {
+        /*if (current_Type == Type_Share_Accompany_Key || current_Type == Type_Share_Accompany_Video) {
             share_sina.setVisibility(View.GONE);
         } else {
             share_sina.setVisibility(View.VISIBLE);
-        }
+        }*/
         if (isVisiblePwd_Layout && StringUtils.isNotNullString(video_pas)) {
             accompany_pwd_layout.setVisibility(View.VISIBLE);
             accompany_pwd_switch.setChecked(true);
@@ -184,7 +256,7 @@ public class ShareDialog implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.share_wechat:
+            /*case R.id.share_wechat:
                 if (current_Type == Type_Share_Store_Detail) {
                     goShare(SHARE_MEDIA.WEIXIN);
                 } else {
@@ -223,7 +295,7 @@ public class ShareDialog implements OnClickListener {
                     ShareGetDate(SHARE_MEDIA.SMS);
                 }
                 dialog.dismiss();
-                break;
+                break;*/
             case R.id.share_cancel:
                 dialog.dismiss();
                 break;
@@ -303,6 +375,12 @@ public class ShareDialog implements OnClickListener {
         } else if (current_Type == Type_Share_Theme_Activity) {
             //活动详情分享
             shareGetData = new ShareGetData(Type_Share_Theme_Activity, current_Way, activity_id, activity_title);
+        } else if (current_Type == Type_Share_Theme) {
+            //主题详情分享
+            shareGetData = new ShareGetData(Type_Share_Theme, current_Way, theme_id, theme_title);
+        } else if (current_Type == Type_Share_Past_Theme) {
+            //主题详情分享
+            shareGetData = new ShareGetData(Type_Share_Past_Theme, current_Way, theme_id, theme_title);
         }
 
         if (shareGetData == null) {
@@ -444,4 +522,63 @@ public class ShareDialog implements OnClickListener {
         return instance;
     }
 
+    public ShareDialog setTheme_title(String theme_title) {
+        this.theme_title = theme_title;
+        return instance;
+    }
+
+    public ShareDialog setTheme_id(String theme_id) {
+        this.theme_id = theme_id;
+        return instance;
+    }
+
+    public class ShareWayGridViewAdapter extends BaseAdapter {
+        private List<ShareLocalModel> shareLocalModels;
+
+        public ShareWayGridViewAdapter(List<ShareLocalModel> shareLocalModels) {
+            this.shareLocalModels = shareLocalModels;
+        }
+
+        @Override
+        public int getCount() {
+            return shareLocalModels.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return shareLocalModels.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(UIUtils.getContext()).inflate(R.layout.item_gv_share_way, parent, false);
+                holder = new ViewHolder();
+                holder.tv_share_item = (TextView) convertView.findViewById(R.id.tv_share_item);
+                convertView.setTag(holder);
+
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            final ShareLocalModel shareLocalModel = shareLocalModels.get(position);
+            holder.tv_share_item.setText(shareLocalModel.getName());
+            Drawable top = UIUtils.getDrawable(shareLocalModel.getImg());
+            holder.tv_share_item.setCompoundDrawablePadding(UIUtils.getDimens(R.dimen.DIMEN_6DP));
+            holder.tv_share_item.setCompoundDrawablesWithIntrinsicBounds(null, top, null, null);
+
+            return convertView;
+        }
+
+        public class ViewHolder {
+
+            private TextView tv_share_item;
+        }
+    }
 }

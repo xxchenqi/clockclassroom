@@ -51,6 +51,9 @@
             android:contentDescription="@string/desc" />
     </RelativeLayout>
 
+    <View
+        style="@style/linestyle_gray_f5"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

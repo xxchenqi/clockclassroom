@@ -69,21 +69,15 @@
         <View style="@style/linestyle_h_unfocused" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_contact_delete"
+    <TextView
+        android:id="@+id/btn_contact_delete"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/DIMEN_50DP"
         android:layout_alignParentBottom="true"
-        android:background="@color/order_gray">
-
-        <Button
-            android:id="@+id/btn_contact_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/DIMEN_12DP"
-            android:background="@drawable/background_green_1eb482_radius_5"
-            android:text="@string/delete_contact"
-            android:textColor="@color/white" />
-    </LinearLayout>
+        android:background="@color/app_theme_color"
+        android:gravity="center"
+        android:text="@string/delete_contact"
+        android:textSize="@dimen/DIMEN_18DP"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

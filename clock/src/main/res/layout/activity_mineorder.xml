@@ -31,8 +31,10 @@
             android:visibility="visible"
             ptr:ptrAnimationStyle="flip" />
 
-        <RelativeLayout
+        <LinearLayout
+            android:gravity="center"
             android:id="@+id/rl_mine_order3"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
@@ -41,8 +43,6 @@
                 android:id="@+id/iv_mineorder_none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/DIMEN_155DP"
                 android:src="@drawable/none_order"
                 tools:ignore="ContentDescription" />
 
@@ -50,38 +50,23 @@
                 android:id="@+id/tv_mineorder_none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_mineorder_none"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/DIMEN_26DP"
                 android:text="@string/order_none"
                 android:textColor="@color/color_gay_8f"
                 android:textSize="@dimen/DIMEN_17DP" />
 
-            <TextView
-                android:id="@+id/tv_mineorder_see"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_mineorder_none"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/DIMEN_12DP"
-                android:text="@string/order_see"
-                android:textColor="@color/color_gay_8f"
-                android:textSize="@dimen/DIMEN_14DP" />
-
             <Button
                 android:id="@+id/btn_mineorder_stroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_mineorder_see"
-                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/DIMEN_64DP"
                 android:layout_marginRight="@dimen/DIMEN_64DP"
-                android:layout_marginTop="@dimen/DIMEN_68DP"
+                android:layout_marginTop="@dimen/DIMEN_40DP"
                 android:background="@drawable/bg_exit_or"
-                android:text="@string/order_stroll"
+                android:text="@string/to_reserve_the_classroom"
                 android:textColor="@color/white"
                 android:textSize="@dimen/DIMEN_17DP" />
-        </RelativeLayout>
+        </LinearLayout>
     </FrameLayout>
 
 </LinearLayout>

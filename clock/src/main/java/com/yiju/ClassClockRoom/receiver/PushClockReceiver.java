@@ -20,7 +20,6 @@ import com.yiju.ClassClockRoom.act.OrderDetailActivity;
 import com.yiju.ClassClockRoom.act.OrganizationCertificationStatusActivity;
 import com.yiju.ClassClockRoom.act.PersonMineCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.PersonalCenterActivity;
-import com.yiju.ClassClockRoom.act.ShopCartActivity;
 import com.yiju.ClassClockRoom.act.accompany.AccompanyReadStatusActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
 import com.yiju.ClassClockRoom.bean.PushBean;
@@ -29,6 +28,7 @@ import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.control.SchemeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
+import com.yiju.ClassClockRoom.util.LogUtil;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -261,14 +261,13 @@ public class PushClockReceiver extends BroadcastReceiver {
 			 * Log.d("GetuiSdkDemo", "timestamp = " + timestamp);
 			 */
                 break;
-            case Action_Int_Cart:// 未提交，购物车
-                if (!isRuningApp(context)) {
-                    StartApp(context);
-                    return;
-                }
-                Intent intentCart = new Intent(context, ShopCartActivity.class);
-                intentCart.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                BaseApplication.getmForegroundActivity().startActivity(intentCart);
+            case Action_Int_Cart://已经没有购物车了 未提交，购物车
+//                if (!isRuningApp(context)) {
+//                    StartApp(context);
+//                    return;
+//                }
+//                intentCart.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                BaseApplication.getmForegroundActivity().startActivity(intentCart);
                 break;
             case Action_Int_Video:// 视频
                 if (!isRuningApp(context)) {
@@ -280,8 +279,8 @@ public class PushClockReceiver extends BroadcastReceiver {
                         AccompanyReadStatusActivity.class);
 //                intentVideo.putExtra(MainActivity.Param_Start_Fragment,
 //                        FragmentFactory.TAB_VIDEO);
-                intent.putExtra(SchemeControl.PASSWORD, bean_skip.getContent().split("：")[1].split("，")[0].trim());
-                intentVideo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intentVideo.putExtra(SchemeControl.PASSWORD, bean_skip.getContent().split("：")[1].split("，")[0].trim());
+//                intentVideo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 BaseApplication.getmForegroundActivity().startActivity(
                         intentVideo);
                 break;
@@ -301,7 +300,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                             bean_skip.getUrl());
                     intentActivity.putExtra(Common_Show_WebPage_Activity.Param_String_Title,
                             bean_skip.getTitle());
-                    intentActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                    intentActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     BaseApplication.getmForegroundActivity().startActivity(intentActivity);
                 }
                 break;
@@ -317,7 +316,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                             bean_skip.getTeacherID());
                     intentActivity.putExtra(Common_Show_WebPage_Activity.Param_String_Title,
                             bean_skip.getTitle());
-                    intentActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                    intentActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     BaseApplication.getmForegroundActivity().startActivity(intentActivity);
                 }
                 break;
@@ -330,7 +329,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                     return;
                 }
                 Intent intentOrganizationAdd = new Intent(context, MineOrganizationActivity.class);
-                intentOrganizationAdd.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                intentOrganizationAdd.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 BaseApplication.getmForegroundActivity().startActivity(intentOrganizationAdd);
                 break;
             case Action_Int_Exit_Org://机构移除老师
@@ -343,7 +342,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                         PersonalCenterActivity.class);
 //                intentExitOrg.putExtra(MainActivity.Param_Start_Fragment,
 //                        FragmentFactory.TAB_MY);
-                intentExitOrg.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                intentExitOrg.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 BaseApplication.getmForegroundActivity().startActivity(
                         intentExitOrg);
                 break;
@@ -362,7 +361,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                 if (bean_skip != null && StringUtils.isNotNullString(bean_skip.getOid())) {
                     Intent intentOrder = new Intent(context, OrderDetailActivity.class);
                     intentOrder.putExtra("oid", bean_skip.getOid());
-                    intentOrder.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                    intentOrder.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     BaseApplication.getmForegroundActivity().startActivity(intentOrder);
                 }
                 break;
@@ -374,7 +373,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                 Intent intentOrganizationFail = new Intent(UIUtils.getContext(),
                         OrganizationCertificationStatusActivity.class);
                 intentOrganizationFail.putExtra(OrganizationCertificationStatusActivity.STATUS, OrganizationCertificationStatusActivity.STATUS_FAIL);
-                intentOrganizationFail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                intentOrganizationFail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 BaseApplication.getmForegroundActivity().startActivity(intentOrganizationFail);
                 break;
             case ACTION_INT_COURSE_REVIEW_SUCCESS://课程审核通过
@@ -388,7 +387,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                 if (bean_skip != null && StringUtils.isNotNullString(bean_skip.getCourse_id())) {
                     Intent intent_personMineCourse = new Intent(UIUtils.getContext(), PersonMineCourseDetailActivity.class);
                     intent_personMineCourse.putExtra("course_id", bean_skip.getCourse_id());
-                    intent_personMineCourse.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                    intent_personMineCourse.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     BaseApplication.getmForegroundActivity().startActivity(intent_personMineCourse);
                 }
                 break;
@@ -403,7 +402,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                     intent_member_detail.putExtra(MemberDetailActivity.ACTION_UID, bean_skip.getDetail_id());
                     intent_member_detail.putExtra(MemberDetailActivity.ACTION_TITLE,
                             UIUtils.getString(R.string.teacher_detail));
-                    intent_member_detail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                    intent_member_detail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     BaseApplication.getmForegroundActivity().startActivity(intent_member_detail);
                 }
                 break;
@@ -424,11 +423,11 @@ public class PushClockReceiver extends BroadcastReceiver {
             code = bean.getMid();
         }
         extras.putInt(Notify_Push_Id, code);
-        Intent intent_Handler = new Intent(BaseApplication.getmForegroundActivity(), PushClockReceiver.class);
+        Intent intent_Handler = new Intent(BaseApplication.getApplication(), PushClockReceiver.class);
         intent_Handler.putExtras(extras);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseApplication.getmForegroundActivity(),
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseApplication.getApplication(),
                 code, intent_Handler, 0);
-        Notification notification = new Notification.Builder(BaseApplication.getmForegroundActivity())
+        Notification notification = new Notification.Builder(BaseApplication.getApplication())
                 .setAutoCancel(true)
                 .setContentTitle(bean.getTitle())
                 .setContentText(bean.getContent())

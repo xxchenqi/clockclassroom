@@ -283,6 +283,9 @@ public static final android.os.Parcelable$Creator *;
 -keepclassmembers class ** {
     public void baseRefreshEvent*(**);
 }
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
 
 -keep class **JNI* {*;}
 

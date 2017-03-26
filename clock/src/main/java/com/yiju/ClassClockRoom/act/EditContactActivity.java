@@ -84,12 +84,7 @@ public class EditContactActivity extends BaseActivity implements
      * 删除联系人按钮
      */
     @ViewInject(R.id.btn_contact_delete)
-    private Button btn_contact_delete;
-    /**
-     * 删除联系人布局
-     */
-    @ViewInject(R.id.ll_contact_delete)
-    private LinearLayout ll_contact_delete;
+    private TextView btn_contact_delete;
     //联系人id
     private String id;
     //标记
@@ -116,7 +111,7 @@ public class EditContactActivity extends BaseActivity implements
         if ("new".equals(flag)) {
             //新建联系人
             head_title.setText(getResources().getString(R.string.new_contact));
-            ll_contact_delete.setVisibility(View.GONE);
+            btn_contact_delete.setVisibility(View.GONE);
         } else if ("edit".equals(flag)) {
             //编辑联系人
             Data data = (Data) getIntent().getSerializableExtra("data");

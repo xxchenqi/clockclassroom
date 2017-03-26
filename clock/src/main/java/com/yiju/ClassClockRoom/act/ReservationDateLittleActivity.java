@@ -47,10 +47,12 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
     private Date endDate;
     private Calendar ca = Calendar.getInstance();
     private String fail;
-    private String hasWeek;
+//    private String hasWeek;
     private List<Date> haveDates;
     private List<Date> selectedDates;
     private Set<Date> grayDates;
+    private long beginTime;
+    private long endTime;
 
     /**
      * 初始化页面
@@ -83,7 +85,7 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
         }
         mDates.clear();
         fail = mReservationIntent.getStringExtra("FAIL");
-        hasWeek = mReservationIntent.getStringExtra("hasWeek");
+//        hasWeek = mReservationIntent.getStringExtra("hasWeek");
         selectedDates = (ArrayList<Date>) mReservationIntent.
                 getSerializableExtra("selectedDates");
         haveDates = (ArrayList<Date>) mReservationIntent.
@@ -93,38 +95,29 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
         if (null != selectedDates && selectedDates.size() > 0) {
             mDates.clear();
             mDates.addAll(selectedDates);
-            List<Date> weekDates = new ArrayList<>();
-            if (null != hasWeek && !hasWeek.equals("每周")) {
-                String[] weeks = hasWeek.substring(2,hasWeek.length()).split("、");
-                int counts = weeks.length;
-                if (counts < 7) {
-                    for (String week : weeks) {
-                        int intWeek = formatWeek(week);
-                        for (int j = 0; j < mDates.size(); j++) {
-                            ca.setTime(mDates.get(j));
-                            if (ca.get(Calendar.DAY_OF_WEEK) == intWeek) {
-                                weekDates.add(mDates.get(j));
-                            }
-                        }
-                    }
-                    mDates.clear();
-                    mDates.addAll(weekDates);
-                }
-            }
+            beginTime = selectedDates.get(0).getTime() / 1000;
+            endTime = selectedDates.get(selectedDates.size() - 1).getTime() / 1000;
         }
         if(null != haveDates && haveDates.size() > 0){
             mDates.clear();
             mDates.addAll(haveDates);
         }
-        Collections.sort(mDates);
         if (null != fail && "FAIL".equals(fail)) {
             //预订失败过来
             tv_has_date.setVisibility(View.VISIBLE);
+            if(null != grayDates && grayDates.size()>0){
+                for (Date d:grayDates) {
+                    if(mDates.contains(d)){
+                        mDates.remove(d);
+                    }
+                }
+            }
 
         } else {
             //预订之前过来
             tv_has_date.setVisibility(View.GONE);
         }
+        Collections.sort(mDates);
         initCalendarDate();
 
 
@@ -159,8 +152,8 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
 
         Calendar lastYear = Calendar.getInstance();
         lastYear.add(Calendar.YEAR, -1);
-        long beginTime = mDates.get(0).getTime() / 1000;
-        long endTime = mDates.get(mDates.size() - 1).getTime() / 1000;
+//        long beginTime = mDates.get(0).getTime() / 1000;
+//        long endTime = mDates.get(mDates.size() - 1).getTime() / 1000;
         long currentTime = System.currentTimeMillis() / 1000;
         long sevenTime = 7 * 24 * 60 * 60;
         long ninetyTime = 90 * 24 * 60 * 60;
@@ -210,40 +203,6 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
             default:
                 break;
         }
-    }
-
-    /**
-     * 将星期字符串转换成数字
-     *
-     * @param week 星期字符串
-     * @return 星期数字
-     */
-    private int formatWeek(String week) {
-        int szWeek = 0;
-        switch (week) {
-            case "一":
-                szWeek = Calendar.MONDAY;
-                break;
-            case "二":
-                szWeek = Calendar.TUESDAY;
-                break;
-            case "三":
-                szWeek = Calendar.WEDNESDAY;
-                break;
-            case "四":
-                szWeek = Calendar.THURSDAY;
-                break;
-            case "五":
-                szWeek = Calendar.FRIDAY;
-                break;
-            case "六":
-                szWeek = Calendar.SATURDAY;
-                break;
-            case "日":
-                szWeek = Calendar.SUNDAY;
-                break;
-        }
-        return szWeek;
     }
 
     /**

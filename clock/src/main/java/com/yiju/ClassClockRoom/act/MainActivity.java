@@ -22,7 +22,9 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseFragmentActivity;
 import com.yiju.ClassClockRoom.bean.VersionBean;
+import com.yiju.ClassClockRoom.common.constant.RequestCodeConstant;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.fragment.BaseFragment;
 import com.yiju.ClassClockRoom.fragment.ExperienceClassFragment;
@@ -208,6 +210,14 @@ public class MainActivity extends BaseFragmentActivity implements
             ((RadioButton) rbs.getChildAt(0)).setChecked(true);
         } else if (resultCode == 4) {
             ((RadioButton) rbs.getChildAt(2)).setChecked(true);
+        }
+        if (requestCode == RequestCodeConstant.Web_Skip_Login && resultCode == -1) {//主题页登录回调
+            ((ThemeTemplateFragment) fragment_theme).refreshWebView();
+        } else if (resultCode == 1000) {//登录状态变化
+            boolean flag = data.getBooleanExtra(ExtraControl.EXTRA_IS_LOGIN, false);
+            if (flag) {
+                ((ThemeTemplateFragment) fragment_theme).refreshWebView();
+            }
         }
     }
 

@@ -1,16 +1,16 @@
 package com.yiju.ClassClockRoom.util.net.api;
 
 import com.yiju.ClassClockRoom.R;
-import com.yiju.ClassClockRoom.common.base.BaseSingleton;
-import com.yiju.ClassClockRoom.bean.result.MineOrder;
 import com.yiju.ClassClockRoom.bean.PictureWrite;
-import com.yiju.ClassClockRoom.common.DataManager;
-import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.bean.base.BaseEntity;
+import com.yiju.ClassClockRoom.bean.result.MineOrder;
+import com.yiju.ClassClockRoom.common.DataManager;
+import com.yiju.ClassClockRoom.common.base.BaseSingleton;
+import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.HttpApiParam;
 import com.yiju.ClassClockRoom.util.net.HttpManage;
-import com.yiju.ClassClockRoom.util.net.HttpUrl;
 import com.yiju.ClassClockRoom.util.net.ResultCallImpl;
+import com.yiju.ClassClockRoom.util.net.UrlUtils;
 
 import java.io.File;
 
@@ -31,7 +31,7 @@ public class HttpPhotoApi extends BaseSingleton {
      */
     public void uploadPhoto(File file) {
         HttpManage.getInstance().getObject(HttpManage.getInstance()
-                        .getApiService(HttpUrl.BASE_PIC_WIRTE)
+                        .getApiService(UrlUtils.BASE_PIC_WRITE)
                         .uploadPhoto(HttpApiParam.uploadPhoto(file)),false,
                 new ResultCallImpl<PictureWrite>() {
                     @Override

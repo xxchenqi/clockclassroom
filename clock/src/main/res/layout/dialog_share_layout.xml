@@ -31,8 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
             android:background="@null"
             android:checked="true"
             app:theme="@style/Color1SwitchStyle" />
@@ -46,17 +46,29 @@
             android:checked="true" />-->
     </RelativeLayout>
 
-    <LinearLayout
+    <GridView
+        android:id="@+id/gv_share_way"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/DIMEN_24DP"
-        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:background="@color/color_gay_f5"
+        android:numColumns="4"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:horizontalSpacing="@dimen/DIMEN_40DP"
+        android:verticalSpacing="@dimen/DIMEN_20DP"
+        android:padding="@dimen/DIMEN_25DP"/>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_gay_f5"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/DIMEN_20DP"
+        android:paddingTop="@dimen/DIMEN_25DP">
 
         <TextView
             android:id="@+id/share_wechat"
-            style="@style/textstyle_12p_black"
+            style="@style/textstyle_11p_gay_66"
             android:layout_weight="1"
             android:drawablePadding="@dimen/DIMEN_6DP"
             android:drawableTop="@drawable/wechat_share_icon"
@@ -65,7 +77,7 @@
 
         <TextView
             android:id="@+id/share_wechat_circle"
-            style="@style/textstyle_12p_black"
+            style="@style/textstyle_11p_gay_66"
             android:layout_weight="1"
             android:drawablePadding="@dimen/DIMEN_6DP"
             android:drawableTop="@drawable/circle_share_icon"
@@ -74,7 +86,7 @@
 
         <TextView
             android:id="@+id/share_qq"
-            style="@style/textstyle_12p_black"
+            style="@style/textstyle_11p_gay_66"
             android:layout_weight="1"
             android:drawablePadding="@dimen/DIMEN_6DP"
             android:drawableTop="@drawable/qq_share_icon"
@@ -83,34 +95,70 @@
 
         <TextView
             android:id="@+id/share_sina"
-            style="@style/textstyle_12p_black"
+            style="@style/textstyle_11p_gay_66"
             android:layout_weight="1"
             android:drawablePadding="@dimen/DIMEN_6DP"
             android:drawableTop="@drawable/weibo_share_icon"
             android:gravity="center"
             android:text="@string/sina" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_gay_f5"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/DIMEN_25DP">
+
         <TextView
             android:id="@+id/share_sms"
-            style="@style/textstyle_12p_black"
+            style="@style/textstyle_11p_gay_66"
             android:layout_weight="1"
+            android:background="@color/color_gay_f5"
             android:drawablePadding="@dimen/DIMEN_6DP"
             android:drawableTop="@drawable/sms_share_icon"
             android:gravity="center"
             android:text="@string/sms" />
-        
-    </LinearLayout>
+
+        <TextView
+            style="@style/textstyle_11p_gay_66"
+            android:layout_weight="1"
+            android:background="@color/color_gay_f5"
+            android:drawablePadding="@dimen/DIMEN_6DP"
+            android:drawableTop="@drawable/sms_share_icon"
+            android:gravity="center"
+            android:text="@string/sms"
+            android:visibility="invisible" />
+
+        <TextView
+            style="@style/textstyle_11p_gay_66"
+            android:layout_weight="1"
+            android:background="@color/color_gay_f5"
+            android:drawablePadding="@dimen/DIMEN_6DP"
+            android:drawableTop="@drawable/sms_share_icon"
+            android:gravity="center"
+            android:text="@string/sms"
+            android:visibility="invisible" />
+
+        <TextView
+            style="@style/textstyle_11p_gay_66"
+            android:layout_weight="1"
+            android:background="@color/color_gay_f5"
+            android:drawablePadding="@dimen/DIMEN_6DP"
+            android:drawableTop="@drawable/sms_share_icon"
+            android:gravity="center"
+            android:text="@string/sms"
+            android:visibility="invisible" />
+    </LinearLayout>-->
 
     <TextView
         android:id="@+id/share_cancel"
-        style="@style/textstyle_17p_orange"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_34DP"
-        android:layout_marginBottom="@dimen/DIMEN_12DP"
-        android:layout_marginLeft="@dimen/DIMEN_12DP"
-        android:layout_marginRight="@dimen/DIMEN_12DP"
-        android:background="@drawable/bg_white_bottom_orange_f06000_frame"
+        android:layout_height="@dimen/DIMEN_50DP"
         android:gravity="center"
-        android:text="@string/label_cancel" />
+        android:text="@string/label_cancel"
+        android:textColor="@color/color_black_login"
+        android:textSize="@dimen/DIMEN_19DP" />
 
 </LinearLayout>

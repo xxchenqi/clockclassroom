@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.common.callback.InitView;
-import com.yiju.ClassClockRoom.control.CountControl;
 import com.yiju.ClassClockRoom.util.net.ClassEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +33,9 @@ public abstract class BaseFragment extends Fragment implements InitView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         currentView = inflater.inflate(setContentViewId(), null, false);
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         initIntent();
         initView();
         initData();
@@ -94,7 +95,9 @@ public abstract class BaseFragment extends Fragment implements InitView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.yiju.ClassClockRoom.act;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
@@ -8,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,14 +25,16 @@ import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.AddInvoiceContactBean;
 import com.yiju.ClassClockRoom.bean.InvoiceContacts;
+import com.yiju.ClassClockRoom.common.callback.IViewOnclickListener;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
+import com.yiju.ClassClockRoom.widget.dialog.InvoiceHeadDialog;
+import com.yiju.ClassClockRoom.widget.dialog.InvoiceTypeDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ----------------------------------------
@@ -41,7 +45,7 @@ import java.util.List;
  * 时间: on 2016/10/18 10:03
  * ----------------------------------------
  */
-public class WriteInvoiceInformationActivity extends BaseActivity implements View.OnClickListener {
+public class WriteInvoiceInformationActivity extends BaseActivity implements View.OnClickListener, IViewOnclickListener {
     public static String EXTRA_INVOICE_INFO = "invoice";
     public static String EXTRA_INVOICE_TYPE = "type";
     public static String EXTRA_INVOICE_HEAD = "head";
@@ -59,18 +63,6 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
     //保存文案
     @ViewInject(R.id.head_right_text)
     private TextView head_right_text;
-    //纸质发票
-    @ViewInject(R.id.tv_paper_invoice)
-    private TextView tv_paper_invoice;
-    //电子发票
-    @ViewInject(R.id.tv_electron_invoice)
-    private TextView tv_electron_invoice;
-    //专用发票
-    @ViewInject(R.id.tv_special_invoice)
-    private TextView tv_special_invoice;
-    //普通和电子发票显示的内容
-    @ViewInject(R.id.ll_invoice_common)
-    private LinearLayout ll_invoice_common;
     //专用发票未填写显示的内容
     @ViewInject(R.id.ll_invoice_special_no)
     private LinearLayout ll_invoice_special_no;
@@ -80,12 +72,6 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
     //填写专用发票信息
     @ViewInject(R.id.tv_write_invoice)
     private TextView tv_write_invoice;
-    //个人
-    @ViewInject(R.id.tv_invoice_personal)
-    private TextView tv_invoice_personal;
-    //公司
-    @ViewInject(R.id.tv_invoice_company)
-    private TextView tv_invoice_company;
     //填写发票信息
     @ViewInject(R.id.et_write_company)
     private EditText et_write_company;
@@ -113,12 +99,27 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
     //发票信息
     @ViewInject(R.id.tv_invoice_info)
     private TextView tv_invoice_info;
-    //分割线
-    @ViewInject(R.id.v_invoice_divider)
-    private View v_invoice_divider;
 
-    //tv集合
-    private List<TextView> tvs;
+    //发票类型
+    @ViewInject(R.id.ll_invoice_type)
+    private LinearLayout ll_invoice_type;
+    //发票抬头
+    @ViewInject(R.id.ll_invoice_head)
+    private LinearLayout ll_invoice_head;
+    //公司名称布局
+    @ViewInject(R.id.ll_company_name)
+    private LinearLayout ll_company_name;
+    //发票信息布局
+    @ViewInject(R.id.fl_invoice_info)
+    private FrameLayout fl_invoice_info;
+    //发票类型描述
+    @ViewInject(R.id.tv_type_desc)
+    private TextView tv_type_desc;
+    //发票抬头描述
+    @ViewInject(R.id.tv_head_desc)
+    private TextView tv_head_desc;
+
+
     //发票信息
     private ArrayList<InvoiceContacts> invoiceContactses;
     //是否显示已填写好的专用发票
@@ -154,6 +155,9 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
     //点击次数
     private int click = 0;
 
+    private InvoiceHeadDialog headDialog;
+    private InvoiceTypeDialog typeDialog;
+
     @Override
     public void initIntent() {
         super.initIntent();
@@ -164,11 +168,14 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
     @Override
     protected void initView() {
         uid = StringUtils.getUid();
-        tvs = new ArrayList<>();
-        tvs.add(tv_paper_invoice);
-        tvs.add(tv_electron_invoice);
-        tvs.add(tv_special_invoice);
+        headDialog = new InvoiceHeadDialog(this, this);
+        typeDialog = new InvoiceTypeDialog(this, this);
+    }
 
+    @Override
+    protected void initData() {
+        head_title.setText(UIUtils.getString(R.string.invoice_head_title));
+        head_right_text.setText(UIUtils.getString(R.string.label_save));
         if (invoiceContactses != null && invoiceContactses.size() > 0) {
             //获取发票信息的时候 1专用 2普通/电子
             for (int i = 0; i < invoiceContactses.size(); i++) {
@@ -198,15 +205,15 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                     if (!"个人".equals(invoiceContacts.getMc())) {
                         invoice_head = "公司";
                         companyName = invoiceContacts.getMc();
-                        et_write_company.setVisibility(View.VISIBLE);
+                        ll_company_name.setVisibility(View.VISIBLE);
                         et_write_company.setText(companyName);
-                        tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.black));//个人改成灰色
-                        tv_invoice_company.setTextColor(UIUtils.getColor(R.color.app_theme_color));//公司绿色
+                        et_write_company.setSelection(companyName.length());
+                        tv_head_desc.setText("公司");
                     } else {
                         invoice_head = "个人";
                         companyName = "个人";
-                        tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.app_theme_color));//个人改成绿色
-                        tv_invoice_company.setTextColor(UIUtils.getColor(R.color.black));//公司置灰
+                        tv_head_desc.setText("个人");
+                        ll_company_name.setVisibility(View.GONE);
                     }
                 }
             }
@@ -215,21 +222,20 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                 case 1://纸质
                     //选中
                     tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));//改变备注信息
-                    changeColor(tv_paper_invoice);//改变普通发票颜色
-                    ll_invoice_common.setVisibility(View.VISIBLE);
+                    tv_type_desc.setText("纸质普通发票");
                     break;
                 case 2://电子
                     //选中
                     tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));//改变备注信息
-                    changeColor(tv_electron_invoice);//改变电子发票颜色
-                    ll_invoice_common.setVisibility(View.VISIBLE);
+                    tv_type_desc.setText("电子普通发票");
                     break;
                 case 3://专用
                     //专用选中
+                    tv_type_desc.setText("专用发票");
                     tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));//备注信息
-                    ll_invoice_special.setVisibility(View.VISIBLE);
-                    changeColor(tv_special_invoice);
-                    //初始化数据
+                    ll_invoice_special.setVisibility(View.VISIBLE);//专用布局显示
+                    ll_invoice_head.setVisibility(View.GONE);//发票抬头隐藏
+                    ll_company_name.setVisibility(View.GONE);//公司名称隐藏
                     break;
             }
         } else {
@@ -238,10 +244,9 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
             isFirst = false;//默认电子发票是开过的
             isFirst_special = true;
             //直接展示电子个人
-            changeColor(tv_electron_invoice);//改变电子发票颜色
-            tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.app_theme_color));//个人改成绿色
-            tv_invoice_company.setTextColor(UIUtils.getColor(R.color.black));//公司置灰
-            ll_invoice_common.setVisibility(View.VISIBLE);
+            tv_type_desc.setText("电子普通发票");
+            tv_head_desc.setText("个人");
+            ll_company_name.setVisibility(View.GONE);//隐藏公司名称
             //初始化数据
             typeid = 2;
             invoice_head = "个人";
@@ -250,23 +255,14 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
     }
 
     @Override
-    protected void initData() {
-        head_title.setText(UIUtils.getString(R.string.invoice_head_title));
-        head_right_text.setText(UIUtils.getString(R.string.label_save));
-    }
-
-    @Override
     public void initListener() {
         super.initListener();
         head_back_relative.setOnClickListener(this);
         head_right_relative.setOnClickListener(this);
-        tv_paper_invoice.setOnClickListener(this);
-        tv_electron_invoice.setOnClickListener(this);
-        tv_special_invoice.setOnClickListener(this);
         tv_write_invoice.setOnClickListener(this);
-        tv_invoice_personal.setOnClickListener(this);
-        tv_invoice_company.setOnClickListener(this);
         ll_invoice_modify.setOnClickListener(this);
+        ll_invoice_type.setOnClickListener(this);
+        ll_invoice_head.setOnClickListener(this);
         et_write_company.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -336,110 +332,9 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                         break;
                 }
                 break;
-            case R.id.tv_paper_invoice://纸质发票
-                typeid = 1;
-                tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));
-                ll_invoice_common.setVisibility(View.VISIBLE);
-                ll_invoice_special_no.setVisibility(View.GONE);
-                ll_invoice_special.setVisibility(View.GONE);
-                changeColor(tv_paper_invoice);
-
-                if (getString(R.string.invoice_personal).equals(invoice_head)) {
-                    //可点击
-                    changeStatus(true);
-                } else if (getString(R.string.company).equals(invoice_head)) {
-                    //判断是否有公司名字
-                    companyName = et_write_company.getText().toString();
-                    if (StringUtils.isNotNullString(companyName)) {
-                        //可点击
-                        changeStatus(true);
-                    } else {
-                        //不可点击
-                        changeStatus(false);
-                    }
-                } else {
-                    //不可点击
-                    changeStatus(false);
-                }
-
-                break;
-            case R.id.tv_electron_invoice://电子发票
-                typeid = 2;
-                tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));
-                ll_invoice_common.setVisibility(View.VISIBLE);
-                ll_invoice_special_no.setVisibility(View.GONE);
-                ll_invoice_special.setVisibility(View.GONE);
-                changeColor(tv_electron_invoice);
-                if (getString(R.string.invoice_personal).equals(invoice_head)) {
-                    //可点击
-                    changeStatus(true);
-                } else if (getString(R.string.company).equals(invoice_head)) {
-                    //判断是否有公司名字
-                    companyName = et_write_company.getText().toString();
-                    if (StringUtils.isNotNullString(companyName)) {
-                        //可点击
-                        changeStatus(true);
-                    } else {
-                        //不可点击
-                        changeStatus(false);
-                    }
-                } else {
-                    //不可点击
-                    changeStatus(false);
-                }
-                break;
-            case R.id.tv_special_invoice://专用发票
-                if (click == 0) {
-                    UIUtils.showLongToastSafe(getString(R.string.toast_special_invoice));
-                    click++;
-                }
-                typeid = 3;
-                tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));
-                ll_invoice_common.setVisibility(View.GONE);
-                if (isShow) {
-                    ll_invoice_special_no.setVisibility(View.GONE);
-                    ll_invoice_special.setVisibility(View.VISIBLE);
-                } else {
-                    ll_invoice_special_no.setVisibility(View.VISIBLE);
-                    ll_invoice_special.setVisibility(View.GONE);
-                }
-                changeColor(tv_special_invoice);
-                if (isShow) {
-                    //可点击保存
-                    changeStatus(true);
-                } else {
-                    //不可点击保存
-                    changeStatus(false);
-                }
-                break;
             case R.id.tv_write_invoice://填写发票信息
                 Intent intent = new Intent(this, DedicatedInvoiceInformationActivity.class);
                 startActivityForResult(intent, 0);
-                break;
-            case R.id.tv_invoice_personal://个人
-                invoice_head = "个人";
-                companyName = "个人";
-                tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.app_theme_color));
-                tv_invoice_company.setTextColor(UIUtils.getColor(R.color.black));
-                et_write_company.setVisibility(View.GONE);
-                v_invoice_divider.setVisibility(View.GONE);
-                //可点击
-                changeStatus(true);
-                break;
-            case R.id.tv_invoice_company://公司
-                invoice_head = "公司";
-                tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.black));
-                tv_invoice_company.setTextColor(UIUtils.getColor(R.color.app_theme_color));
-                et_write_company.setVisibility(View.VISIBLE);
-                v_invoice_divider.setVisibility(View.VISIBLE);
-                companyName = et_write_company.getText().toString();
-                if (StringUtils.isNotNullString(companyName)) {
-                    //可点击
-                    changeStatus(true);
-                } else {
-                    //不可点击
-                    changeStatus(false);
-                }
                 break;
             case R.id.ll_invoice_modify://专用发票修改
                 Intent intent_modify = new Intent(this, DedicatedInvoiceInformationActivity.class);
@@ -451,6 +346,127 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                 intent_modify.putExtra(DedicatedInvoiceInformationActivity.EXTRA_OPEN_ACCOUNT, yhzh);
                 startActivityForResult(intent_modify, 0);
                 break;
+            case R.id.ll_invoice_type://发票类型
+                typeDialog.createView();
+                break;
+            case R.id.ll_invoice_head://发票抬头
+                headDialog.createView();
+                break;
+
+        }
+    }
+
+    @Override
+    public void viewClick(View view, AlertDialog dialog) {
+        dialog.dismiss();
+        switch (view.getId()) {
+            case R.id.tv_personal://个人
+                invoice_head = "个人";
+                companyName = "个人";
+                ll_company_name.setVisibility(View.GONE);
+                tv_head_desc.setText("个人");
+                //可点击
+                changeStatus(true);
+                break;
+            case R.id.tv_company://公司
+                invoice_head = "公司";
+                ll_company_name.setVisibility(View.VISIBLE);
+                tv_head_desc.setText("公司");
+                companyName = et_write_company.getText().toString();
+                if (StringUtils.isNotNullString(companyName)) {
+                    //可点击
+                    changeStatus(true);
+                } else {
+                    //不可点击
+                    changeStatus(false);
+                }
+                break;
+            case R.id.tv_paper://纸质
+                typeid = 1;
+                //发票领取方式
+                tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));
+                //显示发票抬头
+                ll_invoice_head.setVisibility(View.VISIBLE);
+                //隐藏专用发票
+                ll_invoice_special_no.setVisibility(View.GONE);
+                ll_invoice_special.setVisibility(View.GONE);
+                tv_type_desc.setText("纸质普通发票");
+                if (getString(R.string.invoice_personal).equals(invoice_head)) {
+                    //可点击
+                    changeStatus(true);
+                } else if (getString(R.string.company).equals(invoice_head)) {
+                    //判断是否有公司名字
+                    ll_company_name.setVisibility(View.VISIBLE);
+                    companyName = et_write_company.getText().toString();
+                    if (StringUtils.isNotNullString(companyName)) {
+                        //可点击
+                        changeStatus(true);
+                    } else {
+                        //不可点击
+                        changeStatus(false);
+                    }
+                } else {
+                    //不可点击
+                    changeStatus(false);
+                }
+
+                break;
+            case R.id.tv_electron://电子
+                typeid = 2;
+                //发票领取方式
+                tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));
+                //显示发票抬头
+                ll_invoice_head.setVisibility(View.VISIBLE);
+                //隐藏专用发票
+                ll_invoice_special_no.setVisibility(View.GONE);
+                ll_invoice_special.setVisibility(View.GONE);
+                tv_type_desc.setText("电子普通发票");
+                if (getString(R.string.invoice_personal).equals(invoice_head)) {
+                    //可点击
+                    changeStatus(true);
+                } else if (getString(R.string.company).equals(invoice_head)) {
+                    //判断是否有公司名字
+                    companyName = et_write_company.getText().toString();
+                    ll_company_name.setVisibility(View.VISIBLE);
+                    if (StringUtils.isNotNullString(companyName)) {
+                        //可点击
+                        changeStatus(true);
+                    } else {
+                        //不可点击
+                        changeStatus(false);
+                    }
+                } else {
+                    //不可点击
+                    changeStatus(false);
+                }
+                break;
+            case R.id.tv_special://专用
+                if (click == 0) {
+                    UIUtils.showLongToastSafe(getString(R.string.toast_special_invoice));
+                    click++;
+                }
+                typeid = 3;
+                //发票领取方式
+                tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));
+                ll_invoice_head.setVisibility(View.GONE);
+                ll_company_name.setVisibility(View.GONE);
+                tv_type_desc.setText("专用发票");
+                if (isShow) {
+                    ll_invoice_special_no.setVisibility(View.GONE);
+                    ll_invoice_special.setVisibility(View.VISIBLE);
+                } else {
+                    ll_invoice_special_no.setVisibility(View.VISIBLE);
+                    ll_invoice_special.setVisibility(View.GONE);
+                }
+                if (isShow) {
+                    //可点击保存
+                    changeStatus(true);
+                } else {
+                    //不可点击保存
+                    changeStatus(false);
+                }
+                break;
+
         }
     }
 
@@ -594,17 +610,6 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
 
     }
 
-
-    private void changeColor(TextView textView) {
-        for (int i = 0; i < tvs.size(); i++) {
-            if (tvs.get(i).getId() == textView.getId()) {
-                tvs.get(i).setTextColor(UIUtils.getColor(R.color.app_theme_color));
-            } else {
-                tvs.get(i).setTextColor(UIUtils.getColor(R.color.black));
-            }
-        }
-    }
-
     private void changeStatus(boolean status) {
         if (status) {
             head_right_relative.setClickable(true);
@@ -621,9 +626,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1000) {
             isShow = true;
-            changeColor(tv_special_invoice);
             changeStatus(true);
-            ll_invoice_common.setVisibility(View.GONE);
             ll_invoice_special_no.setVisibility(View.GONE);
             ll_invoice_special.setVisibility(View.VISIBLE);
             mc = data.getStringExtra(DedicatedInvoiceInformationActivity.EXTRA_COMPANY_NAME);
@@ -673,5 +676,6 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
         }
         return false;
     }
+
 
 }

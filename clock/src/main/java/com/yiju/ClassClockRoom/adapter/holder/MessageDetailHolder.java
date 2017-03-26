@@ -12,7 +12,6 @@ import com.yiju.ClassClockRoom.act.OrderDetailActivity;
 import com.yiju.ClassClockRoom.act.OrganizationCertificationStatusActivity;
 import com.yiju.ClassClockRoom.act.PersonMineCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.PersonalCenterActivity;
-import com.yiju.ClassClockRoom.act.ShopCartActivity;
 import com.yiju.ClassClockRoom.act.accompany.AccompanyReadStatusActivity;
 import com.yiju.ClassClockRoom.bean.MessageBox.MessageData;
 import com.yiju.ClassClockRoom.control.SchemeControl;
@@ -90,8 +89,7 @@ public class MessageDetailHolder extends BaseRecyclerViewHolder {
                 intentOrder.putExtra("oid", messageData.getDetail_id());
                 UIUtils.startActivity(intentOrder);
                 break;
-            case 2://购物车
-                jumpMessageDetial("cart", new Intent(UIUtils.getContext(), ShopCartActivity.class));
+            case 2://购物车(已经没有购物车了)
                 break;
 
             case 4://机构加人

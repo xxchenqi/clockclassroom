@@ -69,6 +69,11 @@ public class PasswordActivity extends BaseActivity implements OnClickListener,
     @ViewInject(R.id.et_password)
     private EditText et_password;
     /**
+     * 确认密码输入框
+     */
+    @ViewInject(R.id.et_password_again)
+    private EditText et_password_again;
+    /**
      * 显示密码
      */
     @ViewInject(R.id.cb_password_is_show)
@@ -94,6 +99,7 @@ public class PasswordActivity extends BaseActivity implements OnClickListener,
     private TelephonyManager tm;
     //cid
     private String cid;
+    private String youYunUDid;
     //动画
     private Animation shake;
 
@@ -142,16 +148,18 @@ public class PasswordActivity extends BaseActivity implements OnClickListener,
         tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         cid = SharedPreferencesUtils.getString(PasswordActivity.this,
                 SharedPreferencesConstant.Shared_Login_Cid, "");
+        youYunUDid = SharedPreferencesUtils.getString(PasswordActivity.this,
+                SharedPreferencesConstant.Shared_Login_Udid, "");
         shake = AnimationUtils.loadAnimation(PasswordActivity.this, R.anim.shake_x);
     }
 
     @Override
     public void initListener() {
         super.initListener();
-        circular_immediately_login.setClickable(false);
         rl_password_back.setOnClickListener(this);
         circular_immediately_login.setIndeterminateProgressMode(true);
         circular_immediately_login.setOnClickListener(this);
+        circular_immediately_login.setEnabled(false);
         cb_password_is_show.setOnCheckedChangeListener(this);
         et_password.addTextChangedListener(new TextWatcher() {
             @Override
@@ -161,14 +169,30 @@ public class PasswordActivity extends BaseActivity implements OnClickListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String contents = s.toString();
-
-                if (!"".equals(contents)) {
-                    circular_immediately_login.setClickable(true);
-                    circular_immediately_login.setTextColor(UIUtils.getColor(R.color.white));
+                if (s.length() >= 6 && s.length() <= 18) {
+                    circular_immediately_login.setEnabled(true);
                 } else {
-                    circular_immediately_login.setClickable(false);
-                    circular_immediately_login.setTextColor(UIUtils.getColor(R.color.color_lucency_white));
+                    circular_immediately_login.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        et_password_again.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 6 && s.length() <= 18) {
+                    circular_immediately_login.setEnabled(true);
+                } else {
+                    circular_immediately_login.setEnabled(false);
                 }
 
             }
@@ -192,6 +216,11 @@ public class PasswordActivity extends BaseActivity implements OnClickListener,
                 finish();
                 break;
             case R.id.circular_immediately_login://立即登录
+                if (!et_password.getText().toString().equals(et_password_again.getText().toString())) {
+                    UIUtils.showToastSafe("两次密码输入不一致!");
+                    return;
+                }
+
                 circular_immediately_login.setProgress(50);
                 Message m = new Message();
                 mHandler.sendMessageDelayed(m, 1000);
@@ -314,7 +343,10 @@ public class PasswordActivity extends BaseActivity implements OnClickListener,
         params.addBodyParameter("password", password);
         params.addBodyParameter("device_token", tm.getDeviceId());
         if (StringUtils.isNotNullString(cid)) {
-            params.addBodyParameter("cid", cid);
+            params.addBodyParameter("cid", cid);//个推推送码
+        }
+        if (StringUtils.isNotNullString(youYunUDid)) {
+            params.addBodyParameter("udid", youYunUDid);//游云推送码
         }
 
         httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,

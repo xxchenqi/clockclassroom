@@ -38,7 +38,7 @@ public class HttpRemovalApi extends BaseSingleton {
     public String changeBaseUrl = "https://api.51shizhong.com";
     public String changeJavaUrl = "https://api2.51shizhong.com";
     public String changeBasePicUrl = "http://i.upload.file.dc.cric.com/";
-    public String changeEjuPayUrl = "http://ejupay.17shihui.com/gateway-outrpc/acquirer/interact";
+    public String changeEjuPayUrl = "https://ejupay.17shihui.com/gateway-outrpc/acquirer/interact";
     public String changeWebBaseUrl = "http://api.51shizhong.com";
     private ImageView iv_splash_bg;
     private boolean isFirst;
@@ -55,15 +55,23 @@ public class HttpRemovalApi extends BaseSingleton {
     public void getHttpRequestForServer(final boolean isFirst, ImageView iv_splash_bg) {
         this.isFirst = isFirst;
         this.iv_splash_bg = iv_splash_bg;
-        getHttpRequestRemovalForServer();
+        if (BaseApplication.FORMAL_ENVIRONMENT == 1) {
+            if (iv_splash_bg != null) {
+                getHttpRequestSplashBg();
+            } else {
+                handleSplashDefault();
+            }
+        } else {
+            //只有在线上环境才做服务器迁移
+            getHttpRequestRemovalForServer();
+        }
     }
 
 
     public void getHttpRequestRemovalForServer() {
         HttpUtils httpUtils = new HttpUtils();
-        RequestParams params = new RequestParams();
         httpUtils.configTimeout(2000);
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.REMOVAL_API, params,
+        httpUtils.send(HttpRequest.HttpMethod.GET, UrlUtils.REMOVAL_API,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -97,6 +105,7 @@ public class HttpRemovalApi extends BaseSingleton {
             changeBasePicUrl = entity.getBasePicUrl();
             changeEjuPayUrl = entity.getEjuPayUrl();
             changeWebBaseUrl = entity.getH5BaseUrl();
+            UrlUtils.setBaseUrl(changeBaseUrl, changeWebBaseUrl, changeEjuPayUrl, changeJavaUrl, changeBasePicUrl);
         }
         if (iv_splash_bg != null) {
             getHttpRequestSplashBg();
@@ -151,7 +160,7 @@ public class HttpRemovalApi extends BaseSingleton {
                                 //app内活动
                                 intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
                                 intent.putExtra(UIUtils.getString(R.string.redirect_open_url), splashResult.getObj().getUrl());
-                                intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_activity_Page);
+                                intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_splash_news_Page);
                                 UIUtils.startActivity(intent);
                                 break;
                             case 2:

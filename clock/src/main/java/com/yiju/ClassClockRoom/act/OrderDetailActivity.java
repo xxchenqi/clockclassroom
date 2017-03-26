@@ -44,6 +44,7 @@ import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.LogUtil;
@@ -461,7 +462,6 @@ public class OrderDetailActivity extends BaseActivity implements
     };
     private Order2 order2Info;
     private HttpHandler<File> download;
-    private int coupon_id;
     private String url;
     private String balance;
     private String fee;
@@ -470,10 +470,25 @@ public class OrderDetailActivity extends BaseActivity implements
     private ArrayList<Order2> order2;
     private String pay_method;
     private String store_tel;
+    //是否要刷新,支付结果页关闭返回到此界面
+    private boolean refresh = false;
 
     @Override
     public int setContentViewId() {
         return R.layout.activity_order_detail;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //支付结果页回来刷新
+         refresh = intent.getBooleanExtra(ExtraControl.EXTRA_REFRESH_FLAG, false);
+        if (refresh) {
+            if (handler != null) {
+                handler.removeMessages(0);
+            }
+            initData();
+        }
     }
 
     @Override
@@ -528,7 +543,6 @@ public class OrderDetailActivity extends BaseActivity implements
      * 获取余额
      */
     private void getBalanceHttpUtils() {
-        ProgressDialog.getInstance().show();
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "user_amount_remain");
@@ -544,13 +558,11 @@ public class OrderDetailActivity extends BaseActivity implements
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         UIUtils.showToastSafe(R.string.fail_network_request);
-                        ProgressDialog.getInstance().dismiss();
                     }
 
                     @Override
                     public void onSuccess(ResponseInfo<String> arg0) {
                         // 处理返回的数据
-                        ProgressDialog.getInstance().dismiss();
                         JSONObject json;
                         try {
                             json = new JSONObject(arg0.result);
@@ -639,7 +651,6 @@ public class OrderDetailActivity extends BaseActivity implements
             } else {
                 rl_reimburse.setVisibility(View.GONE);
             }
-            coupon_id = Integer.valueOf(data.getCoupon_id());
             if (data.getExpire_time() != null) {
                 expireTime = Integer.valueOf(data.getExpire_time());
             }
@@ -656,6 +667,7 @@ public class OrderDetailActivity extends BaseActivity implements
                     store_tel, R.color.blue, new StringFormatUtil.IOnClickListener() {
                 @Override
                 public void click() {
+                    callPhone(store_tel);
                 }
             }).fillColor();
             tv_order_detail_conf_tips.setHighlightColor(UIUtils.getColor(android.R.color.transparent));
@@ -893,7 +905,7 @@ public class OrderDetailActivity extends BaseActivity implements
                 case 8://已关闭
                     tv_order_detail_status.setText(UIUtils.getString(R.string.status_close));
                     tv_pay_type_name.setText(UIUtils
-                            .getString(R.string.order_ought_pay));
+                            .getString(R.string.order_wait_pay));
                     break;
                 case 6://订单超时
                     tv_order_detail_status.setText(UIUtils.getString(R.string.status_overtime));
@@ -943,7 +955,8 @@ public class OrderDetailActivity extends BaseActivity implements
                     break;
                 case 2://电子发票
                     setInvoiceData(UIUtils.getString(R.string.invoice_electronic));
-                    if (StringUtils.isNullString(url)) {
+                    if (StringUtils.isNullString(url) || currentStatus == 11
+                            || currentStatus == 12 || currentStatus == 100) {//已取消也隐藏
                         rl_electronic_invoice.setVisibility(View.GONE);
                     } else {
                         rl_electronic_invoice.setVisibility(View.VISIBLE);
@@ -1080,6 +1093,9 @@ public class OrderDetailActivity extends BaseActivity implements
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
+            if(refresh){
+                setResult(RESULT_OK);
+            }
             super.onBackPressed();
         }
     }
@@ -1088,6 +1104,7 @@ public class OrderDetailActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+
                 onBackPressed();
                 break;
             //关闭订单
@@ -1136,7 +1153,7 @@ public class OrderDetailActivity extends BaseActivity implements
                 Intent pledgeIntent = new Intent(this, Pledge_Activity.class);
                 startActivity(pledgeIntent);
                 break;
-            case R.id.tv_pay_order:
+            case R.id.tv_pay_order://支付
 
                 if ("1".equals(school_type)) {
                     mPopupWindow = PayWayUtil.getPopu(OrderDetailActivity.this.getWindow(),
@@ -1416,7 +1433,6 @@ public class OrderDetailActivity extends BaseActivity implements
                         }
                         if (code == 1) {
                             ProgressDialog.getInstance().dismiss();
-                            coupon_id = 0;
                             rl_privilege_price.setVisibility(View.GONE);
                             tv_ought_pay.setText(String.format(
                                     UIUtils.getString(R.string.how_much_money),
@@ -1469,16 +1485,6 @@ public class OrderDetailActivity extends BaseActivity implements
                     }
                 });
 //        }
-    }
-
-    private void check(int num) {
-        for (int i = 0; i < cbs.size(); i++) {
-            if (i == num) {
-                cbs.get(i).setChecked(true);
-            } else {
-                cbs.get(i).setChecked(false);
-            }
-        }
     }
 
     /**
@@ -1553,49 +1559,56 @@ public class OrderDetailActivity extends BaseActivity implements
                             if (code == EjuPayResultCode.PAY_SUCCESS_CODE.getCode()) {
                                 //支付成功
                                 // 成功处理
-                                if ("0".equals(confirm_type) || "1".equals(confirm_type)) {
-                                    //无需确认和支付前确认,可以布置课室
-                                    Intent intentSucess = new Intent(
-                                            OrderDetailActivity.this,
-                                            AliPay_PayOKActivity.class);
-                                    intentSucess.putExtra("sucess", conmmitInfo);
-                                    intentSucess.putExtra("sid", sid);
-                                    intentSucess.putExtra("name", name);
-                                    intentSucess.putExtra("order2", datas);
-                                    startActivity(intentSucess);
-                                } else {
-                                    //支付后确认,不可以布置课室
-                                    Intent intent = new Intent(OrderDetailActivity.this,
-                                            NewPayResultActivity.class);
-                                    intent.putExtra("conmmitInfo", conmmitInfo);
-                                    intent.putExtra("type", 2);
-                                    startActivity(intent);
-                                }
+//                                if ("0".equals(confirm_type) || "1".equals(confirm_type)) {
+//                                } else {
+//                                    //支付后确认,不可以布置课室
+//                                }
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_SUCCESS,
+                                        ClassroomPayResultActivity.ENTRANCE_DETAIL,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
 
                             } else if (code == EjuPayResultCode.PAY_FAIL_CODE.getCode()) {
                                 //支付失败
-                                Intent intentFail = new Intent(
-                                        OrderDetailActivity.this,
-                                        AliPay_PayFailActivity.class);
-                                intentFail.putExtra("fail", conmmitInfo);
-                                intentFail.putExtra("sid", sid);
-                                intentFail.putExtra("name", name);
-                                startActivity(intentFail);
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_FAIL,
+                                        ClassroomPayResultActivity.ENTRANCE_DETAIL,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
                             } else if (code == EjuPayResultCode.PAY_CANCEL_C0DE.getCode()) {
                                 //支付取消
-                                Intent intentFail = new Intent(
-                                        OrderDetailActivity.this,
-                                        AliPay_PayFailActivity.class);
-                                intentFail.putExtra("fail", conmmitInfo);
-                                intentFail.putExtra("sid", sid);
-                                intentFail.putExtra("name", name);
-                                startActivity(intentFail);
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_FAIL,
+                                        ClassroomPayResultActivity.ENTRANCE_DETAIL,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
                             }
                         }
                     }
             );
         }
     }
+
+    /**
+     * 跳转结果页
+     *
+     * @param type       1.支付失败,2.支付成功,3.提价成功
+     * @param entrance   1.订单确认页 ,2.列表,详情
+     * @param room_count 房间数量
+     * @param type_desc  迷你间等
+     * @param oid        订单id
+     */
+    private void jumpResult(int type, int entrance, String room_count, String type_desc, String oid) {
+        Intent intent = new Intent(this, ClassroomPayResultActivity.class);
+        intent.putExtra(ExtraControl.EXTRA_TYPE, type);
+        intent.putExtra(ExtraControl.EXTRA_ENTRANCE, entrance);
+        intent.putExtra(ExtraControl.EXTRA_ROOM_COUNT, room_count);
+        intent.putExtra(ExtraControl.EXTRA_TYPE_DESC, type_desc);
+        intent.putExtra(ExtraControl.EXTRA_ORDER_ID, oid);
+        startActivity(intent);
+    }
+
 
     private void checkPassword() {
         EjuPaySDKUtil.initEjuPaySDK(new EjuPaySDKUtil.IEjuPayInit() {
@@ -1605,7 +1618,6 @@ public class OrderDetailActivity extends BaseActivity implements
                 if (EjuPayManager.getInstance().isUserSetPwd()) {
                     //跳转输入密码页面
                     ProgressDialog.getInstance().dismiss();
-                    mPopupWindow.dismiss();
                     jumpPayPage();
 
                 } else {
@@ -1632,10 +1644,13 @@ public class OrderDetailActivity extends BaseActivity implements
 
     private void jumpPayPage() {
         Intent intent = new Intent(OrderDetailActivity.this, PayPasswordActivity.class);
-        intent.putExtra("conmmitInfo", conmmitInfo);
-        intent.putExtra("sid", sid);
-        intent.putExtra("name", name);
-        intent.putExtra("order2", order2);
+        intent.putExtra(ExtraControl.EXTRA_ROOM_COUNT, conmmitInfo.getRoom_count() + "");
+        intent.putExtra(ExtraControl.EXTRA_TYPE_DESC, conmmitInfo.getType_desc());
+        intent.putExtra(ExtraControl.EXTRA_ORDER_ID, conmmitInfo.getOrder1_id() + "");
+        intent.putExtra(ExtraControl.EXTRA_CONFIRM_TYPE, conmmitInfo.getConfirm_type());
+        intent.putExtra(ExtraControl.EXTRA_ENTRANCE, ClassroomPayResultActivity.ENTRANCE_DETAIL);
+        intent.putExtra(ExtraControl.EXTRA_BALANCE, fee);
+        mPopupWindow.dismiss();
         startActivity(intent);
     }
 

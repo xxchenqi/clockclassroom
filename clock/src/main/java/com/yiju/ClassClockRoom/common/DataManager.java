@@ -223,6 +223,11 @@ public class DataManager {
     public static final int MODIFY_MEMBER_DATA_INFO = 16;
     public static final int MODIFY_MEMBER_DATA_OTHER = 17;
 
+    //关注供应商
+    public static final int ATTENTION_SP = 18;
+    //取消供应商
+    public static final int ATTENTION_CANCEL_SP = 19;
+
     public void modifyMemberInfo(MemberDetailResult bean, boolean flag) {
         if (flag) {
             EventBus.getDefault().post(new ClassEvent<>(MODIFY_MEMBER_DATA_INFO, bean));

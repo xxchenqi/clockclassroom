@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_56DP"
         android:layout_marginTop="@dimen/DIMEN_10DP"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <TextView
             style="@style/textstyle_15p_black37"
@@ -45,7 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_56DP"
         android:layout_marginTop="@dimen/DIMEN_1DP"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <TextView
             style="@style/textstyle_15p_black37"
@@ -79,7 +81,7 @@
         android:id="@+id/remind_accompany_read_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_56DP"
-        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white">
 
         <TextView

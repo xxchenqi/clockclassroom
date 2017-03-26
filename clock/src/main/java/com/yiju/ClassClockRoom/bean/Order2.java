@@ -169,6 +169,16 @@ public class Order2 implements Serializable {
     private String device_fee;
     private String school_phone;
     private String school_tags;
+    private String confirm_type;
+
+    public String getConfirm_type() {
+        return confirm_type;
+    }
+
+    public void setConfirm_type(String confirm_type) {
+        this.confirm_type = confirm_type;
+    }
+
     private List<TimeGroup> time_group;
     private List<AvailablePrice> available_price;
 

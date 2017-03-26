@@ -41,7 +41,7 @@ public class ContactShopCartActivity extends BaseActivity implements
      */
     private TextView head_title;
     private ListView lv_contact;
-    private RelativeLayout rl_contact;
+    private TextView rl_contact;
     private String uid;
     private List<Data> mLists = new ArrayList<>();
     private ShopcartContactAdapter adapter;
@@ -63,7 +63,7 @@ public class ContactShopCartActivity extends BaseActivity implements
         head_back_relative = (RelativeLayout) findViewById(R.id.head_back_relative);
         head_title = (TextView) findViewById(R.id.head_title);
         lv_contact = (ListView) findViewById(R.id.lv_contact);
-        rl_contact = (RelativeLayout) findViewById(R.id.rl_contact);
+        rl_contact = (TextView) findViewById(R.id.rl_contact);
         head_back_relative.setOnClickListener(this);
         rl_contact.setOnClickListener(this);
         //设置标题

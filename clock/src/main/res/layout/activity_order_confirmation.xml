@@ -10,7 +10,6 @@
     tools:ignore="HardcodedText">
     <!--标题-->
     <include layout="@layout/include_head_greenbg_left_icon_right_icon_layout" />
-
     <!--订单确认内容-->
     <ScrollView
         android:id="@+id/sv_order_detail"
@@ -32,8 +31,8 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/DIMEN_12DP"
-                android:paddingRight="@dimen/DIMEN_12DP">
+                android:paddingLeft="@dimen/DIMEN_10DP"
+                android:paddingRight="@dimen/DIMEN_10DP">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -53,6 +52,7 @@
                         android:id="@+id/tv_order_detail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:textColor="@color/color_gay_8f"
                         android:textSize="@dimen/DIMEN_14DP"
                         tools:ignore="HardcodedText" />
@@ -61,8 +61,9 @@
                         android:id="@+id/tv_order_detail_mobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/DIMEN_12DP"
-                        android:layout_marginRight="@dimen/DIMEN_12DP"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/DIMEN_10DP"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
                         android:textColor="@color/color_gay_8f"
                         android:textSize="@dimen/DIMEN_14DP"
                         tools:ignore="HardcodedText" />
@@ -71,7 +72,8 @@
                         android:id="@+id/tv_not_null"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/DIMEN_12DP"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
                         android:text="@string/go_setting"
                         android:textColor="@color/color_gay_8f"
                         android:textSize="@dimen/DIMEN_14DP" />
@@ -80,6 +82,7 @@
                         android:id="@+id/iv_order_detail_mobile_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:contentDescription="@string/desc"
                         android:src="@drawable/arrow" />
                 </LinearLayout>
@@ -98,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/DIMEN_10DP"
-                    android:layout_marginTop="@dimen/DIMEN_16DP"
+                    android:layout_marginTop="@dimen/DIMEN_15DP"
                     android:src="@drawable/chain" />
 
                 <TextView
@@ -106,8 +109,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/DIMEN_8DP"
-                    android:layout_marginTop="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_10DP"
                     android:layout_toRightOf="@id/iv_self_support"
+                    android:drawablePadding="@dimen/DIMEN_4DP"
                     android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_15DP"
                     tools:text="闵行中心店" />
@@ -118,11 +122,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_item_detail_sname"
-                    android:layout_marginBottom="@dimen/DIMEN_12DP"
+                    android:layout_marginBottom="@dimen/DIMEN_10DP"
                     android:layout_marginLeft="@dimen/DIMEN_10DP"
                     android:layout_marginTop="@dimen/DIMEN_9DP"
                     android:textColor="@color/color_gay_99"
-                    android:textSize="@dimen/DIMEN_12DP"
+                    android:textSize="@dimen/DIMEN_10DP"
                     tools:text="上海市静安区" />
             </RelativeLayout>
             <!--课室信息-->
@@ -132,7 +136,7 @@
                 android:layout_marginTop="@dimen/DIMEN_1DP"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:padding="@dimen/DIMEN_12DP">
+                android:padding="@dimen/DIMEN_10DP">
 
                 <ImageView
                     android:id="@+id/iv_store_pic"
@@ -257,7 +261,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/DIMEN_40DP"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/DIMEN_12DP"
+                    android:paddingLeft="@dimen/DIMEN_10DP"
                     android:text="订单信息(单天)"
                     android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_16DP" />
@@ -265,7 +269,6 @@
                 <View
                     style="@style/linestyle_h_unfocused"
                     android:layout_marginLeft="@dimen/DIMEN_10DP" />
-
 
                 <TextView
                     android:id="@+id/tv_use_date"
@@ -276,6 +279,16 @@
                     android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_12DP"
                     tools:text="使用日期:2016-11-16" />
+
+                <TextView
+                    android:id="@+id/tv_use_week"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginTop="@dimen/DIMEN_10DP"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_12DP"
+                    tools:text="循环方式:周一、周二、周三" />
 
                 <TextView
                     android:id="@+id/tv_use_day"
@@ -323,41 +336,60 @@
                         android:layout_marginLeft="@dimen/DIMEN_10DP" />
 
                     <TextView
-                        android:id="@+id/tv_cancel_classroom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/DIMEN_35DP"
-                        android:layout_marginLeft="@dimen/DIMEN_12DP"
-                        android:gravity="center_vertical"
-                        android:text="取消课室"
-                        android:textColor="@color/color_gay_99"
-                        android:textSize="@dimen/DIMEN_14DP" />
-
-                    <LinearLayout
-                        android:id="@+id/ll_cancel_classroom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
-
-                    <TextView
                         android:id="@+id/tv_add_classroom"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/DIMEN_35DP"
-                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:layout_marginLeft="@dimen/DIMEN_10DP"
                         android:layout_marginTop="@dimen/DIMEN_10DP"
                         android:gravity="center_vertical"
-                        android:text="增加课室"
+                        android:text="增加日期"
                         android:textColor="@color/color_gay_99"
                         android:textSize="@dimen/DIMEN_14DP" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_add_classroom_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/DIMEN_10DP"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:lineSpacingExtra="@dimen/DIMEN_4DP"
+                        android:textColor="@color/color_black_33"
+                        android:textSize="@dimen/DIMEN_12DP" />
+                    <!--<LinearLayout
                         android:id="@+id/ll_add_classroom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" />
+                        android:orientation="vertical" />-->
+
+                    <TextView
+                        android:id="@+id/tv_cancel_classroom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/DIMEN_35DP"
+                        android:layout_marginLeft="@dimen/DIMEN_10DP"
+                        android:gravity="center_vertical"
+                        android:text="减少日期"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_14DP" />
+
+                    <TextView
+                        android:id="@+id/tv_cancel_classroom_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/DIMEN_10DP"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:lineSpacingExtra="@dimen/DIMEN_4DP"
+                        android:textColor="@color/color_black_33"
+                        android:textSize="@dimen/DIMEN_12DP" />
+                    <!--<LinearLayout
+                        android:id="@+id/ll_cancel_classroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />-->
 
                     <View
                         style="@style/linestyle_h_unfocused"
-                        android:layout_marginLeft="@dimen/DIMEN_10DP" />
+                        android:layout_marginLeft="@dimen/DIMEN_10DP"
+                        android:layout_marginTop="@dimen/DIMEN_10DP" />
                 </LinearLayout>
 
 
@@ -366,7 +398,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/DIMEN_40DP"
                     android:background="@color/white"
-                    android:paddingLeft="@dimen/DIMEN_12DP">
+                    android:paddingLeft="@dimen/DIMEN_10DP">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -382,8 +414,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/DIMEN_12DP"
-                        android:drawablePadding="@dimen/DIMEN_12DP"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:drawablePadding="@dimen/DIMEN_10DP"
                         android:drawableRight="@drawable/arrow"
                         android:gravity="center"
                         android:textColor="@color/app_theme_color"
@@ -406,7 +438,7 @@
                     android:layout_height="@dimen/DIMEN_40DP"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/DIMEN_12DP"
+                    android:paddingLeft="@dimen/DIMEN_10DP"
                     android:text="收费项目"
                     android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_16DP" />
@@ -433,7 +465,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/DIMEN_40DP"
                     android:background="@color/white"
-                    android:paddingLeft="@dimen/DIMEN_12DP">
+                    android:paddingLeft="@dimen/DIMEN_10DP">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -449,8 +481,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/DIMEN_12DP"
-                        android:drawablePadding="@dimen/DIMEN_12DP"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:drawablePadding="@dimen/DIMEN_10DP"
                         android:drawableRight="@drawable/arrow"
                         android:gravity="center"
                         android:textColor="@color/app_theme_color"
@@ -464,18 +496,19 @@
             <LinearLayout
                 android:id="@+id/ll_order_detail_remark"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_42DP"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/DIMEN_10DP"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/DIMEN_12DP"
-                android:paddingRight="@dimen/DIMEN_12DP">
+                android:paddingLeft="@dimen/DIMEN_10DP"
+                android:paddingRight="@dimen/DIMEN_10DP">
 
                 <TextView
                     android:id="@+id/tv_order_detail_remark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="订单备注"
+                    android:gravity="center_vertical"
+                    android:text="备注"
                     android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_16DP"
                     tools:ignore="HardcodedText" />
@@ -483,16 +516,19 @@
                 <EditText
                     android:id="@+id/et_remark"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/DIMEN_12DP"
+                    android:layout_marginLeft="@dimen/DIMEN_80DP"
+                    android:layout_marginTop="@dimen/DIMEN_12DP"
                     android:background="@null"
-                    android:gravity="right|center"
+                    android:gravity="center_vertical|right"
                     android:hint="@string/label_order_remark_hint"
-                    android:maxLength="15"
                     android:imeActionLabel="@string/sure"
                     android:imeOptions="actionDone"
                     android:inputType="text"
-                    android:textColor="@color/color_gay_8f"
-                    android:textSize="@dimen/DIMEN_14DP" />
+                    android:lineSpacingExtra="@dimen/DIMEN_4DP"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_12DP" />
             </LinearLayout>
             <!--发票信息-->
             <RelativeLayout
@@ -501,7 +537,7 @@
                 android:layout_height="@dimen/DIMEN_40DP"
                 android:layout_marginTop="@dimen/DIMEN_10DP"
                 android:background="@color/white"
-                android:paddingLeft="@dimen/DIMEN_12DP">
+                android:paddingLeft="@dimen/DIMEN_10DP">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -511,19 +547,26 @@
                     android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_16DP" />
 
-                <TextView
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
+                    android:background="@drawable/arrow" />
+                <!--<TextView
                     android:id="@+id/tv_invoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/DIMEN_12DP"
-                    android:drawablePadding="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
+                    android:drawablePadding="@dimen/DIMEN_10DP"
                     android:drawableRight="@drawable/arrow"
                     android:gravity="center"
                     android:text="@string/go_setting"
                     android:textColor="@color/color_gay_8f"
-                    android:textSize="@dimen/DIMEN_14DP" />
+                    android:textSize="@dimen/DIMEN_14DP" />-->
             </RelativeLayout>
             <!--发票信息内容-->
             <LinearLayout
@@ -538,7 +581,7 @@
                     android:id="@+id/tv_invoice_type"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_35DP"
-                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
                     android:gravity="center_vertical"
                     android:text="电子发票"
                     android:textColor="@color/color_gay_99"
@@ -548,7 +591,7 @@
                     android:id="@+id/tv_invoice_company_name"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_35DP"
-                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
                     android:gravity="center_vertical"
                     android:text="个人"
                     android:textColor="@color/color_gay_99"
@@ -558,7 +601,7 @@
                     android:id="@+id/tv_invoice_company_xmmc"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_35DP"
-                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
                     android:gravity="center_vertical"
                     android:text="租赁服务费"
                     android:textColor="@color/color_gay_99"
@@ -572,7 +615,7 @@
                 android:layout_height="@dimen/DIMEN_40DP"
                 android:layout_marginTop="@dimen/DIMEN_10DP"
                 android:background="@color/white"
-                android:paddingLeft="@dimen/DIMEN_12DP">
+                android:paddingLeft="@dimen/DIMEN_10DP">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -588,9 +631,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/DIMEN_12DP"
-                    android:drawablePadding="@dimen/DIMEN_12DP"
-                    android:drawableRight="@drawable/more_btn_icon"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
+                    android:drawablePadding="@dimen/DIMEN_10DP"
+                    android:drawableRight="@drawable/arrow"
                     android:gravity="center"
                     android:text="未使用优惠券"
                     android:textColor="@color/color_gay_8f"
@@ -610,7 +653,7 @@
                     android:id="@+id/tv_order_detail_remind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
                     android:text="温馨提示：到店需另付押金"
                     android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_16DP"
@@ -619,7 +662,7 @@
                 <ImageView
                     android:layout_width="@dimen/DIMEN_14DP"
                     android:layout_height="@dimen/DIMEN_14DP"
-                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
                     android:background="@drawable/video_question_icon"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -633,24 +676,25 @@
         android:layout_height="wrap_content"
         android:background="@color/blackde5"
         android:visibility="gone">
+
         <TextView
             android:id="@+id/tv_order_conf_tips"
             android:layout_width="match_parent"
             android:layout_height="@dimen/DIMEN_32DP"
             android:background="@color/yellow_fff6df"
-            android:paddingLeft="@dimen/DIMEN_10DP"
+            android:drawableLeft="@drawable/prompt"
             android:drawablePadding="@dimen/DIMEN_8DP"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/prompt"
+            android:paddingLeft="@dimen/DIMEN_10DP"
             android:text="@string/txt_school_invoice"
             android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_12DP"/>
+            android:textSize="@dimen/DIMEN_10DP" />
 
         <RelativeLayout
             android:id="@+id/rl_order_conf_bottom"
             android:layout_width="match_parent"
-            android:layout_below="@id/tv_order_conf_tips"
             android:layout_height="@dimen/DIMEN_50DP"
+            android:layout_below="@id/tv_order_conf_tips"
             android:background="@color/white"
             android:visibility="visible">
 

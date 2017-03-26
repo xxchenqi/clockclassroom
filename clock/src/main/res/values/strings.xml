@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--小米push所需-->
+    <string name="MiPushAppId">2882303761517434951</string>
+    <string name="MiPushAppKey">5741743476951</string>
+    <!-- 消息成功率统计： 通道将消息转发给SDK后，SDK通知通道消息已接收到 -->
+    <string name="hwpush_ability_value" translatable="false">successRateAnalytics</string>
+
     <!--scheme管理开始-->
     <!--预定义-->
     <string name="scheme">hourclassroom</string>
@@ -50,6 +56,7 @@
     <string name="scheme_more_path">/more</string>
     <string name="scheme_web_message_detail_path">/web_message_detail</string>
     <string name="scheme_web_activity_detail_path">/web_activity_detail</string>
+    <string name="scheme_supplier_detail_path">/supplier_detail</string>
     <!--uri内部跳转定义-->
     <string name="scheme_home_uri">hourclassroom://51shizhong.com/home</string>
     <string name="scheme_course_home_uri">hourclassroom://51shizhong.com/course_home</string>
@@ -139,7 +146,7 @@
     <string name="label_checkAllOrder">全部</string>
     <string name="label_wait_pay">待支付</string>
     <string name="label_mineInvoice">我的发票</string>
-    <string name="label_service">机构认证帮助、服务协议、联系客服等</string>
+    <string name="label_service">服务协议、联系客服等</string>
     <string name="label_more">更多</string>
     <string name="label_check_more">查看更多</string>
     <string name="label_check_more_class_hour">查看更多课室</string>
@@ -152,7 +159,7 @@
     <string name="label_hint_password">输入密码</string>
     <string name="label_forget_password">忘记密码</string>
     <string name="label_social_account">使用其他账号登录</string>
-    <string name="label_login_beUse">用户名必须为手机号或者邮箱</string>
+    <string name="label_login_beUse">请输入正确格式的手机号</string>
     <string name="label_login_hasContent">用户名与密码不能为空</string>
     <string name="label_login_bePassword">密码必须是字母或数字组成，且长度为6至18位</string>
     <string name="label_hint_phonelogin">输入手机号</string>
@@ -172,8 +179,8 @@
     <string name="label_quit">退出当前账号</string>
     <string name="label_modify_mail">绑定/修改邮箱</string>
     <string name="label_save">保存</string>
-    <string name="label_help_find_password">绑定邮箱后可以帮助您找回密码</string>
-    <string name="label_password_format">由字母、数字、汉字或下划线组成,限4&#8211;16个字符(1个汉字为2个字符),不能以下划线开头或结尾</string>
+    <string name="label_help_find_password">邮箱绑定后可以帮助您找回密码</string>
+    <string name="label_password_format">由字母、数字、汉字或下划线组成,限4&#8211;16个字,不能以下划线开头或结尾</string>
     <string name="label_affirm_commit">确认提交</string>
     <string name="label_binding">第三方账号绑定</string>
     <string name="label_go_binding">去绑定</string>
@@ -337,6 +344,7 @@
     <string name="order_log">订单日志</string>
     <string name="classroom_price">课室费用</string>
     <string name="order_none">您没有相关的订单哦</string>
+    <string name="course_order_none">没有课程订单哟</string>
     <string name="orderback_none">您没有可以退单的课室哦</string>
     <string name="order_see">看看别的吧</string>
     <string name="order_stroll">随便逛逛</string>
@@ -364,6 +372,7 @@
     <string name="back_order_fail">退单失败!</string>
     <string name="contact_service">客服电话：</string>
     <string name="back_home">返回首页</string>
+    <string name="back_experience_home">体验课首页</string>
     <string name="check_order">查看订单</string>
     <string name="back_order_success">退单成功!</string>
 
@@ -405,7 +414,7 @@
     <string name="sms">短信</string>
 
     <!-- 个人信息 -->
-    <string name="person_information_input_nickname">请输入用户名</string>
+    <string name="person_information_input_nickname">输入昵称</string>
     <string name="person_information_modify_password">修改密码</string>
     <string name="person_information_current_password">当前密码</string>
     <string name="person_information_new_password">新密码</string>
@@ -576,9 +585,9 @@
     <string name="pledge_content">根据预订的课室类型,到店消费时需支付押金,若无物品损坏,消费完成时将退还押金</string>
 
     <!--绑定内容-->
-    <string name="binding_content">绑定后，您可以与更多朋友分享足迹和体验。为了您的账号安全，在未绑定手机且已绑定唯一第三方账号的情况下,不允许解绑。</string>
-    <string name="password_text">设置新密码,6&#8211;18位字母或数字</string>
-    <string name="input_email">请输入邮箱</string>
+    <string name="binding_content">绑定成功后可以通过绑定的第三方账号进行登录</string>
+    <string name="password_text">由大小写字母或数字组成,限6&#8211;18个字</string>
+    <string name="input_email">输入邮箱</string>
     <string name="edit">编辑</string>
     <string name="delete">删除</string>
 
@@ -607,6 +616,7 @@
 
     <string name="use_desc_content">(%s)</string>
     <string name="sum_room_count">等共%d间</string>
+    <string name="type_desc_and_room_count">%1$s等共%2$s间课室</string>
 
     <string name="how_much_money">¥%s</string>
     <string name="negative_how_much_money">-¥%s</string>
@@ -747,7 +757,7 @@
     <string name="reservation_time">使用时段</string>
     <string name="reservation_week">循环方式</string>
     <string name="reservation_choose">请选择</string>
-    <string name="reservation_room_count">预订数量</string>
+    <string name="reservation_room_count">课室数量</string>
     <string name="reservation_time_fail">推荐预订时间</string>
     <string name="reservation_date_little_title">个别日期调整</string>
     <string name="reservation_device">收费项目</string>
@@ -903,7 +913,7 @@
     <string name="label_peidu">陪读</string>
     <string name="label_attention_fail">关注失败</string>
     <string name="label_cancel_attention_fail">取消关注失败</string>
-    <string name="label_order_remark_hint">特殊需求可填写备注，最多100字</string>
+    <string name="label_order_remark_hint">您对桌椅摆放方式、教学设备及其他教学服务有更多的需求都可在这里提出哦</string>
 
     <!--小米push所需-->
     <string name="string_format_course_money">¥%s/时</string>
@@ -973,6 +983,8 @@
     <string name="title_special_invoice_qualification_information">专用发票资质信息</string>
     <string name="txt_order_submitted_successfully">订单提交成功</string>
     <string name="txt_will_be_confirm">门店将在工作时间内尽快完成确认</string>
+    <string name="classroom_pay_success_info">门店将在工作时间内尽快完成确认\n确认通过后订单生效</string>
+    <string name="classroom_commit_info">门店将在工作时间内尽快完成确认\n确认通过后须及时完成支付</string>
     <string name="title_submit_the_results">提交结果</string>
     <string name="txt_order_payment_success">订单支付成功</string>
     <string name="txt_order_payment_failure">订单支付失败</string>
@@ -1026,7 +1038,7 @@
     <string name="toast_enter_the_correct_email_format">请输入正确的邮箱格式</string>
     <string name="toast_enter_a_correct_phone_number_format">请输入正确的手机号格式</string>
     <string name="toast_input_rule_password">请输入6–18位字母或数字密码</string>
-    <string name="toast_input_correct_nickname_length">昵称长度为4–16个字符，请重新输入</string>
+    <string name="toast_input_correct_nickname_length">昵称长度为4–16个字，请重新输入</string>
     <string name="toast_input_correct_nickname">请输入正确格式昵称</string>
     <string name="toast_update_nickname_success">昵称更新成功</string>
     <string name="toast_enter_same_password_twice">新密码两次输入不一致</string>
@@ -1152,4 +1164,16 @@
     <string name="format_course_has_people_num">已报名人数：%s</string>
     <string name="txt_no_new_message">没有新消息哦</string>
     <string name="format_amount_add">+%s</string>
+    <string name="to_reserve_the_classroom">去预订课室</string>
+    <string name="to_sign_up">去报名课程</string>
+    <string name="close">关闭</string>
+
+    <string name="had_choose_time">已选择时间段</string>
+    <string name="please_input_company_name">请输入公司名称</string>
+    <string name="txt_affirm_edit">确认修改</string>
+    <string name="txt_affirm_bind">确认绑定</string>
+    <string name="hint_set_pwd">设置密码</string>
+    <string name="hint_set_pwd_again">确认密码</string>
+    <string name="toast_show_close_success">关闭成功</string>
+    <string name="toast_show_delete_success">删除成功</string>
 </resources>

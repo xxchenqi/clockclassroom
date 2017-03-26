@@ -13,7 +13,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -21,28 +24,43 @@
             android:id="@+id/et_change_nickname"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
             android:layout_weight="1"
             android:background="@null"
             android:hint="@string/person_information_input_nickname"
             android:inputType="none"
             android:maxLines="1"
-            android:textColor="@color/color_gay_8f"
-            android:textSize="@dimen/DIMEN_15DP"
+            android:textColor="@color/color_gay_bb"
+            android:textColorHint="@color/color_gay_bb"
+            android:textSize="@dimen/DIMEN_16DP"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
-    <View style="@style/linestyle_h_unfocused" />
+    <View
+        style="@style/linestyle_h_unfocused"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/DIMEN_12DP"
-        android:layout_marginTop="@dimen/DIMEN_20DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:text="@string/label_password_format"
-        android:textColor="@color/black66"
-        android:textSize="@dimen/DIMEN_12DP"
+        android:textColor="@color/color_gay_99"
+        android:textSize="@dimen/DIMEN_10DP"
         tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/bt_nickname_confirm_edit"
+        android:layout_width="@dimen/DIMEN_306DP"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_50DP"
+        android:background="@drawable/background_green_1eb482_radius_70"
+        android:gravity="center"
+        android:text="@string/txt_affirm_edit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/DIMEN_19DP" />
 
 </LinearLayout>

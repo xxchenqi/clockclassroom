@@ -1,8 +1,10 @@
 package com.yiju.ClassClockRoom.common.constant;
 
 public class SharedPreferencesConstant {
-	// 登录的Cid用于推送
+	// 登录的Cid用于推送(个推)
 	public static final String Shared_Login_Cid = "login_cid";
+	// 登录的Udid用于推送(游云推送)
+	public static final String Shared_Login_Udid = "login_udid";
 	//是否在前台记录
 	public static final String Shared_Count_IsRunningForeground = "count_is_running_foreground";
 	//视频密码错误锁

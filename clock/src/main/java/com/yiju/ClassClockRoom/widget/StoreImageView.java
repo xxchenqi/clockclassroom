@@ -16,7 +16,7 @@ import com.yiju.ClassClockRoom.util.UIUtils;
  */
 public class StoreImageView extends FrameLayout {
 
-    private RatioLayout rl_ratio;
+//    private RatioLayout rl_ratio;
     private ImageView imageView;
 
     public StoreImageView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -33,8 +33,8 @@ public class StoreImageView extends FrameLayout {
 
     public void setImgResource(String pic_big) {
         if (StringUtils.isNotNullString(pic_big)) {
-            if (pic_big.contains("_")) {
-                String[] split = pic_big.split("_")[1].split("X");
+            /*if (pic_big.contains("/w/")) {
+                String[] split = pic_big.split("/w/")[1].split("/h/");
                 if (split.length == 2) {
                     int w = Integer.parseInt(split[0]);//宽
                     int h = Integer.parseInt(split[1]);//高
@@ -44,12 +44,12 @@ public class StoreImageView extends FrameLayout {
             } else {
                 rl_ratio.setRatio((float) 1.43);
                 rl_ratio.postInvalidate();
-            }
+            }*/
             Glide.with(UIUtils.getContext()).load(pic_big).placeholder(R.drawable.bg_placeholder).into(imageView);
         } else {
-            rl_ratio.setRatio((float) 1.43);
-            rl_ratio.postInvalidate();
-            imageView.setBackgroundResource(R.drawable.bg_placeholder);
+           /* rl_ratio.setRatio((float) 1.43);
+            rl_ratio.postInvalidate();*/
+            imageView.setImageResource(R.drawable.bg_placeholder);
         }
     }
 
@@ -57,7 +57,7 @@ public class StoreImageView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         View view = inflate(getContext(), R.layout.view_store_image, this);
-        rl_ratio = (RatioLayout) view.findViewById(R.id.rl_ratio);
+//        rl_ratio = (RatioLayout) view.findViewById(R.id.rl_ratio);
         imageView = (ImageView) view.findViewById(R.id.iv_store_image);
     }
 }

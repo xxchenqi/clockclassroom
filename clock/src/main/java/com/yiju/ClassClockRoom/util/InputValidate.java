@@ -67,7 +67,7 @@ public class InputValidate {
 
     // 根据产品规则，昵称是由字母、数字、汉字或下划线组成,限4-16个字符,不能以下划线开头或结尾
     public static boolean checkNickname(String str) {
-        String telRegex = "^(?!_)(?!.*?_$)([\u4e00-\u9fa5a-zA-Z0-9_]){2,16}$";
+        String telRegex = "^(?!_)(?!.*?_$)([\u4e00-\u9fa5a-zA-Z0-9_]){4,16}$";
         return !TextUtils.isEmpty(str) && str.matches(telRegex);
 //					&& ((str.length() >= 4) && (str.length() <= 16));
     }

@@ -56,7 +56,10 @@ public class HttpCommonApi extends BaseSingleton {
                                 if ("1".equals(type)) {                       //关注老师
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_TEACHER);
-                                } else {                                      //关注课程
+                                } else if("3".equals(type)){//关注供应商
+                                    DataManager.getInstance()
+                                            .baseEvent(bean, DataManager.ATTENTION_SP);
+                                }else {                                      //关注课程
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_COURSE);
                                 }
@@ -64,7 +67,10 @@ public class HttpCommonApi extends BaseSingleton {
                                 if ("1".equals(type)) {                       //取消老师关注
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_CANCEL_TEACHER);
-                                } else {                                      //取消课程关注
+                                } else if("3".equals(type)){//取消关注供应商
+                                    DataManager.getInstance()
+                                            .baseEvent(bean, DataManager.ATTENTION_CANCEL_SP);
+                                }else {                                      //取消课程关注
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_CANCEL_COURSE);
                                 }

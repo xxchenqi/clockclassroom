@@ -101,7 +101,7 @@ public class GuideActivity extends BaseActivity implements OnClickListener {
                     tv_experience.setClickable(true);
 
                 } else {
-                    rg_guide.setVisibility(View.GONE);
+                    rg_guide.setVisibility(View.VISIBLE);
                     tv_skip.setVisibility(View.VISIBLE);
                     tv_experience.setVisibility(View.GONE);
                     tv_skip.setClickable(true);

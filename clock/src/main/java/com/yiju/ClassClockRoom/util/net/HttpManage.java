@@ -40,14 +40,7 @@ public class HttpManage {
      * 初始化Gson类型的数据传输
      */
     public IApiService getApiService() {
-        return getApiService(HttpUrl.BASE_URL);
-    }
-
-    /**
-     * 初始化String类型的数据传输
-     */
-    public IApiService getApiServiceForJson() {
-        return getApiServiceForJson(HttpUrl.BASE_URL);
+        return getApiService(UrlUtils.BASE_URL+"/");
     }
 
     /**

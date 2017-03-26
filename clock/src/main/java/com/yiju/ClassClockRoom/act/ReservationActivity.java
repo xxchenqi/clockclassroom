@@ -200,11 +200,8 @@ public class ReservationActivity extends BaseActivity implements
 
     // 预订提示
     @ViewInject(R.id.ll_reservation)
-    private LinearLayout ll_reservation;
+    private RelativeLayout ll_reservation;
     //描述信息
-    @ViewInject(R.id.tv_reservation_describe_all)
-    private TextView tv_reservation_describe_all;
-    //显示全部
     @ViewInject(R.id.tv_reservation_describe)
     private TextView tv_reservation_describe;
 
@@ -215,6 +212,7 @@ public class ReservationActivity extends BaseActivity implements
     private List<Date> selectedDates;
     private List<Date> copySingleDates = new ArrayList<>();
     private List<Date> copyMoreDates = new ArrayList<>();
+    private List<Date> copyMoreOriginalDates = new ArrayList<>();
     private String room_start_time;
     private String room_end_time;
     private ArrayList<Integer> reservationWeekList;
@@ -296,21 +294,9 @@ public class ReservationActivity extends BaseActivity implements
                 str = instruction;
             }
             tv_reservation_describe.setText(str);
-            tv_reservation_describe.post(new Runnable() {
-                @Override
-                public void run() {
-                    lineCount = tv_reservation_describe.getLineCount();
-                    if (lineCount > 3) {
-                        tv_reservation_describe.setMaxLines(3);
-                    } else {
-                        tv_reservation_describe_all.setVisibility(View.GONE);
-                    }
-                }
-            });
         } else {
             if (!"0".equals(confirm_type)) {
                 tv_reservation_describe.setText(R.string.txt_reservation_describe);
-                tv_reservation_describe_all.setVisibility(View.GONE);
             } else {
                 ll_reservation.setVisibility(View.GONE);
             }
@@ -733,8 +719,8 @@ public class ReservationActivity extends BaseActivity implements
                     }
                 } else {
                     intent.putExtra("reservation_flag", false);
-                    if (null != copyMoreDates && copyMoreDates.size() > 0) {
-                        intent.putExtra("reservationHaveDate", (Serializable) copyMoreDates);
+                    if (null != copyMoreOriginalDates && copyMoreOriginalDates.size() > 0) {
+                        intent.putExtra("reservationHaveDate", (Serializable) copyMoreOriginalDates);
                     }
                 }
                 break;
@@ -811,6 +797,8 @@ public class ReservationActivity extends BaseActivity implements
                         } else {
                             copyMoreDates.clear();
                             copyMoreDates.addAll(selectedDates);
+                            copyMoreOriginalDates.clear();
+                            copyMoreOriginalDates.addAll(selectedDates);
                             showDateContent();
                         }
                     }
@@ -846,7 +834,7 @@ public class ReservationActivity extends BaseActivity implements
                     showDeviceContent();
                     break;
                 case DATE_LITTLE:
-                    haveDates = (ArrayList<Date>) data.getSerializableExtra("haveDates");
+                    haveDates = (List<Date>) data.getSerializableExtra("haveDates");
                     if (null != haveDates && haveDates.size() > 0) {
                         littleFlag = true;
                         int count = 0;
@@ -860,8 +848,12 @@ public class ReservationActivity extends BaseActivity implements
                                 count++;
                             }
                         }
-                        tv_reservation_little.setText("已调整 " + count + " 天");
-                    }else{
+                        if (count == 0) {
+                            tv_reservation_little.setText(UIUtils.getString(R.string.reservation_choose));
+                        } else {
+                            tv_reservation_little.setText("已调整 " + count + " 天");
+                        }
+                    } else {
                         littleFlag = false;
                     }
 
@@ -919,6 +911,7 @@ public class ReservationActivity extends BaseActivity implements
     private void clearLittleData() {
         if (null != haveDates && haveDates.size() > 0) {
             haveDates.clear();
+            tv_reservation_little.setText(UIUtils.getString(R.string.reservation_choose));
         }
     }
 
@@ -931,14 +924,21 @@ public class ReservationActivity extends BaseActivity implements
         Collections.sort(list);
         StringBuilder sbWeek = new StringBuilder();
         sbWeek.append("每周");
-        for (int i = 0; i < list.size(); i++) {
-            if (i == list.size() - 1) {
-                sbWeek.append(getNewWeek(list.get(i)));
-            } else {
-                sbWeek.append(getNewWeek(list.get(i))).append("、");
+        if (list.size() != 7) {
+            for (int i = 0; i < list.size(); i++) {
+                if (i == list.size() - 1) {
+                    sbWeek.append(getNewWeek(list.get(i)));
+                } else {
+                    sbWeek.append(getNewWeek(list.get(i))).append("、");
+                }
             }
+
         }
         tv_week.setText(sbWeek.toString());
+        String weekStr = sbWeek.toString();
+        copyMoreDates.clear();
+        copyMoreDates.addAll(copyMoreOriginalDates);
+        deleteWeek(copyMoreDates, weekStr);
         clearLittleData();
     }
 
@@ -1075,26 +1075,9 @@ public class ReservationActivity extends BaseActivity implements
                     mDates.addAll(haveDates);
                 }
             }
-            List<Date> weekDates = new ArrayList<>();
             String weekDays = tv_week.getText().toString();
-            if(!littleFlag){
-                if (!weekDays.equals("每周")) {
-                    String[] weeks = weekDays.substring(2,weekDays.length()).split("、");
-                    int counts = weeks.length;
-                    if (counts < 7) {
-                        for (String week : weeks) {
-                            int intWeek = formatWeek(week);
-                            for (int j = 0; j < mDates.size(); j++) {
-                                ca.setTime(mDates.get(j));
-                                if (ca.get(Calendar.DAY_OF_WEEK) == intWeek) {
-                                    weekDates.add(mDates.get(j));
-                                }
-                            }
-                        }
-                        mDates.clear();
-                        mDates.addAll(weekDates);
-                    }
-                }
+            if (!littleFlag) {
+                deleteWeek(mDates, weekDays);
             }
             for (Date d : mDates) {
                 ca.setTime(d);
@@ -1144,6 +1127,27 @@ public class ReservationActivity extends BaseActivity implements
                             ProgressDialog.getInstance().dismiss();
                         }
                     });
+        }
+    }
+
+    private void deleteWeek(List<Date> dates, String weekDays) {
+        List<Date> weekDates = new ArrayList<>();
+        if (!weekDays.equals("每周")) {
+            String[] weeks = weekDays.substring(2, weekDays.length()).split("、");
+            int counts = weeks.length;
+            if (counts < 7) {
+                for (String week : weeks) {
+                    int intWeek = formatWeek(week);
+                    for (int j = 0; j < dates.size(); j++) {
+                        ca.setTime(dates.get(j));
+                        if (ca.get(Calendar.DAY_OF_WEEK) == intWeek) {
+                            weekDates.add(dates.get(j));
+                        }
+                    }
+                }
+                dates.clear();
+                dates.addAll(weekDates);
+            }
         }
     }
 
@@ -1438,7 +1442,10 @@ public class ReservationActivity extends BaseActivity implements
                     showTimeDialog();
                     return false;
                 }
-            } else {
+            } else if(week.equals("")){
+                showTimeDialog();
+                return false;
+            } else{
                 return true;
             }
         } else {
@@ -1475,12 +1482,13 @@ public class ReservationActivity extends BaseActivity implements
                     Intent intent = new Intent(UIUtils.getContext(), ReservationDateLittleActivity.class);
                     if (null != haveDates && haveDates.size() > 0) {
                         intent.putExtra("haveDates", (Serializable) haveDates);
-                    } else if (null != selectedDates && selectedDates.size() > 0) {
-                        intent.putExtra("selectedDates", (Serializable) selectedDates);
+                    }
+                    if (null != copyMoreDates && copyMoreDates.size() > 0) {
+                        intent.putExtra("selectedDates", (Serializable) copyMoreDates);
                     }
                     intent.putExtra("grayDates", (Serializable) noFullDates);
                     intent.putExtra("FAIL", "FAIL");
-                    startActivity(intent);
+                    startActivityForResult(intent, DATE_LITTLE);
                 }
             }
         });

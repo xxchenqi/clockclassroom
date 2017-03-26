@@ -3,6 +3,7 @@ package com.yiju.ClassClockRoom.act;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.InputFilter;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -50,6 +51,7 @@ import com.yiju.ClassClockRoom.bean.TimeGroup;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.util.CommonUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.LogUtil;
@@ -76,9 +78,9 @@ import java.util.Set;
 /**
  * ----------------------------------------
  * 注释: 订单确认页
- * <p>
+ * <p/>
  * 作者: cq
- * <p>
+ * <p/>
  * 时间: on 2016/5/9 15:27
  * ----------------------------------------
  */
@@ -146,6 +148,9 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     //使用日期
     @ViewInject(R.id.tv_use_date)
     private TextView tv_use_date;
+    //循环方式
+    @ViewInject(R.id.tv_use_week)
+    private TextView tv_use_week;
     //使用天数
     @ViewInject(R.id.tv_use_day)
     private TextView tv_use_day;
@@ -163,12 +168,18 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     // 增加课室
     @ViewInject(R.id.tv_add_classroom)
     private TextView tv_add_classroom;
+    // 增加日期
+    @ViewInject(R.id.tv_add_classroom_date)
+    private TextView tv_add_classroom_date;
+    // 减少日期
+    @ViewInject(R.id.tv_cancel_classroom_date)
+    private TextView tv_cancel_classroom_date;
     //取消课室列表
-    @ViewInject(R.id.ll_cancel_classroom)
-    private LinearLayout ll_cancel_classroom;
-    //增加课室列表
-    @ViewInject(R.id.ll_add_classroom)
-    private LinearLayout ll_add_classroom;
+//    @ViewInject(R.id.ll_cancel_classroom)
+//    private LinearLayout ll_cancel_classroom;
+//    //增加课室列表
+//    @ViewInject(R.id.ll_add_classroom)
+//    private LinearLayout ll_add_classroom;
 
     //收费项目
     @ViewInject(R.id.ll_no_free_device_add)
@@ -217,8 +228,8 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     @ViewInject(R.id.tv_invoice_company_xmmc)
     private TextView tv_invoice_company_xmmc;
     //发票箭头
-    @ViewInject(R.id.tv_invoice)
-    private TextView tv_invoice;
+//    @ViewInject(R.id.tv_invoice)
+//    private TextView tv_invoice;
     //余额支付提示
     @ViewInject(R.id.tv_order_conf_tips)
     private TextView tv_order_conf_tips;
@@ -273,6 +284,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     private String balance;
     private String school_type;
     private String store_tel;
+    private String c_type;
 
     @Override
     public void initIntent() {
@@ -284,6 +296,8 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     protected void initView() {
         uid = StringUtils.getUid();
         et_remark.setFilters(new InputFilter[]{CommonUtil.getTextLengthFilter(100)});
+        et_remark.setSingleLine(false);
+        et_remark.setHorizontallyScrolling(false);
         order2s = new ArrayList<>();
         invoiceContacts = new ArrayList<>();
         invoice_type_save = SharedPreferencesUtils.getString(this,
@@ -406,7 +420,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             rl_order_confirmation_affirm_pay.setVisibility(View.VISIBLE);
             sv_order_detail.setVisibility(View.VISIBLE);
             dataEntity = orderConfirmationBean.getData().get(0);
-
+            c_type = dataEntity.getConfirm_type();
             //联系人和手机设置
             ContactTelName contact = orderConfirmationBean.getContact();
             if (contact != null) {
@@ -462,6 +476,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                         store_tel, R.color.blue, new StringFormatUtil.IOnClickListener() {
                     @Override
                     public void click() {
+                        callPhone(store_tel);
                     }
                 }).fillColor();
                 tv_order_conf_tips.setHighlightColor(UIUtils.getColor(android.R.color.transparent));
@@ -505,9 +520,20 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             if (!dataEntity.getStart_date().equals(dataEntity.getEnd_date())) {
                 tv_order_info.setText("订单信息(多天)");
                 tv_use_date.setText("使用日期：" + dataEntity.getStart_date() + "~" + dataEntity.getEnd_date());
+                tv_use_week.setVisibility(View.VISIBLE);
+                String repeat = dataEntity.getRepeat();
+                if (StringUtils.isNullString(repeat)) {
+                    tv_use_week.setVisibility(View.GONE);
+                } else {
+                    tv_use_week.setVisibility(View.VISIBLE);
+                    String[] repeats = repeat.split(",");
+                    String week = getStrWeek(repeats);
+                    tv_use_week.setText("循环方式：" + week);
+                }
             } else {
                 tv_order_info.setText("订单信息(单天)");
                 tv_use_date.setText("使用日期：" + dataEntity.getStart_date());
+                tv_use_week.setVisibility(View.GONE);
             }
 
             List<TimeGroup> time_group = dataEntity.getTime_group();
@@ -533,17 +559,22 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             List<AdjustmentData> cancel_date = dataEntity.getRoom_adjust().getCancel_date();
             List<AdjustmentData> add_date = dataEntity.getRoom_adjust().getAdd_date();
             //取消
-            if (cancel_date != null && cancel_date.size() != 0) {
+            List<AdjustmentData> newCancel_date = getNewCancel_date(cancel_date);
+            if (newCancel_date != null && newCancel_date.size() != 0) {
                 //设置
-                handleClassRoomCancel(ll_cancel_classroom, cancel_date);
+                StringBuilder addBuilder = getDateBuilder(newCancel_date);
+                tv_cancel_classroom_date.setText(addBuilder.toString());
             } else {
                 //隐藏
                 tv_cancel_classroom.setVisibility(View.GONE);
             }
             //增加
-            if (add_date != null && add_date.size() != 0) {
+            List<AdjustmentData> newCancel_date1 = getNewCancel_date(add_date);
+            if (newCancel_date1 != null && newCancel_date1.size() != 0) {
                 //设置
-                handleClassRoomCancel(ll_add_classroom, add_date);
+                StringBuilder addBuilder = getDateBuilder(newCancel_date1);
+                tv_add_classroom_date.setText(addBuilder.toString());
+
             } else {
                 //隐藏
                 tv_add_classroom.setVisibility(View.GONE);
@@ -633,6 +664,61 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         }
     }
 
+    @NonNull
+    private StringBuilder getDateBuilder(List<AdjustmentData> add_date) {
+        StringBuilder addBuilder = new StringBuilder();
+        for (int i = 0; i < add_date.size(); i++) {
+            if (i == add_date.size() - 1) {
+                addBuilder.append(add_date.get(i).getDate());
+            } else {
+                addBuilder.append(add_date.get(i).getDate() + "、");
+            }
+        }
+        return addBuilder;
+    }
+
+    private String getStrWeek(String[] repeats) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < repeats.length; i++) {
+            if (i == (repeats.length - 1)) {
+                stringBuilder.append(getWeekDay(Integer.valueOf(repeats[i])));
+            } else {
+                stringBuilder.append(getWeekDay(Integer.valueOf(repeats[i])) + "、");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    private String getWeekDay(Integer integer) {
+
+        String weekStr = null;
+        switch (integer) {
+            case 1:
+                weekStr = "周一";
+                break;
+            case 2:
+                weekStr = "周二";
+                break;
+            case 3:
+                weekStr = "周三";
+                break;
+            case 4:
+                weekStr = "周四";
+                break;
+            case 5:
+                weekStr = "周五";
+                break;
+            case 6:
+                weekStr = "周六";
+                break;
+            case 7:
+                weekStr = "周日";
+                break;
+        }
+        return weekStr;
+    }
+
 
     /**
      * 新增发票请求
@@ -692,57 +778,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         return R.layout.activity_order_confirmation;
     }
 
-
-    /**
-     * 取消课室
-     *
-     * @param ll_parent   动态添加布局的父控件
-     * @param cancel_date 取消课室的日期数据源
-     */
-    private void handleClassRoomCancel(LinearLayout ll_parent, List<AdjustmentData> cancel_date) {
-        cancel_date = getNewCancel_date(cancel_date);
-        if (cancel_date != null && cancel_date.size() != 0) {
-            for (int i = 0; i < cancel_date.size(); i++) {
-                LinearLayout cancel_layout = (LinearLayout) LayoutInflater.from(
-                        UIUtils.getContext()).inflate(
-                        R.layout.item_adjustment_date, null);
-                TextView tv_adjustment_date = (TextView)
-                        cancel_layout.findViewById(R.id.tv_adjustment_date);
-                TextView tv_adjustment_time = (TextView)
-                        cancel_layout.findViewById(R.id.tv_adjustment_time);
-                TextView tv_adjustment_count = (TextView)
-                        cancel_layout.findViewById(R.id.tv_adjustment_count);
-                AdjustmentData adjustmentData = cancel_date.get(i);
-                tv_adjustment_date.setText(adjustmentData.getDate());
-                tv_adjustment_time.setText(
-                        String.format(
-                                getString(R.string.to_symbol),
-                                StringUtils.changeTime(adjustmentData.getStart_time()),
-                                StringUtils.changeTime(adjustmentData.getEnd_time())
-                        ));
-
-                tv_adjustment_count.setText(
-                        String.format(
-                                getString(R.string.format_multiply_rooms),
-                                adjustmentData.getRoom_count()
-                        ));
-                ll_parent.addView(cancel_layout, i);
-            }
-        }
-    }
-
     private List<AdjustmentData> getNewCancel_date(List<AdjustmentData> cancel_date) {
-        /*HashMap<String, AdjustmentData> hashMap = new HashMap<>();
-        for (AdjustmentData adjustmentData : cancel_date) {
-            String date = adjustmentData.getDate();
-            if (!hashMap.containsKey(date)) {
-                hashMap.put(date, adjustmentData);
-            }
-        }
-        List<AdjustmentData> newCancel_date = new ArrayList<>();
-        for (String dateKey : hashMap.keySet()) {
-            newCancel_date.add(hashMap.get(dateKey));
-        }*/
         List<AdjustmentData> newCancel_date = new ArrayList<>();
         Set<String> set = new HashSet<>();
         for (AdjustmentData adjustmentData : cancel_date) {
@@ -890,7 +926,11 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
 
                         } else {
                             //提交成功结果页
-                            jumpNewResult(1);
+                            jumpResult(ClassroomPayResultActivity.TYPE_COMMIT_SUCCESS,
+                                    ClassroomPayResultActivity.ENTRANCE_AFFIRM,
+                                    conmmitInfo.getRoom_count() + "",
+                                    conmmitInfo.getType_desc(),
+                                    conmmitInfo.getOrder1_id() + "");
                         }
                         //支付宝支付相关处理
 //                        getAliPaySign();
@@ -1005,31 +1045,40 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                         public void payResult(int code, String msg, String dataJson) {
                             if (code == EjuPayResultCode.PAY_SUCCESS_CODE.getCode()) {
                                 //支付成功
-                                if ("0".equals(confirm_type)) {
-                                    //0 无需确认
-                                    jumpSucess();
-                                } else {
-                                    //2 支付后确认
-                                    jumpNewResult(2);
-                                }
+//                                if ("0".equals(confirm_type)) {
+//                                    //0 无需确认
+//                                } else {
+//                                    //2 支付后确认
+//                                }
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_SUCCESS,
+                                        ClassroomPayResultActivity.ENTRANCE_AFFIRM,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
                             } else if (code == EjuPayResultCode.PAY_FAIL_CODE.getCode()) {
                                 //支付失败
-                                if ("0".equals(confirm_type)) {
-                                    //0 无需确认
-                                    jumpFail();
-                                } else {
-                                    //2 支付后确认
-                                    jumpNewResult(3);
-                                }
+//                                if ("0".equals(confirm_type)) {
+//                                    //0 无需确认
+//                                } else {
+//                                    //2 支付后确认
+//                                }
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_FAIL,
+                                        ClassroomPayResultActivity.ENTRANCE_AFFIRM,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
                             } else if (code == EjuPayResultCode.PAY_CANCEL_C0DE.getCode()) {
                                 //支付取消
-                                if ("0".equals(confirm_type)) {
-                                    //0 无需确认
-                                    jumpFail();
-                                } else {
-                                    //2 支付后确认
-                                    jumpNewResult(3);
-                                }
+//                                if ("0".equals(confirm_type)) {
+//                                    //0 无需确认
+//                                } else {
+//                                    //2 支付后确认
+//                                }
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_FAIL,
+                                        ClassroomPayResultActivity.ENTRANCE_AFFIRM,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
                             }
                         }
                     }
@@ -1038,40 +1087,36 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     }
 
     /**
-     * 失败跳转
+     * 跳转结果页
+     *
+     * @param type       1.支付失败,2.支付成功,3.提价成功
+     * @param entrance   1.订单确认页 ,2.列表,详情
+     * @param room_count 房间数量
+     * @param type_desc  迷你间等
+     * @param oid        订单id
      */
-    private void jumpFail() {
-        Intent intentFail = new Intent(OrderConfirmationActivity.this,
-                AliPay_PayFailActivity.class);
-        intentFail.putExtra("fail", conmmitInfo);
-        intentFail.putExtra("sid", sid);
-        intentFail.putExtra("name", name);
-        startActivity(intentFail);
+    private void jumpResult(int type, int entrance, String room_count, String type_desc, String oid) {
+        Intent intent = new Intent(this, ClassroomPayResultActivity.class);
+        intent.putExtra(ExtraControl.EXTRA_TYPE, type);
+        intent.putExtra(ExtraControl.EXTRA_ENTRANCE, entrance);
+        intent.putExtra(ExtraControl.EXTRA_ROOM_COUNT, room_count);
+        intent.putExtra(ExtraControl.EXTRA_TYPE_DESC, type_desc);
+        intent.putExtra(ExtraControl.EXTRA_ORDER_ID, oid);
+        startActivity(intent);
     }
 
     /**
-     * 成功跳转
+     * 跳转余额支付
      */
-    private void jumpSucess() {
-        Intent intentSucess = new Intent(OrderConfirmationActivity.this,
-                AliPay_PayOKActivity.class);
-        intentSucess.putExtra("sucess", conmmitInfo);
-        intentSucess.putExtra("sid", sid);
-        intentSucess.putExtra("name", name);
-        intentSucess.putExtra("order2", order2s);
-        startActivity(intentSucess);
-    }
-
-
-    /**
-     * type: 1 提交成功 2.支付成功 3.支付失败
-     * 跳转到新的结果页
-     */
-    private void jumpNewResult(int type) {
-        Intent intent = new Intent(OrderConfirmationActivity.this,
-                NewPayResultActivity.class);
-        intent.putExtra("conmmitInfo", conmmitInfo);
-        intent.putExtra("type", type);
+    private void jumpPayPage() {
+        String currentFee = tv_sum_price.getText().toString().substring(1);
+        Intent intent = new Intent(this, PayPasswordActivity.class);
+        intent.putExtra(ExtraControl.EXTRA_ROOM_COUNT, conmmitInfo.getRoom_count() + "");
+        intent.putExtra(ExtraControl.EXTRA_TYPE_DESC, conmmitInfo.getType_desc());
+        intent.putExtra(ExtraControl.EXTRA_ORDER_ID, conmmitInfo.getOrder1_id() + "");
+        intent.putExtra(ExtraControl.EXTRA_CONFIRM_TYPE, conmmitInfo.getConfirm_type());
+        intent.putExtra(ExtraControl.EXTRA_ENTRANCE, ClassroomPayResultActivity.ENTRANCE_AFFIRM);
+        intent.putExtra(ExtraControl.EXTRA_BALANCE, currentFee);
         startActivity(intent);
     }
 
@@ -1127,7 +1172,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 }
                 tv_invoice_company_name.setText(head);
                 tv_invoice_company_xmmc.setText(R.string.invoice_rental_fee);
-                tv_invoice.setText("");
+//                tv_invoice.setText("");
                 ll_invoice_info.setVisibility(View.VISIBLE);
                 break;
             default:
@@ -1170,36 +1215,42 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             case R.id.btn_affirm_pay://确认付款
                 String mobile = tv_order_detail_mobile.getText().toString();
                 if (StringUtils.isNotNullString(mobile)) {
-                    if ("1".equals(school_type)) {
-                        String currentFee = tv_sum_price.getText().toString().substring(1);
-                        mPopupWindow = PayWayUtil.getPopu(OrderConfirmationActivity.this.getWindow(),
-                                OrderConfirmationActivity.this,
-                                R.layout.activity_order_confirmation,
-                                balance, currentFee, new PayWayOnClickListener() {
-                                    @Override
-                                    public void onBalanceClick() {
-                                        commitCart(et_remark.getText().toString(),
-                                                tv_order_detail_name.getText().toString(),
-                                                tv_order_detail_mobile.getText().toString(),
-                                                coupon_id, order2_id, "0", false);
-                                    }
-
-                                    @Override
-                                    public void onOtherClick() {
-                                        mPopupWindow.dismiss();
-                                        commitCart(et_remark.getText().toString(),
-                                                tv_order_detail_name.getText().toString(),
-                                                tv_order_detail_mobile.getText().toString(),
-                                                coupon_id, order2_id, "0", true);
-                                    }
-                                });
-                    } else {
+                    if("1".equals(c_type)){
                         commitCart(et_remark.getText().toString(),
                                 tv_order_detail_name.getText().toString(),
                                 tv_order_detail_mobile.getText().toString(),
-                                coupon_id, order2_id, "0", true);
-                    }
+                                coupon_id, order2_id, "0", false);
+                    }else{
+                        if ("1".equals(school_type)) {
+                            String currentFee = tv_sum_price.getText().toString().substring(1);
+                            mPopupWindow = PayWayUtil.getPopu(OrderConfirmationActivity.this.getWindow(),
+                                    OrderConfirmationActivity.this,
+                                    R.layout.activity_order_confirmation,
+                                    balance, currentFee, new PayWayOnClickListener() {
+                                        @Override
+                                        public void onBalanceClick() {
+                                            commitCart(et_remark.getText().toString(),
+                                                    tv_order_detail_name.getText().toString(),
+                                                    tv_order_detail_mobile.getText().toString(),
+                                                    coupon_id, order2_id, "0", false);
+                                        }
 
+                                        @Override
+                                        public void onOtherClick() {
+                                            mPopupWindow.dismiss();
+                                            commitCart(et_remark.getText().toString(),
+                                                    tv_order_detail_name.getText().toString(),
+                                                    tv_order_detail_mobile.getText().toString(),
+                                                    coupon_id, order2_id, "0", true);
+                                        }
+                                    });
+                        } else {
+                            commitCart(et_remark.getText().toString(),
+                                    tv_order_detail_name.getText().toString(),
+                                    tv_order_detail_mobile.getText().toString(),
+                                    coupon_id, order2_id, "0", true);
+                        }
+                    }
                 } else {
                     showSmileToast(getString(R.string.toast_select_contact));
                 }
@@ -1327,15 +1378,6 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 }
             }
         });
-    }
-
-    private void jumpPayPage() {
-        Intent intent = new Intent(OrderConfirmationActivity.this, PayPasswordActivity.class);
-        intent.putExtra("conmmitInfo", conmmitInfo);
-        intent.putExtra("sid", sid);
-        intent.putExtra("name", name);
-        intent.putExtra("order2", order2s);
-        startActivity(intent);
     }
 
 

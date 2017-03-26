@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.yiju.ClassClockRoom.widget.RatioLayout
+    <!--<com.yiju.ClassClockRoom.widget.RatioLayout
         android:id="@+id/rl_ratio"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent">-->
 
         <ImageView
             android:id="@+id/iv_store_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/DIMEN_250DP"
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
-    </com.yiju.ClassClockRoom.widget.RatioLayout>
+    <!--</com.yiju.ClassClockRoom.widget.RatioLayout>-->
 </FrameLayout>

@@ -37,7 +37,7 @@
         android:layout_marginBottom="@dimen/DIMEN_52DP"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <RadioButton
             android:layout_width="@dimen/DIMEN_10DP"
@@ -62,13 +62,7 @@
             android:button="@null"
             android:clickable="false" />
 
-        <RadioButton
-            android:layout_width="@dimen/DIMEN_10DP"
-            android:layout_height="@dimen/DIMEN_10DP"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:background="@drawable/dot"
-            android:button="@null"
-            android:clickable="false" />
+
     </RadioGroup>
 
     <TextView

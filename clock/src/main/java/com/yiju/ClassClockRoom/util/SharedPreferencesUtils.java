@@ -145,6 +145,7 @@ public class SharedPreferencesUtils {
         edit.remove("password");
         edit.remove("third_source");
         edit.remove(SharedPreferencesConstant.Shared_Login_Cid);//退出登录的时候清掉当前cid
+        edit.remove(SharedPreferencesConstant.Shared_Login_Udid);//退出登录的时候清掉当前udid
         edit.apply();
     }
 

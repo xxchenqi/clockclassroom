@@ -11,6 +11,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -45,6 +46,7 @@ import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
 import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.LogUtil;
@@ -131,7 +133,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
      * 无订单布局
      */
     @ViewInject(R.id.rl_mine_order3)
-    private RelativeLayout rl_mine_order3;
+    private LinearLayout rl_mine_order3;
     /**
      * 随便逛逛按钮
      */
@@ -252,12 +254,9 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     private String fee;
     private PopupWindow mPopupWindow;
     private CartCommit conmmitInfo;
-    private String sid;
-    private String name;
     private Order2 order2;
     private String confirm_type;
     private String pay_method;
-    private ArrayList<Order2> order2s;
 
 
     @Override
@@ -270,6 +269,17 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         super.initIntent();
         status = getIntent().getStringExtra(STATUS);
         count = getIntent().getStringExtra(COUNT);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //支付结果页回来刷新
+        boolean refresh = intent.getBooleanExtra(ExtraControl.EXTRA_REFRESH_FLAG, false);
+        if (refresh) {
+            lv_mineorder.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+            lv_mineorder.setRefreshing();
+        }
     }
 
     @Override
@@ -554,7 +564,6 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
             case R.id.head_right_relative:
 //                //批量开具发票
 //                UIUtils.showToastSafe("批量开具发票");
-//                Intent invoiceOrderIntent = new Intent(this, InvoiceOrderActivity.class);
 //                startActivity(invoiceOrderIntent);
 
                 // 跳转至如何开具发票页h5
@@ -881,31 +890,32 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                         public void payResult(int code, String msg, String dataJson) {
                             if (code == EjuPayResultCode.PAY_SUCCESS_CODE.getCode()) {
                                 // 成功处理
-                                if ("0".equals(confirm_type) || "1".equals(confirm_type)) {
-                                    //无需确认和支付前确认,可以布置课室
-                                    jumpSucess();
-                                } else {
-                                    //支付后确认,不可以布置课室
-                                    jumpNewResult(2);
-                                }
+//                                if ("0".equals(confirm_type) || "1".equals(confirm_type)) {
+//                                    //无需确认和支付前确认,可以布置课室
+//                                } else {
+//                                    //支付后确认,不可以布置课室
+//                                }
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_SUCCESS,
+                                        ClassroomPayResultActivity.ENTRANCE_LIST,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
+
                             } else if (code == EjuPayResultCode.PAY_FAIL_CODE.getCode()) {
                                 //支付失败
-                                Intent intentFail = new Intent(
-                                        MineOrderActivity.this,
-                                        AliPay_PayFailActivity.class);
-                                intentFail.putExtra("fail", conmmitInfo);
-                                intentFail.putExtra("sid", sid);
-                                intentFail.putExtra("name", name);
-                                startActivity(intentFail);
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_FAIL,
+                                        ClassroomPayResultActivity.ENTRANCE_LIST,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
+
                             } else if (code == EjuPayResultCode.PAY_CANCEL_C0DE.getCode()) {
                                 //支付取消
-                                Intent intentFail = new Intent(
-                                        MineOrderActivity.this,
-                                        AliPay_PayFailActivity.class);
-                                intentFail.putExtra("fail", conmmitInfo);
-                                intentFail.putExtra("sid", sid);
-                                intentFail.putExtra("name", name);
-                                startActivity(intentFail);
+                                jumpResult(ClassroomPayResultActivity.TYPE_PAY_FAIL,
+                                        ClassroomPayResultActivity.ENTRANCE_LIST,
+                                        conmmitInfo.getRoom_count() + "",
+                                        conmmitInfo.getType_desc(),
+                                        conmmitInfo.getOrder1_id() + "");
                             }
                         }
                     }
@@ -950,38 +960,33 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
     private void jumpPayPage() {
         Intent intent = new Intent(MineOrderActivity.this, PayPasswordActivity.class);
-        intent.putExtra("conmmitInfo", conmmitInfo);
-        intent.putExtra("sid", sid);
-        intent.putExtra("name", name);
-        intent.putExtra("order2", order2s);
+        intent.putExtra(ExtraControl.EXTRA_ROOM_COUNT, conmmitInfo.getRoom_count() + "");
+        intent.putExtra(ExtraControl.EXTRA_TYPE_DESC, conmmitInfo.getType_desc());
+        intent.putExtra(ExtraControl.EXTRA_ORDER_ID, conmmitInfo.getOrder1_id() + "");
+        intent.putExtra(ExtraControl.EXTRA_CONFIRM_TYPE, conmmitInfo.getConfirm_type());
+        intent.putExtra(ExtraControl.EXTRA_ENTRANCE, ClassroomPayResultActivity.ENTRANCE_LIST);
+        intent.putExtra(ExtraControl.EXTRA_BALANCE, fee);
         startActivity(intent);
     }
 
     /**
-     * type: 1 提交成功 2.支付成功 3.支付失败
-     * 跳转到新的结果页
+     * 跳转结果页
+     *
+     * @param type       1.支付失败,2.支付成功,3.提价成功
+     * @param entrance   1.订单确认页 ,2.列表,详情
+     * @param room_count 房间数量
+     * @param type_desc  迷你间等
+     * @param oid        订单id
      */
-    private void jumpNewResult(int type) {
-        Intent intent = new Intent(this,
-                NewPayResultActivity.class);
-        intent.putExtra("conmmitInfo", conmmitInfo);
-        intent.putExtra("type", type);
+    private void jumpResult(int type, int entrance, String room_count, String type_desc, String oid) {
+        Intent intent = new Intent(this, ClassroomPayResultActivity.class);
+        intent.putExtra(ExtraControl.EXTRA_TYPE, type);
+        intent.putExtra(ExtraControl.EXTRA_ENTRANCE, entrance);
+        intent.putExtra(ExtraControl.EXTRA_ROOM_COUNT, room_count);
+        intent.putExtra(ExtraControl.EXTRA_TYPE_DESC, type_desc);
+        intent.putExtra(ExtraControl.EXTRA_ORDER_ID, oid);
         startActivity(intent);
     }
-
-    /**
-     * 成功跳转
-     */
-    private void jumpSucess() {
-        Intent intentSucess = new Intent(this,
-                AliPay_PayOKActivity.class);
-        intentSucess.putExtra("sucess", conmmitInfo);
-        intentSucess.putExtra("sid", sid);
-        intentSucess.putExtra("name", name);
-        intentSucess.putExtra("order2", order2s);
-        startActivity(intentSucess);
-    }
-
 
     //订单列表的，取消订单，删除订单等按钮
     @Override
@@ -995,22 +1000,18 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
                     final MineOrderData o1 = data.get(position);//1级
                     //2级
-                    order2s = o1.getOrder2();
-                    this.order2 = o1.getOrder2().get(0);
+                    order2 = o1.getOrder2().get(0);
                     pay_method = o1.getPay_method();
-//                    int coupon_id = Integer.valueOf(o2.getCoupon_id());//优惠券id
-                    school_type = this.order2.getSchool_type();
+                    school_type = order2.getSchool_type();
                     fee = o1.getReal_fee();
                     conmmitInfo = new CartCommit();
                     conmmitInfo.setTrade_id(o1.getTrade_id());
-                    conmmitInfo.setUse_desc(this.order2.getUse_desc());
-                    conmmitInfo.setType_desc(this.order2.getType_desc());
-                    conmmitInfo.setRoom_count(Integer.valueOf(this.order2.getRoom_count()));
+                    conmmitInfo.setUse_desc(order2.getUse_desc());
+                    conmmitInfo.setType_desc(order2.getType_desc());
+                    conmmitInfo.setRoom_count(Integer.valueOf(order2.getRoom_count()));
                     conmmitInfo.setOrder1_id(Integer.valueOf(id));
-                    sid = this.order2.getSid();
-                    name = this.order2.getSname();
                     confirm_type = o1.getConfirm_type();
-                    if("".equals(school_type)){
+                    if ("1".equals(school_type)) {
                         mPopupWindow = PayWayUtil.getPopu(MineOrderActivity.this.getWindow(),
                                 MineOrderActivity.this,
                                 R.layout.activity_mineorder,
@@ -1024,14 +1025,14 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                                     @Override
                                     public void onOtherClick() {
                                         mPopupWindow.dismiss();
-                                        if("5".equals(pay_method)){
-                                            changePayWay(id,position);
-                                        }else{
+                                        if ("5".equals(pay_method)) {
+                                            changePayWay(id, position);
+                                        } else {
                                             checkCoupon(id, position, true);
                                         }
                                     }
                                 });
-                    }else{
+                    } else {
                         checkCoupon(id, position, true);
                     }
 
@@ -1055,7 +1056,6 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
                 }
 //                else if ("开具发票".equals(text)) {
-//                    Intent intent = new Intent(this, InvoiceInformationActivity.class);
 //                    intent.putExtra("oid", id);
 //                    startActivityForResult(intent, 0);
 //                }
@@ -1120,13 +1120,12 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                             });
                         } else if (cartCommit.getCode() == 1) {
                             //去支付
+                            if (!StringUtils.isNullString(cartCommit.getTrade_id())) {
+                                data.get(position).setTrade_id(cartCommit.getTrade_id());
+                                conmmitInfo.setTrade_id(cartCommit.getTrade_id());
+                            }
                             if (flag) {
-                                if (!StringUtils.isNullString(cartCommit.getTrade_id())) {
-                                    data.get(position).setTrade_id(cartCommit.getTrade_id());
-                                    conmmitInfo.setTrade_id(cartCommit.getTrade_id());
-                                }
                                 parseData();
-
                             } else {
                                 checkPassword();
                             }
@@ -1278,10 +1277,6 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         }
     }
 
-    @Override
-    public void cbClick(boolean isChecked, String rr) {
-
-    }
 
     @Override
     public void onClickItem(int position) {
@@ -1305,9 +1300,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
             status = MineOrderActivity.STATUS_CLOSE;
         }
         head_right_text.setText(datas_filtrate.get(position).getDist_name());
-        is_down_refresh = true;
-        limit = 0;
-        limit_end = 5;
-        getHttpUtils();
+        lv_mineorder.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+        lv_mineorder.setRefreshing();
     }
 }

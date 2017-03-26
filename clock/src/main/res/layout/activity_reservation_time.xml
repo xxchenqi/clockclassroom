@@ -8,66 +8,58 @@
 
     <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/DIMEN_88DP"
+    <TextView
+        android:id="@+id/tv_reservation_start_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
         android:layout_marginTop="@dimen/DIMEN_10DP"
-        android:layout_marginBottom="@dimen/DIMEN_12DP"
-        android:background="@color/gray">
+        android:background="@color/white"
+        android:textColor="@color/color_gay_99"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/DIMEN_15DP"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:text="@string/reservation_start_time"
+        android:drawableLeft="@drawable/green_circle"
+        android:drawablePadding="@dimen/DIMEN_10DP"/>
 
-        <TextView
-            android:id="@+id/tv_reservation_start_time"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_44DP"
-            android:layout_toLeftOf="@+id/v_shadow_gray"
-            android:background="@color/white"
-            android:textColor="@color/color_gay_99"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/DIMEN_15DP"
-            android:paddingLeft="@dimen/DIMEN_12DP"
-            android:text="@string/reservation_start_time"
-            android:drawableLeft="@drawable/green_circle"
-            android:drawablePadding="@dimen/DIMEN_10DP"/>
+    <TextView
+        android:id="@+id/tv_reservation_end_time"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:background="@color/white"
+        android:textColor="@color/color_gay_99"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/DIMEN_15DP"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:text="@string/reservation_end_time"
+        android:drawableLeft="@drawable/red_circle"
+        android:drawablePadding="@dimen/DIMEN_10DP"/>
 
-        <TextView
-            android:id="@+id/tv_reservation_end_time"
-            android:layout_below="@+id/tv_reservation_start_time"
-            android:layout_toLeftOf="@+id/v_shadow_gray"
-            android:layout_marginTop="@dimen/DIMEN_1DP"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_44DP"
-            android:background="@color/white"
-            android:textColor="@color/color_gay_99"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/DIMEN_15DP"
-            android:paddingLeft="@dimen/DIMEN_12DP"
-            android:text="@string/reservation_end_time"
-            android:drawableLeft="@drawable/red_circle"
-            android:drawablePadding="@dimen/DIMEN_10DP"/>
+    <TextView
+        android:id="@+id/tv_add_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_40DP"
+        android:background="@drawable/background_green_1eb482_radius_20"
+        android:layout_margin="@dimen/DIMEN_12DP"
+        android:lineSpacingExtra="@dimen/DIMEN_4DP"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/DIMEN_16DP"
+        android:text="@string/affirm"/>
 
-        <TextView
-            android:id="@+id/tv_add_time"
-            android:layout_width="@dimen/DIMEN_103DP"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:layout_alignParentRight="true"
-            android:lineSpacingExtra="@dimen/DIMEN_4DP"
-            android:gravity="center"
-            android:textColor="@color/color_gay_99"
-            android:textSize="@dimen/DIMEN_16DP"
-            android:text="@string/reservation_add_time"/>
-
-        <ImageView
-            android:id="@+id/v_shadow_gray"
-            android:layout_toLeftOf="@+id/tv_add_time"
-            android:layout_width="@dimen/DIMEN_5DP"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:src="@drawable/shadow_gray"
-            android:scaleType="fitXY"/>
-
-    </RelativeLayout>
-
+    <TextView
+        android:id="@+id/tv_use_time"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:background="@color/white"
+        android:textColor="@color/color_black_33"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/DIMEN_15DP"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:text="@string/had_choose_time"
+        android:visibility="gone"/>
     <ListView
         android:id="@+id/list_time"
         android:layout_width="match_parent"
@@ -75,45 +67,4 @@
         android:background="@color/white"
         android:dividerHeight="@dimen/DIMEN_1DP"
         android:divider="@color/color_gay_ee"/>
-   <!-- <RelativeLayout
-        android:id="@+id/rl_reservation_start_time"
-        android:layout_marginTop="@dimen/DIMEN_10DP"
-        style="@style/reservation_rl_week">
-
-        <TextView
-            android:id="@+id/tv_reservation_start_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/DIMEN_16DP"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
-            android:text="@string/reservation_start_time_xml"
-            android:textColor="@color/app_theme_color"/>
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/rl_reservation_end_time"
-        android:layout_marginTop="@dimen/DIMEN_1DP"
-        style="@style/reservation_rl_week">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_gay_99"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/DIMEN_16DP"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:text="@string/reservation_end_time"/>
-        <TextView
-            android:id="@+id/tv_reservation_end_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/DIMEN_16DP"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
-            android:text="@string/reservation_end_time_xml"
-            android:textColor="@color/app_theme_color"/>
-
-    </RelativeLayout>-->
 </LinearLayout>

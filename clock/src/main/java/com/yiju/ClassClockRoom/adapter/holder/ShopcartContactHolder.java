@@ -79,11 +79,11 @@ public class ShopcartContactHolder extends BaseHolder<Data> {
                 tv_contact_default.setVisibility(View.GONE);
             }
             if (info.isCheck()) {
-                iv_contact_choose
-                        .setBackgroundResource(R.drawable.check_icon);
+                iv_contact_choose.setVisibility(View.VISIBLE);
                 tv_contact_name.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                 tv_contact_phone.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             } else {
+                iv_contact_choose.setVisibility(View.GONE);
                 tv_contact_name.setTextColor(UIUtils.getColor(R.color.color_gay_8f));
                 tv_contact_phone.setTextColor(UIUtils.getColor(R.color.color_gay_8f));
             }

@@ -342,6 +342,9 @@ public class EmptyActivity extends Activity {
                             intent_start.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_activity_Page);
                             intent.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.ID));
                             intent.putExtra(ExtraControl.EXTRA_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
+                        } else if (path.equals(UIUtils.getString(R.string.scheme_supplier_detail_path))) {//供应商详情
+                            intent_start.setClass(this, SupplierDetailActivity.class);
+                            intent_start.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.SUPPLIER_ID));
                         } else {//默认跳转首页
                             intent_start.setClass(this, MainActivity.class);
                             intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_INDEX);

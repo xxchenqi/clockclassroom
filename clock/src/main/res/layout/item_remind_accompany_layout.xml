@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/DIMEN_56DP"
     android:background="@color/white">
@@ -8,17 +9,17 @@
         android:id="@+id/item_accompany_time"
         style="@style/textstyle_15p_black37"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/DIMEN_12DP" />
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        tools:text="提前5分钟" />
 
     <LinearLayout
         android:id="@+id/ll_item_accompany_icon"
-        android:layout_width="@dimen/DIMEN_56DP"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/DIMEN_12DP"
-        android:gravity="center">
-
+        android:layout_toRightOf="@id/item_accompany_time"
+        android:gravity="right|center_vertical"
+        android:paddingRight="@dimen/DIMEN_12DP">
 
         <ImageView
             android:id="@+id/item_accompany_icon"

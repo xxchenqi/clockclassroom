@@ -1,6 +1,8 @@
 package com.yiju.ClassClockRoom.act;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -81,6 +83,77 @@ public class PersonalCenter_ChangePasswordActivity extends BaseActivity
         head_title.setText(getResources().getString(R.string.person_information_modify_password));
         head_back_relative.setOnClickListener(this);
         btn_commit.setOnClickListener(this);
+        hideCommitButton();
+
+        et_old_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!"".equals(s.toString())
+                        && !"".equals(et_new_password.getText().toString())
+                        && !"".equals(et_new_password_check.getText().toString())){
+                    showCommitButton();
+                }else{
+                    hideCommitButton();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        et_new_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!"".equals(s.toString())
+                        && !"".equals(et_old_password.getText().toString())
+                        && !"".equals(et_new_password_check.getText().toString())){
+                    showCommitButton();
+                }else{
+                    hideCommitButton();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        et_new_password_check.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!"".equals(s.toString())
+                        && !"".equals(et_new_password.getText().toString())
+                        && !"".equals(et_old_password.getText().toString())){
+                    showCommitButton();
+                }else{
+                    hideCommitButton();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -209,4 +282,21 @@ public class PersonalCenter_ChangePasswordActivity extends BaseActivity
         return false;
     }
 
+    private void hideCommitButton() {
+        if (StringUtils.isNullString(et_old_password.getText().toString())
+                || StringUtils.isNullString(et_new_password.getText().toString())
+                || StringUtils.isNullString(et_new_password_check.getText().toString())){
+            btn_commit.setBackgroundResource(R.drawable.background_gray_dddddd_radius_70);
+            btn_commit.setEnabled(false);
+        }
+    }
+
+    private void showCommitButton() {
+        if (StringUtils.isNotNullString(et_old_password.getText().toString())
+                && StringUtils.isNotNullString(et_new_password.getText().toString())
+                && StringUtils.isNotNullString(et_new_password_check.getText().toString())){
+            btn_commit.setBackgroundResource(R.drawable.background_green_1eb482_radius_70);
+            btn_commit.setEnabled(false);
+        }
+    }
 }
