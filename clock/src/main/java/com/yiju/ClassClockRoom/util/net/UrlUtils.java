@@ -41,7 +41,7 @@ public class UrlUtils {
 
     public static final String API_VERSION = "api_v8";
     private static String TEST_BASE_URL = BASE_URL + "/" + API_VERSION;
-    private static String H5_BASE_URL = BASE_URL + "/h5_v9";
+    public static String H5_BASE_URL = BASE_URL + "/h5_v9";
 
     private static String BASE_CALSS_ROOM = TEST_BASE_URL
             + "/classroom_api.php?";
@@ -49,6 +49,7 @@ public class UrlUtils {
     // 首页ListView数据
 //    public static String SERVER_INDEX = TEST_BASE_URL + "/api_merge/classroom_api.php?";
     public static String SERVER_INDEX = JAVA_URL + "/dubboServiceConsumer/redis/findClassroom_api.action";
+    public static String SERVER_INDEX_NEW = JAVA_URL + "/dubboServiceConsumer/v2.6/school/findSchool.action?";
     // 教室详情页面
     public static String SERVER_SCHOOL_DETAIL = TEST_BASE_URL
             + "/classroom_api.php?";
@@ -250,4 +251,6 @@ public class UrlUtils {
     public static String H5_SPECIAL_COURSE = H5_BASE_URL
             + "/subject_course.html";
     public static String JAVA_MORE_STORE = JAVA_URL + "/dubboServiceConsumer/school/moreSchool.action";
+    //门店详情
+    public static String JAVA_STORE_DETAIL = JAVA_URL + "/dubboServiceConsumer/v2.6/school/findSchoolDetail.action";
 }

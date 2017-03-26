@@ -130,7 +130,7 @@ public class PersonalCenter_BindingThreeWayAccountActivity extends BaseActivity 
         if ("".equals(shared_third_qq)) {
             iv_qq.setImageResource(R.drawable.qq_icon);
             tv_qq.setText(getResources().getString(R.string.label_go_binding));
-            tv_qq.setTextColor(getResources().getColor(R.color.color_green_1e));
+            tv_qq.setTextColor(getResources().getColor(R.color.app_theme_color));
             rl_qqbind.setOnClickListener(this);
         } else {
             iv_qq.setImageResource(R.drawable.qq_share_icon);
@@ -141,7 +141,7 @@ public class PersonalCenter_BindingThreeWayAccountActivity extends BaseActivity 
         if ("".equals(shared_third_wechat)) {
             iv_wx.setImageResource(R.drawable.wechat_icon_gray);
             tv_wx.setText(getResources().getString(R.string.label_go_binding));
-            tv_wx.setTextColor(getResources().getColor(R.color.color_green_1e));
+            tv_wx.setTextColor(getResources().getColor(R.color.app_theme_color));
             rl_wxbind.setOnClickListener(this);
         } else {
             iv_wx.setImageResource(R.drawable.wechat_share_icon);
@@ -152,7 +152,7 @@ public class PersonalCenter_BindingThreeWayAccountActivity extends BaseActivity 
         if ("".equals(shared_third_weibo)) {
             iv_sina.setImageResource(R.drawable.sina_icon);
             tv_sina.setText(getResources().getString(R.string.label_go_binding));
-            tv_sina.setTextColor(getResources().getColor(R.color.color_green_1e));
+            tv_sina.setTextColor(getResources().getColor(R.color.app_theme_color));
             rl_sinabind.setOnClickListener(this);
         } else {
             iv_sina.setImageResource(R.drawable.weibo_share_icon);

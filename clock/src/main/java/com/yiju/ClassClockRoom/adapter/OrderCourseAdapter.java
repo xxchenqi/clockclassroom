@@ -109,7 +109,7 @@ public class OrderCourseAdapter extends CommonBaseAdapter<OrderCourseData> {
                 btn_mine_order_right.setText(UIUtils.getString(R.string.order_immediate_pay));
                 btn_mine_order_left.setText(UIUtils.getString(R.string.order_close));
                 btn_mine_order_right.setBackgroundResource(R.drawable.background_green_1eb482_stroke);
-                btn_mine_order_right.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                btn_mine_order_right.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             } else {//隐藏
                 tv_order_need_time.setVisibility(View.GONE);
                 tv_course_status.setText(mContext.getResources().getString(

@@ -26,7 +26,7 @@
             android:id="@+id/tv_item_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ziying"
+            android:drawableLeft="@drawable/chain"
             android:drawablePadding="@dimen/DIMEN_6DP"
             android:text="正在加载门店数据"
             android:textColor="@color/color_black_33"

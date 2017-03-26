@@ -3,17 +3,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/gray"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:ignore="contentDescription">
 
     <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_37DP"
+        tools:ignore="HardcodedText">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/reservation_week_more"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="平时 "
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+            <TextView
+                android:id="@+id/tv_all_count_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/app_theme_color"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:text="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 天，周末 "
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+            <TextView
+                android:id="@+id/tv_all_count_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/app_theme_color"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:text="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 天"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_12DP" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/rl_reservation_every"
-        style="@style/reservation_rl_week"
-        android:layout_marginTop="@dimen/DIMEN_12DP">
+        style="@style/reservation_rl_week">
 
         <TextView
             android:id="@+id/tv_reservation_every"
@@ -22,7 +81,7 @@
 
         <ImageView
             android:id="@+id/iv_reservation_every"
-            style="@style/reservation_week_choose"/>
+            style="@style/reservation_week_choose" />
     </RelativeLayout>
 
 

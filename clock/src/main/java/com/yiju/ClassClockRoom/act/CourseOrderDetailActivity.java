@@ -215,7 +215,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void initView() {
-        greenSpan = new ForegroundColorSpan(UIUtils.getColor(R.color.color_green_1e));
+        greenSpan = new ForegroundColorSpan(UIUtils.getColor(R.color.app_theme_color));
     }
 
     @Override

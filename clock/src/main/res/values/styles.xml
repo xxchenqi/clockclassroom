@@ -85,12 +85,12 @@
     </style>
 
     <style name="order_tab_layout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/color_green_1e</item>
+        <item name="tabIndicatorColor">@color/app_theme_color</item>
         <!--<item name="tabIndicatorColor">@android:color/transparent</item>-->
         <item name="tabIndicatorHeight">@dimen/DIMEN_2DP</item>
         <item name="tabBackground">@color/white</item>
         <item name="tabTextAppearance">@style/order_tab_textAppearance</item>
-        <item name="tabSelectedTextColor">@color/color_green_1e</item>
+        <item name="tabSelectedTextColor">@color/app_theme_color</item>
         <item name="tabTextColor">@color/color_black_33</item>
         <item name="tabMode">fixed</item>
         <item name="tabGravity">fill</item>

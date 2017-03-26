@@ -16,18 +16,18 @@
         android:id="@+id/iv_item_teacher_pic"
         android:layout_width="@dimen/DIMEN_100DP"
         android:layout_height="@dimen/DIMEN_100DP"
+        android:layout_centerVertical="true"
         android:background="@drawable/clock_wait"
         android:scaleType="centerCrop"
-        android:layout_centerVertical="true"
         tools:ignore="contentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/iv_item_teacher_pic"
         android:background="@color/white"
         android:orientation="vertical"
-        android:layout_centerVertical="true"
         android:paddingLeft="@dimen/DIMEN_16DP"
         android:paddingRight="@dimen/DIMEN_12DP">
 
@@ -57,11 +57,12 @@
                 android:id="@+id/tv_tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_green_1eb482_radius_70"
+                android:background="@drawable/bg_tv_tags_green"
                 android:ellipsize="end"
+                android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="三年教龄"
-                android:textColor="@color/white"
+                android:textColor="@color/app_theme_color"
                 android:textSize="@dimen/DIMEN_12DP" />
         </LinearLayout>
 
@@ -69,10 +70,10 @@
             android:id="@+id/tv_org_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="所属机构"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
             android:textColor="@color/color_gay_99"
             android:textSize="@dimen/DIMEN_12DP" />
 
@@ -80,8 +81,8 @@
             android:id="@+id/tv_course_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
             android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:ellipsize="end"
             android:maxLines="1"
             android:text="开设课程：健康饮食、现代舞初级"
             android:textColor="@color/color_gay_99"

@@ -17,8 +17,6 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
-import com.yiju.ClassClockRoom.bean.MemberDetailData;
-import com.yiju.ClassClockRoom.bean.MienBean;
 import com.yiju.ClassClockRoom.bean.MineOrganizationBean;
 import com.yiju.ClassClockRoom.bean.TagBean;
 import com.yiju.ClassClockRoom.bean.result.CommonResultBean;
@@ -128,7 +126,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
      * 个人老师资料标签
      */
     private void initChildViews() {
-        if (bean.getData() != null) {
+        if (bean != null && bean.getData() != null) {
             List<TagBean> tags = bean.getTags();
             //已有的tag
             String[] split = bean.getData().getTags().split(",");
@@ -142,7 +140,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
                 TextView view = new TextView(this);
                 view.setText(tags.get(i).getName());
                 view.setTextSize(12);
-                view.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                view.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                 view.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_tv_flowlayout_green));
 
                 for (String aSplit : split) {
@@ -163,7 +161,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
                         String content = tv.getText().toString();
                         if (datas.contains(content)) {
                             //包含,要删除
-                            tv.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                            tv.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                             tv.setBackgroundResource(R.drawable.bg_tv_flowlayout_green);
                             datas.remove(content);
                         } else {
@@ -192,7 +190,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
                 TextView view = new TextView(this);
                 view.setText(tags.get(i).getName());
                 view.setTextSize(12);
-                view.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                view.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                 view.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_tv_flowlayout_green));
 
                 view.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +201,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
                         String content = tv.getText().toString();
                         if (datas.contains(content)) {
                             //包含,要删除
-                            tv.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                            tv.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                             tv.setBackgroundResource(R.drawable.bg_tv_flowlayout_green);
                             datas.remove(content);
                         } else {
@@ -240,7 +238,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
             TextView view = new TextView(this);
             view.setText(tags.get(i).getName());
             view.setTextSize(12);
-            view.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+            view.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             view.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_tv_flowlayout_green));
 
             for (String aSplit : split) {
@@ -260,7 +258,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
                     String content = tv.getText().toString();
                     if (datas.contains(content)) {
                         //包含,要删除
-                        tv.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                        tv.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                         tv.setBackgroundResource(R.drawable.bg_tv_flowlayout_green);
                         datas.remove(content);
                     } else {
@@ -407,7 +405,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
                     getHttpUtils2(sb.toString());
                 } else {
                     bean.getData().setTags(tags);
-                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true,false);
+                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true, false);
 //                    getHttpUtils(sb.toString());
                 }
                 break;
@@ -435,7 +433,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
             TextView view = new TextView(this);
             view.setText(tag);
             view.setTextSize(12);
-            view.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+            view.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             view.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_tv_flowlayout_green));
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -444,7 +442,7 @@ public class ModifyTagActivity extends BaseActivity implements View.OnClickListe
                     String content = tv.getText().toString();
                     if (datas.contains(content)) {
                         //包含,要删除
-                        tv.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                        tv.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                         tv.setBackgroundResource(R.drawable.bg_tv_flowlayout_green);
                         datas.remove(content);
                     } else {

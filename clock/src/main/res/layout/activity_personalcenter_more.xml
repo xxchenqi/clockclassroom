@@ -35,7 +35,7 @@
             android:layout_marginLeft="@dimen/DIMEN_12DP"
             android:layout_toRightOf="@id/tv_service_hotline"
             android:text="(08:30-20:30)"
-            android:textColor="@color/color_green_1e"
+            android:textColor="@color/app_theme_color"
             android:textSize="@dimen/DIMEN_15DP"
             tools:ignore="HardcodedText" />
 

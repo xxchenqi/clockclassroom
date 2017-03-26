@@ -159,7 +159,9 @@ public class MonthView extends LinearLayout {
                      List<List<MonthCellDescriptor>> cells, boolean displayOnly,
                      Typeface titleTypeface, Typeface dateTypeface,
                      CalendarPickerView.SelectionMode mode,
-                     Date beginDate, Date endDate, Set<Date> blueDates, Set<Date> orangeDates) {
+                     Date beginDate, Date endDate,
+                     Date singleDate, Set<Date> orangeDates,
+                     List<Date> oldDates) {
         Logr.d("Initializing MonthView (%d) for %s",
                 System.identityHashCode(this), month);
         long start = System.currentTimeMillis();
@@ -207,30 +209,15 @@ public class MonthView extends LinearLayout {
                         cellView.setTextColor(getResources().getColor(R.color.calendar_selcted_black));
                     }
                     if (CalendarPickerView.SelectionMode.MULTIPLE == mode) {
+                        setStartAndEnd(beginDate, endDate, cellView, date);
                         if (cell.isSelected()) {
                             cellView.setBackgroundResource(R.drawable.reserve_choose_icon);
-                            cellView.setTextColor(getResources().getColor(R.color.calendar_selcted_black));
+                            cellView.setTextColor(getResources().getColor(R.color.calendar_blue_white));
                         } else {
-                            if (cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)) {
+                            if (cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg) &&
+                                    cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_week_color)) {
                                 cellView.setBackgroundResource(R.color.calendar_no_color);
                                 cellView.setTextColor(getResources().getColor(R.color.calendar_selcted_black));
-                            }
-                        }
-                        if (null != beginDate && null != endDate) {
-                            if (date.getTime() + (23 * 60 * 60 * 1000 + 59 * 60 * 1000) >= beginDate.getTime() &&
-                                    date.getTime() <= endDate.getTime() &&
-                                    cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)
-                                    ) {
-                                cellView.setTextColor(getResources().getColor(R.color.calendar_selcted_black));
-                            } else {
-                                if (cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)) {
-                                    cellView.setTextColor(getResources().getColor(R.color.calendar_week_color));
-                                }
-                            }
-                            if (date.getYear() == beginDate.getYear() &&
-                                    date.getMonth() == beginDate.getMonth() &&
-                                    date.getDate() == beginDate.getDate()) {
-                                cellView.setTextColor(getResources().getColor(R.color.calendar_selected_day_bg));
                             }
                         }
                         if (null != orangeDates && orangeDates.size() > 0) {
@@ -246,19 +233,37 @@ public class MonthView extends LinearLayout {
                                 }
                             }
                         }
-                        if (null != blueDates && blueDates.size() > 0) {
-                            for (Date bDate : blueDates) {
-                                if (date.getYear() == bDate.getYear() &&
-                                        date.getMonth() == bDate.getMonth() &&
-                                        date.getDate() == bDate.getDate() &&(
-                                        cellView.getCurrentTextColor() == getResources().getColor(R.color.calendar_selcted_black)||
-                                                cellView.getCurrentTextColor() == getResources().getColor(R.color.calendar_selected_day_bg))&&
-                                        cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)) {
-                                    cellView.setBackgroundResource(R.drawable.reserve_adjustment_icon);
-                                    cellView.setTextColor(getResources().getColor(R.color.calendar_blue_white));
+
+                    } else if(CalendarPickerView.SelectionMode.SINGLE == mode){
+                        setStartAndEnd(beginDate, endDate, cellView, date);
+                        /*if (null != beginDate && null != endDate) {
+                            if (date.getTime() + (23 * 60 * 60 * 1000 + 59 * 60 * 1000) >= beginDate.getTime() &&
+                                    date.getTime() <= endDate.getTime() &&
+                                    cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)) {
+                                cellView.setTextColor(getResources().getColor(R.color.calendar_selcted_black));
+                            } else {
+                                if (cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)) {
+                                    cellView.setTextColor(getResources().getColor(R.color.calendar_week_color));
                                 }
                             }
+                            if (date.getYear() == beginDate.getYear() &&
+                                    date.getMonth() == beginDate.getMonth() &&
+                                    date.getDate() == beginDate.getDate() && cell.isCurrentMonth()) {
+                                cellView.setTextColor(getResources().getColor(R.color.calendar_selected_day_bg));
+                            }
+                        }*/
+                        if (cell.isSelected()) {
+                            cellView.setBackgroundResource(R.drawable.reserve_choose_icon);
+                            cellView.setTextColor(getResources().getColor(R.color.calendar_blue_white));
+                        } else {
+                            cellView.setBackgroundResource(R.color.calendar_no_color);
+                            if (cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_week_color)&&
+                                    cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_selected_day_bg)
+                                    && cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)){
+                                cellView.setTextColor(getResources().getColor(R.color.calendar_selcted_black));
+                            }
                         }
+
                     } else {
                         if (null != beginDate && null != endDate) {
                             if (date.getTime() + (23 * 60 * 60 * 1000 + 59 * 60 * 1000) >= beginDate.getTime() &&
@@ -285,9 +290,10 @@ public class MonthView extends LinearLayout {
                             if (SPposition != Integer.MAX_VALUE
                                     || EPposition != Integer.MAX_VALUE) {
                                 if (SPposition == EPposition && SMPposition == EMPposition && SYPposition == EYPposition) {
-                                    cellView.setBackgroundColor(getResources()
+                                    /*cellView.setBackgroundColor(getResources()
                                             .getColor(
-                                                    R.color.calendar_selected_day_bg));
+                                                    R.color.calendar_selected_day_bg));*/
+                                    cellView.setBackgroundResource(R.drawable.reserve_choose_icon);
                                 } else if (countD == SPposition && countM == SMPposition && countY == SYPposition) {
                                     cellView.setBackgroundResource(R.drawable.order_startchoose_btn);
                                     SPposition = Integer.MAX_VALUE;
@@ -311,6 +317,23 @@ public class MonthView extends LinearLayout {
                                 cellView.setTextColor(getResources().getColor(R.color.calendar_selcted_black));
                             }
                         }
+                        if (null != oldDates && oldDates.size() > 0) {
+                            for (int j = 0; j < oldDates.size(); j++) {
+                                if (date.getYear() == oldDates.get(j).getYear() &&
+                                        date.getMonth() == oldDates.get(j).getMonth() &&
+                                        date.getDate() == oldDates.get(j).getDate() ) {
+                                    cellView.setTextColor(getResources().getColor(R.color.calendar_blue_white));
+                                    cellView.setBackgroundResource(R.color.calendar_selcted_range);
+                                    if(oldDates.size() == 1){
+                                        cellView.setBackgroundResource(R.drawable.reserve_choose_icon);
+                                    }else if(j == 0){
+                                        cellView.setBackgroundResource(R.drawable.order_startchoose_btn);
+                                    }else if(j == (oldDates.size() - 1)){
+                                        cellView.setBackgroundResource(R.drawable.order_endchoose_btn);
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     if (null != decorators) {
@@ -332,6 +355,26 @@ public class MonthView extends LinearLayout {
         }
 
         Logr.d("MonthView.init took %d ms", System.currentTimeMillis() - start);
+    }
+
+    private void setStartAndEnd(Date beginDate, Date endDate, CalendarCellView cellView, Date date) {
+        if (null != beginDate && null != endDate) {
+            if (date.getTime() + (23 * 60 * 60 * 1000 + 59 * 60 * 1000) >= beginDate.getTime() &&
+                    date.getTime() <= endDate.getTime() &&
+                    cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)
+                    ) {
+                cellView.setTextColor(getResources().getColor(R.color.calendar_selcted_black));
+            } else {
+                if (cellView.getCurrentTextColor() != getResources().getColor(R.color.calendar_active_month_bg)) {
+                    cellView.setTextColor(getResources().getColor(R.color.calendar_week_color));
+                }
+            }
+            if (date.getYear() == beginDate.getYear() &&
+                    date.getMonth() == beginDate.getMonth() &&
+                    date.getDate() == beginDate.getDate()) {
+                cellView.setTextColor(getResources().getColor(R.color.calendar_selected_day_bg));
+            }
+        }
     }
 
     public void setDividerColor(int color) {

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
 
-    <color name="app_theme_color">#1EA77E</color>
+    <color name="app_theme_color">#41C256</color>
     <color name="app_theme_color_no">#9cb5ad</color>
 
     <color name="gray">#ececec</color>
+    <color name="gray_898989">#898989</color>
+    <color name="gray_8e8e8e">#8e8e8e</color>
     <color name="gray_cccccc">#cccccc</color>
     <color name="gray_de">#dedede</color>
     <color name="gray_8f">#8f8f8f</color>
@@ -80,17 +82,18 @@
     <color name="color_gay_ee">#eeeeee</color>
 
     <!-- 草绿1eb482 -->
-    <color name="color_green_1e">#1eb482</color>
     <color name="color_green_5f">#088b5f</color>
     <color name="color_green_cc1e">#cc1eb482</color>
     <color name="color_green_00">#00ffaa</color>
     <color name="color_green_ef">#EFF9EE</color>
+    <color name="color_green_30AA44">#30AA44</color>
     <!-- 淡黄 -->
     <color name="color_yellowish">#f6f1ea</color>
     <!-- 透明 -->
     <color name="color_lucency">#b0000000</color>
     <!-- 透明黑 -->
     <color name="color_lucency_white">#40ffffff</color>
+    <color name="color_lucency_black">#e0000000</color>
 
     <color name="color_gay_7d">#7d7d7d</color>
     <color name="color_gay_eb">#ebebeb</color>
@@ -99,6 +102,8 @@
     <color name="color_fe">#fefcef</color>
     <color name="orange">#f06000</color>
     <color name="red_ce">#ce1c17</color>
+    <!--红色-->
+    <color name="color_red_f2">#f27575</color>
     <color name="color_lucency_0">#000000</color>
     <color name="black_b2">#b2000000</color>
 
@@ -116,4 +121,8 @@
     <color name="cpb_white">@android:color/white</color>
     <!--橘色-->
     <color name="color_orange_fa">#FA6000</color>
+    <!--红色-->
+    <color name="color_red_ff">#FF4747</color>
+
+    <color name="yellow_fff6df">#fff6df</color>
 </resources>

@@ -26,11 +26,14 @@ import com.yiju.ClassClockRoom.bean.MoreStoreBean.MoreStoreEntity;
 import com.yiju.ClassClockRoom.bean.SchoolAll;
 import com.yiju.ClassClockRoom.bean.SchoolLeft;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
-import com.yiju.ClassClockRoom.control.map.LocationSingle;
+import com.yiju.ClassClockRoom.control.ExtraControl;
+import com.yiju.ClassClockRoom.fragment.IndexFragment;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
+import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
+import com.yiju.ClassClockRoom.widget.dialog.ProgressDialog;
 import com.yiju.ClassClockRoom.widget.windows.MoreStorePopUpWindow;
 
 import java.util.ArrayList;
@@ -81,10 +84,10 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
     private MoreStoreAdapter adapter;
     //区号
     private String dist_id;
-    //经度
+    /*//经度
     private Double lng_g;
     //纬度
-    private Double lat_g;
+    private Double lat_g;*/
     //当前页
     private int page = 1;
     //每页记录数
@@ -96,8 +99,8 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initView() {
-        lng_g = LocationSingle.getInstance().getLongitude();
-        lat_g = LocationSingle.getInstance().getLatitude();
+        /*lng_g = LocationSingle.getInstance().getLongitude();
+        lat_g = LocationSingle.getInstance().getLatitude();*/
     }
 
     @Override
@@ -162,14 +165,15 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
      * 更多门店请求
      */
     private void getHttpUtils() {
+        ProgressDialog.getInstance().show();
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         if (dist_id != null && !"-1".equals(dist_id)) {
             params.addBodyParameter("dist_id", dist_id);
         }
-        if ((lng_g != null && lng_g != 0.0) && (lat_g != null && lat_g != 0.0)) {
-            params.addBodyParameter("lng_g", lng_g + "");
-            params.addBodyParameter("lat_g", lat_g + "");
+        if (StringUtils.isNotNullString(IndexFragment.lat) && StringUtils.isNotNullString(IndexFragment.lng)) {
+            params.addBodyParameter("lng_g", IndexFragment.lng);
+            params.addBodyParameter("lat_g", IndexFragment.lat);
         }
         params.addBodyParameter("page", page + "");
         params.addBodyParameter("rows", rows);
@@ -180,12 +184,14 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
 
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
+                        ProgressDialog.getInstance().dismiss();
                         UIUtils.showToastSafe(R.string.fail_network_request);
                         lv_more_store.onRefreshComplete();
                     }
 
                     @Override
                     public void onSuccess(ResponseInfo<String> arg0) {
+                        ProgressDialog.getInstance().dismiss();
                         // 处理返回的数据
                         lv_more_store.onRefreshComplete();
                         processData(arg0.result);
@@ -296,10 +302,8 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
         }
         //点击去门店详情
         int sid = datas.get(position - 1).getId();
-        Intent intent = new Intent(this, SingleStoreActivity.class);
-        intent.putExtra("sid", sid + "");
-        intent.putExtra("school_type", datas.get(position - 1).getSchool_type());
-        intent.putExtra("store_name", datas.get(position - 1).getName());
+        Intent intent = new Intent(this, StoreDetailActivity.class);
+        intent.putExtra(ExtraControl.EXTRA_STORE_ID, sid + "");
         startActivity(intent);
     }
 

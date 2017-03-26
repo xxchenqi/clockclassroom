@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_44DP"
-        android:background="@color/color_green_1e">
+        android:background="@color/app_theme_color">
 
         <ImageView
             android:id="@+id/iv_back_coupon"
@@ -68,7 +68,7 @@
                 android:layout_marginTop="@dimen/DIMEN_4DP"
                 android:gravity="center"
                 android:text="@string/coupon_content"
-                android:textColor="@color/color_green_1e"
+                android:textColor="@color/app_theme_color"
                 android:textSize="@dimen/DIMEN_14DP"
                 android:visibility="gone" />
 

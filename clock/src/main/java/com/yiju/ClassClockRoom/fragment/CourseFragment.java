@@ -22,8 +22,8 @@ import com.yiju.ClassClockRoom.act.CourseDetailActivity;
 import com.yiju.ClassClockRoom.act.CourseMoreActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
 import com.yiju.ClassClockRoom.adapter.CourseAdapter;
-import com.yiju.ClassClockRoom.bean.CourseInfo;
 import com.yiju.ClassClockRoom.bean.CourseData;
+import com.yiju.ClassClockRoom.bean.CourseInfo;
 import com.yiju.ClassClockRoom.bean.SpecialInfo;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
@@ -135,8 +135,8 @@ public class CourseFragment extends BaseFragment implements AdapterView.OnItemCl
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "get_course_index_list");
-        if (!"".equals(NewIndexFragment.sid)) {
-            params.addBodyParameter("sid", NewIndexFragment.sid);
+        if (!"".equals(IndexFragment.sid)) {
+            params.addBodyParameter("sid", IndexFragment.sid);
         }
         httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_COURSE, params,
                 new RequestCallBack<String>() {

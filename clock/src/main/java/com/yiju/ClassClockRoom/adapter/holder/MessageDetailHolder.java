@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.MainActivity;
+import com.yiju.ClassClockRoom.act.MemberDetailActivity;
 import com.yiju.ClassClockRoom.act.MineOrganizationActivity;
 import com.yiju.ClassClockRoom.act.OrderDetailActivity;
 import com.yiju.ClassClockRoom.act.OrganizationCertificationStatusActivity;
@@ -104,7 +105,7 @@ public class MessageDetailHolder extends BaseRecyclerViewHolder {
                 String content = messageData.getContent().split("：")[1].split("，")[0].trim();
                 Intent intent = new Intent();
                 intent.setClass(UIUtils.getContext(), AccompanyReadStatusActivity.class);
-                intent.putExtra(SchemeControl.PASSWORD,content);
+                intent.putExtra(SchemeControl.PASSWORD, content);
                 UIUtils.startActivity(intent);
                 break;
 
@@ -121,6 +122,14 @@ public class MessageDetailHolder extends BaseRecyclerViewHolder {
                 Intent intent_personMineCourse = new Intent(UIUtils.getContext(), PersonMineCourseDetailActivity.class);
                 intent_personMineCourse.putExtra("course_id", messageData.getDetail_id());
                 UIUtils.startActivity(intent_personMineCourse);
+                break;
+            case 23://审核通过
+            case 24://审核不通过
+                Intent intent_member_detail = new Intent(UIUtils.getContext(), MemberDetailActivity.class);
+                intent_member_detail.putExtra(MemberDetailActivity.ACTION_UID, messageData.getDetail_id());
+                intent_member_detail.putExtra(MemberDetailActivity.ACTION_TITLE,
+                        UIUtils.getString(R.string.teacher_detail));
+                UIUtils.startActivity(intent_member_detail);
                 break;
 
         }

@@ -40,6 +40,7 @@ import com.yiju.ClassClockRoom.widget.GridViewForScrollView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * ----------------------------------------
@@ -192,7 +193,7 @@ public class PublishCourseSecondActivity extends BaseActivity
     private Course_Need_Info course_need_info = new Course_Need_Info();
     private Course_DataInfo course_person;
     private Course_Person_Detail course_person_detail;
-    private boolean no_choose_teacher;
+    private boolean no_choose_teacher = true;
 
 
     @Override
@@ -239,8 +240,11 @@ public class PublishCourseSecondActivity extends BaseActivity
             }
         }
         if (StringUtils.isNotNullString(data)) {
-            course_need_info.setStart_date(data.split("~")[0]);
-            course_need_info.setEnd_date(data.split("~")[1]);
+            String[] ss = data.split("~");
+            if (ss.length == 2) {
+                course_need_info.setStart_date(data.split("~")[0]);
+                course_need_info.setEnd_date(data.split("~")[1]);
+            }
         }
         course_need_info.setRepeat(sb.toString());
         course_need_info.setStart_time(Integer.parseInt(time.split("~")[0].replaceAll(":", "").replaceAll(" ", "")));
@@ -283,8 +287,6 @@ public class PublishCourseSecondActivity extends BaseActivity
             ll_people_num.setVisibility(View.VISIBLE);
             tv_course_desc_none.setVisibility(View.GONE);
             ll_course_desc.setVisibility(View.VISIBLE);
-            tv_course_teacher_none.setVisibility(View.GONE);
-            ll_course_teacher.setVisibility(View.VISIBLE);
 
             tv_course_name.setText(course_person.getName());
             tv_course_price.setText(
@@ -295,7 +297,7 @@ public class PublishCourseSecondActivity extends BaseActivity
             if (StringUtils.isNotNullString(course_person.getHave_enroll())
                     && StringUtils.isNotNullString(course_person.getRemain_count())) {
                 tv_course_people_num.setText(
-                        String.format(
+                        String.format(Locale.CHINA,
                                 "%s/%d",
                                 course_person.getRemain_count(),
                                 Integer.parseInt(course_person.getHave_enroll())
@@ -303,7 +305,14 @@ public class PublishCourseSecondActivity extends BaseActivity
                         )
                 );
             }
-            tv_course_teacher.setText(course_person.getReal_name());
+            if (StringUtils.isNullString(course_person.getReal_name())) {
+                tv_course_teacher_none.setVisibility(View.VISIBLE);
+                ll_course_teacher.setVisibility(View.GONE);
+            } else {
+                tv_course_teacher_none.setVisibility(View.GONE);
+                ll_course_teacher.setVisibility(View.VISIBLE);
+                tv_course_teacher.setText(course_person.getReal_name());
+            }
             tv_course_desc.setText(course_person.getDesc());
             teacher_uid = course_person.getTeacher_id();
             urls = course_person.getPics();
@@ -321,8 +330,6 @@ public class PublishCourseSecondActivity extends BaseActivity
             ll_people_num.setVisibility(View.VISIBLE);
             tv_course_desc_none.setVisibility(View.GONE);
             ll_course_desc.setVisibility(View.VISIBLE);
-            tv_course_teacher_none.setVisibility(View.GONE);
-            ll_course_teacher.setVisibility(View.VISIBLE);
 
             tv_course_name.setText(course_person_detail_data.getName());
             tv_course_price.setText(
@@ -337,7 +344,14 @@ public class PublishCourseSecondActivity extends BaseActivity
                             course_person_detail_data.getTotal_count()
                     )
             );
-            tv_course_teacher.setText(course_person_detail_data.getTeacher().getReal_name());
+            if (StringUtils.isNullString(course_person_detail_data.getTeacher().getReal_name())) {
+                tv_course_teacher_none.setVisibility(View.VISIBLE);
+                ll_course_teacher.setVisibility(View.GONE);
+            } else {
+                tv_course_teacher_none.setVisibility(View.GONE);
+                ll_course_teacher.setVisibility(View.VISIBLE);
+                tv_course_teacher.setText(course_person_detail_data.getTeacher().getReal_name());
+            }
             tv_course_desc.setText(course_person_detail_data.getDesc());
             teacher_uid = course_person_detail_data.getTeacher().getId();
             urls = course_person_detail_data.getPics();

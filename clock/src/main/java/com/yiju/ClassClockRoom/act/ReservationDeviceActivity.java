@@ -10,10 +10,10 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.DeviceTypeAdapter;
-import com.yiju.ClassClockRoom.bean.DeviceEntity;
-import com.yiju.ClassClockRoom.bean.Order2;
-import com.yiju.ClassClockRoom.bean.ReservationBean;
+import com.yiju.ClassClockRoom.bean.ReservationBean.ReservationDevice;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDeviceActivity extends BaseActivity implements View.OnClickListener {
@@ -24,16 +24,14 @@ public class ReservationDeviceActivity extends BaseActivity implements View.OnCl
     @ViewInject(R.id.head_title)
     private TextView head_title;
 
-    @ViewInject(R.id.head_right_text)
-    private TextView head_right_text;
+    @ViewInject(R.id.tv_device_price)
+    private TextView tv_device_price;
 
     @ViewInject(R.id.reservation_list)
     private ListView reservation_list;
 
     private DeviceTypeAdapter deviceTypeAdapter;
-    private List<ReservationBean.ReservationDevice> devices;
-    private Order2 info;
-    private ReservationBean reservationBean;
+    private List<ReservationDevice> mDevices = new ArrayList<>();
 
     /**
      * 初始化页面
@@ -41,7 +39,6 @@ public class ReservationDeviceActivity extends BaseActivity implements View.OnCl
     @Override
     protected void initView() {
         head_back.setOnClickListener(this);
-        head_right_text.setOnClickListener(this);
     }
 
     /**
@@ -50,27 +47,23 @@ public class ReservationDeviceActivity extends BaseActivity implements View.OnCl
     @Override
     protected void initData() {
         head_title.setText(getString(R.string.reservation_device));
-        head_right_text.setText(getString(R.string.label_save));
+        tv_device_price.setText(getString(R.string.reservation_device_price_0));
         Intent mReservationIntent = getIntent();
         if (null != mReservationIntent) {
-            info = (Order2) mReservationIntent.getSerializableExtra("info");
-        }else{
-            return;
-        }
-        reservationBean = (ReservationBean) mReservationIntent.getSerializableExtra("reservationBean");
-        ReservationBean reservationHadBean = (ReservationBean) mReservationIntent.getSerializableExtra("reservationHadBean");
-        if (null != reservationBean && null == reservationHadBean) {
-            devices = reservationBean.getDevice();
-        } else if (null != reservationBean && null != info) {
-            devices = reservationBean.getDevice();
-            List<DeviceEntity> infoDevices = info.getDevice_nofree();
-            for (int i = 0; i < devices.size(); i++) {
-                devices.get(i).setCount(Integer.valueOf(infoDevices.get(i).getNum()));
+            List<ReservationDevice>  devices = (List<ReservationDevice>) mReservationIntent.getSerializableExtra("reservationDevices");
+            List<ReservationDevice> haveDevices = (List<ReservationDevice>) mReservationIntent.getSerializableExtra("haveDevices");
+            if (null != devices && devices.size()>0) {
+                mDevices.clear();
+                mDevices.addAll(devices);
             }
-        } else if(null != reservationBean){
-            devices = reservationHadBean.getDevice();
+
+            if (null != haveDevices && haveDevices.size()>0) {
+                mDevices.clear();
+                mDevices.addAll(haveDevices);
+            }
         }
         showDevice();
+        changePrice();
     }
 
     @Override
@@ -85,22 +78,20 @@ public class ReservationDeviceActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.head_back:
-                finish();
-                break;
-            case R.id.head_right_text:
-                backReservation();
+                onBackPressed();
                 break;
         }
     }
+
     /**
      * 显示设备列表
      */
     private void showDevice() {
-        if (null != devices && devices.size() > 0) {
+        if (null != mDevices && mDevices.size() > 0) {
             if (deviceTypeAdapter == null) {
-                deviceTypeAdapter = new DeviceTypeAdapter(this, devices);
+                deviceTypeAdapter = new DeviceTypeAdapter(this, mDevices, tv_device_price);
                 reservation_list.setAdapter(deviceTypeAdapter);
             } else {
                 deviceTypeAdapter.notifyDataSetChanged();
@@ -114,11 +105,24 @@ public class ReservationDeviceActivity extends BaseActivity implements View.OnCl
     private void backReservation() {
         int DEVICE = 3;
         Intent intent = new Intent();
-        if(null != reservationBean){
-            reservationBean.setDevice(devices);
-            intent.putExtra("reservationHaveBean", reservationBean);
+        if (null != mDevices && mDevices.size()>0) {
+            intent.putExtra("haveDevices", (Serializable) mDevices);
         }
         setResult(DEVICE, intent);
         finish();
+    }
+
+    private void changePrice() {
+        int price = 0;
+        for (ReservationDevice info : mDevices) {
+            price += (info.getCount() * Double.valueOf(info.getFee()));
+        }
+        tv_device_price.setText("￥" + price);
+    }
+
+    @Override
+    public void onBackPressed() {
+        backReservation();
+        super.onBackPressed();
     }
 }

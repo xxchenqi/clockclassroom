@@ -93,7 +93,7 @@ public class SingleStoreActivity extends BaseActivity implements View.OnClickLis
     protected void initView() {
         head_title.setText(store_name);
         if (!TextUtils.isEmpty(school_type) && "1".equals(school_type)) {
-            Drawable drawable = UIUtils.getDrawable(R.drawable.ziying);
+            Drawable drawable = UIUtils.getDrawable(R.drawable.chain);
             if (drawable != null) {
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 head_title.setCompoundDrawables(drawable, null, null, null);

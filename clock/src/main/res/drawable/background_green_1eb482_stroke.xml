@@ -7,6 +7,6 @@
     <!-- #f06000橙色 -->
     <stroke
         android:width="@dimen/DIMEN_1DP"
-        android:color="@color/color_green_1e" />
+        android:color="@color/app_theme_color" />
 
 </shape>

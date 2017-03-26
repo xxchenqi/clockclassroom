@@ -34,7 +34,7 @@ import matrix.sdk.count.WeimiCountConfiguration;
 
 public class BaseApplication extends MultiDexApplication {
     //环境 1:线下环境 2:线上测试 3:正式环境
-    public static final int FORMAL_ENVIRONMENT = 3;
+    public static final int FORMAL_ENVIRONMENT = 1;
     public static boolean BugTagsFlag;
     public static boolean LogFlag;
 

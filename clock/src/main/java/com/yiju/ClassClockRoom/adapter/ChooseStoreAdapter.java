@@ -38,7 +38,7 @@ public class ChooseStoreAdapter extends CommonBaseAdapter<ChooseStoreBean.DataEn
         TextView tv_item_store = holder.getView(R.id.tv_item_store);
 
 
-        Drawable drawable = UIUtils.getDrawable(R.drawable.ziying);
+        Drawable drawable = UIUtils.getDrawable(R.drawable.chain);
         if(dataEntity.getSchool_type().equals("1")){
             if (drawable != null) {
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());

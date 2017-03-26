@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
-import com.yiju.ClassClockRoom.bean.Order2;
-import com.yiju.ClassClockRoom.bean.ReservationDate;
 import com.yiju.ClassClockRoom.util.UIUtils;
 
 import java.text.SimpleDateFormat;
@@ -30,8 +28,11 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
     @ViewInject(R.id.head_title)
     private TextView head_title;
 
-    @ViewInject(R.id.head_right_text)
-    private TextView head_right_text;
+    // "平时 4 天，周末 0 天"
+    @ViewInject(R.id.tv_all_count_day)
+    private TextView tv_all_count_day;
+    @ViewInject(R.id.tv_all_count_week)
+    private TextView tv_all_count_week;
 
     @ViewInject(R.id.rl_reservation_every)
     private RelativeLayout rl_reservation_every;
@@ -90,6 +91,8 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
     private Set<Integer> mWeeks = new HashSet<>();
     private List<TextView> mTextViews = new ArrayList<>();
     private List<ImageView> mImageViews = new ArrayList<>();
+    private Calendar calendar;
+    private int allCount;
 
     /**
      * 初始化页面
@@ -97,7 +100,6 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initView() {
         head_back.setOnClickListener(this);
-        head_right_text.setOnClickListener(this);
         rl_reservation_every.setOnClickListener(this);
         rl_reservation_mon.setOnClickListener(this);
         rl_reservation_tue.setOnClickListener(this);
@@ -123,17 +125,14 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
     protected void initData() {
 
         head_title.setText(getString(R.string.reservation_week));
-        head_right_text.setText(getString(R.string.label_save));
+        calendar = Calendar.getInstance();
         Intent mReservationIntent = getIntent();
-        Order2 info;
-        if (null != mReservationIntent) {
-            info = (Order2) mReservationIntent.getSerializableExtra("info");
-        } else {
+        if (null == mReservationIntent) {
             return;
         }
         mDates.clear();
         ArrayList<Integer> reservationHaveWeekList = mReservationIntent.getIntegerArrayListExtra("reservationHaveWeek");
-        ReservationDate reservationDate = (ReservationDate) mReservationIntent.
+        List<Date> reservationDates = (ArrayList<Date>) mReservationIntent.
                 getSerializableExtra("reservationHaveDate");
         mTextViews.add(tv_reservation_sun);
         mTextViews.add(tv_reservation_mon);
@@ -149,123 +148,56 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
         mImageViews.add(iv_reservation_thu);
         mImageViews.add(iv_reservation_fri);
         mImageViews.add(iv_reservation_sat);
-        if (null != reservationDate) {
-            List<Date> reservationDates = reservationDate.getDate();
-            if (null != reservationDates && reservationDates.size() > 0) {
-                mDates.addAll(reservationDates);
-                mWeeks = getDeadWeeks(mDates);
-                if (mDates.size() >= 7) {
-                    showChoose(1);
-                    showChoose(2);
-                    showChoose(3);
-                    showChoose(4);
-                    showChoose(5);
-                    showChoose(6);
-                    showChoose(7);
-                } else if (mDates.size() < 7) {
-                    for (int i = 0; i < mDates.size(); i++) {
-                        showChoose((mDates.get(i).getDay()) + 1);
-                    }
-                }
-                showChooseView(tv_reservation_every, iv_reservation_every, rl_reservation_every);
-                if (null != reservationHaveWeekList && reservationHaveWeekList.size() > 0) {
-                    if (reservationHaveWeekList.size() == mWeeks.size()) {
-                        iv_reservation_every.setVisibility(View.VISIBLE);
-                    } else {
-                        iv_reservation_every.setVisibility(View.GONE);
-                    }
-                    for (int j = 0; j < mImageViews.size(); j++) {
-                        backColor(mImageViews.get(j));
-                    }
-                    for (int i = 0; i < reservationHaveWeekList.size(); i++) {
-                        showChoose(reservationHaveWeekList.get(i) + 1);
-                    }
+        if (null != reservationDates && reservationDates.size() > 0) {
+            mDates.addAll(reservationDates);
+            mWeeks = getDeadWeeks(mDates);
+            if (mDates.size() >= 7) {
+                showChoose(1);
+                showChoose(2);
+                showChoose(3);
+                showChoose(4);
+                showChoose(5);
+                showChoose(6);
+                showChoose(7);
+            } else if (mDates.size() < 7) {
+                for (int i = 0; i < mDates.size(); i++) {
+                    showChoose((mDates.get(i).getDay()+1));
                 }
             }
-        } else if (null != info) {
-            Set<Date> newDeadDates = getNewDeadDates(info.getStart_date(), info.getEnd_date());
-            mDates.addAll(newDeadDates);
-            String repeat = info.getRepeat();
-            if (!("").equals(repeat)) {
-                /*for (int i = 0; i < newDeadDates.size(); i++) {
-                    showChoose(newDeadDates.get(i).getDay() + 1);
-                }*/
-                for (Date date : newDeadDates) {
-                    showChoose(date.getDay() + 1);
-                }
-                tv_reservation_every.setTextColor(getResources().getColor(R.color.order_divider_view));
-                iv_reservation_every.setVisibility(View.GONE);
-                for (ImageView iv : mImageViews) {
-                    backColor(iv);
-                }
-                for (Integer in : mWeeks) {
-                    if (in == 0) {
-                        mTextViews.get(6).setTextColor(
-                                getResources().getColor(R.color.order_black));
-                        mImageViews.get(6).setVisibility(View.VISIBLE);
-                        mImageViews.get(6).setEnabled(true);
-                    } else {
-                        mTextViews.get(in - 1).setTextColor(
-                                getResources().getColor(R.color.order_black));
-                        mImageViews.get(in - 1).setVisibility(View.VISIBLE);
-                        mImageViews.get(in - 1).setEnabled(true);
-                    }
-                }
-                if (repeat.contains(",")) {
-                    String[] repeats = repeat.split(",");
-                    for (String repeat1 : repeats) {
-                        if ("7".equals(repeat1)) {
-                            showChoose(1);
-                        } else {
-                            showChoose(Integer.valueOf(repeat1) + 1);
-                        }
-                    }
-                } else {
-                    if (repeat.equals("7")) {
-                        showChoose(0);
-                    } else {
-                        showChoose(Integer.valueOf(repeat) + 1);
-                    }
-                }
-                tv_reservation_every.setTextColor(getResources().getColor(R.color.order_black));
-                if (repeat.length() == 1 && repeat.length() == newDeadDates.size()) {
+            showChooseView(tv_reservation_every, iv_reservation_every, rl_reservation_every, Integer.MAX_VALUE);
+            if (null != reservationHaveWeekList && reservationHaveWeekList.size() > 0) {
+                allCount = 0;
+                if (reservationHaveWeekList.size() == mWeeks.size()) {
                     iv_reservation_every.setVisibility(View.VISIBLE);
-                    numInfoCount = 1;
-                } else if (repeat.length() >= 1) {
-                    String[] repeats = repeat.split(",");
-                    numInfoCount = repeats.length;
-                    if (repeats.length == newDeadDates.size()) {
-                        iv_reservation_every.setVisibility(View.VISIBLE);
-                    } else {
-                        iv_reservation_every.setVisibility(View.GONE);
-                    }
-                }/* else {
+                } else {
                     iv_reservation_every.setVisibility(View.GONE);
-                }*/
-
-
-            /*} else {
-                for (int i = 0; i < newDeadDates.size(); i++) {
-                    showChoose(newDeadDates.get(i).getDay() + 1);
                 }
-                tv_reservation_every.setTextColor(getResources().getColor(R.color.order_divider_view));
-                iv_reservation_every.setVisibility(View.GONE);*/
-            }else {
-                for (Date date : newDeadDates) {
-                    showChoose(date.getDay() + 1);
+                for (int j = 0; j < mImageViews.size(); j++) {
+                    backColor(mImageViews.get(j));
                 }
-                tv_reservation_every.setTextColor(getResources().getColor(R.color.order_black));
-                iv_reservation_every.setVisibility(View.VISIBLE);
-                numInfoCount = getDeadWeeks(mDates).size();
+                for (int i = 0; i < reservationHaveWeekList.size(); i++) {
+                    showChoose(reservationHaveWeekList.get(i) + 1);
+                }
+                if (reservationHaveWeekList.contains(Calendar.SUNDAY - 1) && !reservationHaveWeekList.contains(Calendar.SATURDAY - 1)) {
+                    setDayTip(Calendar.SUNDAY);
+                } else if (reservationHaveWeekList.contains(Calendar.SATURDAY - 1) && !reservationHaveWeekList.contains(Calendar.SUNDAY - 1)) {
+                    setDayTip(Calendar.SATURDAY);
+                } else if (reservationHaveWeekList.contains(Calendar.SATURDAY - 1) && reservationHaveWeekList.contains(Calendar.SUNDAY - 1)) {
+                    setDayTip();
+                    allCount = mDates.size();
+                } else {
+//                    changeTextColor("平时 " + allCount + " 天,周末 0 天",
+//                            String.valueOf(allCount), String.valueOf(0));
+                    setCountText(allCount + "", "0");
+                }
+            } else {
+                setDayTip();
+                allCount = mDates.size();
             }
-            iv_reservation_every.setEnabled(true);
-            rl_reservation_every.setEnabled(true);
         }
         mWeeks = getDeadWeeks(mDates);
         if (null != reservationHaveWeekList && reservationHaveWeekList.size() > 0) {
             numCount = reservationHaveWeekList.size();
-        } else if (null != info) {
-            numCount = numInfoCount;
         } else {
             numCount = mWeeks.size();
         }
@@ -285,10 +217,7 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back:
-                finish();
-                break;
-            case R.id.head_right_text:
-                backReservation();
+                onBackPressed();
                 break;
             case R.id.rl_reservation_every:
                 // 每天的点击事件，点击之后将所有星期置为未选中状态
@@ -302,6 +231,9 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
                     backColor(iv_reservation_sat);
                     backColor(iv_reservation_sun);
                     numCount = 0;
+//                    changeTextColor("平时 0 天,周末 0 天", "0", "0");
+                    setCountText("0", "0");
+                    allCount = 0;
                 } else {
                     // 那么将所有的星期全部置为选中状态
                     changeText(iv_reservation_every, tv_reservation_every);
@@ -313,53 +245,149 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
                     changeText(iv_reservation_sat, tv_reservation_sat);
                     changeText(iv_reservation_sun, tv_reservation_sun);
                     numCount = mWeeks.size();
+                    allCount = mDates.size();
+                    setDayTip();
                 }
                 break;
             case R.id.rl_reservation_mon:
-                chooseWeek(iv_reservation_mon);
+                chooseWeek(iv_reservation_mon, Calendar.MONDAY);
                 break;
             case R.id.rl_reservation_tue:
-                chooseWeek(iv_reservation_tue);
+                chooseWeek(iv_reservation_tue, Calendar.TUESDAY);
                 break;
             case R.id.rl_reservation_wed:
-                chooseWeek(iv_reservation_wed);
+                chooseWeek(iv_reservation_wed, Calendar.WEDNESDAY);
                 break;
             case R.id.rl_reservation_thu:
-                chooseWeek(iv_reservation_thu);
+                chooseWeek(iv_reservation_thu, Calendar.THURSDAY);
                 break;
             case R.id.rl_reservation_fri:
-                chooseWeek(iv_reservation_fri);
+                chooseWeek(iv_reservation_fri, Calendar.FRIDAY);
                 break;
             case R.id.rl_reservation_sat:
-                chooseWeek(iv_reservation_sat);
+                chooseWeek(iv_reservation_sat, Calendar.SATURDAY);
                 break;
             case R.id.rl_reservation_sun:
-                chooseWeek(iv_reservation_sun);
+                chooseWeek(iv_reservation_sun, Calendar.SUNDAY);
                 break;
             default:
                 break;
         }
     }
 
+    private void setDayTip() {
+        int count = getDays(Calendar.SUNDAY) + getDays(Calendar.SATURDAY);
+//        changeTextColor("平时 " + (allCount - count) + " 天,周末 " + (count) + " 天",
+//                String.valueOf(allCount - count), String.valueOf(count));
+
+
+        setCountText(allCount - count + "", count + "");
+    }
+
+
+    private int getDays(int day) {
+        int count = 0;
+        for (Date d : mDates) {
+            calendar.setTime(d);
+            int week = calendar.get(Calendar.DAY_OF_WEEK);
+            if (week == day) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+   /* private void changeTextColor(String wholeStr, String greenStr1, String greenStr2) {
+        StringFormatUtil spanStr = new StringFormatUtil(this, wholeStr,
+                greenStr1, greenStr2, R.color.app_theme_color).fillColor(true);
+        tv_all_count.setText(spanStr.getResult());
+    }*/
+
+    private void setCountText(String dayCount, String weekCount) {
+        tv_all_count_day.setText(dayCount);
+        tv_all_count_week.setText(weekCount);
+    }
+
     /**
      * 星期状态
      *
-     * @param iv 星期是否被选中
+     * @param iv   星期是否被选中
+     * @param week 星期几
      */
-    private void chooseWeek(ImageView iv) {
+    private void chooseWeek(ImageView iv, int week) {
 
         if (iv.getVisibility() == View.VISIBLE) {
             iv.setVisibility(View.GONE);
             iv_reservation_every.setVisibility(View.GONE);
             numCount--;
-
+            int chooseDays = getDays(week);
+            allCount = allCount - chooseDays;
+            setDayTip(week, true);
         } else {
             iv.setVisibility(View.VISIBLE);
             numCount++;
             if (numCount == mWeeks.size()) {
                 iv_reservation_every.setVisibility(View.VISIBLE);
             }
+            int chooseDays = getDays(week);
+            allCount = allCount + chooseDays;
+            setDayTip(week, false);
         }
+
+    }
+
+    private void setDayTip(int week, boolean flag) {
+        int zhouMo = 0;
+        int pingshi = 0;
+        if (flag) {
+            if (week == Calendar.SUNDAY && iv_reservation_sat.getVisibility() == View.VISIBLE) {
+                zhouMo = getDays(Calendar.SATURDAY);
+            } else if (week == Calendar.SUNDAY && iv_reservation_sat.getVisibility() == View.GONE) {
+                zhouMo = 0;
+            } else if (week == Calendar.SATURDAY && iv_reservation_sun.getVisibility() == View.VISIBLE) {
+                zhouMo = getDays(Calendar.SUNDAY);
+            } else if (week == Calendar.SATURDAY && iv_reservation_sun.getVisibility() == View.GONE) {
+                zhouMo = 0;
+            } else if(iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.GONE){
+                zhouMo = 0;
+            } else if(iv_reservation_sat.getVisibility() == View.VISIBLE && iv_reservation_sun.getVisibility() == View.GONE){
+                zhouMo = getDays(Calendar.SATURDAY);
+            }else if(iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.VISIBLE){
+                zhouMo = getDays(Calendar.SUNDAY);
+            } else{
+                zhouMo = getDays(Calendar.SATURDAY) + getDays(Calendar.SUNDAY);
+            }
+        } else {
+            if (week == Calendar.SATURDAY && iv_reservation_sat.getVisibility() == View.VISIBLE &&
+                    iv_reservation_sun.getVisibility() == View.GONE) {
+                zhouMo = getDays(Calendar.SATURDAY);
+            } else if (week == Calendar.SUNDAY && iv_reservation_sun.getVisibility() == View.VISIBLE &&
+                    iv_reservation_sat.getVisibility() == View.GONE) {
+                zhouMo = getDays(Calendar.SUNDAY);
+            } else if(iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.GONE){
+                zhouMo = 0;
+            } else if(iv_reservation_sat.getVisibility() == View.VISIBLE && iv_reservation_sun.getVisibility() == View.GONE){
+                zhouMo = getDays(Calendar.SATURDAY);
+            } else if(iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.VISIBLE){
+                zhouMo = getDays(Calendar.SUNDAY);
+            } else {
+                zhouMo = getDays(Calendar.SATURDAY) + getDays(Calendar.SUNDAY);
+            }
+        }
+        pingshi = allCount - zhouMo;
+//        changeTextColor("平时 " + pingshi + " 天,周末 " + zhouMo + " 天",
+//                String.valueOf(pingshi), String.valueOf(zhouMo));
+        setCountText(pingshi + "", zhouMo + "");
+    }
+
+    private void setDayTip(int week) {
+        int zhouMo = 0;
+        int pingshi = 0;
+        zhouMo = getDays(week);
+        pingshi = allCount - zhouMo;
+//        changeTextColor("平时 " + pingshi + " 天,周末 " + zhouMo + " 天",
+//                String.valueOf(pingshi), String.valueOf(zhouMo));
+        setCountText(pingshi + "", zhouMo + "");
     }
 
     /**
@@ -382,27 +410,27 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
      * @param i 日期中的天
      */
     private void showChoose(int i) {
-        switch (i - 1) {
-            case 0:
-                showChooseView(tv_reservation_sun, iv_reservation_sun, rl_reservation_sun);
-                break;
+        switch (i) {
             case 1:
-                showChooseView(tv_reservation_mon, iv_reservation_mon, rl_reservation_mon);
+                showChooseView(tv_reservation_sun, iv_reservation_sun, rl_reservation_sun, i);
                 break;
             case 2:
-                showChooseView(tv_reservation_tue, iv_reservation_tue, rl_reservation_tue);
+                showChooseView(tv_reservation_mon, iv_reservation_mon, rl_reservation_mon, i);
                 break;
             case 3:
-                showChooseView(tv_reservation_wed, iv_reservation_wed, rl_reservation_wed);
+                showChooseView(tv_reservation_tue, iv_reservation_tue, rl_reservation_tue, i);
                 break;
             case 4:
-                showChooseView(tv_reservation_thu, iv_reservation_thu, rl_reservation_thu);
+                showChooseView(tv_reservation_wed, iv_reservation_wed, rl_reservation_wed, i);
                 break;
             case 5:
-                showChooseView(tv_reservation_fri, iv_reservation_fri, rl_reservation_fri);
+                showChooseView(tv_reservation_thu, iv_reservation_thu, rl_reservation_thu, i);
                 break;
             case 6:
-                showChooseView(tv_reservation_sat, iv_reservation_sat, rl_reservation_sat);
+                showChooseView(tv_reservation_fri, iv_reservation_fri, rl_reservation_fri, i);
+                break;
+            case 7:
+                showChooseView(tv_reservation_sat, iv_reservation_sat, rl_reservation_sat, i);
                 break;
 
             default:
@@ -414,11 +442,15 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
      * 展示选中的星期
      *
      * @param text 展示可选的星期
+     * @param week 星期
      */
-    private void showChooseView(TextView text, ImageView iv, RelativeLayout rl) {
+    private void showChooseView(TextView text, ImageView iv, RelativeLayout rl, int week) {
         text.setTextColor(getResources().getColor(R.color.order_black));
         iv.setVisibility(View.VISIBLE);
         rl.setEnabled(true);
+        if (week != Integer.MAX_VALUE) {
+            allCount += getDays(week);
+        }
     }
 
     /**
@@ -524,5 +556,10 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
         } else {
             UIUtils.showToastSafe(R.string.toast_select_one_day_at_least);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backReservation();
     }
 }

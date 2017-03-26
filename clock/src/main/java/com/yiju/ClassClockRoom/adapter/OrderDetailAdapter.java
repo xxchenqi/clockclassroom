@@ -25,12 +25,13 @@ import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.ClassroomArrangementActivity;
 import com.yiju.ClassClockRoom.act.ClassroomDetailActivity;
 import com.yiju.ClassClockRoom.act.IndexDetailActivity;
-import com.yiju.ClassClockRoom.act.SingleStoreActivity;
+import com.yiju.ClassClockRoom.act.StoreDetailActivity;
 import com.yiju.ClassClockRoom.bean.AdjustmentData;
 import com.yiju.ClassClockRoom.bean.CommonMsgResult;
 import com.yiju.ClassClockRoom.bean.DeviceEntity;
 import com.yiju.ClassClockRoom.bean.Order2;
 import com.yiju.ClassClockRoom.bean.Order3;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -39,9 +40,12 @@ import com.yiju.ClassClockRoom.util.net.UrlUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * --------------------------------------
@@ -179,16 +183,18 @@ public class OrderDetailAdapter extends BaseAdapter {
             } else {
                 o.setIsHave(true);
                 viewHolder.ll_all_up_down.setVisibility(View.VISIBLE);
+                List<AdjustmentData> newCancel_date = getNewCancel_date(o.getRoom_adjust().getCancel_date());
                 //取消课室动态布局
                 handleClassRoom(
                         viewHolder.ll_cancel_classroom,
                         viewHolder.tv_cancel_classroom,
-                        o.getRoom_adjust().getCancel_date());
+                        newCancel_date);
+                List<AdjustmentData> newAdd_date = getNewCancel_date(o.getRoom_adjust().getAdd_date());
                 //增加课室动态布局
                 handleClassRoom(
                         viewHolder.ll_add_classroom,
                         viewHolder.tv_add_classroom,
-                        o.getRoom_adjust().getAdd_date());
+                        newAdd_date);
             }
             //可选设备
             handleDeviceNoFree(viewHolder.ll_can_select, viewHolder.ll_no_free_device_add, o.getDevice_nofree());
@@ -240,12 +246,27 @@ public class OrderDetailAdapter extends BaseAdapter {
                         o.getStart_date(),
                         o.getEnd_date()
                 ));
-        viewHolder.tv_item_detail_time.setText(
-                String.format(
-                        UIUtils.getString(R.string.to_symbol),
-                        StringUtils.changeTime(o.getStart_time()),
-                        StringUtils.changeTime(o.getEnd_time())
-                ));
+        if (o.getTime_group() != null && o.getTime_group().size() >= 0) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < o.getTime_group().size(); i++) {
+                if (i == o.getTime_group().size() - 1) {
+                    String dateShow = String.format(
+                            UIUtils.getString(R.string.to_symbol),
+                            StringUtils.changeTime(o.getTime_group().get(i).getStart_time()),
+                            StringUtils.changeTime(o.getTime_group().get(i).getEnd_time())
+                    );
+                    sb.append(dateShow);
+                } else {
+                    String dateShow = String.format(
+                            UIUtils.getString(R.string.to_symbol),
+                            StringUtils.changeTime(o.getTime_group().get(i).getStart_time()),
+                            StringUtils.changeTime(o.getTime_group().get(i).getEnd_time())
+                    );
+                    sb.append(dateShow).append("，");
+                }
+            }
+            viewHolder.tv_item_detail_time.setText(sb.toString());
+        }
         viewHolder.tv_item_detail_repeat.setText(StringUtils.getRepeatWeek(o.getRepeat()));
         /*viewHolder.tv_item_detail_fee.setText(
                 String.format(
@@ -295,20 +316,8 @@ public class OrderDetailAdapter extends BaseAdapter {
         viewHolder.tv_item_detail_sname.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(UIUtils.getContext(),
-                        IndexDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("sid", o.getSid());
-                bundle.putString("name", o.getSname());
-                bundle.putString("address", o.getSaddress());
-                bundle.putString("tags", o.getTags());
-                intent.putExtras(bundle);
-                BaseApplication.getmForegroundActivity().startActivity(intent);*/
-
-                Intent intent = new Intent(UIUtils.getContext(), SingleStoreActivity.class);
-                intent.putExtra("sid", o.getSid());
-                intent.putExtra("school_type",o.getSchool_type());
-                intent.putExtra("store_name", o.getSname());
+                Intent intent = new Intent(UIUtils.getContext(), StoreDetailActivity.class);
+                intent.putExtra(ExtraControl.EXTRA_STORE_ID, o.getSid());
                 UIUtils.startActivity(intent);
             }
         });
@@ -320,7 +329,7 @@ public class OrderDetailAdapter extends BaseAdapter {
                 intent.putExtra("sid", o.getSid());
                 intent.putExtra("sname", o.getSname());
                 intent.putExtra("type_desc", o.getType_desc());
-                intent.putExtra("typeid", o.getType_id());
+                intent.putExtra(ExtraControl.EXTRA_TYPE_ID, o.getType_id());
                 intent.putExtra("from_order_detail", "1");
                 BaseApplication.getmForegroundActivity().startActivity(intent);
             }
@@ -341,7 +350,7 @@ public class OrderDetailAdapter extends BaseAdapter {
                         ClassroomDetailActivity.class);
                 intent.putExtra("order2", o);
                 intent.putExtra("coupon_id", coupon_id);
-                context.startActivity(intent);
+                BaseApplication.getmForegroundActivity().startActivity(intent);
             }
         });
         //课室布置
@@ -508,9 +517,40 @@ public class OrderDetailAdapter extends BaseAdapter {
         private LinearLayout ll_set_classroom;//课室布置区域块
         private LinearLayout ll_set_classroom_top;//课室布置头
         private TextView tv_edit_classroom;//课室布置 修改
-//        private TextView tv_check_classroom_relevance;//课程是否关联
+        //        private TextView tv_check_classroom_relevance;//课程是否关联
         private ImageView iv_item_detail_type;//旗舰店
 
+    }
+
+    private List<AdjustmentData> getNewCancel_date(List<AdjustmentData> cancel_date) {
+        /* 此方法去重会影响原有数据顺序
+        HashMap<String, AdjustmentData> hashMap = new HashMap<>();
+        for (AdjustmentData adjustmentData : cancel_date) {
+            String date = adjustmentData.getDate();
+            if (!hashMap.containsKey(date)) {
+                hashMap.put(date, adjustmentData);
+            }
+        }
+        List<AdjustmentData> newCancel_date = new ArrayList<>();
+        for (String dateKey : hashMap.keySet()) {
+            newCancel_date.add(hashMap.get(dateKey));
+        }*/
+        List<AdjustmentData> newCancel_date = new ArrayList<>();
+        Set<String> set = new HashSet<>();
+        for (AdjustmentData adjustmentData : cancel_date) {
+            if (adjustmentData == null) {
+                continue;
+            }
+            String date = adjustmentData.getDate();
+            if (StringUtils.isNotNullString(date)) {
+                if (!set.contains(date)) {
+                    set.add(date);
+                    newCancel_date.add(adjustmentData);
+                }
+            }
+        }
+        set.clear();
+        return newCancel_date;
     }
 
     /**
@@ -556,7 +596,7 @@ public class OrderDetailAdapter extends BaseAdapter {
     /**
      * 收费设备_可选设备
      *
-     * @param ll_parent     动态添加布局的父控件
+     * @param ll_parent      动态添加布局的父控件
      * @param device_no_free 收费设备数据源
      */
     private void handleDeviceNoFree(LinearLayout ll_can_select, LinearLayout ll_parent, List<DeviceEntity> device_no_free) {

@@ -2,17 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/gray"
     android:fitsSystemWindows="true"
-    android:background="@color/gray">
+    android:orientation="vertical">
 
     <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_32DP"
+        android:background="@color/yellow_fff6df"
+        android:drawableLeft="@drawable/green_tip"
+        android:drawablePadding="@dimen/DIMEN_8DP"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:text="@string/reservation_device_tip"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_12DP" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_37DP">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/reservation_device_choose"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP" />
+
+        <TextView
+            android:id="@+id/tv_device_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/DIMEN_15DP"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:textColor="@color/app_theme_color"/>
+
+        <TextView
+            android:layout_toLeftOf="@+id/tv_device_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/DIMEN_12DP"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_gay_99"
+            android:text="@string/reservation_device_price_all"/>
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/reservation_list"
-        android:layout_marginTop="@dimen/DIMEN_12DP"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/list"/>
+        android:background="@color/white"
+        android:divider="@color/list" />
 
 </LinearLayout>

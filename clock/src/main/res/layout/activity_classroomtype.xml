@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:tabIndicatorColor="@color/color_green_1e"
+        app:tabIndicatorColor="@color/app_theme_color"
         app:tabIndicatorHeight="@dimen/DIMEN_2DP"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/color_green_1e"
+        app:tabSelectedTextColor="@color/app_theme_color"
         app:tabTextColor="@color/color_gay_99" />
 
     <View style="@style/linestyle_order_divider_view2" />

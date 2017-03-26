@@ -2,7 +2,10 @@ package com.yiju.ClassClockRoom.act;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +26,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.MemberDetailAdapter;
+import com.yiju.ClassClockRoom.bean.CommonMsgResult;
 import com.yiju.ClassClockRoom.bean.MemberDetailData;
 import com.yiju.ClassClockRoom.bean.MienBean;
 import com.yiju.ClassClockRoom.bean.PictureWrite;
@@ -37,6 +41,7 @@ import com.yiju.ClassClockRoom.control.camera.CameraDialog;
 import com.yiju.ClassClockRoom.control.camera.CameraImage;
 import com.yiju.ClassClockRoom.control.camera.ResultCameraHandler;
 import com.yiju.ClassClockRoom.util.CommonUtil;
+import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.PermissionsChecker;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -70,7 +75,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     public static final String ACTION_SHOW_TEACHER = "show_teacher";
     public static final String ACTION_ORG_AUTH = "org_auth";
     public static final String ACTION_MOBILE = "mobile";
-    public static final String ACTION_title = "title";
+    public static final String ACTION_TITLE = "title";
     public static final String ACTION_COURSE_FLAG = "course_flag";
     public static final String ACTION_BACK_FLAG = "back_flag";
     //回退
@@ -79,6 +84,26 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     //标题
     @ViewInject(R.id.head_title)
     private TextView head_title;
+    //右上角按钮文案
+    @ViewInject(R.id.head_right_text)
+    private TextView head_right_text;
+    @ViewInject(R.id.head_right_relative)
+    private RelativeLayout head_right_relative;
+    //状态块
+    @ViewInject(R.id.rl_teacher_status)
+    private RelativeLayout rl_teacher_status;
+    //审核状态
+    @ViewInject(R.id.tv_teacher_status)
+    private TextView tv_teacher_status;
+    //审核时间
+    @ViewInject(R.id.tv_teacher_check_time)
+    private TextView tv_teacher_check_time;
+    //未通过原因
+    @ViewInject(R.id.tv_teacher_un_verify_reason)
+    private TextView tv_teacher_un_verify_reason;
+    //提示
+    @ViewInject(R.id.tv_member_tips)
+    private TextView tv_member_tips;
     //老师风采
     @ViewInject(R.id.gv_teacher_elegant)
     private GridViewForScrollView gv_teacher_elegant;
@@ -157,7 +182,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     //被修改人的id,传进来的id
     private String teacher_uid;
     //是否是管理员(传进来的)
-    private String org_auth;
+    private String org_auth;// 2 为管理员
     //是否是管理员(用户本身的)
     private String user_org_auth;
     //手机
@@ -198,6 +223,8 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     public static int RESULT_CODE_FROM_MEMBER_BACK_ACT = 1006;
     private String from;
 
+    private boolean isEditMustInfo;
+
     @Override
     public void initIntent() {
         super.initIntent();
@@ -205,7 +232,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         from = getIntent().getStringExtra("from");
         show_teacher = getIntent().getStringExtra(ACTION_SHOW_TEACHER);
         org_auth = getIntent().getStringExtra(ACTION_ORG_AUTH);
-        title = getIntent().getStringExtra(ACTION_title);
+        title = getIntent().getStringExtra(ACTION_TITLE);
         mobile = getIntent().getStringExtra(ACTION_MOBILE);
         course_flag = getIntent().getBooleanExtra(ACTION_COURSE_FLAG, false);
     }
@@ -275,7 +302,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         }
 
         //是否需要显示底部的内容
-        if (org_id != null) {
+        if (StringUtils.isNotNullString(org_id)) {
             if ("0".equals(org_id)) {
                 if ("2".equals(is_auth)) {
 //                        UIUtils.showToastSafe("认证失败");
@@ -295,16 +322,12 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
             }
         }
 
-
         getHttpUtils();
-
     }
 
     @Override
     public void initListener() {
         super.initListener();
-        head_back_relative.setOnClickListener(this);
-
     }
 
     /**
@@ -315,9 +338,6 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "get_teacher_info");
         params.addBodyParameter("teacher_uid", teacher_uid);
-//        params.addBodyParameter("username", username);
-//        params.addBodyParameter("password", password);
-//        params.addBodyParameter("third_source", third_source);
 
         httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
                 new RequestCallBack<String>() {
@@ -337,88 +357,39 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void processData(String result) {
+        head_back_relative.setOnClickListener(this);
+        rl_member_name.setOnClickListener(this);
+        head_right_relative.setOnClickListener(this);
+        rl_member_gender.setOnClickListener(this);
+        rl_member_teacher_brief.setOnClickListener(this);
+        rl_member_tag.setOnClickListener(this);
+        btn_remove_organization.setOnClickListener(this);
+        rl_member_head.setOnClickListener(this);
+
         bean = GsonTools.changeGsonToBean(result,
                 MemberDetailResult.class);
         if (bean == null) {
             return;
         }
-        //请求完成后进行监听，防止崩溃
-        if (!course_flag) {
-            if ("2".equals(user_org_auth)) {
-                //用户是管理员，可编辑
-                rl_member_head.setOnClickListener(this);
-                rl_member_gender.setOnClickListener(this);
-                rl_member_teacher_brief.setOnClickListener(this);
-                rl_member_tag.setOnClickListener(this);
-                btn_remove_organization.setOnClickListener(this);
-                rl_member_name.setOnClickListener(this);
-                edit_flag = true;
-            } else {
-                if (UIUtils.getString(R.string.member_detail).equals(title) || !UIUtils.getString(R.string.teacher_detail).equals(title)) {
-                    //如果是老师资料，自己点自己可以编辑头像
-                    if (StringUtils.getUid().equals(teacher_uid)) {
-                        if ("1".equals(is_pay)) {
-                            rl_member_head.setOnClickListener(this);
-                            rl_member_gender.setOnClickListener(this);
-                            rl_member_teacher_brief.setOnClickListener(this);
-                            rl_member_tag.setOnClickListener(this);
-                            btn_remove_organization.setOnClickListener(this);
-                            rl_member_name.setOnClickListener(this);
-                            edit_flag = true;
-                        } else {
-                            iv_member_name_arrow.setVisibility(View.INVISIBLE);
-                            iv_member_gender_arrow.setVisibility(View.INVISIBLE);
-                            iv_member_teacher_brief_arrow.setVisibility(View.INVISIBLE);
-                            iv_member_tag_arrow.setVisibility(View.INVISIBLE);
-                            rl_member_head.setOnClickListener(this);
-                        }
-                    } else {
-                        //用户看别人,全部不能点击
-                        iv_member_name_arrow.setVisibility(View.INVISIBLE);
-                        iv_member_gender_arrow.setVisibility(View.INVISIBLE);
-                        iv_member_teacher_brief_arrow.setVisibility(View.INVISIBLE);
-                        iv_member_tag_arrow.setVisibility(View.INVISIBLE);
-                        iv_member_head_arrow.setVisibility(View.INVISIBLE);
-                    }
-                } else {
-                    //老师详情并且订过课室,订过的都能编辑，没订过的只能编辑头像
-                    if ("1".equals(is_pay)) {
-                        rl_member_head.setOnClickListener(this);
-                        rl_member_gender.setOnClickListener(this);
-                        rl_member_teacher_brief.setOnClickListener(this);
-                        rl_member_tag.setOnClickListener(this);
-                        btn_remove_organization.setOnClickListener(this);
-                        rl_member_name.setOnClickListener(this);
-                        edit_flag = true;
-                    } else {
-                        iv_member_name_arrow.setVisibility(View.INVISIBLE);
-                        iv_member_gender_arrow.setVisibility(View.INVISIBLE);
-                        iv_member_teacher_brief_arrow.setVisibility(View.INVISIBLE);
-                        iv_member_tag_arrow.setVisibility(View.INVISIBLE);
-                        rl_member_head.setOnClickListener(this);
-                    }
-                }
-            }
-        } else {
-            btn_remove_organization.setVisibility(View.GONE);
-            iv_member_name_arrow.setVisibility(View.INVISIBLE);
-            iv_member_gender_arrow.setVisibility(View.INVISIBLE);
-            iv_member_teacher_brief_arrow.setVisibility(View.INVISIBLE);
-            iv_member_tag_arrow.setVisibility(View.INVISIBLE);
-            iv_member_head_arrow.setVisibility(View.INVISIBLE);
-            edit_flag = false;
-        }
-
 
         if ("1".equals(bean.getCode())) {
+            org_auth = bean.getOrg_auth();//当前老师是否是管理员
+            is_pay = bean.getIs_pay();//标记是否完整下过订单
             MemberDetailData data = bean.getData();
+            if (data == null) {
+                return;
+            }
+            mobile = bean.getMobile();
+            //不同审核状态下初始化各种控件
+            initTeacherStatus(bean, data);
+            //显示隐藏各控件
+            initViewVisible(data);
             //当前用户是管理员 或者 当前用户公开信息 或者 是从个人老师资料进来的 或者 当前用户点击的是自己，
             //都显示所有信息
             if ("2".equals(user_org_auth) || "1".equals(show_teacher) ||
                     UIUtils.getString(R.string.teacher_detail).equals(title)
                     || StringUtils.getUid().equals(teacher_uid)) {
                 //设置名字
-//                tv_member_name_content.setText(bean.getOrg_dname());
                 tv_member_name_content.setText(data.getReal_name());
                 //设置手机
                 tv_member_mobile_content.setText(mobile);
@@ -449,36 +420,23 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
                     tv_teacher_brief.setVisibility(View.GONE);
                 }
                 //设置标签
-                if (!"".equals(data.getTags())) {
+                if (StringUtils.isNotNullString(data.getTags())) {
                     fl_member_tag.setVisibility(View.VISIBLE);
                     fl_member_tag.removeAllViews();
                     fl_member_tag.setHorizontalSpacing(UIUtils.dip2px(5));
                     fl_member_tag.setVerticalSpacing(UIUtils.dip2px(2));
                     String[] tags = data.getTags().split(",");
-//                    int sum_width = 0;
                     for (String tag : tags) {
                         TextView view = new TextView(this);
                         view.setText(tag);
                         view.setTextSize(10);
-                        view.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                        view.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                         view.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_tv_flowlayout_green));
 
                         int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
                         int height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
                         view.measure(width, height);
-
-                        /*sum_width += view.getMeasuredWidth() + UIUtils.dip2px(5) * 2;
-                        if (sum_width > fl_member_tag.getWidth()) {
-                            TextView tv = new TextView(this);
-                            tv.setText("...");
-                            tv.setTextSize(10);
-                            tv.setTextColor(UIUtils.getColor(R.color.color_green_1e));
-                            tv.setGravity(Gravity.BOTTOM);
-                            fl_member_tag.addView(tv);
-                            break;
-                        } else {*/
                         fl_member_tag.addView(view);
-//                        }
                     }
                 } else {
                     fl_member_tag.removeAllViews();
@@ -486,23 +444,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
                 }
 
                 //设置老师风采
-                List<MienBean> mien = data.getMien();
-                datas.clear();
-                if (mien.size() != 0) {
-                    datas.addAll(mien);
-                    if (edit_flag) {
-                        //当前用户为管理员是可编辑的
-                        datas.add(new MienBean());
-                    }
-                    adapter = new MemberDetailAdapter(this, datas, R.layout.item_member_detail, datas.size(), mScreenWidth, mScreenHeight, this, user_org_auth, edit_flag);
-                    gv_teacher_elegant.setAdapter(adapter);
-                } else {
-                    if (edit_flag) {
-                        datas.add(new MienBean());
-                    }
-                    adapter = new MemberDetailAdapter(this, datas, R.layout.item_member_detail, datas.size(), mScreenWidth, mScreenHeight, this, user_org_auth, edit_flag);
-                    gv_teacher_elegant.setAdapter(adapter);
-                }
+                setTeacherMine(data);
             } else {
                 //不公开,隐藏信息,只显示名字和手机的部分内容
                 //设置名字
@@ -524,61 +466,286 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         } else {
             //尚未有该用户信息
             if ("11018".equals(bean.getCode())) {
+                bean.getData().setIs_verify("-1");
                 //当前用户是管理员
                 if ("2".equals(user_org_auth)) {
+                    //不同审核状态下初始化各种控件
+                    initTeacherStatus(bean, bean.getData());
+                    //显示隐藏各控件
+                    initViewVisible(bean.getData());
                     //设置名字
-                    rl_member_name.setOnClickListener(this);
-                    if (bean.getData() != null) {
-                        tv_member_name_content.setText(bean.getData().getReal_name());
-                    }
+                    rl_member_name.setClickable(true);
+
                     //设置手机
                     tv_member_mobile_content.setText(mobile);
+                    //设置头像
+                    if (StringUtils.isNotNullString(bean.getAvatar())) {
+                        Glide.with(UIUtils.getContext()).load(bean.getAvatar()).into(cv_member_head_info);
+                    }
                     //增加老师风采
                     if (!course_flag) {
-                        datas.clear();
-                        datas.add(new MienBean());
-                        adapter = new MemberDetailAdapter(this, datas, R.layout.item_member_detail, datas.size(), mScreenWidth, mScreenHeight, this, user_org_auth, edit_flag);
-                        gv_teacher_elegant.setAdapter(adapter);
+                        setTeacherMine(bean.getData());
                     }
-                } else if ("1".equals(show_teacher)) {
-                    if (bean.getData() != null
-                            && StringUtils.isNotNullString(bean.getData().getReal_name())) {
-                        //设置名字
-                        tv_member_name_content.setText(bean.getData().getReal_name());
-                    }
-                    //设置手机
-                    tv_member_mobile_content.setText(mobile);
                 } else {
-                    //不公开,隐藏信息,只显示名字和手机的部分内容
-                    //设置名字
-                    if (bean.getData() != null && StringUtils.isNotNullString(bean.getData().getReal_name())) {
-                        String real_name = bean.getData().getReal_name();
-                        if (real_name.length() > 0) {
-                            //显示剩余*的数量=org_dname.length()-1
-                            StringBuilder sb = new StringBuilder();
-                            for (int i = 0; i < real_name.length() - 1; i++) {
-                                sb.append("*");
+                    //非管理员用户看自己
+                    if (StringUtils.getUid().equals(teacher_uid)) {
+                        initHeadViewVisibleClick();
+                        if ("1".equals(is_pay)) {//是否订过课室
+                            initViewVisibleClick();
+                            head_right_text.setText(R.string.txt_submit_audit);
+                            head_right_relative.setVisibility(View.VISIBLE);
+                            head_right_relative.setClickable(true);
+                        } else {
+                            initViewInVisibleNoClick();
+                            head_right_relative.setVisibility(View.INVISIBLE);
+                            head_right_relative.setClickable(false);
+                        }
+                    } else {
+                        //用户看别人,全部不能点击
+                        initHeadViewInVisibleNoClick();
+                        initViewInVisibleNoClick();
+                        head_right_relative.setVisibility(View.INVISIBLE);
+                        head_right_relative.setClickable(false);
+                    }
+                    if ("1".equals(show_teacher)) {
+                        if (bean.getData() != null
+                                && StringUtils.isNotNullString(bean.getData().getReal_name())) {
+                            //设置名字
+                            tv_member_name_content.setText(bean.getData().getReal_name());
+                        }
+                        //设置手机
+                        tv_member_mobile_content.setText(mobile);
+                        //设置头像
+                        if (StringUtils.isNotNullString(bean.getAvatar())) {
+                            Glide.with(UIUtils.getContext()).load(bean.getAvatar()).into(cv_member_head_info);
+                        }
+                    } else {
+                        //不公开,隐藏信息,只显示名字和手机的部分内容
+                        //设置名字
+                        if (bean.getData() != null && StringUtils.isNotNullString(bean.getData().getReal_name())) {
+                            String real_name = bean.getData().getReal_name();
+                            if (real_name.length() > 0) {
+                                //显示剩余*的数量=org_dname.length()-1
+                                StringBuilder sb = new StringBuilder();
+                                for (int i = 0; i < real_name.length() - 1; i++) {
+                                    sb.append("*");
+                                }
+                                tv_member_name_content.setText(real_name.substring(0, 1) + sb.toString());
                             }
-                            tv_member_name_content.setText(real_name.substring(0, 1) + sb.toString());
+                        }
+                        //设置手机
+                        if (mobile != null && mobile.length() != 0) {
+                            String m = mobile.substring(0, 2) + "*****" + mobile.substring(7, 11);
+                            tv_member_mobile_content.setText(m);
                         }
                     }
-                    //设置手机
-                    if (mobile != null && mobile.length() != 0) {
-                        String m = mobile.substring(0, 2) + "*****" + mobile.substring(7, 11);
-                        tv_member_mobile_content.setText(m);
-                    }
-                    if (edit_flag) {
-                        //增加老师风采
-                        datas.clear();
-                        datas.add(new MienBean());
-                        adapter = new MemberDetailAdapter(this, datas, R.layout.item_member_detail, datas.size(), mScreenWidth, mScreenHeight, this, user_org_auth, edit_flag);
-                        gv_teacher_elegant.setAdapter(adapter);
-                    }
+                    setTeacherMine(bean.getData());
                 }
+
             } else {
                 UIUtils.showToastSafe(bean.getMsg());
             }
         }
+    }
+
+    /**
+     * 设置老师风采
+     *
+     * @param data 老师信息
+     */
+    private void setTeacherMine(MemberDetailData data) {
+        if (datas == null) {
+            datas = new ArrayList<>();
+        } else {
+            datas.clear();
+        }
+        if (data != null) {
+            List<MienBean> mien = data.getMien();
+            if (mien != null && mien.size() > 0) {
+                datas.addAll(mien);
+            }
+        }
+        if (edit_flag) {
+            //当前用户为管理员是可编辑的
+            datas.add(new MienBean());
+        }
+        adapter = new MemberDetailAdapter(this, datas, R.layout.item_member_detail, datas.size(),
+                mScreenWidth, mScreenHeight, this, user_org_auth, edit_flag);
+        gv_teacher_elegant.setAdapter(adapter);
+    }
+
+
+    //审核状态各种控件初始化
+    private void initTeacherStatus(MemberDetailResult bean, MemberDetailData data) {
+        String is_verify = data.getIs_verify();
+        if ("-1".equals(is_verify)) {//新建
+            if ("2".equals(user_org_auth) || "1".equals(is_pay)) {//是否是机构管理员 是否订过课室)
+                head_right_relative.setVisibility(View.VISIBLE);
+                head_right_relative.setClickable(true);
+            } else {
+                head_right_relative.setVisibility(View.INVISIBLE);
+                head_right_relative.setClickable(false);
+            }
+            if (bean.getFullteacherinfo() == 1) {//资料齐全 才可提交审核
+                head_right_relative.setEnabled(true);
+            } else {
+                head_right_relative.setEnabled(false);
+                head_right_text.setTextColor(UIUtils.getColor(R.color.gray));
+            }
+
+            head_right_text.setText(R.string.txt_submit_audit);
+            rl_teacher_status.setVisibility(View.GONE);
+            tv_teacher_un_verify_reason.setVisibility(View.GONE);
+        } else if ("0".equals(is_verify)) {//审核未通过
+            if (isEditMustInfo) {//编辑过资料
+                head_right_relative.setVisibility(View.VISIBLE);
+                head_right_relative.setClickable(true);
+                head_right_text.setText(R.string.txt_submit_audit);
+            } else {
+                head_right_relative.setVisibility(View.INVISIBLE);
+                head_right_relative.setClickable(false);
+            }
+            rl_teacher_status.setVisibility(View.VISIBLE);
+            rl_teacher_status.setBackgroundColor(UIUtils.getColor(R.color.color_red_f2));
+            tv_teacher_status.setText(R.string.person_course_status_fail_check);
+            tv_teacher_un_verify_reason.setVisibility(View.VISIBLE);
+            String str = getString(R.string.txt_not_by_reason) + data.getUnverify_reason();
+            int start = getString(R.string.txt_not_by_reason).length();
+            SpannableStringBuilder mSpannableStringBuilder = new SpannableStringBuilder(str);
+            mSpannableStringBuilder.setSpan
+                    (new ForegroundColorSpan(UIUtils.getColor(R.color.color_black_33)),
+                            0, start, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+            mSpannableStringBuilder.setSpan
+                    (new ForegroundColorSpan(UIUtils.getColor(R.color.color_red_ff)),
+                            start, str.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+            tv_teacher_un_verify_reason.setText(mSpannableStringBuilder);
+        } else if ("1".equals(is_verify)) {//待(未)审核
+            head_right_relative.setVisibility(View.INVISIBLE);
+            head_right_relative.setClickable(false);
+            rl_teacher_status.setVisibility(View.VISIBLE);
+            rl_teacher_status.setBackgroundColor(UIUtils.getColor(R.color.color_gay_99));
+            tv_teacher_status.setText(R.string.person_course_status_wait_check);
+            tv_teacher_un_verify_reason.setVisibility(View.GONE);
+        } else if ("2".equals(is_verify)) {//审核通过
+            if ("2".equals(user_org_auth) || "1".equals(is_pay)) {//是否订过课室)
+                head_right_relative.setVisibility(View.VISIBLE);
+                head_right_relative.setClickable(true);
+            } else {
+                head_right_relative.setVisibility(View.INVISIBLE);
+                head_right_relative.setClickable(false);
+            }
+            tv_member_tips.setVisibility(View.GONE);
+            head_right_text.setText(R.string.edit);
+            rl_teacher_status.setVisibility(View.VISIBLE);
+            rl_teacher_status.setBackgroundColor(UIUtils.getColor(R.color.app_theme_color));
+            tv_teacher_status.setText(R.string.txt_approve);
+            tv_teacher_un_verify_reason.setVisibility(View.GONE);
+        }
+        tv_teacher_check_time.setText(DateUtil.second2Date(data.getVerify_time()));//审核时间
+    }
+
+    //判断各控件是否显示隐藏
+    private void initViewVisible(MemberDetailData data) {
+        String is_verify = data.getIs_verify();
+        //请求完成后进行监听，防止崩溃
+        if (!course_flag) {
+            if ("2".equals(user_org_auth)) {
+                //用户是管理员，可编辑
+                initHeadViewVisibleClick();
+                if ("1".equals(is_verify) || "2".equals(is_verify)) {//待审核 或 审核通过
+                    initViewInVisibleNoClick();
+                } else {
+                    initViewVisibleClick();
+                    btn_remove_organization.setClickable(true);
+                }
+            } else {
+                if (UIUtils.getString(R.string.member_detail).equals(title)
+                        || !UIUtils.getString(R.string.teacher_detail).equals(title)) {
+                    //如果是老师资料，自己点自己可以编辑
+                    if (StringUtils.getUid().equals(teacher_uid)) {
+                        initHeadViewVisibleClick();
+                        if ("1".equals(is_pay)) {//是否订过课室
+                            if ("1".equals(is_verify) || "2".equals(is_verify)) {//待审核 或 审核通过
+                                initViewInVisibleNoClick();
+                            } else {
+                                initViewVisibleClick();
+                                btn_remove_organization.setClickable(true);
+                            }
+                        } else {
+                            initViewInVisibleNoClick();
+                            head_right_relative.setVisibility(View.INVISIBLE);
+                            head_right_relative.setClickable(false);
+                        }
+                    } else {
+                        //用户看别人,全部不能点击
+                        initHeadViewInVisibleNoClick();
+                        initViewInVisibleNoClick();
+                        head_right_relative.setVisibility(View.INVISIBLE);
+                        head_right_relative.setClickable(false);
+                    }
+                } else {
+                    //老师详情并且订过课室,订过的都能编辑，没订过的只能编辑头像
+                    initHeadViewVisibleClick();
+                    if ("1".equals(is_pay)) {
+                        if ("1".equals(is_verify) || "2".equals(is_verify)) {//待审核 或 审核通过
+                            initViewInVisibleNoClick();
+                        } else {
+                            initViewVisibleClick();
+                            btn_remove_organization.setClickable(true);
+                        }
+                    } else {
+                        initViewInVisibleNoClick();
+                    }
+                }
+            }
+
+        } else {
+            btn_remove_organization.setVisibility(View.GONE);
+            initHeadViewInVisibleNoClick();
+            initViewInVisibleNoClick();
+        }
+    }
+
+    /**
+     * 设置头像可点击，并显示头像向右箭头
+     */
+    private void initHeadViewVisibleClick() {
+        rl_member_head.setClickable(true);
+        iv_member_head_arrow.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 设置头像不可点击，并隐藏头像向右箭头
+     */
+    private void initHeadViewInVisibleNoClick() {
+        rl_member_head.setClickable(false);
+        iv_member_head_arrow.setVisibility(View.INVISIBLE);
+    }
+
+    //隐藏向右箭头并取消点击事件
+    private void initViewInVisibleNoClick() {
+        iv_member_name_arrow.setVisibility(View.INVISIBLE);
+        iv_member_gender_arrow.setVisibility(View.INVISIBLE);
+        iv_member_teacher_brief_arrow.setVisibility(View.INVISIBLE);
+        iv_member_tag_arrow.setVisibility(View.INVISIBLE);
+        rl_member_name.setClickable(false);
+        rl_member_gender.setClickable(false);
+        rl_member_teacher_brief.setClickable(false);
+        rl_member_tag.setClickable(false);
+        edit_flag = false;
+    }
+
+    //显示向右箭头并设置为可点击状态
+    private void initViewVisibleClick() {
+        iv_member_name_arrow.setVisibility(View.VISIBLE);
+        iv_member_gender_arrow.setVisibility(View.VISIBLE);
+        iv_member_teacher_brief_arrow.setVisibility(View.VISIBLE);
+        iv_member_tag_arrow.setVisibility(View.VISIBLE);
+        rl_member_name.setClickable(true);
+        rl_member_gender.setClickable(true);
+        rl_member_teacher_brief.setClickable(true);
+        rl_member_tag.setClickable(true);
+        edit_flag = true;
     }
 
     @Override
@@ -601,6 +768,29 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.head_back_relative://回退
                 onBackPressed();
+                break;
+            case R.id.head_right_relative://提交审核/编辑
+                if (UIUtils.getString(R.string.txt_submit_audit).equals(head_right_text.getText().toString())) {
+                    getHttpUtilsForTeacherSubmitVerify("", false);
+                } else {//编辑
+                    CustomDialog dialog = new CustomDialog(
+                            MemberDetailActivity.this,
+                            UIUtils.getString(R.string.confirm),
+                            UIUtils.getString(R.string.label_cancel),
+                            getString(R.string.dialog_message_edit_teacher)
+                    );
+                    dialog.setOnClickListener(new IOnClickListener() {
+                        @Override
+                        public void oncClick(boolean isOk) {
+                            if (isOk) {
+                                initHeadViewVisibleClick();
+                                initViewVisibleClick();
+                                setTeacherMine(bean.getData());
+                                getHttpUtilsForTeacherSubmitVerify("-1", true);
+                            }
+                        }
+                    });
+                }
                 break;
             case R.id.rl_member_head://头像
                 //检测是否打开读写权限
@@ -670,6 +860,53 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+    //提交审核接口请求
+    private void getHttpUtilsForTeacherSubmitVerify(final String status, final boolean isEdit) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "teacher_submit_verify");
+        params.addBodyParameter("teacher_uid", teacher_uid);
+        if (StringUtils.isNotNullString(status)) {
+            params.addBodyParameter("status", "-1");
+        }
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+                new RequestCallBack<String>() {
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        // 处理返回的数据
+                        processDataForTeacherSubmitVerify(arg0.result, status, isEdit);
+
+                    }
+                });
+    }
+
+    //提交审核结果处理
+    private void processDataForTeacherSubmitVerify(String result, String status, boolean isEdit) {
+        CommonMsgResult msgResult = GsonTools.changeGsonToBean(result, CommonMsgResult.class);
+        if (msgResult == null) {
+            return;
+        }
+
+        if ("1".equals(msgResult.getCode())) {
+            //刷界面
+            if (StringUtils.isNullString(status) || isEdit) {
+                getHttpUtils();
+            }
+        }
+        if (StringUtils.isNullString(status)) {
+            back_flag = true;
+            UIUtils.showToastSafe(msgResult.getMsg());
+        }
+    }
+
+
     @Override
     public void onBackPressed() {
         if (OrganizationTeacherListActivity.FROM_TAG.equals(from) && back_flag) {
@@ -711,14 +948,41 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
                                     uploadingHeadImage(imageUri);
                                 }
                             });
-        } else if (resultCode == OrganizationModifyNameActivity.RESULT_CODE_FROM_ORGANIZATION_MODIFY_TEACHER_ACT
-                || resultCode == OrganizationModifyNameActivity.RESULT_CODE_FROM_ORGANIZATION_MODIFY_NAME_ACT
-                || requestCode == OrganizationModifyNameActivity.RESULT_CODE_FROM_ORGANIZATION_MODIFY_OTHER_ACT
+        } else if (resultCode == OrganizationModifyNameActivity.RESULT_CODE_FROM_ORGANIZATION_MODIFY_BRIEF_ACT
+                || resultCode == OrganizationModifyNameActivity.RESULT_CODE_FROM_ORGANIZATION_MODIFY_NAME_ACT) {
+            //简介
+            String brief_edit = data.getStringExtra("brief_edit");
+            if (StringUtils.isNotNullString(brief_edit)) {
+                tv_teacher_brief.setText(brief_edit);
+                if (bean != null && bean.getData() != null) {
+                    bean.getData().setInfo(brief_edit);
+                }
+            }
+            //姓名
+            String name_edit = data.getStringExtra("name_edit");
+            if (StringUtils.isNotNullString(name_edit)) {
+                tv_member_name_content.setText(name_edit);
+                if (bean != null && bean.getData() != null) {
+                    bean.getData().setReal_name(name_edit);
+                }
+            }
+            back_flag = true;
+            isEditMustInfo = true;
+            getHttpUtilsForTeacherSubmitVerify("-1", false);
+            head_right_relative.setVisibility(View.VISIBLE);
+            head_right_relative.setClickable(true);
+            head_right_text.setText(R.string.txt_submit_audit);
+        } else if (requestCode == OrganizationModifyNameActivity.RESULT_CODE_FROM_ORGANIZATION_MODIFY_OTHER_ACT
                 || resultCode == ModifyTagActivity.RESULT_CODE_FROM_MODIFY_TAG_TEACHER_ACT
                 || resultCode == OrganizationMienEditActivity.RESULT_CODE_FROM_ORGANIZATION_MIEN_EDIT_DELETE_ACT) {
-            //修改简介、昵称、其他信息、标签、风采
+            //修改其他信息、标签、风采
             back_flag = true;
-            getHttpUtils();
+            if (resultCode == OrganizationMienEditActivity.RESULT_CODE_FROM_ORGANIZATION_MIEN_EDIT_DELETE_ACT) {
+                isEditMustInfo = true;
+                getHttpUtilsForTeacherSubmitVerify("-1", false);
+            } else {
+                getHttpUtils();
+            }
         }
     }
 
@@ -835,7 +1099,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
                 mienBean.setPic(headUrl);
                 mien.add(mienBean);
             }
-            HttpClassRoomApi.getInstance().askModifyMemberInfo(title, teacher_uid, bean, true,true);
+            HttpClassRoomApi.getInstance().askModifyMemberInfo(title, teacher_uid, bean, true, true);
         } else {
             UIUtils.showToastSafe(getString(R.string.toast_request_fail));
         }
@@ -845,8 +1109,9 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     public void onRefreshEvent(ClassEvent<Object> event) {
         if (event.getType() == DataManager.MODIFY_MEMBER_DATA_INFO) {
             MemberDetailResult bean = (MemberDetailResult) event.getData();
-            if ("1".equals(bean.getCode())) {
+            if ("1".equals(bean.getCode())) {//更改风采
                 UIUtils.showToastSafe(getString(R.string.toast_edit_success));
+                isEditMustInfo = true;
                 back_flag = true;
                 getHttpUtils();
             } else {

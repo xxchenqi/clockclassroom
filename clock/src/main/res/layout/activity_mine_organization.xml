@@ -73,7 +73,7 @@
                 android:layout_marginLeft="@dimen/DIMEN_12DP"
                 android:layout_marginTop="@dimen/DIMEN_12DP"
                 android:src="@drawable/user_unload"
-                app:border_color="@color/color_green_1e"
+                app:border_color="@color/app_theme_color"
                 app:border_width="@dimen/DIMEN_5DP" />
 
             <TextView
@@ -200,7 +200,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/DIMEN_12DP"
                         android:text="@string/brief"
-                        android:textColor="@color/color_green_1e"
+                        android:textColor="@color/app_theme_color"
                         android:textSize="@dimen/DIMEN_14DP" />
 
                     <LinearLayout
@@ -266,7 +266,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/DIMEN_12DP"
                         android:text="@string/teacher"
-                        android:textColor="@color/color_green_1e"
+                        android:textColor="@color/app_theme_color"
                         android:textSize="@dimen/DIMEN_14DP" />
 
                     <LinearLayout

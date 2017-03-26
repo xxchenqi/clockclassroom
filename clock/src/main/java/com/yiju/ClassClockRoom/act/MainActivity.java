@@ -37,7 +37,7 @@ import com.yiju.ClassClockRoom.common.constant.RequestCodeConstant;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
 import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.fragment.BaseFragment;
-import com.yiju.ClassClockRoom.fragment.NewIndexFragment;
+import com.yiju.ClassClockRoom.fragment.IndexFragment;
 import com.yiju.ClassClockRoom.fragment.PersonalCenterFragment;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -99,7 +99,7 @@ public class MainActivity extends BaseFragmentActivity implements
             if (info != null) {
                 bundle.putSerializable("info", info);//从OrderEditDetailActivity传入
                 bundle.putBoolean("isBackHome", true);
-                NewIndexFragment indexFragment = new NewIndexFragment();
+                IndexFragment indexFragment = new IndexFragment();
                 changeFragment(indexFragment, bundle);
             }
             start_fragment = FragmentFactory.TAB_INDEX;
@@ -139,12 +139,11 @@ public class MainActivity extends BaseFragmentActivity implements
     // 初始化主页fragment界面
     private void initFragments() {
         fragments = new ArrayList<>();
-        fragments
-                .add(FragmentFactory.createFragment(FragmentFactory.TAB_INDEX));
-        fragments
-                .add(FragmentFactory.createFragment(FragmentFactory.TAB_COURSE));
-        fragments.add(FragmentFactory.createFragment(FragmentFactory.TAB_TEACHER));
-        fragments.add(FragmentFactory.createFragment(FragmentFactory.TAB_MY));
+        FragmentFactory factory = new FragmentFactory();
+        fragments.add(factory.createFragment(FragmentFactory.TAB_INDEX));
+        fragments.add(factory.createFragment(FragmentFactory.TAB_COURSE));
+        fragments.add(factory.createFragment(FragmentFactory.TAB_TEACHER));
+        fragments.add(factory.createFragment(FragmentFactory.TAB_MY));
 
     }
 
@@ -260,7 +259,7 @@ public class MainActivity extends BaseFragmentActivity implements
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if(!isFragmentStatok){
+        if (!isFragmentStatok) {
             return true;
         }
         return super.dispatchKeyEvent(event);
@@ -401,6 +400,8 @@ public class MainActivity extends BaseFragmentActivity implements
                                     Uri.parse("file://" + result.toString()),
                                     "application/vnd.android.package-archive");
                             startActivity(i);
+                            //下载完成后关闭
+                            finish();
 
                         }
 

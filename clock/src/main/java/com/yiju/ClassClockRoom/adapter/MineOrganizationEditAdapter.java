@@ -13,6 +13,7 @@ import com.yiju.ClassClockRoom.adapter.holder.ViewHolder;
 import com.yiju.ClassClockRoom.bean.MemberBean;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
 import com.yiju.ClassClockRoom.util.StringUtils;
+import com.yiju.ClassClockRoom.util.UIUtils;
 
 import java.util.List;
 
@@ -58,28 +59,38 @@ public class MineOrganizationEditAdapter extends CommonBaseAdapter<MemberBean.Da
         tv_item_mine_organization_teacher.setText(dataEntity.getReal_name());
 
         if ("0".equals(dataEntity.getShow_teacher())) {
-            iv_item_mine_organization_eye.setBackgroundResource(R.drawable.icon_closeeye);
+            iv_item_mine_organization_eye.setBackgroundResource(R.drawable.hide);
         } else {
-            iv_item_mine_organization_eye.setBackgroundResource(R.drawable.icon_openeye);
+            iv_item_mine_organization_eye.setBackgroundResource(0);
         }
         if ("0".equals(dataEntity.getFullteacherinfo())) {//0：不全 1：全
-            tv_teacher_data.setVisibility(View.VISIBLE);
-        } else {
-            tv_teacher_data.setVisibility(View.GONE);
+            tv_teacher_data.setText(R.string.txt_data_for_completion_teacher);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_orange_fa));
+        }
+        //-1新建 1=待(未)审核 2=审核通过 0=审核未通过
+        if ("1".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.person_course_status_wait_check);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_black_33));
+        } else if ("2".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.txt_approve);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.app_theme_color));
+        } else if ("0".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.person_course_status_fail_check);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_red_ff));
         }
         if ("2".equals(dataEntity.getOrg_auth())) {
             ll_public.setVisibility(View.VISIBLE);
-            iv_select_teacher.setBackgroundResource(R.drawable.order_choose_btn);
+            iv_select_teacher.setBackgroundResource(R.drawable.check);
         } else {
             ll_public.setVisibility(View.GONE);
-            iv_select_teacher.setBackgroundResource(R.drawable.order_nonechoose_btn);
+            iv_select_teacher.setBackgroundResource(R.drawable.uncheck);
         }
 
         rl_select_teacher.setVisibility(View.VISIBLE);
         if (dataEntity.isCheck()) {
-            iv_select_teacher.setBackgroundResource(R.drawable.order_choose_btn);
+            iv_select_teacher.setBackgroundResource(R.drawable.check);
         } else {
-            iv_select_teacher.setBackgroundResource(R.drawable.order_nonechoose_btn);
+            iv_select_teacher.setBackgroundResource(R.drawable.uncheck);
         }
         rl_select_teacher.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -75,7 +75,7 @@ public class WatchlistCourseAdapter extends BaseAdapter {
         if (StringUtils.isNotNullString(status)) {
             holder.tv_course_status.setText(status);
             if (UIUtils.getString(R.string.person_course_status_applying_single).equals(status)) {
-                holder.tv_course_status.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                holder.tv_course_status.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             } else if (UIUtils.getString(R.string.person_course_status_cancel).equals(status)) {
                 holder.tv_course_status.setTextColor(UIUtils.getColor(R.color.color_gay_99));
             } else if (UIUtils.getString(R.string.person_course_status_finish).equals(status)) {

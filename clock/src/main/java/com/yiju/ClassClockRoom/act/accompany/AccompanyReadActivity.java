@@ -25,9 +25,10 @@ public class AccompanyReadActivity extends BaseFragmentActivity{
 
 
     private void changeFragment() {
+        FragmentFactory factory = new FragmentFactory();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction beginTransaction = fm.beginTransaction();
-        currentFragment = FragmentFactory.createFragment(FragmentFactory.TAB_VIDEO);
+        currentFragment = factory.createFragment(FragmentFactory.TAB_VIDEO);
         beginTransaction.replace(R.id.fl_container, currentFragment);
         beginTransaction.commit();
     }

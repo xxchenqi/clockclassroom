@@ -12,7 +12,12 @@ import com.yiju.ClassClockRoom.control.map.LocationSingle;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -328,6 +333,30 @@ public class StringUtils extends BaseSingleton {
         DecimalFormat df = new DecimalFormat("0.00");
         String result = df.format(cny);
         return result + "";
+    }
+
+    /**
+     * 改日期是否是周末
+     *
+     * @param date 日期
+     * @return true 是周末 ， false 不是周末
+     */
+    public static boolean isWeekend(String date) {
+        try {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = format.parse(date);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(d);
+            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+                    || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            return false;
+        }
+
     }
 
 }

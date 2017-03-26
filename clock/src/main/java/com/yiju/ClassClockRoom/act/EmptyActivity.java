@@ -13,6 +13,7 @@ import com.yiju.ClassClockRoom.act.search.SearchActivity;
 import com.yiju.ClassClockRoom.act.search.Search_Result_Activity;
 import com.yiju.ClassClockRoom.bean.MessageBox;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.control.SchemeControl;
 import com.yiju.ClassClockRoom.control.map.NavigationUtils;
@@ -65,10 +66,8 @@ public class EmptyActivity extends Activity {
                         } else if (path.equals(UIUtils.getString(R.string.scheme_store_list_path))) {//门店列表
                             intent_start.setClass(this, MoreStoreActivity.class);
                         } else if (path.equals(UIUtils.getString(R.string.scheme_store_detail_path))) {//门店详情
-                            intent_start.setClass(this, SingleStoreActivity.class);
-                            intent_start.putExtra("sid", uri.getQueryParameter(SchemeControl.STORE_ID));
-                            intent_start.putExtra("school_type", uri.getQueryParameter(SchemeControl.SCHOOL_TYPE));
-                            intent_start.putExtra("store_name", uri.getQueryParameter(SchemeControl.STORE_NAME));
+                            intent_start.setClass(this, StoreDetailActivity.class);
+                            intent_start.putExtra(ExtraControl.EXTRA_STORE_ID, uri.getQueryParameter(SchemeControl.STORE_ID));
                         } else if (path.equals(UIUtils.getString(R.string.scheme_reserve_path))) {//预定
                             intent_start.setClass(this, ReservationActivity.class);
                             intent_start.putExtra("sid", uri.getQueryParameter(SchemeControl.STORE_ID));
@@ -238,7 +237,7 @@ public class EmptyActivity extends Activity {
                                 intent_start.putExtra(MemberDetailActivity.ACTION_SHOW_TEACHER, uri.getQueryParameter(SchemeControl.SHOW_TEACHER));
                                 intent_start.putExtra(MemberDetailActivity.ACTION_ORG_AUTH, uri.getQueryParameter(SchemeControl.ORG_AUTH));
                                 intent_start.putExtra(MemberDetailActivity.ACTION_MOBILE, uri.getQueryParameter(SchemeControl.MOBILE));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_title, uri.getQueryParameter(SchemeControl.TITLE));
+                                intent_start.putExtra(MemberDetailActivity.ACTION_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
                                 intent_start.putExtra(MemberDetailActivity.ACTION_COURSE_FLAG, uri.getBooleanQueryParameter(SchemeControl.COURSE_FLAG, false));
                             } else {
                                 intent_start.setClass(this, LoginActivity.class);
@@ -247,7 +246,7 @@ public class EmptyActivity extends Activity {
                                 intent_start.putExtra(MemberDetailActivity.ACTION_SHOW_TEACHER, uri.getQueryParameter(SchemeControl.SHOW_TEACHER));
                                 intent_start.putExtra(MemberDetailActivity.ACTION_ORG_AUTH, uri.getQueryParameter(SchemeControl.ORG_AUTH));
                                 intent_start.putExtra(MemberDetailActivity.ACTION_MOBILE, uri.getQueryParameter(SchemeControl.MOBILE));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_title, uri.getQueryParameter(SchemeControl.TITLE));
+                                intent_start.putExtra(MemberDetailActivity.ACTION_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
                                 intent_start.putExtra(MemberDetailActivity.ACTION_COURSE_FLAG, uri.getBooleanQueryParameter(SchemeControl.COURSE_FLAG, false));
                             }
                         } else if (path.equals(UIUtils.getString(R.string.scheme_mine_organization_path))) {//我的机构

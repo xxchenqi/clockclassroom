@@ -2,6 +2,8 @@ package com.yiju.ClassClockRoom.act;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -16,11 +18,13 @@ import com.yiju.ClassClockRoom.adapter.ClassroomAdapter;
 import com.yiju.ClassClockRoom.bean.ClassroomItem;
 import com.yiju.ClassClockRoom.bean.Order2;
 import com.yiju.ClassClockRoom.bean.Order3;
+import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
+import com.yiju.ClassClockRoom.util.PermissionsChecker;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.widget.MyListView;
+import com.yiju.ClassClockRoom.widget.dialog.CustomDialog;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -420,10 +424,43 @@ public class ClassroomDetailActivity extends BaseActivity implements
 //                if (!"0".equals(course_id)) {
 //                    UIUtils.showToastSafe("已关联课程的课室不可进行退单，需要取消课程发布方可进行退单");
 //                }else{
-                Intent intent = new Intent(this, BackOrderActivity.class);
+                if (order2 == null) {
+                    return;
+                }
+                final String tel;
+                if (StringUtils.isNullString(order2.getSchool_phone())) {
+                    tel = UIUtils.getString(R.string.txt_phone_number);
+                } else {
+                    tel = order2.getSchool_phone();
+                }
+                CustomDialog dialog = new CustomDialog(
+                        this,
+                        UIUtils.getString(R.string.dialog_confirm_call_service),
+                        UIUtils.getString(R.string.label_cancel),
+                        UIUtils.getString(R.string.dialog_message_call_service)
+                );
+                dialog.setOnClickListener(new IOnClickListener() {
+                    @Override
+                    public void oncClick(boolean isOk) {
+                        if (isOk) {
+                            if (!PermissionsChecker.checkPermission(PermissionsChecker.CALL_PHONE_PERMISSIONS)) {
+                                // 跳转系统电话
+                                Intent intent = new Intent(Intent.ACTION_CALL, Uri
+                                        .parse("tel:" + tel));// 默认400-608-2626
+                                startActivity(intent);
+                            } else {
+                                PermissionsChecker.requestPermissions(
+                                        ClassroomDetailActivity.this,
+                                        PermissionsChecker.CALL_PHONE_PERMISSIONS
+                                );
+                            }
+                        }
+                    }
+                });
+               /* Intent intent = new Intent(this, BackOrderActivity.class);
                 intent.putExtra("list", (Serializable) no_finish_hour_list);
                 intent.putExtra("order2", order2);
-                startActivity(intent);
+                startActivity(intent);*/
 //                }
                 break;
             case R.id.head_back_relative://返回
@@ -496,4 +533,14 @@ public class ClassroomDetailActivity extends BaseActivity implements
         return getString(R.string.title_act_classroom_detail);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (!(requestCode == PermissionsChecker.REQUEST_EXTERNAL_STORAGE
+                && PermissionsChecker.hasAllPermissionsGranted(grantResults))) {
+            //权限未获取
+//        } else {
+            UIUtils.showToastSafe(getString(R.string.toast_permission_call_phone));
+        }
+    }
 }

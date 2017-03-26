@@ -20,13 +20,14 @@ import com.yiju.ClassClockRoom.act.CourseDetailActivity;
 import com.yiju.ClassClockRoom.act.CourseMoreActivity;
 import com.yiju.ClassClockRoom.act.LoginActivity;
 import com.yiju.ClassClockRoom.act.MainActivity;
-import com.yiju.ClassClockRoom.act.SingleStoreActivity;
+import com.yiju.ClassClockRoom.act.StoreDetailActivity;
 import com.yiju.ClassClockRoom.act.TeacherDetailActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
 import com.yiju.ClassClockRoom.common.constant.RequestCodeConstant;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.map.NavigationUtils;
 import com.yiju.ClassClockRoom.util.PermissionsChecker;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -182,10 +183,10 @@ public class NetWebViewClient extends WebViewClient {
                 String store_name = Uri.parse(url).getQueryParameter("title");
                 String school_type = Uri.parse(url).getQueryParameter("school_type");
 
-                Intent intent = new Intent(UIUtils.getContext(), SingleStoreActivity.class);
-                intent.putExtra("sid", sid);
-                intent.putExtra("school_type", school_type);
-                intent.putExtra("store_name", store_name);
+                Intent intent = new Intent(UIUtils.getContext(), StoreDetailActivity.class);
+                intent.putExtra(ExtraControl.EXTRA_STORE_ID, sid);
+//                intent.putExtra("school_type", school_type);
+//                intent.putExtra("store_name", store_name);
                 UIUtils.startActivity(intent);
                 return false;
             }

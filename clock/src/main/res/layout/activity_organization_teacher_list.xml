@@ -28,23 +28,23 @@
         android:paddingLeft="@dimen/DIMEN_12DP"
         android:paddingRight="@dimen/DIMEN_12DP">
 
+        <ImageView
+            android:id="@+id/iv_no_teacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/desc"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/DIMEN_56DP"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_toRightOf="@id/iv_no_teacher"
             android:gravity="center_vertical"
             android:text="不选择老师"
             android:textColor="@color/color_black_33"
             android:textSize="@dimen/DIMEN_14DP" />
 
-        <ImageView
-            android:id="@+id/iv_no_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/order_choose_btn"
-            android:contentDescription="@string/desc"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <ListView

@@ -15,6 +15,7 @@ import com.igexin.sdk.PushConsts;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.MainActivity;
+import com.yiju.ClassClockRoom.act.MemberDetailActivity;
 import com.yiju.ClassClockRoom.act.MineOrganizationActivity;
 import com.yiju.ClassClockRoom.act.OrderDetailActivity;
 import com.yiju.ClassClockRoom.act.OrganizationCertificationStatusActivity;
@@ -115,6 +116,12 @@ public class PushClockReceiver extends BroadcastReceiver {
     //开电子发票
     private static final int ACTION_INT_OPEN_ELECTRONIC_INVOICE = 90025;
     private static final String ACTION_OPEN_ELECTRONIC_INVOICE = "open_electronic_invoice";
+    //老师审核通过
+    private static final int ACTION_INT_TEACHER_REVIEW_SUCCESS = 90026;
+    private static final String ACTION_TEACHER_REVIEW_SUCCESS = "teacher_review_success";
+    //老师审核未通过
+    private static final int ACTION_INT_TEACHER_REVIEW_FAIL = 90027;
+    private static final String ACTION_TEACHER_REVIEW_FAIL = "teacher_review_fail";
 
     //无法识别的消息
     private static final int Action_Int_Null = 90016;
@@ -215,9 +222,13 @@ public class PushClockReceiver extends BroadcastReceiver {
                         actionValue = ACTION_INT_ORDER_PASS_AFTER_PAYMENT;
                     } else if (ACTION_ORDER_NOT_PASS_AFTER_PAYMENT.equals(bean.getAction())) {
                         actionValue = ACTION_INT_ORDER_NOT_PASS_AFTER_PAYMENT;
-                    } else if(ACTION_OPEN_ELECTRONIC_INVOICE.equals(bean.getAction())){
+                    } else if (ACTION_OPEN_ELECTRONIC_INVOICE.equals(bean.getAction())) {
                         actionValue = ACTION_INT_OPEN_ELECTRONIC_INVOICE;
-                    }else {
+                    } else if (ACTION_TEACHER_REVIEW_SUCCESS.equals(bean.getAction())) {
+                        actionValue = ACTION_INT_TEACHER_REVIEW_SUCCESS;
+                    } else if (ACTION_TEACHER_REVIEW_FAIL.equals(bean.getAction())) {
+                        actionValue = ACTION_INT_TEACHER_REVIEW_FAIL;
+                    } else {
                         actionValue = Action_Int_Null;
                     }
                     extras.putInt(ACTION, actionValue);
@@ -270,7 +281,7 @@ public class PushClockReceiver extends BroadcastReceiver {
                         AccompanyReadStatusActivity.class);
 //                intentVideo.putExtra(MainActivity.Param_Start_Fragment,
 //                        FragmentFactory.TAB_VIDEO);
-                intent.putExtra(SchemeControl.PASSWORD,bean_skip.getContent().split("：")[1].split("，")[0].trim());
+                intent.putExtra(SchemeControl.PASSWORD, bean_skip.getContent().split("：")[1].split("，")[0].trim());
                 intentVideo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 BaseApplication.getmForegroundActivity().startActivity(
                         intentVideo);
@@ -380,6 +391,21 @@ public class PushClockReceiver extends BroadcastReceiver {
                     intent_personMineCourse.putExtra("course_id", bean_skip.getCourse_id());
                     intent_personMineCourse.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     BaseApplication.getmForegroundActivity().startActivity(intent_personMineCourse);
+                }
+                break;
+            case ACTION_INT_TEACHER_REVIEW_SUCCESS:
+            case ACTION_INT_TEACHER_REVIEW_FAIL:
+                if (!isRuningApp(context)) {
+                    StartApp(context);
+                    return;
+                }
+                if (bean_skip != null && StringUtils.isNotNullString(bean_skip.getDetail_id())) {
+                    Intent intent_member_detail = new Intent(UIUtils.getContext(), MemberDetailActivity.class);
+                    intent_member_detail.putExtra(MemberDetailActivity.ACTION_UID, bean_skip.getDetail_id());
+                    intent_member_detail.putExtra(MemberDetailActivity.ACTION_TITLE,
+                            UIUtils.getString(R.string.teacher_detail));
+                    intent_member_detail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    BaseApplication.getmForegroundActivity().startActivity(intent_member_detail);
                 }
                 break;
             default:

@@ -31,8 +31,11 @@ public class MemberDetailData implements Serializable {
     private String allow_edit = "";
     private String tags = "";
     private String org_id = "";
-    private List<MienBean> mien = new ArrayList<>();
+    private String is_verify = "";//是否审核通过,-1新建 1=待(未)审核 2=审核通过 0=审核未通过
+    private String verify_time = "";//审核时间
+    private String unverify_reason = "";//未通过理由
 
+    private List<MienBean> mien = new ArrayList<>();
 
     public void setId(String id) {
         this.id = id;
@@ -176,5 +179,29 @@ public class MemberDetailData implements Serializable {
 
     public List<MienBean> getMien() {
         return mien;
+    }
+
+    public String getIs_verify() {
+        return is_verify;
+    }
+
+    public void setIs_verify(String is_verify) {
+        this.is_verify = is_verify;
+    }
+
+    public String getUnverify_reason() {
+        return unverify_reason;
+    }
+
+    public void setUnverify_reason(String unverify_reason) {
+        this.unverify_reason = unverify_reason;
+    }
+
+    public String getVerify_time() {
+        return verify_time;
+    }
+
+    public void setVerify_time(String verify_time) {
+        this.verify_time = verify_time;
     }
 }

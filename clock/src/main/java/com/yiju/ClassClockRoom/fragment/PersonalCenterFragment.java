@@ -603,7 +603,7 @@ public class PersonalCenterFragment extends BaseFragment implements
                 intent.putExtra(MemberDetailActivity.ACTION_SHOW_TEACHER, show_teacher);
                 intent.putExtra(MemberDetailActivity.ACTION_ORG_AUTH, org_auth);
                 intent.putExtra(MemberDetailActivity.ACTION_MOBILE, mobile);
-                intent.putExtra(MemberDetailActivity.ACTION_title,
+                intent.putExtra(MemberDetailActivity.ACTION_TITLE,
                         UIUtils.getString(R.string.teacher_detail));
                 startActivity(intent);
 //                }

@@ -19,7 +19,9 @@ import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
+import com.yiju.ClassClockRoom.bean.StoreDetailClassRoom;
 import com.yiju.ClassClockRoom.common.NetWebViewClient;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.map.NavigationUtils;
 import com.yiju.ClassClockRoom.control.share.ShareDialog;
 import com.yiju.ClassClockRoom.fragment.NewIndexFragment;
@@ -29,6 +31,9 @@ import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * 首页跳转到的详情页
  *
@@ -36,107 +41,93 @@ import com.yiju.ClassClockRoom.util.net.UrlUtils;
  */
 public class IndexDetailActivity extends BaseActivity implements
         OnClickListener {
+    //失败页面
     @ViewInject(R.id.ly_broken_fail)
     private RelativeLayout ly_broken_fail;
+    //刷新
     @ViewInject(R.id.btn_broken_refresh)
     private Button btn_broken_refresh;
-    /**
-     * 返回按钮
-     */
+    //返回按钮
     @ViewInject(R.id.head_back_relative)
     private RelativeLayout head_back_relative;
-    /**
-     * 标题
-     */
+    //标题
     @ViewInject(R.id.head_title)
     private TextView head_title;
-    /**
-     * 分享按钮
-     */
+    //分享按钮
     @ViewInject(R.id.head_right_relative)
     private RelativeLayout head_right_relative;
-    /**
-     * webview
-     */
+    //webview
     @ViewInject(R.id.wv_room_detail)
     private WebView wv_room_detail;
-    /**
-     * 购物车
-     */
+    //购物车
     @ViewInject(R.id.iv_root_detail_cart)
     private ImageView iv_root_detail_cart;
-    /**
-     * 预订按钮
-     */
+    //预订按钮
     @ViewInject(R.id.btn_room_detail_reserve)
     private Button btn_room_detail_reserve;
-    /**
-     * 标题布局1(其他webview)
-     */
+    //标题布局1(其他webview)
     @ViewInject(R.id.ll_room_detail_title_1)
     private LinearLayout ll_room_detail_title_1;
 
-    /**
-     * 标题布局2(类型详情进来的标题)
-     */
+    //标题布局2(类型详情进来的标题)
     @ViewInject(R.id.ll_room_detail_title_2)
     private LinearLayout ll_room_detail_title_2;
-    /**
-     * 标题布局2(返回图标)
-     */
+    //标题布局2(返回图标)
     @ViewInject(R.id.head_gradual_back)
     private ImageView head_gradual_back;
 
-    /**
-     * 返回键2
-     */
+    //返回键2
     @ViewInject(R.id.head_gradual_back_relative)
     private RelativeLayout head_gradual_back_relative;
-    /**
-     * 标题2
-     */
+    //标题2
     @ViewInject(R.id.head_gradual_title)
     private TextView head_gradual_title;
     @ViewInject(R.id.head_right_image)
     private ImageView head_right_image;
 
-    /**
-     * 无WIFI显示界面
-     */
+    //无WIFI显示界面
     @ViewInject(R.id.ly_wifi)
     private RelativeLayout ly_wifi;
-    /**
-     * 刷新
-     */
+    //刷新
     @ViewInject(R.id.btn_no_wifi_refresh)
     private Button btn_no_wifi_refresh;
-
-    /**
-     * webview 设置
-     */
+    //webview 设置
     private WebSettings setting;
-
 
     private String lng;
     private String lat;
-
-    private String sid;
-    private String type_desc;
     private String address;
     private String tags;
     private String url;
-    private String typeid;
-    private String sname;
+    private String school_type;
     //是否是门店页面
     private boolean isStorePage;
 
+    //************课室参数*************
+    //门店开始时间
     private String room_start_time;
+    //门店结束时间
     private String room_end_time;
-    private String room_name;
-    private String school_type;
-    private String instruction;
-    private String confirm_type;
+    //能否预定
     private String can_schedule;
+    //类型描述
+    private String type_desc;
+    //课室id
+    private String typeid;
+    //门店名字
+    private String sname;
+    //门店id
+    private String sid;
+    //索引
+    private int index;
+    //门店图片
+    private String store_pic;
+    //门店电话
+    private String tel;
+    //课室原数据
+    private List<StoreDetailClassRoom> data_class_room;
+    //************课室参数*************
+
 
     @Override
     public int setContentViewId() {
@@ -171,15 +162,18 @@ public class IndexDetailActivity extends BaseActivity implements
         school_type = intent.getStringExtra("school_type");//标记是否是旗舰店
         if (StringUtils.isNotNullString(type_desc)) {
             // 课室类型详情
-            instruction = intent.getStringExtra("instruction");
-            sid = intent.getStringExtra("sid");
-            typeid = intent.getStringExtra("typeid");
-            sname = intent.getStringExtra("sname");
-            room_start_time = intent.getStringExtra("room_start_time");
-            room_end_time = intent.getStringExtra("room_end_time");
-            room_name = intent.getStringExtra("room_name");
-            confirm_type = intent.getStringExtra("confirm_type");
-            can_schedule = intent.getStringExtra("can_schedule");//标记是否可预订
+            sid = intent.getStringExtra(ExtraControl.EXTRA_SID);
+            room_start_time = intent.getStringExtra(ExtraControl.EXTRA_ROOM_START_TIME);
+            room_end_time = intent.getStringExtra(ExtraControl.EXTRA_ROOM_END_TIME);
+            index = intent.getIntExtra(ExtraControl.EXTRA_INDEX, 0);
+            store_pic = intent.getStringExtra(ExtraControl.EXTRA_STORE_PIC);
+            data_class_room = (List<StoreDetailClassRoom>) intent.getSerializableExtra(ExtraControl.EXTRA_CLASS_ROOM);
+            tel = intent.getStringExtra(ExtraControl.EXTRA_TEL);
+            typeid = intent.getStringExtra(ExtraControl.EXTRA_TYPE_ID);
+            sname = intent.getStringExtra(ExtraControl.EXTRA_SNAME);
+            can_schedule = intent.getStringExtra(ExtraControl.EXTRA_CAN_SCHEDULE);//标记是否可预订
+
+
             url = UrlUtils.TYPE_DESC + "typeid=" + typeid
                     + "&pictype=pictype&type=2&sid=" + sid + "&title=" + type_desc;
 
@@ -279,16 +273,27 @@ public class IndexDetailActivity extends BaseActivity implements
                 break;
             case R.id.btn_room_detail_reserve:
                 //预订
+//                Intent intent = new Intent(this, ReservationActivity.class);
+//                intent.putExtra("sid", sid);
+//                intent.putExtra("name", sname);//name: "测试徐汇虹梅商务大厦旗舰店",
+//                intent.putExtra("type_id", typeid);
+//                intent.putExtra("room_start_time", room_start_time);
+//                intent.putExtra("room_end_time", room_end_time);
+//                intent.putExtra("room_name", room_name);//desc: "大间课室(有窗)",
+//                startActivity(intent);
+
                 Intent intent = new Intent(this, ReservationActivity.class);
-                intent.putExtra("sid", sid);
-                intent.putExtra("name", sname);//name: "测试徐汇虹梅商务大厦旗舰店",
-                intent.putExtra("type_id", typeid);
-                intent.putExtra("room_start_time", room_start_time);
-                intent.putExtra("room_end_time", room_end_time);
-                intent.putExtra("room_name", room_name);//desc: "大间课室(有窗)",
-                intent.putExtra("instruction", instruction);
-                intent.putExtra("confirm_type", confirm_type);
+                intent.putExtra(ExtraControl.EXTRA_SID, sid);
+                intent.putExtra(ExtraControl.EXTRA_TYPE_ID, typeid);
+                intent.putExtra(ExtraControl.EXTRA_CLASS_ROOM, (Serializable) data_class_room);
+                intent.putExtra(ExtraControl.EXTRA_INDEX, index);
+                intent.putExtra(ExtraControl.EXTRA_STORE_PIC, store_pic);
+                intent.putExtra(ExtraControl.EXTRA_ROOM_START_TIME, room_start_time);
+                intent.putExtra(ExtraControl.EXTRA_ROOM_END_TIME, room_end_time);
+                intent.putExtra(ExtraControl.EXTRA_SNAME, sname);
+                intent.putExtra(ExtraControl.EXTRA_TEL, tel);
                 startActivity(intent);
+
                 break;
             case R.id.head_right_relative:
                 ShareDialog.getInstance()

@@ -70,6 +70,15 @@ public class MemberBean {
         private String org_dname;
         private boolean check;
         private String fullteacherinfo;//资料是否齐全  0：不全  1：全
+        private String is_verify = "";//是否审核通过,-1新建 1=待(未)审核 2=审核通过 0=审核未通过
+
+        public String getIs_verify() {
+            return is_verify;
+        }
+
+        public void setIs_verify(String is_verify) {
+            this.is_verify = is_verify;
+        }
 
         public String getOrg_dname() {
             return org_dname;

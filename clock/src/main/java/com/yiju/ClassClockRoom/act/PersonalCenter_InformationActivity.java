@@ -259,6 +259,9 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
         sc_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
                 if (isChecked) {//
                     value = "1";//显示
                     tv_show_msg.setText(UIUtils.getString(R.string.text_show_open));
@@ -685,7 +688,7 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        ActivityControlManager.getInstance().finishCurrentAndOpenHome(this,3);
+        ActivityControlManager.getInstance().finishCurrentAndOpenHome(this, 3);
     }
 
     @Override

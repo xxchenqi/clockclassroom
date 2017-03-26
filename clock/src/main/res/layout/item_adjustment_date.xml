@@ -18,6 +18,7 @@
         android:textSize="@dimen/DIMEN_12DP" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_adjustment_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

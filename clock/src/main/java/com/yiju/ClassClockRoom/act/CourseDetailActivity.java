@@ -26,9 +26,9 @@ import com.yiju.ClassClockRoom.bean.result.CourseDetail;
 import com.yiju.ClassClockRoom.common.DataManager;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.map.NavigationUtils;
 import com.yiju.ClassClockRoom.control.share.ShareDialog;
-import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.ClassEvent;
@@ -151,7 +151,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private boolean listenerFlag = true;
     private int prePointPosition = 0;
     private List<ImageView> imageViews;
-    private String uid;
     private int pos;
 
     @Override
@@ -182,9 +181,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initData() {
-        uid = SharedPreferencesUtils.getString(this, "id", null);
-        if (null != course_id) {
-            HttpCourseApi.getInstance().getCourseDetail(uid, course_id);
+        if (StringUtils.isNotNullString(course_id)) {
+            HttpCourseApi.getInstance().getCourseDetail(StringUtils.getUid(), course_id);
         }
     }
 
@@ -542,7 +540,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_course_detail_baoming:
                 if (loginJudge() && null != course_id) {
-                    HttpCourseApi.applyCourse(uid, course_id);
+                    HttpCourseApi.applyCourse(StringUtils.getUid(), course_id);
                 }
                 break;
             case R.id.ll_show_teacher:
@@ -551,9 +549,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.iv_course_detail_attention:   //关注课程/取消关注课程
                 if (loginJudge() && null != course_id) {
                     if ("0".equals(courseDetailData.getIs_interest())) {
-                        HttpCommonApi.attentionAction("interest", uid, course_id, Attention_Type_Course);     //关注
+                        HttpCommonApi.attentionAction("interest", StringUtils.getUid(), course_id, Attention_Type_Course);     //关注
                     } else {
-                        HttpCommonApi.attentionAction("uninterest", uid, course_id, Attention_Type_Course);   //取消关注
+                        HttpCommonApi.attentionAction("uninterest", StringUtils.getUid(), course_id, Attention_Type_Course);   //取消关注
                     }
                 }
                 break;
@@ -567,7 +565,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
      * 登录相关判断处理
      */
     private boolean loginJudge() {
-        if (StringUtils.isNullString(uid)) {
+        if (StringUtils.isNullString(StringUtils.getUid()) || "-1".equals(StringUtils.getUid())) {
             Intent intentLogin = new Intent(this, LoginActivity.class);
             startActivityForResult(intentLogin,
                     Course_Detail_Login);
@@ -596,12 +594,12 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
      */
     private void jumpSchoolPage() {
         Intent intent = new Intent(UIUtils.getContext(),
-                IndexDetailActivity.class);
+                StoreDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("sid", courseDetailData.getSchool().getId());
-        bundle.putString("name", courseDetailData.getSchool().getName());
-        bundle.putString("address", courseDetailData.getSchool().getAddress());
-        bundle.putString("tags", courseDetailData.getSchool().getTags());
+        bundle.putString(ExtraControl.EXTRA_STORE_ID, courseDetailData.getSchool().getId());
+//        bundle.putString("name", courseDetailData.getSchool().getName());
+//        bundle.putString("address", courseDetailData.getSchool().getAddress());
+//        bundle.putString("tags", courseDetailData.getSchool().getTags());
         intent.putExtras(bundle);
         startActivity(intent);
     }

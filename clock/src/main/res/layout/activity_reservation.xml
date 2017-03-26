@@ -346,7 +346,7 @@
                         android:paddingBottom="@dimen/DIMEN_12DP"
                         android:paddingRight="@dimen/DIMEN_24DP"
                         android:text="显示全部"
-                        android:textColor="@color/color_green_1e"
+                        android:textColor="@color/app_theme_color"
                         android:textSize="@dimen/DIMEN_14DP" />
                 </LinearLayout>
 

@@ -9,12 +9,22 @@
     android:padding="@dimen/DIMEN_12DP"
     tools:ignore="HardcodedText">
 
+    <ImageView
+        android:id="@+id/iv_select_teacher"
+        android:layout_width="@dimen/DIMEN_22DP"
+        android:layout_height="@dimen/DIMEN_22DP"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        tools:ignore="ContentDescription" />
+
     <com.yiju.ClassClockRoom.widget.CircleImageView
         android:id="@+id/iv_item_course_teacher_avatar"
         android:layout_width="@dimen/DIMEN_35DP"
         android:layout_height="@dimen/DIMEN_35DP"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
         android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:layout_toRightOf="@id/iv_select_teacher"
         android:src="@drawable/user_unload"
         app:border_color="@color/white"
         app:border_width="0dp"
@@ -69,19 +79,10 @@
         android:id="@+id/tv_teacher_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/DIMEN_12DP"
-        android:layout_toLeftOf="@+id/iv_select_teacher"
-        android:text="@string/txt_data_for_completion_teacher"
-        android:textColor="@color/color_orange_fa"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/iv_select_teacher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        tools:ignore="ContentDescription" />
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        tools:text="@string/txt_data_for_completion_teacher" />
+
 
 </RelativeLayout>

@@ -149,7 +149,7 @@ public class MineOrderAdapter extends CommonBaseAdapter<MineOrderData> {
                 btn_mine_order_right.setText(UIUtils.getString(R.string.order_immediate_pay));
                 btn_mine_order_left.setText(UIUtils.getString(R.string.order_close));
                 btn_mine_order_right.setBackgroundResource(R.drawable.background_green_1eb482_stroke);
-                btn_mine_order_right.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                btn_mine_order_right.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             } else {//隐藏
                 tv_time.setVisibility(View.GONE);
                 tv_status.setText(mContext.getResources().getString(
@@ -168,7 +168,7 @@ public class MineOrderAdapter extends CommonBaseAdapter<MineOrderData> {
             btn_mine_order_right.setVisibility(View.VISIBLE);
             btn_mine_order_left.setVisibility(View.GONE);
             btn_mine_order_right.setText(UIUtils.getString(R.string.order_classroom_arrangement));
-            btn_mine_order_right.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+            btn_mine_order_right.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             btn_mine_order_right.setBackgroundResource(R.drawable.background_green_1eb482_stroke);
         } else if ("2".equals(status) || "4".equals(status) || "8".equals(status)) { //已关闭
             tv_status.setText(mContext.getResources().getString(

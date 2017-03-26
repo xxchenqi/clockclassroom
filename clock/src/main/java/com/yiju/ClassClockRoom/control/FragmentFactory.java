@@ -5,7 +5,7 @@ import android.util.SparseArray;
 import com.yiju.ClassClockRoom.fragment.AccompanyReadFragment;
 import com.yiju.ClassClockRoom.fragment.BaseFragment;
 import com.yiju.ClassClockRoom.fragment.CourseFragment;
-import com.yiju.ClassClockRoom.fragment.NewIndexFragment;
+import com.yiju.ClassClockRoom.fragment.IndexFragment;
 import com.yiju.ClassClockRoom.fragment.PersonalCenterFragment;
 import com.yiju.ClassClockRoom.fragment.TeacherFragment;
 
@@ -25,16 +25,16 @@ public class FragmentFactory {
     // 我的
     public static final int TAB_MY = 3;
     // 用来缓存当前的hashMap
-    private static SparseArray<BaseFragment> mFragmentsHashMap = new SparseArray<>();
+    private SparseArray<BaseFragment> mFragmentsHashMap = new SparseArray<>();
 
-    public static BaseFragment createFragment(int position) {
+    public BaseFragment createFragment(int position) {
         // 从内存获取到fragment
         BaseFragment mBaseFragment = mFragmentsHashMap.get(position);
 
         if (mBaseFragment == null) {
             switch (position) {
                 case TAB_INDEX:
-                    mBaseFragment = new NewIndexFragment();
+                    mBaseFragment = new IndexFragment();
                     break;
                 case TAB_VIDEO:
                     mBaseFragment = new AccompanyReadFragment();

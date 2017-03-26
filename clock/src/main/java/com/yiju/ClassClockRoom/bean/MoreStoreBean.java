@@ -92,15 +92,63 @@ public class MoreStoreBean {
     }
 
     public class MoreStoreEntity {
+        /**
+         * address : 上海市静安区共和新路2395弄宝华商业街35号
+         * addressgeo :
+         * area : 静安区
+         * available_table :
+         * can_schedule : 0
+         * contract_code :
+         * create_time : 0
+         * detail :
+         * dist_id : 0
+         * distances : 0.36
+         * end_time : 0
+         * end_time_afternoon : 1800
+         * end_time_day : 0
+         * end_time_evening : 2100
+         * end_time_morning : 0
+         * id : 299
+         * ip :
+         * is_available : 0
+         * lat : 31.28634546508
+         * lat_g : 31.280147
+         * lng : 121.45991762838
+         * lng_g : 121.453891
+         * name : 秦汉胡同国学大宁分院
+         * phone :
+         * pic_big : http://get.file.dc.cric.com/SZJSc9570a49e974cac0ebc0b0c2be4f7045_639X446_0_0_1.jpg
+         * pic_small : http://get.file.dc.cric.com/SZJSc9570a49e974cac0ebc0b0c2be4f7045_314X236_0_0_1.jpg
+         * praise : 0
+         * rate_device : 0
+         * rate_room : 0
+         * school_type : 2
+         * start_time : 0
+         * start_time_afternoon : 1200
+         * start_time_day : 0
+         * start_time_evening : 1800
+         * start_time_morning : 0
+         * tags : 国学 茶道 琴棋书画 交通便利
+         * traffic :
+         * type_desc :
+         * update_time : 0
+         * use : 国学 茶道 琴棋书画 交通便利
+         * video_ip :
+         * video_password :
+         * video_port :
+         * video_username :
+         */
+
         private String address;
         private String addressgeo;
         private String area;
         private String available_table;
+        private String can_schedule;
         private String contract_code;
         private int create_time;
         private String detail;
         private int dist_id;
-        private Double distances;
+        private double distances;
         private int end_time;
         private int end_time_afternoon;
         private int end_time_day;
@@ -109,9 +157,9 @@ public class MoreStoreBean {
         private int id;
         private String ip;
         private int is_available;
-        private int lat;
+        private double lat;
         private double lat_g;
-        private int lng;
+        private double lng;
         private double lng_g;
         private String name;
         private String phone;
@@ -120,6 +168,7 @@ public class MoreStoreBean {
         private int praise;
         private int rate_device;
         private int rate_room;
+        private String school_type;
         private int start_time;
         private int start_time_afternoon;
         private int start_time_day;
@@ -134,15 +183,6 @@ public class MoreStoreBean {
         private String video_password;
         private String video_port;
         private String video_username;
-        private String school_type;//1=直营店 2=合作店 3=合营店 4=加盟店
-
-        public Double getDistances() {
-            return distances;
-        }
-
-        public void setDistances(Double distances) {
-            this.distances = distances;
-        }
 
         public String getAddress() {
             return address;
@@ -176,6 +216,14 @@ public class MoreStoreBean {
             this.available_table = available_table;
         }
 
+        public String getCan_schedule() {
+            return can_schedule;
+        }
+
+        public void setCan_schedule(String can_schedule) {
+            this.can_schedule = can_schedule;
+        }
+
         public String getContract_code() {
             return contract_code;
         }
@@ -206,6 +254,14 @@ public class MoreStoreBean {
 
         public void setDist_id(int dist_id) {
             this.dist_id = dist_id;
+        }
+
+        public double getDistances() {
+            return distances;
+        }
+
+        public void setDistances(double distances) {
+            this.distances = distances;
         }
 
         public int getEnd_time() {
@@ -272,11 +328,11 @@ public class MoreStoreBean {
             this.is_available = is_available;
         }
 
-        public int getLat() {
+        public double getLat() {
             return lat;
         }
 
-        public void setLat(int lat) {
+        public void setLat(double lat) {
             this.lat = lat;
         }
 
@@ -288,11 +344,11 @@ public class MoreStoreBean {
             this.lat_g = lat_g;
         }
 
-        public int getLng() {
+        public double getLng() {
             return lng;
         }
 
-        public void setLng(int lng) {
+        public void setLng(double lng) {
             this.lng = lng;
         }
 
@@ -358,6 +414,14 @@ public class MoreStoreBean {
 
         public void setRate_room(int rate_room) {
             this.rate_room = rate_room;
+        }
+
+        public String getSchool_type() {
+            return school_type;
+        }
+
+        public void setSchool_type(String school_type) {
+            this.school_type = school_type;
         }
 
         public int getStart_time() {
@@ -472,12 +536,5 @@ public class MoreStoreBean {
             this.video_username = video_username;
         }
 
-        public String getSchool_type() {
-            return school_type;
-        }
-
-        public void setSchool_type(String school_type) {
-            this.school_type = school_type;
-        }
     }
 }

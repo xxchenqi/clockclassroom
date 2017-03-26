@@ -30,7 +30,7 @@ public class FiltrateAdapter extends CommonBaseAdapter<SchoolInfo> {
         TextView tv_item_filtrate = holder.getView(R.id.tv_item_filtrate);
         holder.setText(R.id.tv_item_filtrate, schoolInfo.getName());
         if (schoolInfo.isFlag()) {
-            tv_item_filtrate.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+            tv_item_filtrate.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             tv_item_filtrate.setBackgroundResource(R.drawable.background_green_1eb482_stroke_radius_6);
         } else {
             tv_item_filtrate.setTextColor(UIUtils.getColor(R.color.black66));

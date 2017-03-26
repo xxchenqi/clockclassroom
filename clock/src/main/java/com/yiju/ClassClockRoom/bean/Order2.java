@@ -169,6 +169,16 @@ public class Order2 implements Serializable {
     private String device_fee;
     private String school_phone;
     private String school_tags;
+    private List<TimeGroup> time_group;
+    private List<AvailablePrice> available_price;
+
+    public List<TimeGroup> getTime_group() {
+        return time_group;
+    }
+
+    public List<AvailablePrice> getAvailable_price() {
+        return available_price;
+    }
 
     public String getSchool_tags() {
         return school_tags;

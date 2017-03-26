@@ -173,7 +173,11 @@ public class TeacherDetailActivity extends BaseActivity implements MineOrganizat
     private void getHttpData(String teacher_id) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
-        params.addBodyParameter("own_uid", StringUtils.getUid());
+        if ("-1".equals(StringUtils.getUid())){
+            params.addBodyParameter("own_uid", "");
+        }else {
+            params.addBodyParameter("own_uid", StringUtils.getUid());
+        }
         params.addBodyParameter("uid", teacher_id);
         httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_TEACHER_API_JAVA, params,
                 new RequestCallBack<String>() {
@@ -306,8 +310,8 @@ public class TeacherDetailActivity extends BaseActivity implements MineOrganizat
                     view.setText(tag);
                     view.setTextSize(10);
                     view.setGravity(Gravity.CENTER_VERTICAL);
-                    view.setTextColor(UIUtils.getColor(R.color.white));
-                    view.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_green_1eb482_radius_70));
+                    view.setTextColor(UIUtils.getColor(R.color.app_theme_color));
+                    view.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_tv_tags_green));
 
                     int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
                     int height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);

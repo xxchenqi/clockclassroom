@@ -21,15 +21,43 @@ public class MemberDetailResult extends BaseEntity implements Serializable {
     private String show_teacher;
     private String avatar;
     private String org_dname;
+    private String org_auth;
+    private String is_pay;//标记是否完整下过订单
     private List<TagBean> tags;
+    private int fullteacherinfo;//资料是否齐全
+    private String mobile;
 
     public MemberDetailData getData() {
-        if(data!=null){
+        if (data != null) {
             return data;
-        }else{
+        } else {
             data = new MemberDetailData();
             return data;
         }
+    }
+
+    public String getIs_pay() {
+        return is_pay;
+    }
+
+    public void setIs_pay(String is_pay) {
+        this.is_pay = is_pay;
+    }
+
+    public String getOrg_auth() {
+        return org_auth;
+    }
+
+    public void setOrg_auth(String org_auth) {
+        this.org_auth = org_auth;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getShow_teacher() {
@@ -66,5 +94,13 @@ public class MemberDetailResult extends BaseEntity implements Serializable {
 
     public void setTags(List<TagBean> tags) {
         this.tags = tags;
+    }
+
+    public int getFullteacherinfo() {
+        return fullteacherinfo;
+    }
+
+    public void setFullteacherinfo(int fullteacherinfo) {
+        this.fullteacherinfo = fullteacherinfo;
     }
 }

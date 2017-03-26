@@ -14,7 +14,7 @@
   <color name="calendar_text_unselectable">#7f778088</color>
   <color name="calendar_week_color">#8f8f8f</color>
   <color name="calendar_no_color">#00000000</color>
-  <color name="calendar_selcted_range">#6ed2b4</color>
+  <color name="calendar_selcted_range">#beF1c6</color>
   <color name="calendar_selcted_black">#000000</color>
   <color name="calendar_week_sun">#1a96d5</color>
   <color name="calendar_blue_white">#eeffffff</color>

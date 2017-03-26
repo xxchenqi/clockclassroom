@@ -76,5 +76,41 @@ public class DateUtil {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
         return f.format(today);
     }
+    /**
+     * 判断两个时间段是否有重叠
+     *
+     * @param beginDate1
+     *            时间段1 开始时间
+     * @param endDate1
+     *            时间段1 结束时间
+     * @param beginDate2
+     *            时间段2 开始时间
+     * @param endDate2
+     *            时间段2 结束时间
+     * @param dateformat
+     *            时间格式
+     * @return true 存在重叠 false 不重叠
+     */
 
+    public static Boolean isOverLaps(String beginDate1, String endDate1,
+                                     String beginDate2, String endDate2, String dateformat) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(dateformat);
+            Date date1b = sdf.parse(beginDate1);
+            Date date1e = sdf.parse(endDate1);
+            Date date2b = sdf.parse(beginDate2);
+            Date date2e = sdf.parse(endDate2);
+            if (date2b.compareTo(date1e) * date2e.compareTo(date1b) > 0)
+                return false;
+            else {// 判断是否是时间交接点:08:00-12:00 12:00-15:00
+                if (date2b.equals(date1e) || date2e.equals(date1b)) {
+                    return false;
+                } else
+                    return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

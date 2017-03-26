@@ -201,11 +201,11 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                         et_write_company.setVisibility(View.VISIBLE);
                         et_write_company.setText(companyName);
                         tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.black));//个人改成灰色
-                        tv_invoice_company.setTextColor(UIUtils.getColor(R.color.color_green_1e));//公司绿色
+                        tv_invoice_company.setTextColor(UIUtils.getColor(R.color.app_theme_color));//公司绿色
                     } else {
                         invoice_head = "个人";
                         companyName = "个人";
-                        tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.color_green_1e));//个人改成绿色
+                        tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.app_theme_color));//个人改成绿色
                         tv_invoice_company.setTextColor(UIUtils.getColor(R.color.black));//公司置灰
                     }
                 }
@@ -239,7 +239,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
             isFirst_special = true;
             //直接展示电子个人
             changeColor(tv_electron_invoice);//改变电子发票颜色
-            tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.color_green_1e));//个人改成绿色
+            tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.app_theme_color));//个人改成绿色
             tv_invoice_company.setTextColor(UIUtils.getColor(R.color.black));//公司置灰
             ll_invoice_common.setVisibility(View.VISIBLE);
             //初始化数据
@@ -419,7 +419,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
             case R.id.tv_invoice_personal://个人
                 invoice_head = "个人";
                 companyName = "个人";
-                tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                 tv_invoice_company.setTextColor(UIUtils.getColor(R.color.black));
                 et_write_company.setVisibility(View.GONE);
                 v_invoice_divider.setVisibility(View.GONE);
@@ -429,7 +429,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
             case R.id.tv_invoice_company://公司
                 invoice_head = "公司";
                 tv_invoice_personal.setTextColor(UIUtils.getColor(R.color.black));
-                tv_invoice_company.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                tv_invoice_company.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                 et_write_company.setVisibility(View.VISIBLE);
                 v_invoice_divider.setVisibility(View.VISIBLE);
                 companyName = et_write_company.getText().toString();
@@ -598,7 +598,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
     private void changeColor(TextView textView) {
         for (int i = 0; i < tvs.size(); i++) {
             if (tvs.get(i).getId() == textView.getId()) {
-                tvs.get(i).setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                tvs.get(i).setTextColor(UIUtils.getColor(R.color.app_theme_color));
             } else {
                 tvs.get(i).setTextColor(UIUtils.getColor(R.color.black));
             }

@@ -555,6 +555,7 @@ public class OrderDetailActivity extends BaseActivity implements
         params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("oid", oid);
         params.addBodyParameter("level", "1");
+        params.addBodyParameter("room_adjust_new", "1");
 
         httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
                 new RequestCallBack<String>() {

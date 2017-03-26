@@ -52,7 +52,7 @@
         android:id="@+id/btn_modify_tag_save"
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_49DP"
-        android:background="@color/color_green_1e"
+        android:background="@color/app_theme_color"
         android:text="@string/label_save"
         android:textColor="@color/white"
         android:textSize="@dimen/DIMEN_17DP" />

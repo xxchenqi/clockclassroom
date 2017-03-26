@@ -19,6 +19,7 @@ public class PushBean implements Parcelable {
     private String content;
     private String url;
     private String teacherID;
+    private String detail_id;
     private String type;
     private String state;
     private String imageUrl;
@@ -43,6 +44,14 @@ public class PushBean implements Parcelable {
         this.imageUrl = imageUrl;
         this.createDate = createDate;
         this.mid = mid;
+    }
+
+    public String getDetail_id() {
+        return detail_id;
+    }
+
+    public void setDetail_id(String detail_id) {
+        this.detail_id = detail_id;
     }
 
     public String getCourse_id() {

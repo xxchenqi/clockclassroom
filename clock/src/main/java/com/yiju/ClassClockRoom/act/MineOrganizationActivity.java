@@ -306,7 +306,7 @@ public class MineOrganizationActivity extends BaseActivity implements
                     view.setText(tag);
                     view.setTextSize(10);
                     view.setGravity(Gravity.CENTER_VERTICAL);
-                    view.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                    view.setTextColor(UIUtils.getColor(R.color.app_theme_color));
                     view.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_tv_tags_green));
 
                     int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -536,7 +536,7 @@ public class MineOrganizationActivity extends BaseActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == OrganizationModifyNameActivity.RESULT_CODE_FROM_ORGANIZATION_MODIFY_TEACHER_ACT) {
+        if (resultCode == OrganizationModifyNameActivity.RESULT_CODE_FROM_ORGANIZATION_MODIFY_BRIEF_ACT) {
             //修改机构简介
             String content = data.getStringExtra("content");
             tv_mine_organization_brief.setText(content);

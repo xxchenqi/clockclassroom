@@ -23,6 +23,7 @@ public class GsonTools {
         try {
             t = gson.fromJson(gsonString, cls);
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             return t;
         }

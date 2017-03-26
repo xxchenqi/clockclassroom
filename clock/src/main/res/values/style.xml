@@ -23,7 +23,7 @@
     </style>
 
     <style name="textstyle_12p_1e" parent="@style/textstyle_parent">
-        <item name="android:textColor">@color/color_green_1e</item>
+        <item name="android:textColor">@color/app_theme_color</item>
         <item name="android:textSize">@dimen/DIMEN_12DP</item>
     </style>
 
@@ -63,7 +63,7 @@
     </style>
 
     <style name="textstyle_14p_green_21" parent="@style/textstyle_parent">
-        <item name="android:textColor">@color/color_green_1e</item>
+        <item name="android:textColor">@color/app_theme_color</item>
         <item name="android:textSize">@dimen/DIMEN_14DP</item>
     </style>
 
@@ -354,7 +354,7 @@
     </style>
 
     <style name="Color1SwitchStyle">
-        <item name="colorControlActivated">@color/color_green_1e</item>
+        <item name="colorControlActivated">@color/app_theme_color</item>
     </style>
 
     <style name="style_personal_center_info_end">
@@ -400,7 +400,7 @@
     <!--Relativelayout-->
     <style name="reservation_rl_week">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/DIMEN_50DP</item>
+        <item name="android:layout_height">@dimen/DIMEN_44DP</item>
         <item name="android:background">@color/white</item>
     </style>
     <!--我的课程详情的TextView-->

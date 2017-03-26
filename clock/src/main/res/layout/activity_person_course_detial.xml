@@ -51,7 +51,7 @@
                 android:id="@+id/rl_per_cour_status"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/DIMEN_100DP"
-                android:background="@color/color_green_1e">
+                android:background="@color/app_theme_color">
 
                 <LinearLayout
                     android:layout_width="wrap_content"

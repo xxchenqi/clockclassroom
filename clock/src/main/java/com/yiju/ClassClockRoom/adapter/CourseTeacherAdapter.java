@@ -49,28 +49,57 @@ public class CourseTeacherAdapter extends CommonBaseAdapter<SchoolTeacherListRes
             return;
         }
         if (StringUtils.isNotNullString(dataEntity.getAvatar())) {
-            Glide.with(mContext).load(dataEntity.getAvatar()).into(iv_item_course_teacher_avatar);
+            Glide.with(mContext).load(dataEntity.getAvatar()).placeholder(R.drawable.user_unload).into(iv_item_course_teacher_avatar);
         }
         tv_item_course_teacher_name.setText(dataEntity.getReal_name());
-        if ("0".equals(dataEntity.getShow_teacher())) {
-            iv_item_mine_organization_eye.setBackgroundResource(R.drawable.icon_closeeye);
-        } else {
-            iv_item_mine_organization_eye.setBackgroundResource(R.drawable.icon_openeye);
-        }
         if ("2".equals(dataEntity.getOrg_auth())) {
             ll_public.setVisibility(View.VISIBLE);
         } else {
             ll_public.setVisibility(View.GONE);
         }
-        if ("0".equals(dataEntity.getFullteacherinfo())) {//0：不全 1：全
-            tv_teacher_data.setVisibility(View.VISIBLE);
+
+        if (!"2".equals(dataEntity.getIs_verify())) {
+            iv_select_teacher.setVisibility(View.INVISIBLE);
             rl_course_teacher_root.setBackgroundColor(UIUtils.getColor(R.color.color_gay_ee));
+            if ("0".equals(dataEntity.getShow_teacher())) {
+                iv_item_mine_organization_eye.setBackgroundResource(R.drawable.hide_gray);
+            }
+            if ("0".equals(dataEntity.getFullteacherinfo())) {//0：不全 1：全
+                tv_teacher_data.setText(R.string.txt_data_for_completion_teacher);
+            }
+            //-1新建 1=待(未)审核 2=审核通过 0=审核未通过
+            if ("1".equals(dataEntity.getIs_verify())) {
+                tv_teacher_data.setText(R.string.person_course_status_wait_check);
+            }else if ("0".equals(dataEntity.getIs_verify())) {
+                tv_teacher_data.setText(R.string.person_course_status_fail_check);
+            }
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_gay_99));
         } else {
+            iv_select_teacher.setVisibility(View.VISIBLE);
             rl_course_teacher_root.setBackgroundColor(UIUtils.getColor(R.color.white));
-            tv_teacher_data.setVisibility(View.GONE);
+            tv_teacher_data.setText(R.string.txt_approve);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.app_theme_color));
+            if ("0".equals(dataEntity.getShow_teacher())) {
+                iv_item_mine_organization_eye.setBackgroundResource(R.drawable.hide);
+            }
+            if (dataEntity.isCheck()) {
+                iv_select_teacher.setBackgroundResource(R.drawable.check);
+            } else {
+                iv_select_teacher.setBackgroundResource(R.drawable.uncheck);
+            }
         }
-        if (dataEntity.isCheck()) {
-            iv_select_teacher.setBackgroundResource(R.drawable.order_choose_btn);
-        }
+        //-1新建 1=待(未)审核 2=审核通过 0=审核未通过
+        /*if ("1".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.person_course_status_wait_check);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_black_33));
+        } else if ("2".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.txt_approve);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.app_theme_color));
+        } else if ("0".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.person_course_status_fail_check);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_gay_99));
+        }*/
+
+
     }
 }

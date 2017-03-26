@@ -40,7 +40,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             //设置状态栏颜色默认为绿色
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setTintColor(UIUtils.getColor(R.color.color_green_1e));
+            tintManager.setTintColor(UIUtils.getColor(R.color.app_theme_color));
         }
     }
 

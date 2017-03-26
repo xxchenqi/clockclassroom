@@ -29,7 +29,7 @@ public class MoreStoreFiltrateAdapter extends CommonBaseAdapter<SchoolLeft> {
         TextView tv_item_more_store_area = holder.getView(R.id.tv_item_more_store_area);
         holder.setText(R.id.tv_item_more_store_area, schoolLeft.getDist_name());
         if (schoolLeft.isFlag()) {
-            tv_item_more_store_area.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+            tv_item_more_store_area.setTextColor(UIUtils.getColor(R.color.app_theme_color));
         } else {
             tv_item_more_store_area.setTextColor(UIUtils.getColor(R.color.black));
         }

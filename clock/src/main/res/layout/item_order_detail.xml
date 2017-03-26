@@ -25,17 +25,17 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/DIMEN_8DP"
             android:contentDescription="@string/desc"
-            android:src="@drawable/ziying" />
+            android:src="@drawable/chain" />
 
         <TextView
             android:id="@+id/tv_item_detail_sname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            tools:text="闵行中心店"
             android:textColor="@color/color_blue_1e"
             android:textSize="@dimen/DIMEN_16DP"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            tools:text="闵行中心店" />
         <!--<TextView
             android:id="@+id/tv_item_detail_use_desc"
             android:layout_width="wrap_content"
@@ -70,6 +70,7 @@
             android:id="@+id/iv_order_pic"
             android:layout_width="@dimen/DIMEN_92DP"
             android:layout_height="@dimen/DIMEN_92DP"
+            android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/DIMEN_12DP"
             android:layout_marginRight="@dimen/DIMEN_10DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
@@ -80,6 +81,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/DIMEN_12DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
             android:layout_toRightOf="@+id/iv_order_pic"
@@ -94,9 +96,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    tools:text="中间课室"
                     android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_16DP" />
+                    android:textSize="@dimen/DIMEN_16DP"
+                    tools:text="中间课室" />
 
                 <TextView
                     android:id="@+id/tv_item_detail_max_member"
@@ -105,19 +107,19 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/DIMEN_6DP"
                     android:layout_toRightOf="@id/tv_item_detail_room_type"
-                    tools:text="(最多容纳10人)"
                     android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_12DP" />
+                    android:textSize="@dimen/DIMEN_12DP"
+                    tools:text="(最多容纳10人)" />
 
                 <TextView
                     android:id="@+id/tv_item_detail_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    tools:text="X1"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_16DP" />
+                    android:textSize="@dimen/DIMEN_16DP"
+                    tools:text="X1" />
             </RelativeLayout>
 
             <TextView
@@ -125,30 +127,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/DIMEN_20DP"
                 android:gravity="center_vertical"
-                tools:text="2015-9-13 ~ 2015/9/13"
                 android:textColor="@color/color_black_33"
                 android:textSize="@dimen/DIMEN_12DP"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                tools:text="2015-9-13 ~ 2015/9/13" />
 
             <TextView
                 android:id="@+id/tv_item_detail_repeat"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/DIMEN_20DP"
                 android:gravity="center_vertical"
-                tools:text="周一"
                 android:textColor="@color/color_black_33"
                 android:textSize="@dimen/DIMEN_12DP"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                tools:text="周一" />
 
             <TextView
                 android:id="@+id/tv_item_detail_time"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                tools:text="13:00 ~ 19:00"
+                android:maxLines="3"
                 android:textColor="@color/color_black_33"
                 android:textSize="@dimen/DIMEN_12DP"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                tools:text="13:00 ~ 19:00" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -181,9 +185,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
-                tools:text="2016-09-13 18:00 ~ 19:00 A103"
                 android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP" />
+                android:textSize="@dimen/DIMEN_14DP"
+                tools:text="2016-09-13 18:00 ~ 19:00 A103" />
         </RelativeLayout>
 
         <View style="@style/linestyle_h_unfocused" />
@@ -363,9 +367,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/DIMEN_12DP"/>
+            android:paddingBottom="@dimen/DIMEN_12DP" />
 
     </LinearLayout>
+
     <View style="@style/linestyle_h_unfocused" />
 
     <!-- 课室布置 -->
@@ -413,8 +418,8 @@
             android:id="@+id/tv_dec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
             android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
             android:gravity="center_vertical"
             android:textColor="@color/color_gay_99"
             android:textSize="@dimen/DIMEN_14DP" />
@@ -424,7 +429,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/DIMEN_12DP"/>
+            android:paddingBottom="@dimen/DIMEN_12DP" />
 
 
     </LinearLayout>

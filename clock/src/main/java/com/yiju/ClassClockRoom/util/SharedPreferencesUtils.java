@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.yiju.ClassClockRoom.bean.ClassRoomData;
+import com.yiju.ClassClockRoom.bean.IndexResult;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
 
 import java.util.Set;
@@ -160,6 +161,23 @@ public class SharedPreferencesUtils {
         ClassRoomData info = null;
         if (json != null) {
             info = GsonTools.changeGsonToBean(json, ClassRoomData.class);
+        }
+        return info;
+    }
+
+    public static void saveIndexObjEntity(IndexResult.ObjEntity objEntity) {
+        SharedPreferences sp = UIUtils.getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("IndexObjEntity", GsonTools.createGsonString(objEntity));
+        editor.apply();
+    }
+
+    public static IndexResult.ObjEntity getIndexObjEntity() {
+        SharedPreferences sp = UIUtils.getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        String json = sp.getString("IndexObjEntity", null);
+        IndexResult.ObjEntity info = null;
+        if (json != null) {
+            info = GsonTools.changeGsonToBean(json, IndexResult.ObjEntity.class);
         }
         return info;
     }

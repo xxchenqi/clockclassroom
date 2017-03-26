@@ -109,7 +109,7 @@ public class OrderDetailListAdapter extends BaseAdapter {
             viewHolder.bt_detail_list_classroom_arrangement.setTextColor(UIUtils.getColor(R.color.color_black_33));
             viewHolder.bt_detail_list_classroom_arrangement.setBackgroundResource(R.drawable.background_gray_stroke);
         } else {
-            viewHolder.bt_detail_list_classroom_arrangement.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+            viewHolder.bt_detail_list_classroom_arrangement.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             viewHolder.bt_detail_list_classroom_arrangement.setBackgroundResource(R.drawable.background_green_1eb482_stroke);
         }
         //课室布置按钮

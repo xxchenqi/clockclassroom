@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_44DP"
         android:background="@color/white"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/head_back_relative"
@@ -86,8 +86,13 @@
             android:id="@+id/lv_more_store"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/color_gay_f5"
-            android:dividerHeight="@dimen/DIMEN_1DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@color/white"
+            android:divider="#00000000"
+            android:dividerHeight="0dip"
+            android:paddingBottom="@dimen/DIMEN_10DP"
             ptr:ptrAnimationStyle="flip" />
 
         <ImageView

@@ -179,7 +179,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
         teacher_uid = getIntent().getStringExtra(MemberDetailActivity.ACTION_UID);
         show_teacher = getIntent().getStringExtra(MemberDetailActivity.ACTION_SHOW_TEACHER);
         org_auth = getIntent().getStringExtra(MemberDetailActivity.ACTION_ORG_AUTH);
-        title = getIntent().getStringExtra(MemberDetailActivity.ACTION_title);
+        title = getIntent().getStringExtra(MemberDetailActivity.ACTION_TITLE);
         mobile = getIntent().getStringExtra(MemberDetailActivity.ACTION_MOBILE);
         course_flag = getIntent().getBooleanExtra(MemberDetailActivity.ACTION_COURSE_FLAG, false);
 
@@ -524,6 +524,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
         }
         SharedPreferencesUtils.saveString(getApplicationContext(),
                 getResources().getString(R.string.shared_third_source), userInfo.getThird_source());
+        SharedPreferencesUtils.saveString(getApplicationContext(),
+                getResources().getString(R.string.shared_org_auth),
+                userInfo.getOrg_auth());
         //获取支付所需的工作密钥
 
         getWorkingKey(userInfo.getId());
@@ -782,7 +785,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                 intent.putExtra(MemberDetailActivity.ACTION_SHOW_TEACHER, show_teacher);
                 intent.putExtra(MemberDetailActivity.ACTION_ORG_AUTH, org_auth);
                 intent.putExtra(MemberDetailActivity.ACTION_MOBILE, mobile);
-                intent.putExtra(MemberDetailActivity.ACTION_title, title);
+                intent.putExtra(MemberDetailActivity.ACTION_TITLE, title);
                 startActivity(intent);
                 finish();
             } else {

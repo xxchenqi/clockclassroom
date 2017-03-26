@@ -10,10 +10,8 @@ import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
-import com.yiju.ClassClockRoom.bean.Order2;
-import com.yiju.ClassClockRoom.bean.ReservationDate;
 
-import java.text.ParseException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,18 +28,18 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
     @ViewInject(R.id.head_title)
     private TextView head_title;
 
-    @ViewInject(R.id.head_right_text)
-    private TextView head_right_text;
-
     //日期
     @ViewInject(R.id.calendar_view)
     private CalendarPickerView calendar_view;
 
     private int clickCount = 0;
     private List<Date> mDates = new ArrayList<>();
+    private List<Date> oldDates = new ArrayList<>();
     private Date beginDate;
     private Date endDate;
     private Date nowDate;
+    private boolean reservation_flag;
+    private Date singleDate;
 
     /**
      * 初始化页面
@@ -49,7 +47,6 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initView() {
         head_back.setOnClickListener(this);
-        head_right_text.setOnClickListener(this);
     }
 
     /**
@@ -58,46 +55,21 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initData() {
 
-        head_title.setText(getString(R.string.reservation_date));
-        head_right_text.setText(getString(R.string.label_save));
         Intent mReservationIntent = getIntent();
-        Order2 info;
         if (null != mReservationIntent) {
-            info = (Order2) mReservationIntent.getSerializableExtra("info");
-        }else{
-            return;
-        }
-        mDates.clear();
-        ReservationDate reservationDate = (ReservationDate) mReservationIntent.
-                getSerializableExtra("reservationHaveDate");
-        if (null != reservationDate) {
-            List<Date> reservationDates = reservationDate.getDate();
+            List<Date> reservationDates = (ArrayList<Date>) mReservationIntent.
+                    getSerializableExtra("reservationHaveDate");
+            reservation_flag = mReservationIntent.getBooleanExtra("reservation_flag", true);
+            if(reservation_flag){
+                if (null != reservationDates && reservationDates.size() > 0) {
+                    singleDate = reservationDates.get(0);
+                }
+            }
             if (null != reservationDates && reservationDates.size() > 0) {
+                mDates.clear();
                 mDates.add(reservationDates.get(0));
                 mDates.add(reservationDates.get(reservationDates.size() - 1));
             }
-        } else if (null == info) {
-            Calendar ca = Calendar.getInstance();
-            ca.add(Calendar.DATE, 1);
-            String start_date = ca.get(Calendar.YEAR) + "-"
-                    + (ca.get(Calendar.MONTH) + 1) + "-"
-                    + ca.get(Calendar.DAY_OF_MONTH);
-
-            ca.setTime(new Date());
-            ca.add(Calendar.DATE, 2);
-            String end_date = ca.get(Calendar.YEAR) + "-"
-                    + (ca.get(Calendar.MONTH) + 1) + "-"
-                    + ca.get(Calendar.DAY_OF_MONTH);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            try {
-                mDates.add(format.parse(start_date));
-                mDates.add(format.parse(end_date));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            mDates.addAll(getNewDeadDates(info.getStart_date(), info.getEnd_date()));
         }
         Calendar nextYear = Calendar.getInstance();
         nowDate = new Date();
@@ -106,7 +78,7 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
             nowDate = format.parse(nextYear.get(Calendar.YEAR) + "-" +
-                    (nextYear.get(Calendar.MONTH) + 1)+ "-"
+                    (nextYear.get(Calendar.MONTH) + 1) + "-"
                     + nextYear.get(Calendar.DAY_OF_MONTH));
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,30 +89,68 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
 
         Calendar lastYear = Calendar.getInstance();
         lastYear.add(Calendar.YEAR, -1);
-        List<Date> dates = new ArrayList<>();
 
         endDate = nextYear.getTime();
         calendar_view.setEndDate(endDate);
-        dates.add(mDates.get(0));
-        dates.add(mDates.get(mDates.size() - 1));
         calendar_view.setDecorators(Collections
                 .<CalendarCellDecorator>emptyList());
-        calendar_view.init(new Date(), nextYear.getTime()) // 设置显示的年月
-                .inMode(CalendarPickerView.SelectionMode.RANGE) // 设置多选
-                .withSelectedDates(dates);
-        int s = dates.get(0).getDate();
-        int sm = dates.get(0).getMonth();
-        int sy = dates.get(0).getYear();
-        int e = dates.get(1).getDate();
-        int em = dates.get(1).getMonth();
-        int ey = dates.get(1).getYear();
-        calendar_view.setSPposition(s);
-        calendar_view.setEPposition(e);
-        calendar_view.setSMPposition(sm);
-        calendar_view.setEMPposition(em);
-        calendar_view.setSYPposition(sy);
-        calendar_view.setEYPposition(ey);
+        if (reservation_flag) {
+            head_title.setText(getString(R.string.reservation_choose_single_date));
+            initSingleCalendar(nextYear);
+        } else {
+            head_title.setText(getString(R.string.reservation_choose_more_date));
+            initMoreCalendar(nextYear);
+        }
         calendar_view.smoothScrollToPosition(0);
+    }
+
+    /**
+     * 选择单天
+     * @param nextYear 标记
+     */
+    private void initSingleCalendar(Calendar nextYear) {
+        if(null != singleDate){
+            calendar_view.init(new Date(), nextYear.getTime())
+                    .inMode(CalendarPickerView.SelectionMode.SINGLE)
+                    .withSelectedDate(singleDate);
+        }else {
+            calendar_view.init(new Date(), nextYear.getTime())
+                    .inMode(CalendarPickerView.SelectionMode.SINGLE);
+        }
+
+    }
+
+    /**
+     * 选择多天             标记
+     *
+     * @param nextYear     最大日期
+     */
+    private void initMoreCalendar(Calendar nextYear) {
+        if(null != mDates && mDates.size() >0 &&mDates.get(0).getTime() < System.currentTimeMillis()){
+            calendar_view.init(new Date(), nextYear.getTime()) // 设置显示的年月
+                    .inMode(CalendarPickerView.SelectionMode.RANGE); // 设置多选
+            calendar_view.setOldDates(mDates);
+            oldDates.clear();
+            oldDates.addAll(mDates);
+        }else {
+            calendar_view.init(new Date(), nextYear.getTime()) // 设置显示的年月
+                    .inMode(CalendarPickerView.SelectionMode.RANGE) // 设置多选
+                    .withSelectedDates(mDates);
+            if(null != mDates && mDates.size() >0){
+                int s = mDates.get(0).getDate();
+                int sm = mDates.get(0).getMonth();
+                int sy = mDates.get(0).getYear();
+                int e = mDates.get(mDates.size()-1).getDate();
+                int em = mDates.get(mDates.size()-1).getMonth();
+                int ey = mDates.get(mDates.size()-1).getYear();
+                calendar_view.setSPposition(s);
+                calendar_view.setEPposition(e);
+                calendar_view.setSMPposition(sm);
+                calendar_view.setEMPposition(em);
+                calendar_view.setSYPposition(sy);
+                calendar_view.setEYPposition(ey);
+            }
+        }
         calendarSelectListener();
     }
 
@@ -156,16 +166,19 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.head_back:
-                finish();
-                break;
-            case R.id.head_right_text:
-                backReservation();
+                onBackPressed();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backReservation();
+        super.onBackPressed();
     }
 
     /**
@@ -174,13 +187,16 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
     private void backReservation() {
         int DATE = 0;
         Intent intent = new Intent();
-        ReservationDate reservationDate = new ReservationDate();
-        List<Date> selectedDates = calendar_view.getSelectedDates();
-        reservationDate.setDate(selectedDates);
-        intent.putExtra("reservationDate", reservationDate);
+        if(null != oldDates && oldDates.size() > 0){
+            intent.putExtra("reservationDate", (Serializable) oldDates);
+        }else {
+            List<Date> selectedDates = calendar_view.getSelectedDates();
+            intent.putExtra("reservationDate", (Serializable) selectedDates);
+        }
         setResult(DATE, intent);
         finish();
     }
+
     /**
      * 日历选择监听
      */
@@ -203,6 +219,8 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
             @Override
             public void onDateSelected(Date date) {
                 // 选择日期时
+                calendar_view.setOldDates(null);
+                oldDates.clear();
                 clickCount++;
                 if (clickCount == 1) {
                     int i = date.getDate();
@@ -281,66 +299,5 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
                 calendar_view.setEYPposition(Integer.MAX_VALUE);
             }
         });
-    }
-    /**
-     * 生成新的日期区间
-     *
-     * @param sd 开始日期字符串
-     * @param ed 结束日期字符串
-     * @return 返回新的日期区间
-     */
-    private List<Date> getNewDeadDates(String sd, String ed) {
-        List<Date> changeDeadDates = new ArrayList<>();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date bDate;
-        Date eDate;
-        try {
-            bDate = format.parse(sd);
-            eDate = format.parse(ed);
-            changeDeadDates.add(bDate);
-            for (int i = 0; i < getGapCount(sd, ed) - 1; i++) {
-                long newB = bDate.getTime() + (24 * 60 * 60 * 1000 * (i + 1));
-                Date date = new Date(newB);
-                changeDeadDates.add(date);
-            }
-            changeDeadDates.add(eDate);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return changeDeadDates;
-
-    }
-
-    /**
-     * 获取两个日期之间的间隔天数
-     * @return 天数
-     */
-    private static int getGapCount(String start, String end) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date startDate;
-        Date endDate;
-        try {
-            startDate = format.parse(start);
-            endDate = format.parse(end);
-            Calendar fromCalendar = Calendar.getInstance();
-            fromCalendar.setTime(startDate);
-            fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
-            fromCalendar.set(Calendar.MINUTE, 0);
-            fromCalendar.set(Calendar.SECOND, 0);
-            fromCalendar.set(Calendar.MILLISECOND, 0);
-
-            Calendar toCalendar = Calendar.getInstance();
-            toCalendar.setTime(endDate);
-            toCalendar.set(Calendar.HOUR_OF_DAY, 0);
-            toCalendar.set(Calendar.MINUTE, 0);
-            toCalendar.set(Calendar.SECOND, 0);
-            toCalendar.set(Calendar.MILLISECOND, 0);
-
-            return (int) ((toCalendar.getTime().getTime() - fromCalendar
-                    .getTime().getTime()) / (1000 * 60 * 60 * 24));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 }

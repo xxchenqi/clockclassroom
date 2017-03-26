@@ -11,6 +11,7 @@ import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.bean.MemberBean;
 import com.yiju.ClassClockRoom.adapter.holder.ViewHolder;
 import com.yiju.ClassClockRoom.util.StringUtils;
+import com.yiju.ClassClockRoom.util.UIUtils;
 
 import java.util.List;
 
@@ -39,18 +40,25 @@ public class MineOrganizationAdapter extends CommonBaseAdapter<MemberBean.DataEn
             Glide.with(mContext).load(dataEntity.getAvatar()).into(iv_item_mine_organization);
         }
         if ("0".equals(dataEntity.getFullteacherinfo())) {//0：不全 1：全
-            tv_teacher_data.setVisibility(View.VISIBLE);
-        } else {
-            tv_teacher_data.setVisibility(View.GONE);
+            tv_teacher_data.setText(R.string.txt_data_for_completion_teacher);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_orange_fa));
+        } else if ("1".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.person_course_status_wait_check);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_black_33));
+        } else if ("2".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.txt_approve);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.app_theme_color));
+        } else if ("0".equals(dataEntity.getIs_verify())) {
+            tv_teacher_data.setText(R.string.person_course_status_fail_check);
+            tv_teacher_data.setTextColor(UIUtils.getColor(R.color.color_red_ff));
         }
-
         holder.setText(R.id.tv_item_mine_organization_teacher, dataEntity.getReal_name());
 
         ImageView iv_item_mine_organization_eye = holder.getView(R.id.iv_item_mine_organization_eye);
         if ("0".equals(dataEntity.getShow_teacher())) {
-            iv_item_mine_organization_eye.setBackgroundResource(R.drawable.icon_closeeye);
+            iv_item_mine_organization_eye.setBackgroundResource(R.drawable.hide);
         } else {
-            iv_item_mine_organization_eye.setBackgroundResource(R.drawable.icon_openeye);
+            iv_item_mine_organization_eye.setBackgroundResource(0);
         }
         LinearLayout ll_public = holder.getView(R.id.ll_public);
         if ("2".equals(dataEntity.getOrg_auth())) {

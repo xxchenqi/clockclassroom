@@ -70,9 +70,9 @@ public class CourseTeacherListActivity extends BaseActivity
     protected void initView() {
         head_title.setText(R.string.title_the_instructor);
         if (no_choose_teacher) {
-            iv_no_teacher.setVisibility(View.VISIBLE);
+            iv_no_teacher.setBackgroundResource(R.drawable.check);
         } else {
-            iv_no_teacher.setVisibility(View.GONE);
+            iv_no_teacher.setBackgroundResource(R.drawable.uncheck);
         }
     }
 
@@ -88,15 +88,20 @@ public class CourseTeacherListActivity extends BaseActivity
                 if (datas == null) {
                     return;
                 }
-                if ("1".equals(datas.get(position).getFullteacherinfo())) {
-                    Intent intent = new Intent();
-                    intent.putExtra("teacher_name", datas.get(position).getReal_name());
-                    intent.putExtra("teacher_uid", datas.get(position).getUid());
-                    setResult(2, intent);
-                    finish();
-                } else {
+                if (!"2".equals(datas.get(position).getIs_verify())) {
                     UIUtils.showToastSafe(getString(R.string.txt_course_teacher_explain));
+                    return;
                 }
+                if ("0".equals(datas.get(position).getFullteacherinfo())) {
+                    UIUtils.showToastSafe(getString(R.string.txt_course_teacher_explain));
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.putExtra("teacher_name", datas.get(position).getReal_name());
+                intent.putExtra("teacher_uid", datas.get(position).getUid());
+                setResult(2, intent);
+                finish();
+
             }
         });
     }

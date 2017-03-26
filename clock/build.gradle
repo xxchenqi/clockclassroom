@@ -12,8 +12,8 @@ android {
         applicationId "com.yiju.ClassClockRoom"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 15
-        versionName "2.5.0"
+        versionCode 16
+        versionName "2.6.0"
 
         // dex突破65535的限制
         multiDexEnabled true
@@ -138,6 +138,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.android.support:multidex:1.0.1'
     compile project(':ejupaysdk-release')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
 android {
     useLibrary 'org.apache.http.legacy'

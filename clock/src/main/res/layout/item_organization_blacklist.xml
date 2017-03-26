@@ -39,6 +39,6 @@
         android:paddingTop="@dimen/DIMEN_6DP"
         android:paddingBottom="@dimen/DIMEN_6DP"
         android:background="@drawable/bg_white_bottom_green_1eb482_frame"
-        android:textColor="@color/color_green_1e" />
+        android:textColor="@color/app_theme_color" />
 
 </RelativeLayout>

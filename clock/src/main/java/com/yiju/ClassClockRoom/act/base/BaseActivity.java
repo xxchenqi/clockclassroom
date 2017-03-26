@@ -46,15 +46,15 @@ public abstract class BaseActivity extends Activity implements InitView {
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             //设置状态栏颜色默认为绿色
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setTintColor(UIUtils.getColor(R.color.color_green_1e));
+            tintManager.setTintColor(UIUtils.getColor(R.color.app_theme_color));
         }
         BaseApplication.setmForegroundActivity(this);
         mContext = this;
         EventBus.getDefault().register(this);
         ViewUtils.inject(this);
         initView();
-        initData();
         initListener();
+        initData();
     }
 
     protected abstract void initView();
@@ -145,6 +145,6 @@ public abstract class BaseActivity extends Activity implements InitView {
 
     @Override
     public void onBackPressed() {
-        ActivityControlManager.getInstance().finishCurrentAndOpenHome(this,0);
+        ActivityControlManager.getInstance().finishCurrentAndOpenHome(this, 0);
     }
 }

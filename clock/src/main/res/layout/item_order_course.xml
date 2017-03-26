@@ -159,7 +159,7 @@
             android:background="@drawable/background_green_1eb482_stroke"
             android:paddingLeft="@dimen/DIMEN_10DP"
             android:paddingRight="@dimen/DIMEN_10DP"
-            android:textColor="@color/color_green_1e" />
+            android:textColor="@color/app_theme_color" />
 
         <Button
             android:id="@+id/btn_mine_order_left"

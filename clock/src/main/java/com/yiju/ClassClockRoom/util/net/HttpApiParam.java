@@ -129,9 +129,10 @@ public class HttpApiParam extends BaseApiParam {
     public static Map<String, RequestBody> getCourseDetail(String uid, String course_id) {
         PostParams params = new PostParams();
         params.put("action", "get_course_detail");
-        if (uid != null) {
-            params.put("own_uid", uid);
+        if ("-1".equals(uid)) {
+            uid = "";
         }
+        params.put("own_uid", uid);
         params.put("id", course_id);
         return params.getMap();
     }

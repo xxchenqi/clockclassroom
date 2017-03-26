@@ -8,6 +8,17 @@
 
     <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_32DP"
+        android:background="@color/yellow_fff6df"
+        android:drawableLeft="@drawable/green_tip"
+        android:drawablePadding="@dimen/DIMEN_8DP"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:text="@string/reservation_date_tip"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_12DP" />
     <com.squareup.timessquare.CalendarPickerView
 
         android:id="@+id/calendar_view"

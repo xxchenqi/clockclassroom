@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yiju.ClassClockRoom.R;
@@ -23,6 +24,8 @@ public class DeviceTypeHolder extends BaseHolder<ReservationDevice> implements V
     private ReservationDevice data;
     private boolean flag = true;
     private int maxCount;
+    private RelativeLayout rl_item_reduce;
+    private RelativeLayout rl_item_add;
 
     public DeviceTypeHolder(Context context) {
         super(context);
@@ -34,6 +37,8 @@ public class DeviceTypeHolder extends BaseHolder<ReservationDevice> implements V
 
         tv_item_device_name = (TextView) view.findViewById(R.id.tv_item_device_name);
         tv_item_device_content = (TextView) view.findViewById(R.id.tv_item_device_content);
+        rl_item_reduce = (RelativeLayout) view.findViewById(R.id.rl_item_reduce);
+        rl_item_add = (RelativeLayout) view.findViewById(R.id.rl_item_add);
         iv_item_reduce = (ImageView) view.findViewById(R.id.iv_item_reduce);
         iv_item_add = (ImageView) view.findViewById(R.id.iv_item_add);
         et_item_device = (EditText) view.findViewById(R.id.et_item_device);
@@ -52,10 +57,10 @@ public class DeviceTypeHolder extends BaseHolder<ReservationDevice> implements V
                 et_item_device.setText(String.valueOf(count));
                 if (count == 0) {
                     iv_item_reduce.setImageResource(R.drawable.order_reduce_btn_noclick);
-                    iv_item_reduce.setEnabled(false);
+                    rl_item_reduce.setEnabled(false);
                 } else {
                     iv_item_reduce.setImageResource(R.drawable.order_reduce_btn_click);
-                    iv_item_reduce.setEnabled(true);
+                    rl_item_reduce.setEnabled(true);
                 }
             } else {
                 et_item_device.setText("0");
@@ -83,8 +88,8 @@ public class DeviceTypeHolder extends BaseHolder<ReservationDevice> implements V
                     String counts = charSequence.toString();
                     if (!"".equals(counts)) {
                         if (Integer.valueOf(counts) > 1) {
-                            iv_item_reduce.setEnabled(true);
-                            iv_item_add.setEnabled(true);
+                            rl_item_reduce.setEnabled(true);
+                            rl_item_add.setEnabled(true);
                             iv_item_reduce.setImageResource(R.drawable.order_reduce_btn_click);
                             if (Integer.valueOf(counts) == maxCount) {
                                 iv_item_add.setImageResource(R.drawable.order_add_btn_noclick);
@@ -128,11 +133,11 @@ public class DeviceTypeHolder extends BaseHolder<ReservationDevice> implements V
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_item_reduce:
+            case R.id.rl_item_reduce:
                 reduceCount(iv_item_reduce, iv_item_add, et_item_device);
                 data.setCount(Integer.valueOf(et_item_device.getText().toString()));
                 break;
-            case R.id.iv_item_add:
+            case R.id.rl_item_add:
                 addCount(iv_item_reduce, iv_item_add, et_item_device, Integer.valueOf(data.getStock()));
                 data.setCount(Integer.valueOf(et_item_device.getText().toString()));
                 break;
@@ -147,7 +152,7 @@ public class DeviceTypeHolder extends BaseHolder<ReservationDevice> implements V
      * @param et  显示文本框
      */
     private void reduceCount(ImageView ivR, ImageView ivA, EditText et) {
-        ivA.setEnabled(true);
+        rl_item_add.setEnabled(true);
         ivA.setImageResource(R.drawable.order_add_btn_click);
         int count = Integer.valueOf(et.getText().toString());
         count--;
@@ -181,16 +186,16 @@ public class DeviceTypeHolder extends BaseHolder<ReservationDevice> implements V
                 ivR.setImageResource(R.drawable.order_reduce_btn_click);
             }
             if (count + 1 >= maxCount) {
-                ivA.setEnabled(false);
+                rl_item_add.setEnabled(false);
                 ivA.setImageResource(R.drawable.order_add_btn_noclick);
             } else {
-                ivA.setEnabled(true);
+                rl_item_add.setEnabled(true);
                 ivA.setImageResource(R.drawable.order_add_btn_click);
             }
             if (count == maxCount) {
                 et.setText(String.valueOf(count));
                 data.setCount(count);
-                ivA.setEnabled(false);
+                rl_item_add.setEnabled(false);
                 return;
             } else {
                 et.setText(String.valueOf(count + 1));

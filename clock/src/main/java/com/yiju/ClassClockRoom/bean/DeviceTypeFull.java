@@ -60,7 +60,7 @@ public class DeviceTypeFull implements Serializable {
         private String date;
         private String start_time;
         private String end_time;
-        private String room_count;
+        private Integer room_count;
         private Integer room_available;
 
         public Integer getStock_available() {
@@ -71,11 +71,11 @@ public class DeviceTypeFull implements Serializable {
             this.room_available = room_available;
         }
 
-        public String getRoom_count() {
+        public Integer getRoom_count() {
             return room_count;
         }
 
-        public void setRoom_count(String room_count) {
+        public void setRoom_count(Integer room_count) {
             this.room_count = room_count;
         }
 

@@ -27,6 +27,7 @@ import com.yiju.ClassClockRoom.bean.Course_Person_Detail_Data;
 import com.yiju.ClassClockRoom.bean.Course_Person_Detail_RoomInfo;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.control.FragmentFactory;
+import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -329,20 +330,7 @@ public class PersonMineCourseDetailActivity extends BaseActivity implements View
         if (StringUtils.isNotNullString(coursePersonDetailData.getAuth_reason())) {
             tv_person_mine_course_detial_reason.setText(coursePersonDetailData.getAuth_reason());
         }
-        String update_time = coursePersonDetailData.getUpdate_time();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(Long.valueOf(update_time + "000"));
-        String upDateTime = calendar.get(Calendar.YEAR) + "-"
-                + (String.valueOf(calendar.get(Calendar.MONTH) + 1).length() == 1 ?
-                ("0" + String.valueOf(calendar.get(Calendar.MONTH) + 1)) : String.valueOf(calendar.get(Calendar.MONTH) + 1)) + "-"
-                + (String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)).length() == 1 ?
-                ("0" + String.valueOf(calendar.get(Calendar.DAY_OF_MONTH))) : String.valueOf(calendar.get(Calendar.DAY_OF_MONTH))) + " "
-                + (String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)).length() == 1 ?
-                ("0" + String.valueOf(calendar.get(Calendar.HOUR_OF_DAY))) : String.valueOf(calendar.get(Calendar.HOUR_OF_DAY))) + ":"
-                + (String.valueOf(calendar.get(Calendar.MINUTE)).length() == 1 ?
-                ("0" + String.valueOf(calendar.get(Calendar.MINUTE))) : String.valueOf(calendar.get(Calendar.MINUTE)));
-
-        tv_per_cour_detail_date.setText(upDateTime);
+        tv_per_cour_detail_date.setText(DateUtil.second2Date(coursePersonDetailData.getUpdate_time()));
         String remain_count = coursePersonDetailData.getRemain_count();
 //        String total_count = coursePersonDetailData.getTotal_count();
         String have_enroll = coursePersonDetailData.getHave_enroll();
@@ -555,7 +543,7 @@ public class PersonMineCourseDetailActivity extends BaseActivity implements View
         intent_teacher.putExtra(MemberDetailActivity.ACTION_UID, coursePersonDetailData.getTeacher().getId());
         intent_teacher.putExtra(MemberDetailActivity.ACTION_SHOW_TEACHER, coursePersonDetailData.getTeacher().getShow_teacher());
         intent_teacher.putExtra(MemberDetailActivity.ACTION_ORG_AUTH, coursePersonDetailData.getTeacher().getOrg_auth());
-        intent_teacher.putExtra(MemberDetailActivity.ACTION_title, UIUtils.getString(R.string.member_detail));
+        intent_teacher.putExtra(MemberDetailActivity.ACTION_TITLE, UIUtils.getString(R.string.member_detail));
         intent_teacher.putExtra(MemberDetailActivity.ACTION_MOBILE, coursePersonDetailData.getTeacher().getMobile());
         intent_teacher.putExtra(MemberDetailActivity.ACTION_COURSE_FLAG, true);
         UIUtils.startActivity(intent_teacher);

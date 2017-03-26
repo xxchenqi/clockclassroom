@@ -63,7 +63,7 @@
                 android:layout_marginLeft="@dimen/DIMEN_12DP"
                 android:layout_marginTop="@dimen/DIMEN_12DP"
                 android:src="@drawable/user_unload"
-                app:border_color="@color/color_green_1e"
+                app:border_color="@color/app_theme_color"
                 app:border_width="@dimen/DIMEN_5DP" />
 
             <LinearLayout
@@ -151,7 +151,7 @@
                         android:layout_width="@dimen/DIMEN_1DP"
                         android:layout_height="match_parent"
                         android:layout_marginRight="@dimen/DIMEN_12DP"
-                        android:background="@color/color_green_1e" />
+                        android:background="@color/app_theme_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -190,7 +190,7 @@
                         android:layout_width="@dimen/DIMEN_1DP"
                         android:layout_height="match_parent"
                         android:layout_marginRight="@dimen/DIMEN_12DP"
-                        android:background="@color/color_green_1e" />
+                        android:background="@color/app_theme_color" />
 
                     <TextView
                         android:layout_width="wrap_content"

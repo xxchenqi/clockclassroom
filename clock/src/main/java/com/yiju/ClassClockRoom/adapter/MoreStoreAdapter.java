@@ -3,6 +3,7 @@ package com.yiju.ClassClockRoom.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,26 +32,52 @@ public class MoreStoreAdapter extends CommonBaseAdapter<MoreStoreEntity> {
 
     @Override
     protected void convert(ViewHolder holder, MoreStoreEntity moreStoreEntity) {
-        Double distances = moreStoreEntity.getDistances();
-        ImageView iv_more_store_pic = holder.getView(R.id.iv_more_store_pic);
-        TextView tv_item_store = holder.getView(R.id.tv_item_store);
+        ImageView iv_item_index_store_pic = holder.getView(R.id.iv_item_index_store_pic);
+        TextView tv_item_index_store_name = holder.getView(R.id.tv_item_index_store_name);
+        TextView tv_item_index_store_tag = holder.getView(R.id.tv_item_index_store_tag);
+        TextView tv_item_index_store_address = holder.getView(R.id.tv_item_index_store_address);
+        TextView tv_item_index_store_distance = holder.getView(R.id.tv_item_index_store_distance);
+        TextView tv_item_index_store_booking = holder.getView(R.id.tv_item_index_store_booking);
+
+        //can_schedule判断 =1是可预订 =0是不可预订
+        if ("1".equals(moreStoreEntity.getCan_schedule())) {
+            tv_item_index_store_booking.setVisibility(View.GONE);
+        } else {
+            tv_item_index_store_booking.setVisibility(View.VISIBLE);
+        }
         if ("1".equals(moreStoreEntity.getSchool_type())) {
-            Drawable drawable = UIUtils.getDrawable(R.drawable.ziying);
+            Drawable drawable = UIUtils.getDrawable(R.drawable.chain);
             if (drawable != null) {
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                tv_item_store.setCompoundDrawables(drawable, null, null, null);
-                tv_item_store.setCompoundDrawablePadding(10);
+                tv_item_index_store_name.setCompoundDrawables(drawable, null, null, null);
+                tv_item_index_store_name.setCompoundDrawablePadding(UIUtils.getDimens(R.dimen.DIMEN_5DP));
             }
         } else {
-            tv_item_store.setCompoundDrawables(null, null, null, null);
+            tv_item_index_store_name.setCompoundDrawables(null, null, null, null);
         }
-        holder.setText(R.id.tv_item_store, moreStoreEntity.getName())
-                .setText(R.id.tv_item_subject, moreStoreEntity.getUse().replace(",", " "))
-                .setText(R.id.tv_item_store_address, moreStoreEntity.getAddress())
-                .setText(R.id.tv_item_distance, distances + "km");
+        tv_item_index_store_name.setText(moreStoreEntity.getName());
+        tv_item_index_store_tag.setText(moreStoreEntity.getUse().replace(",", " "));
+        tv_item_index_store_address.setText(
+                String.format(
+                        UIUtils.getString(R.string.txt_address_before),
+                        moreStoreEntity.getAddress()
+                ));
+        if (moreStoreEntity.getDistances() >= 1) {
+            tv_item_index_store_distance.setText(
+                    String.format(
+                            UIUtils.getString(R.string.txt_more_store_diatance),
+                            moreStoreEntity.getDistances()
+                    ));
+        } else {
+            tv_item_index_store_distance.setText(
+                    String.format(
+                            UIUtils.getString(R.string.txt_more_store_distance_m),
+                            moreStoreEntity.getDistances() * 1000
+                    ));
+        }
         Glide.with(UIUtils.getContext())
                 .load(moreStoreEntity.getPic_small())
                 .error(R.drawable.clock_wait)
-                .into(iv_more_store_pic);
+                .into(iv_item_index_store_pic);
     }
 }

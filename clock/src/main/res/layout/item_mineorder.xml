@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/DIMEN_8DP"
             android:contentDescription="@string/desc"
-            android:src="@drawable/ziying" />
+            android:src="@drawable/chain" />
 
         <TextView
             android:id="@+id/tv_store_name"
@@ -192,7 +192,7 @@
             android:background="@drawable/background_green_1eb482_stroke"
             android:paddingLeft="@dimen/DIMEN_10DP"
             android:paddingRight="@dimen/DIMEN_10DP"
-            android:textColor="@color/color_green_1e"
+            android:textColor="@color/app_theme_color"
             android:textSize="@dimen/DIMEN_14DP" />
 
         <Button

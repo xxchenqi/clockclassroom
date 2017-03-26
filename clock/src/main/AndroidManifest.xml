@@ -307,6 +307,9 @@
             android:name=".act.ReservationDateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".act.ReservationStoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".act.ReservationWeekActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -365,6 +368,9 @@
             android:name=".act.PublishActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".act.PublishTimeActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".act.ChooseStoreActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -410,6 +416,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.accompany.AccompanyReadStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".act.StoreDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 微信 -->
         <activity
@@ -616,7 +625,11 @@
             <intent-filter>
                 <action android:name="ejupay_sign_error_action" />
             </intent-filter>
-        </receiver>
+        </receiver><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <!-- EjuPay end-->
 
     </application>

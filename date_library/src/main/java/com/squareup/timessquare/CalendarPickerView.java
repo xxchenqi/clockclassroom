@@ -19,7 +19,6 @@ import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -111,11 +110,19 @@ public class CalendarPickerView extends ListView {
 	private int EYPposition = Integer.MAX_VALUE;
 	private Date beginDate;
 	private Date endDate;
-	private Set<Date> blueDates;
+	private Date singleDate;
 	private Set<Date> orangeDates;
+	private List<Date> oldDates;
 
-	public void setBlueDates(Set<Date> blueDates) {
-		this.blueDates = blueDates;
+	public void setOldDates(List<Date> oldDates) {
+		this.oldDates = oldDates;
+		if (null != adapter) {
+			adapter.notifyDataSetChanged();
+		}
+	}
+
+	public void setSingleDates(Date singleDate) {
+		this.singleDate = singleDate;
 		if (null != adapter) {
 			adapter.notifyDataSetChanged();
 		}
@@ -399,7 +406,7 @@ public class CalendarPickerView extends ListView {
 		 * if it's not already visible.
 		 */
 		public FluentInitializer withSelectedDate(Date selectedDates) {
-			return withSelectedDates(Collections.singletonList(selectedDates));
+			return withSelectedDates(null != selectedDates? Collections.singletonList(selectedDates):null);
 		}
 
 		/**
@@ -935,7 +942,8 @@ public class CalendarPickerView extends ListView {
 				monthView.setEYPposition(EYPposition);
 			}
 			monthView.init(months.get(position), cells.get(position),
-					displayOnly, titleTypeface, dateTypeface,selectionMode,beginDate,endDate,blueDates,orangeDates);
+					displayOnly, titleTypeface, dateTypeface,selectionMode,
+					beginDate,endDate,singleDate,orangeDates,oldDates);
 			return monthView;
 		}
 	}

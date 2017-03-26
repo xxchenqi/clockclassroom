@@ -91,7 +91,7 @@ public class OrganizationModifyNameActivity extends BaseActivity implements View
     public static final String ACTION_CONTENT = "content";
 
     //修改老师简介
-    public static int RESULT_CODE_FROM_ORGANIZATION_MODIFY_TEACHER_ACT = 1000;
+    public static int RESULT_CODE_FROM_ORGANIZATION_MODIFY_BRIEF_ACT = 1000;
     //修改昵称
     public static int RESULT_CODE_FROM_ORGANIZATION_MODIFY_NAME_ACT = 1001;
     //新建标签
@@ -234,12 +234,12 @@ public class OrganizationModifyNameActivity extends BaseActivity implements View
                     getHttpUtils4();
                 } else if (getString(R.string.teacher_brief).equals(title)) {
                     //修改老师简介
-                    bean.getData().setInfo( et_organization_modify_content.getText().toString());
-                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true,false);
+                    bean.getData().setInfo(et_organization_modify_content.getText().toString());
+                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true, false);
                 } else if (getString(R.string.modify_name).equals(title)) {
                     //修改老师名称
-                    bean.getData().setReal_name( et_organization_modify_content.getText().toString());
-                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true,false);
+                    bean.getData().setReal_name(et_organization_modify_content.getText().toString());
+                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true, false);
                 } else if (getString(R.string.new_tag).equals(title)) {
                     if (!"".equals(et_organization_modify_content.getText().toString())) {
                         getHttpUtils3();
@@ -264,11 +264,14 @@ public class OrganizationModifyNameActivity extends BaseActivity implements View
             }
             if ("1".equals(bean.getCode())) {
                 UIUtils.showLongToastSafe(UIUtils.getString(R.string.toast_edit_success));
+                Intent intent = getIntent();
                 if (getString(R.string.teacher_brief).equals(title)) {
-                    setResult(RESULT_CODE_FROM_ORGANIZATION_MODIFY_TEACHER_ACT);
+                    intent.putExtra("brief_edit", et_organization_modify_content.getText().toString());
+                    setResult(RESULT_CODE_FROM_ORGANIZATION_MODIFY_BRIEF_ACT, intent);
                 } else if (getString(R.string.modify_name).equals(title)) {
-                    setResult(RESULT_CODE_FROM_ORGANIZATION_MODIFY_NAME_ACT);
-                }else{
+                    intent.putExtra("name_edit", et_organization_modify_content.getText().toString());
+                    setResult(RESULT_CODE_FROM_ORGANIZATION_MODIFY_NAME_ACT, intent);
+                } else {
                     //修改其他内容
                     setResult(RESULT_CODE_FROM_ORGANIZATION_MODIFY_OTHER_ACT);
                 }
@@ -380,7 +383,7 @@ public class OrganizationModifyNameActivity extends BaseActivity implements View
             UIUtils.showToastSafe(R.string.toast_save_success);
             Intent intent = new Intent();
             intent.putExtra("content", et_organization_modify_content.getText().toString());
-            this.setResult(RESULT_CODE_FROM_ORGANIZATION_MODIFY_TEACHER_ACT, intent);
+            this.setResult(RESULT_CODE_FROM_ORGANIZATION_MODIFY_BRIEF_ACT, intent);
             finish();
         } else {
             UIUtils.showToastSafe(resultData.getMsg());

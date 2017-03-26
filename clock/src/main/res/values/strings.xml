@@ -75,6 +75,10 @@
     <string name="is_share_accompany_pwd">分享陪读密码</string>
     <string name="choose">选择</string>
     <string name="mustfill">必填</string>
+    <string name="supporting_service">配套服务</string>
+    <string name="free_service">免费服务</string>
+    <string name="no_free_service">收费服务</string>
+    <string name="surroundings">周边环境</string>
     <string name="txt_phone_number">400 608 2626</string>
     <string name="txt_phone_number_">400–608–2626</string>
     <string name="toast_show_course_no_exist">课程不存在</string>
@@ -83,6 +87,14 @@
     <string name="apply_over_hint">报名已完成，下次请赶早哦</string>
     <string name="course_over_hint">课程已结束，下次请赶早哦</string>
     <string name="dialog_show_coupon_use">优惠券已失效，是否确定删除优惠券</string>
+    <string name="restaurant">餐厅</string>
+    <string name="hotel">酒店</string>
+    <string name="school">学校</string>
+    <string name="class_hour">课室</string>
+    <string name="store_detail">门店详情</string>
+    <string name="go_setting">去设置</string>
+    <string name="ordinary_days">平日</string>
+    <string name="weekend">周末</string>
 
 
     <!-- 通用Wev View加载的页面来源 -->
@@ -122,6 +134,8 @@
     <string name="label_mineInvoice">我的发票</string>
     <string name="label_service">联系客服、用户协议等</string>
     <string name="label_more">更多</string>
+    <string name="label_check_more">查看更多</string>
+    <string name="label_check_more_class_hour">查看更多课室</string>
     <string name="label_chooseLogin_or_registered">登录/注册</string>
 
     <!-- 登录页面Label -->
@@ -150,6 +164,7 @@
     <string name="label_quit">退出当前账号</string>
     <string name="label_modify_mail">绑定/修改邮箱</string>
     <string name="label_save">保存</string>
+    <string name="label_clear">清空</string>
     <string name="label_help_find_password">绑定邮箱后可以帮助您找回密码</string>
     <string name="label_password_format">由字母、数字、汉字或下划线组成,限4&#8211;16个字符(1个汉字为2个字符),不能以下划线开头或结尾</string>
     <string name="label_affirm_commit">确认提交</string>
@@ -483,10 +498,12 @@
     <string name="title_act_reservation">预订页</string>
     <string name="title_act_reservation_date">上课起止日期页</string>
     <string name="title_act_reservation_date_little">个别日期调整页</string>
+    <string name="title_act_reservation_store">选择课室页</string>
     <string name="title_act_reservation_date_little_day">具体某天单独调整页</string>
     <string name="title_act_reservation_time_fail">推荐时间预订页</string>
     <string name="title_act_reservation_week">每周课程安排页</string>
     <string name="title_act_reservation_time">上课时间选择页</string>
+    <string name="title_act_publish_time">发布课程时间选择页</string>
     <string name="title_act_reservation_device">可选设备页</string>
     <string name="title_act_index_guide">首页引导页面</string>
     <string name="title_fragment_index">首页</string>
@@ -630,6 +647,7 @@
     <string name="wait_pay_sum">待支付(%s)</string>
 
     <string name="to_symbol">%1$s ~ %2$s</string>
+    <string name="to_symbol_more">%1$s ~ %2$s 等</string>
     <string name="tan_hao">%1$s、%2$s</string>
     <string name="second">%s秒</string>
     <string name="clock_id">时钟教室%s</string>
@@ -721,26 +739,40 @@
 
     <!-- 预订 -->
     <string name="reservation_date_title">选择上课起止日期</string>
+    <string name="toast_reservation_date_title">请选择上课起止日期</string>
     <string name="reservation_date_content">选择课室的使用日期范围</string>
     <string name="reservation_week_title">选择每周课程编排</string>
-    <string name="reservation_week_content">选择每周几上课，可多选</string>
+    <string name="toast_reservation_week_title">请选择每周课程编排</string>
+    <string name="reservation_week_content">每周几上课，可多选</string>
     <string name="reservation_time_title">选择上课时间</string>
-    <string name="reservation_date_little">若有个别日期需要单独调整可选择</string>
-    <string name="reservation_time_content">选择几点到几点上课</string>
+    <string name="toast_reservation_time_title">请选择上课时间</string>
+    <string name="reservation_date_little">个别日期调整</string>
+    <string name="reservation_date_little_choose">(可选)</string>
+    <string name="reservation_time_content">几点到几点上课</string>
     <string name="reservation_room_count_title">课室数量</string>
     <string name="reservation_room_count_content">上课需要课室的数量</string>
-    <string name="reservation_device_title">可选设备</string>
+    <string name="reservation_device_title">收费项目</string>
     <string name="reservation_device_content">可选设备(每间)</string>
-    <string name="reservation_date">上课起止日期</string>
+    <string name="reservation_store">选择课室类型</string>
+    <string name="reservation_store_tip">根据课室容纳人数和用途选择</string>
+    <string name="reservation_date">使用日期</string>
+    <string name="reservation_time">使用时段</string>
+    <string name="reservation_week">循环方式</string>
+    <string name="reservation_choose">请选择</string>
+    <string name="reservation_room_count">预订数量</string>
     <string name="reservation_time_fail">推荐预订时间</string>
     <string name="reservation_date_little_title">个别日期调整</string>
-    <string name="reservation_week">每周课程安排</string>
-    <string name="reservation_time">上课时间</string>
-    <string name="reservation_device">可选设备</string>
-    <string name="reservation_start_time">上课开始时间</string>
-    <string name="reservation_end_time">上课结束时间</string>
+    <string name="reservation_device">收费项目</string>
+    <string name="reservation_store_title">课室类型</string>
+    <string name="reservation_device_price_0">￥0</string>
+    <string name="reservation_choose_single_date">请选择日期</string>
+    <string name="reservation_choose_more_date">请选择日期范围</string>
+    <string name="reservation_choose_time">请选使用时段</string>
+    <string name="reservation_start_time">选择开始时间</string>
+    <string name="reservation_end_time">选择结束时间</string>
     <string name="reservation_start_time_xml">09:00</string>
     <string name="reservation_end_time_xml">10:00</string>
+    <string name="reservation_week_more">可多选</string>
     <string name="reservation_every">每天</string>
     <string name="reservation_mon">周一</string>
     <string name="reservation_tue">周二</string>
@@ -749,10 +781,16 @@
     <string name="reservation_fri">周五</string>
     <string name="reservation_sat">周六</string>
     <string name="reservation_sun">周日</string>
-    <string name="reservation_use_date">课室租用日期</string>
+    <string name="reservation_use_date">已选择日期</string>
     <string name="reservation_change_date">已调整的日期</string>
     <string name="reservation_has_date">被占用日期</string>
     <string name="reservation_add_room">增加课室</string>
+    <string name="reservation_tip">请尽快下单…</string>
+    <string name="reservation_date_tip">灰色不可选…</string>
+    <string name="reservation_device_tip">均为移动设备…</string>
+    <string name="reservation_device_choose">可多选</string>
+    <string name="reservation_device_price_all">共计</string>
+    <string name="reservation_add_time">添加\n时段</string>
     <string name="remind_time">提醒时间</string>
     <string name="remind_order">订单提醒</string>
     <string name="remind_system">系统提醒</string>
@@ -802,6 +840,7 @@
     <string name="person_mine_course">我的课程</string>
     <string name="person_course_status_wait_check">待审核</string>
     <string name="person_course_status_fail_check">审核未通过</string>
+    <string name="txt_approve">审核通过</string>
     <string name="person_course_status_cancel">已取消</string>
     <string name="person_course_status_finish">已完结</string>
     <string name="person_course_status_applying_single">进行中</string>
@@ -836,7 +875,9 @@
     <string name="course_reservation_title">发布课程</string>
     <string name="course_reservation_address">请选择上课门店</string>
     <string name="course_reservation_class_address">上课门店</string>
-    <string name="course_reservation_date">选择上课的日期范围</string>
+    <string name="course_reservation_date">上课的日期范围</string>
+    <string name="reservation_sigle">预订单天</string>
+    <string name="reservation_more">预订多天</string>
 
     <string name="choose_store">选择门店</string>
     <string name="publish_course_success">课程发布成功</string>
@@ -907,7 +948,7 @@
     <string name="dialog_show_cancel_order">你确定要取消订单吗？</string>
     <string name="dialog_show_delete_contact">是否删除该联系人</string>
     <string name="dialog_show_means">去意已决</string>
-    <string name="dialog_show_think_again">我在想想</string>
+    <string name="dialog_show_think_again">我再想想</string>
     <string name="dialog_show_give_up_order">确定放弃该订单？</string>
     <string name="dialog_show_goon_reservation">继续预订</string>
     <string name="dialog_show_reservation_complete">您已成功加入购物车,由于库存有限请尽快完成支付？</string>
@@ -1036,12 +1077,24 @@
     <string name="txt_check_stores">查看可用门店列表</string>
     <string name="txt_data_for_completion">资料待补全</string>
     <string name="txt_data_for_completion_teacher">老师资料待补全</string>
-    <string name="txt_data_integrity_notice">资料填写完整的老师方可在前台展示</string>
-    <string name="txt_course_teacher_explain">资料填写完整的老师方可被选择为授课老师</string>
+    <string name="txt_data_integrity_notice">资料填写完整方可提交审核，审核通过后将在前台展示</string>
+    <string name="txt_course_teacher_explain">老师资料审核通过的老师方可被选择</string>
     <string name="txt_order_refund">退款</string>
     <string name="loading">加载中</string>
     <string name="page_name_available_wifi_store">可用wifi门店列表页</string>
     <string name="title_available_wifi_store_list">可用门店列表</string>
     <string name="txt_select_able">(可选)</string>
     <string name="toast_show_webview_error">网页加载失败</string>
+    <string name="txt_submit_audit">提交审核</string>
+    <string name="txt_not_by_reason">未通过原因：</string>
+    <string name="txt_address_before">地址：%s</string>
+    <string name="txt_near_store">附近门店</string>
+    <string name="txt_more_store_diatance">%skm</string>
+    <string name="txt_more_store_distance_m">%sm</string>
+    <string name="dialog_message_edit_teacher">编辑老师资料将需要重新提交审核</string>
+    <string name="dialog_message_call_service">退单事宜请电话联系客服</string>
+    <string name="dialog_confirm_call_service">联系客服</string>
+    <string name="toast_show_select_date">请选择使用日期</string>
+    <string name="toast_show_select_time">请选择使用时段</string>
+    <string name="toast_show_select_week">请选择循环方式</string>
 </resources>

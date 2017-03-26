@@ -12,12 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.CourseDetailActivity;
 import com.yiju.ClassClockRoom.act.IndexDetailActivity;
 import com.yiju.ClassClockRoom.act.ReservationActivity;
 import com.yiju.ClassClockRoom.act.TeacherDetailActivity;
-import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.bean.CourseInfo;
 import com.yiju.ClassClockRoom.bean.Order2;
 import com.yiju.ClassClockRoom.bean.Room;

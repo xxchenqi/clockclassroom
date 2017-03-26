@@ -390,7 +390,7 @@ public class NewIndexFragment extends BaseFragment
         super.onDestroyView();
         mRoomLists.clear();
         try {
-            Field childFragmentManager =Fragment.class.getDeclaredField("mChildFragmentManager");
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
             childFragmentManager.setAccessible(true);
             childFragmentManager.set(this, null);
         } catch (NoSuchFieldException e) {
@@ -484,7 +484,7 @@ public class NewIndexFragment extends BaseFragment
                         tv_megs.setCompoundDrawables(drawable, null, null, null);
                     }
                 } else {
-                    Drawable drawable = UIUtils.getDrawable(R.drawable.message_coming);
+                    Drawable drawable = UIUtils.getDrawable(R.drawable.message_red);
                     if (drawable != null) {
                         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                         tv_megs.setCompoundDrawables(drawable, null, null, null);
@@ -511,7 +511,7 @@ public class NewIndexFragment extends BaseFragment
                     tv_megs.setCompoundDrawables(drawable, null, null, null);
                 }
             } else {
-                Drawable drawable = UIUtils.getDrawable(R.drawable.message_coming);
+                Drawable drawable = UIUtils.getDrawable(R.drawable.message_red);
                 if (drawable != null) {
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     tv_megs.setCompoundDrawables(drawable, null, null, null);
@@ -549,7 +549,7 @@ public class NewIndexFragment extends BaseFragment
             }
             if (hWalking.getCurrentItem() == index) {
                 if ("1".equals(mLists.get(index).getSchool_type())) {
-                    Drawable drawable = UIUtils.getDrawable(R.drawable.ziying);
+                    Drawable drawable = UIUtils.getDrawable(R.drawable.chain);
                     if (drawable != null) {
                         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                         holder.textView.setCompoundDrawables(drawable, null, null, null);
@@ -557,7 +557,7 @@ public class NewIndexFragment extends BaseFragment
                     }
                 }
                 holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-                holder.textView.setTextColor(UIUtils.getColor(R.color.color_green_1e));
+                holder.textView.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             } else {
                 if ("1".equals(mLists.get(index).getSchool_type())) {
                     Drawable drawable = UIUtils.getDrawable(R.drawable.ziying_gray);

@@ -36,6 +36,7 @@ import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
 import com.yiju.ClassClockRoom.bean.AddInvoiceContactBean;
 import com.yiju.ClassClockRoom.bean.AdjustmentData;
+import com.yiju.ClassClockRoom.bean.AvailablePrice;
 import com.yiju.ClassClockRoom.bean.CartCommit;
 import com.yiju.ClassClockRoom.bean.ContactTelName;
 import com.yiju.ClassClockRoom.bean.CreateOrderResult;
@@ -43,6 +44,7 @@ import com.yiju.ClassClockRoom.bean.DeviceEntity;
 import com.yiju.ClassClockRoom.bean.InvoiceContacts;
 import com.yiju.ClassClockRoom.bean.Order2;
 import com.yiju.ClassClockRoom.bean.ShopCart;
+import com.yiju.ClassClockRoom.bean.TimeGroup;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
 import com.yiju.ClassClockRoom.util.CommonUtil;
@@ -55,12 +57,15 @@ import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.dialog.CustomDialog;
 import com.yiju.ClassClockRoom.widget.dialog.ProgressDialog;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * ----------------------------------------
@@ -78,37 +83,72 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     //标题
     @ViewInject(R.id.head_title)
     private TextView head_title;
+    //客服
+    @ViewInject(R.id.head_right_image)
+    private ImageView head_right_image;
+    //客服点击
+    @ViewInject(R.id.head_right_relative)
+    private RelativeLayout head_right_relative;
     //订单所有内容
     @ViewInject(R.id.sv_order_detail)
     private ScrollView sv_order_detail;
+
     //付款布局
     @ViewInject(R.id.rl_order_confirmation_affirm_pay)
-    private LinearLayout rl_order_confirmation_affirm_pay;
+    private RelativeLayout rl_order_confirmation_affirm_pay;
+
+    //联系人布局
+    @ViewInject(R.id.rl_name_tel)
+    private RelativeLayout rl_name_tel;
+    //联系人名字
+    @ViewInject(R.id.tv_order_detail_name)
+    private TextView tv_order_detail_name;
+    //联系人电话
+    @ViewInject(R.id.tv_order_detail_mobile)
+    private TextView tv_order_detail_mobile;
+    //联系人必填文案
+    @ViewInject(R.id.tv_not_null)
+    private TextView tv_not_null;
+
+    //旗舰店图片
+    @ViewInject(R.id.iv_self_support)
+    private ImageView iv_self_support;
     //店名
     @ViewInject(R.id.tv_item_detail_sname)
     private TextView tv_item_detail_sname;
-    //用途
+    //地址
+    @ViewInject(R.id.tv_store_address)
+    private TextView tv_store_address;
+    //用途(中间课室)
     @ViewInject(R.id.tv_item_detail_use_desc)
     private TextView tv_item_detail_use_desc;
     //数量
     @ViewInject(R.id.tv_item_detail_room_count)
     private TextView tv_item_detail_room_count;
-    //日期
-    @ViewInject(R.id.tv_item_detail_date)
-    private TextView tv_item_detail_date;
-    //星期
-    @ViewInject(R.id.tv_item_detail_repeat)
-    private TextView tv_item_detail_repeat;
-    //时间
-    @ViewInject(R.id.tv_item_detail_time)
-    private TextView tv_item_detail_time;
-    //可选设备列表
-    @ViewInject(R.id.ll_no_free_device_add)
-    private LinearLayout ll_no_free_device_add;
-    //个性化调整
-    @ViewInject(R.id.ll_up_down)
-    private LinearLayout ll_up_down;
-    //个性化调整区域块
+    //平日价格
+    @ViewInject(R.id.tv_day_price)
+    private TextView tv_day_price;
+    //周末价格
+    @ViewInject(R.id.tv_week_price)
+    private TextView tv_week_price;
+    //门店图片
+    @ViewInject(R.id.iv_store_pic)
+    private ImageView iv_store_pic;
+    //订单信息
+    @ViewInject(R.id.tv_order_info)
+    private TextView tv_order_info;
+    //使用日期
+    @ViewInject(R.id.tv_use_date)
+    private TextView tv_use_date;
+    //使用天数
+    @ViewInject(R.id.tv_use_day)
+    private TextView tv_use_day;
+    //使用时段
+    @ViewInject(R.id.tv_use_time)
+    private TextView tv_use_time;
+
+
+    //个别日期调整区域块
     @ViewInject(R.id.ll_edit_individuation)
     private LinearLayout ll_edit_individuation;
     //取消课室
@@ -123,33 +163,24 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     //增加课室列表
     @ViewInject(R.id.ll_add_classroom)
     private LinearLayout ll_add_classroom;
+
+    //收费项目
+    @ViewInject(R.id.ll_no_free_device_add)
+    private LinearLayout ll_no_free_device_add;
+    //收费项目布局
+    @ViewInject(R.id.ll_optional_equipment)
+    private LinearLayout ll_optional_equipment;
+    //课室小计
+    @ViewInject(R.id.rl_class_fee)
+    private RelativeLayout rl_class_fee;
+    //收费项目
+    @ViewInject(R.id.rl_charge)
+    private RelativeLayout rl_charge;
+
+
     //订单备注
     @ViewInject(R.id.et_remark)
     private EditText et_remark;
-    //联系人名字
-    @ViewInject(R.id.tv_order_detail_name)
-    private TextView tv_order_detail_name;
-    //联系人电话
-    @ViewInject(R.id.tv_order_detail_mobile)
-    private TextView tv_order_detail_mobile;
-    //课程费用
-    @ViewInject(R.id.tv_order_detail_money)
-    private TextView tv_order_detail_money;
-    //收费设备费用
-    @ViewInject(R.id.tv_device_fee)
-    private TextView tv_device_fee;
-    //优惠金额
-    @ViewInject(R.id.tv_privilege_price)
-    private TextView tv_privilege_price;
-    //待付金额
-    @ViewInject(R.id.tv_ought_pay)
-    private TextView tv_ought_pay;
-    //合计金额
-//    @ViewInject(R.id.tv_cart_price)
-//    private TextView tv_cart_price;
-    //必填文案
-    @ViewInject(R.id.tv_not_null)
-    private TextView tv_not_null;
     //优惠券
     @ViewInject(R.id.rl_coupon)
     private RelativeLayout rl_coupon;
@@ -159,21 +190,11 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     //优惠券内容
     @ViewInject(R.id.tv_coupon)
     private TextView tv_coupon;
-    //联系人布局
-    @ViewInject(R.id.rl_name_tel)
-    private RelativeLayout rl_name_tel;
+
     //确认付款
     @ViewInject(R.id.btn_affirm_pay)
     private Button btn_affirm_pay;
-    //可选设备布局
-    @ViewInject(R.id.ll_optional_equipment)
-    private LinearLayout ll_optional_equipment;
-    //分割线
-    @ViewInject(R.id.v_order_divider)
-    private View v_order_divider;
-    //旗舰店图片
-    @ViewInject(R.id.iv_self_support)
-    private ImageView iv_self_support;
+
     //发票
     @ViewInject(R.id.rl_invoice)
     private RelativeLayout rl_invoice;
@@ -192,21 +213,26 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     //发票箭头
     @ViewInject(R.id.tv_invoice)
     private TextView tv_invoice;
-    //提醒电话
+
+    //咨询电话布局
     @ViewInject(R.id.ll_lr_order_detail_remind_phone)
     private LinearLayout ll_lr_order_detail_remind_phone;
-    //手机
+    //咨询电话
     @ViewInject(R.id.tv_store_phone)
     private TextView tv_store_phone;
-    //门店图片
-    @ViewInject(R.id.iv_store_pic)
-    private ImageView iv_store_pic;
-    //优惠券金额显示
-    @ViewInject(R.id.rl_coupon_money)
-    private RelativeLayout rl_coupon_money;
-    //设备费用
-    @ViewInject(R.id.rl_device)
-    private RelativeLayout rl_device;
+
+    //总价
+    @ViewInject(R.id.tv_sum_price)
+    private TextView tv_sum_price;
+    //收费项目
+    @ViewInject(R.id.tv_device_price)
+    private TextView tv_device_price;
+    //课室费用
+    @ViewInject(R.id.tv_course_price)
+    private TextView tv_course_price;
+    //房间数量
+    @ViewInject(R.id.tv_sum_room)
+    private TextView tv_sum_room;
 
     //传到支付界面的bean
     private CartCommit conmmitInfo;
@@ -238,9 +264,10 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     private String last_invoice_type;
     //请求次数
     private int request = 0;
-    //uid
     private String invoice_type_save;
     private String uid;
+    //电话
+    private String school_phone;
 
     @Override
     public void initIntent() {
@@ -261,6 +288,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     @Override
     protected void initData() {
         head_title.setText(UIUtils.getString(R.string.order_affirm));
+        head_right_image.setImageResource(R.drawable.service);
         getHttpUtils();
     }
 
@@ -268,17 +296,15 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     public void initListener() {
         super.initListener();
         head_back_relative.setOnClickListener(this);
-//        head_right_relative.setOnClickListener(this);
         rl_name_tel.setOnClickListener(this);
         rl_coupon.setOnClickListener(this);
         lr_order_detail_remind.setOnClickListener(this);
         btn_affirm_pay.setOnClickListener(this);
-//        tv_item_detail_price.setOnClickListener(this);
         rl_invoice.setOnClickListener(this);
         tv_store_phone.setOnClickListener(this);
-//        tv_item_detail_sname.setOnClickListener(this);
-        tv_order_detail_money.setOnClickListener(this);
-        tv_device_fee.setOnClickListener(this);
+        head_right_relative.setOnClickListener(this);
+        rl_class_fee.setOnClickListener(this);
+        rl_charge.setOnClickListener(this);
     }
 
     /**
@@ -296,6 +322,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         params.addBodyParameter("password", StringUtils.getPassword());
         params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("order2_id", order2_id);
+        params.addBodyParameter("room_adjust_new", "1");
 
         httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_RESERVATION, params,
                 new RequestCallBack<String>() {
@@ -327,102 +354,10 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                     orderConfirmationBean.getData().size() == 0) {
                 return;
             }
+
             rl_order_confirmation_affirm_pay.setVisibility(View.VISIBLE);
+            sv_order_detail.setVisibility(View.VISIBLE);
             dataEntity = orderConfirmationBean.getData().get(0);
-            tv_item_detail_sname.setText(dataEntity.getSname());
-            tv_item_detail_use_desc.setText(dataEntity.getType_desc() + "(最多容纳人数" + dataEntity.getMax_member() + "人)");
-            tv_item_detail_room_count.setText(
-                    String.format(
-                            getString(R.string.format_multiply_rooms),
-                            dataEntity.getRoom_count()
-                    ));
-            tv_item_detail_date.setText(replaceDate(dataEntity.getStart_date()) + " - " + replaceDate(dataEntity.getEnd_date()));
-            tv_item_detail_use_desc.setText(dataEntity.getType_desc() + "(最多容纳" + dataEntity.getMax_member() + "人)");
-            tv_item_detail_room_count.setText(
-                    String.format(
-                            getString(R.string.multiply),
-                            dataEntity.getRoom_count()
-                    ));
-            tv_item_detail_date.setText(
-                    String.format(
-                            getString(R.string.to_symbol),
-                            dataEntity.getStart_date(),
-                            dataEntity.getEnd_date()
-                    ));
-            tv_item_detail_repeat.setText(getRepeatWeek(dataEntity.getRepeat()));
-            tv_item_detail_time.setText(StringUtils.changeTime(dataEntity.getStart_time()) + " - "
-                    + StringUtils.changeTime(dataEntity.getEnd_time()));
-            //旗舰店显示设置
-            if ("1".equals(dataEntity.getSchool_type())) {
-                iv_self_support.setVisibility(View.VISIBLE);
-                lr_order_detail_remind.setVisibility(View.VISIBLE);
-                ll_lr_order_detail_remind_phone.setVisibility(View.GONE);
-            } else {
-                iv_self_support.setVisibility(View.GONE);
-                lr_order_detail_remind.setVisibility(View.GONE);
-                ll_lr_order_detail_remind_phone.setVisibility(View.VISIBLE);
-                tv_store_phone.setText(dataEntity.getSchool_phone());
-            }
-            Glide.with(mContext).load(dataEntity.getPic_url()).error(R.drawable.clock_wait)
-                    .into(iv_store_pic);
-            tv_item_detail_time.setText(
-                    String.format(
-                            getString(R.string.to_symbol),
-                            StringUtils.changeTime(dataEntity.getStart_time()),
-                            StringUtils.changeTime(dataEntity.getEnd_time())
-                    ));
-
-            //个性化调整
-            //取消课室和增加课室
-            List<AdjustmentData> cancel_date = dataEntity.getRoom_adjust().getCancel_date();
-            List<AdjustmentData> add_date = dataEntity.getRoom_adjust().getAdd_date();
-            if (cancel_date != null && cancel_date.size() != 0) {
-                //设置
-                handleClassRoomCancel(ll_cancel_classroom, cancel_date);
-            } else {
-                //隐藏
-                tv_cancel_classroom.setVisibility(View.GONE);
-            }
-            if (add_date != null && add_date.size() != 0) {
-                //设置
-                handleClassRoomCancel(ll_add_classroom, add_date);
-            } else {
-                //隐藏
-                tv_add_classroom.setVisibility(View.GONE);
-            }
-
-            //如果增加和取消都没有都隐藏
-            if (cancel_date != null && cancel_date.size() == 0 &&
-                    add_date != null && add_date.size() == 0) {
-                ll_up_down.setVisibility(View.GONE);
-                ll_edit_individuation.setVisibility(View.GONE);
-            }
-
-            //可选设备
-            List<DeviceEntity> device_no_free = dataEntity.getDevice_nofree();
-            handleDeviceNoFree(ll_no_free_device_add, device_no_free);
-
-            fee = dataEntity.getFee();
-            Double courseFee = Double.valueOf(fee) - Double.valueOf(dataEntity.getDevice_fee());
-
-            //课程费用
-            tv_order_detail_money.setText(String.format(UIUtils.getString(
-                    R.string.how_much_money), StringUtils.getDecimal(courseFee + "")));
-            //设备费用
-            if (!"0.00".equals(dataEntity.getDevice_fee())) {
-                tv_device_fee.setText(String.format(UIUtils.getString(
-                        R.string.how_much_money), StringUtils.getDecimal(dataEntity.getDevice_fee())));
-            } else {
-                rl_device.setVisibility(View.GONE);
-            }
-            //优惠金额
-            tv_privilege_price.setText(String.format(getString(R.string.negative_how_much_money), "0.00"));
-            //应付金额
-            tv_ought_pay.setText(String.format(UIUtils.getString(
-                    R.string.how_much_money), StringUtils.getDecimal(dataEntity.getFee())));
-
-            sid = dataEntity.getSid();
-            name = dataEntity.getSname();
 
             //联系人和手机设置
             ContactTelName contact = orderConfirmationBean.getContact();
@@ -434,11 +369,152 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                     tv_not_null.setVisibility(View.GONE);
                 }
             }
+            school_phone = dataEntity.getSchool_phone();
+            //课室图片
+            Glide.with(mContext).load(dataEntity.getPic_url()).error(R.drawable.clock_wait)
+                    .into(iv_store_pic);
+            //门店名字
+            tv_item_detail_sname.setText(dataEntity.getSname());
+            //门店地址
+            tv_store_address.setText(dataEntity.getSaddress());
+            //门店类型
+            tv_item_detail_use_desc.setText(dataEntity.getType_desc() + "(最多容纳" + dataEntity.getMax_member() + "人)");
+            //房间数量
+            tv_item_detail_room_count.setText(
+                    String.format(getString(R.string.format_multiply_rooms), dataEntity.getRoom_count()));
+            //平日价格
+            AvailablePrice availablePrice = dataEntity.getAvailable_price().get(0);
+            tv_day_price.setText("¥" + availablePrice.getPrice_weekday());
+            //周末价格
+            tv_week_price.setText("¥" + availablePrice.getPrice_weekend());
+            //房间数量
+            tv_sum_room.setText("共" + dataEntity.getRoom_count() + "间,合计:");
 
+            //旗舰店显示设置
+            if ("1".equals(dataEntity.getSchool_type())) {
+                //是旗舰店
+                iv_self_support.setVisibility(View.VISIBLE);//显示旗舰店
+                lr_order_detail_remind.setVisibility(View.VISIBLE);//显示温馨提示
+                ll_lr_order_detail_remind_phone.setVisibility(View.GONE);//隐藏咨询电话
+            } else {
+                //非旗舰店
+                iv_self_support.setVisibility(View.GONE);//隐藏旗舰店
+                lr_order_detail_remind.setVisibility(View.GONE);//隐藏温馨提示
+                ll_lr_order_detail_remind_phone.setVisibility(View.VISIBLE);//显示咨询电话
+                tv_store_phone.setText(dataEntity.getSchool_phone());//设置咨询电话
+            }
+
+            //周末
+            int sum_weekend = 0;
+            //非周末
+            int no_sum_weekend = 0;
+            JSONArray array;
+            try {
+                array = new JSONArray(dataEntity.getRoom_info());
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject jsonObject = array.getJSONObject(i);
+                    String date = jsonObject.getString("date");
+                    if (StringUtils.isWeekend(date)) {
+                        sum_weekend++;
+                    } else {
+                        no_sum_weekend++;
+                    }
+                }
+            } catch (JSONException e) {
+                return;
+            }
+
+            if (no_sum_weekend != 0 && sum_weekend != 0) {
+                tv_use_day.setText("使用天数：" + (sum_weekend + no_sum_weekend) + "天"
+                        + "(平日" + no_sum_weekend + "天,周末" + sum_weekend + "天)");
+            } else if (no_sum_weekend == 0 && sum_weekend != 0) {
+                tv_use_day.setText("使用天数：" + (sum_weekend + no_sum_weekend) + "天"
+                        + "(周末" + sum_weekend + "天)");
+            } else if (no_sum_weekend != 0 && sum_weekend == 0) {
+                tv_use_day.setText("使用天数：" + (sum_weekend + no_sum_weekend) + "天"
+                        + "(平日" + no_sum_weekend + "天)");
+            }
+            //订单信息
+            if (!dataEntity.getStart_date().equals(dataEntity.getEnd_date())) {
+                tv_order_info.setText("订单信息(多天)");
+                tv_use_date.setText("使用日期：" + dataEntity.getStart_date() + "~" + dataEntity.getEnd_date());
+            } else {
+                tv_order_info.setText("订单信息(单天)");
+                tv_use_date.setText("使用日期：" + dataEntity.getStart_date());
+            }
+
+            List<TimeGroup> time_group = dataEntity.getTime_group();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < time_group.size(); i++) {
+                if (i == time_group.size() - 1) {
+                    sb.append(String.format(
+                            UIUtils.getString(R.string.to_symbol),
+                            StringUtils.changeTime(time_group.get(i).getStart_time()),
+                            StringUtils.changeTime(time_group.get(i).getEnd_time())
+                    ));
+                } else {
+                    sb.append(String.format(
+                            UIUtils.getString(R.string.to_symbol),
+                            StringUtils.changeTime(time_group.get(i).getStart_time()),
+                            StringUtils.changeTime(time_group.get(i).getEnd_time()))).append(",");
+                }
+            }
+
+            tv_use_time.setText("使用时段：" + sb.toString());
+
+            //取消课室和增加课室
+            List<AdjustmentData> cancel_date = dataEntity.getRoom_adjust().getCancel_date();
+            List<AdjustmentData> add_date = dataEntity.getRoom_adjust().getAdd_date();
+            //取消
+            if (cancel_date != null && cancel_date.size() != 0) {
+                //设置
+                handleClassRoomCancel(ll_cancel_classroom, cancel_date);
+            } else {
+                //隐藏
+                tv_cancel_classroom.setVisibility(View.GONE);
+            }
+            //增加
+            if (add_date != null && add_date.size() != 0) {
+                //设置
+                handleClassRoomCancel(ll_add_classroom, add_date);
+            } else {
+                //隐藏
+                tv_add_classroom.setVisibility(View.GONE);
+            }
+            //如果增加和取消都没有都隐藏
+            if (cancel_date != null && cancel_date.size() == 0 &&
+                    add_date != null && add_date.size() == 0) {
+                ll_edit_individuation.setVisibility(View.GONE);
+            }
+
+
+            //收费项目
+            List<DeviceEntity> device_no_free = dataEntity.getDevice_nofree();
+            handleDeviceNoFree(ll_no_free_device_add, device_no_free);
+            //总费用
+            fee = dataEntity.getFee();
+            tv_sum_price.setText(String.format(UIUtils.getString(R.string.how_much_money), StringUtils.getDecimal(fee)));
+            //收费费用
+            tv_device_price.setText(String.format(UIUtils.getString(
+                    R.string.how_much_money), StringUtils.getDecimal(dataEntity.getDevice_fee())));
+            //课室费用
+            Double class_fee = Double.valueOf(fee) - Double.valueOf(dataEntity.getDevice_fee());
+
+            tv_course_price.setText(String.format(UIUtils.getString(
+                    R.string.how_much_money), StringUtils.getDecimal(class_fee + "")));
+
+            //门店id
+            sid = dataEntity.getSid();
+            //门店名字
+            name = dataEntity.getSname();
+            //发票联系人清空
             invoiceContacts.clear();
-            order2s.clear();
+            //添加到发票联系人
             invoiceContacts.addAll(orderConfirmationBean.getInvoiceContactses());
+            order2s.clear();
             order2s.add(dataEntity);
+
+            //发票逻辑,用户未开过发票
             if (request == 0) {//是第一次请求需要这些判断
                 last_invoice_type = orderConfirmationBean.getLast_invoice_type();
                 if (invoiceContacts.size() == 0) {
@@ -482,7 +558,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                         }
                     }
                 }
-                sv_order_detail.setVisibility(View.VISIBLE);
+
                 request++;
             }
         } else {
@@ -549,65 +625,6 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         return R.layout.activity_order_confirmation;
     }
 
-    /*
-          *替换日期格式
-  */
-    private String replaceDate(String Date) {
-        return Date.replaceAll("-", "/");
-    }
-
-    /*
-   * 重复日期拼接
-   */
-    private String getRepeatWeek(String repeat) {
-        // repeat: "2,3,4,5,6"
-        if ("".equals(repeat)) {
-            return "每天";
-        } else {
-            String[] repeats = repeat.split(",");
-            StringBuilder sb = new StringBuilder();
-            String week = "";
-
-            for (int i = 0; i < repeats.length; i++) {
-                Integer valueOf = Integer.valueOf(repeats[i]);
-
-                switch (valueOf) {
-                    case 1:
-                        week = "周一";
-                        break;
-                    case 2:
-                        week = "周二";
-                        break;
-                    case 3:
-                        week = "周三";
-                        break;
-                    case 4:
-                        week = "周四";
-                        break;
-                    case 5:
-                        week = "周五";
-                        break;
-                    case 6:
-                        week = "周六";
-                        break;
-                    case 7:
-                        week = "周日";
-                        break;
-                    default:
-                        break;
-                }
-
-                if (i == repeats.length - 1) {
-                    sb.append(week);
-                } else {
-                    sb.append(week).append("、");
-                }
-
-            }
-            return sb.toString();
-
-        }
-    }
 
     /**
      * 取消课室
@@ -616,6 +633,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
      * @param cancel_date 取消课室的日期数据源
      */
     private void handleClassRoomCancel(LinearLayout ll_parent, List<AdjustmentData> cancel_date) {
+        cancel_date = getNewCancel_date(cancel_date);
         if (cancel_date != null && cancel_date.size() != 0) {
             for (int i = 0; i < cancel_date.size(); i++) {
                 LinearLayout cancel_layout = (LinearLayout) LayoutInflater.from(
@@ -636,10 +654,6 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                                 StringUtils.changeTime(adjustmentData.getEnd_time())
                         ));
 
-//                tv_adjustment_count.setText("x" + adjustmentData.getRoom_count()+ "间");
-//                        changeTime(adjustmentData.getStart_time())
-//                                + " - " + changeTime(adjustmentData.getEnd_time())
-//                );
                 tv_adjustment_count.setText(
                         String.format(
                                 getString(R.string.format_multiply_rooms),
@@ -649,6 +663,37 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             }
         }
     }
+
+    private List<AdjustmentData> getNewCancel_date(List<AdjustmentData> cancel_date) {
+        /*HashMap<String, AdjustmentData> hashMap = new HashMap<>();
+        for (AdjustmentData adjustmentData : cancel_date) {
+            String date = adjustmentData.getDate();
+            if (!hashMap.containsKey(date)) {
+                hashMap.put(date, adjustmentData);
+            }
+        }
+        List<AdjustmentData> newCancel_date = new ArrayList<>();
+        for (String dateKey : hashMap.keySet()) {
+            newCancel_date.add(hashMap.get(dateKey));
+        }*/
+        List<AdjustmentData> newCancel_date = new ArrayList<>();
+        Set<String> set = new HashSet<>();
+        for (AdjustmentData adjustmentData : cancel_date) {
+            if (adjustmentData == null) {
+                continue;
+            }
+            String date = adjustmentData.getDate();
+            if (StringUtils.isNotNullString(date)) {
+                if (!set.contains(date)) {
+                    set.add(date);
+                    newCancel_date.add(adjustmentData);
+                }
+            }
+        }
+        set.clear();
+        return newCancel_date;
+    }
+
 
     /**
      * 收费设备_可选设备
@@ -675,7 +720,6 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             }
         } else {
             ll_optional_equipment.setVisibility(View.GONE);
-            v_order_divider.setVisibility(View.GONE);
         }
     }
 
@@ -940,49 +984,6 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         startActivity(intent);
     }
 
-    /**
-     * 取消支付处理
-     */
-   /* private void payCancel() {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("action",
-                "order1_status");
-        params.addBodyParameter("oid",
-                conmmitInfo.getOrder1_id() + "");
-        params.addBodyParameter("uid", uid);
-        httpUtils.send(HttpRequest.HttpMethod.POST,
-                UrlUtils.SERVER_USER_COUPON, params,
-                new RequestCallBack<String>() {
-
-                    @Override
-                    public void onFailure(
-                            HttpException arg0,
-                            String arg1) {
-                        // 请求网络失败
-                        UIUtils.showToastSafe("请求数据失败");
-
-                    }
-
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        // 处理返回的数据
-                        CouponUse isYes = GsonTools.changeGsonToBean(arg0.result, CouponUse.class);
-                        if (null != isYes) {
-                            if (isYes.getCode() == 1 && isYes.getMsg().equals("ok")) {
-                                Integer isInt = isYes.getData();
-                                if (isInt == 1) {
-                                    jumpSucess();
-                                } else {
-                                    jumpFail();
-                                }
-                            }
-                        }
-                    }
-
-                }
-        );
-    }*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1006,18 +1007,14 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 //优惠券金额
                 String couponPrice = data.getStringExtra("couponPrice");
                 if (!"0.00".equals(couponPrice)) {
-                    rl_coupon_money.setVisibility(View.VISIBLE);
                     String batch_name = data.getStringExtra("batch_name");
+                    //设置优惠券文案
                     tv_coupon.setText(batch_name);
                     //优惠券id
                     coupon_id = data.getStringExtra("coupon_id");
-                    //设置优惠金额
-                    tv_privilege_price.setText(String.format(UIUtils.getString(
-                            R.string.negative_rmb_how_much), couponPrice));
+                    //应付金额
                     Double sumFee = Double.valueOf(fee) - Double.valueOf(couponPrice);
-                    //设置应付金额
-                    tv_ought_pay.setText(String.format(UIUtils.getString(
-                            R.string.how_much_money), StringUtils.getDecimal(sumFee + "")));
+                    tv_sum_price.setText(String.format(UIUtils.getString(R.string.how_much_money), sumFee));
                 }
                 break;
             case 3://发票
@@ -1054,25 +1051,31 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 onBackPressed();
                 break;
             case R.id.head_right_relative://添加购物车
-                CustomDialog customDialog = new CustomDialog(
-                        OrderConfirmationActivity.this,
-                        UIUtils.getString(R.string.dialog_show_goon_reservation),
-                        UIUtils.getString(R.string.dialog_show_complete_pay),
-                        UIUtils.getString(R.string.dialog_show_reservation_complete));
-                customDialog.setOnClickListener(new IOnClickListener() {
-                    @Override
-                    public void oncClick(boolean isOk) {
-                        if (isOk) {
-                            Intent intentIndex = new Intent(OrderConfirmationActivity.this, MainActivity.class);
-                            intentIndex.putExtra("backhome", "3");
-                            startActivity(intentIndex);
-                        } else {
-                            Intent intentIndex = new Intent(OrderConfirmationActivity.this, MainActivity.class);
-                            intentIndex.putExtra("backhome_jump_shopcart", "3");
-                            startActivity(intentIndex);
+                // 弹出电话呼叫窗口
+                if (StringUtils.isNotNullString(school_phone)) {
+                    CustomDialog customDialog = new CustomDialog(
+                            this,
+                            UIUtils.getString(R.string.confirm),
+                            UIUtils.getString(R.string.label_cancel), school_phone);
+                    customDialog.setOnClickListener(new IOnClickListener() {
+                        @Override
+                        public void oncClick(boolean isOk) {
+                            if (isOk) {
+                                if (!PermissionsChecker.checkPermission(PermissionsChecker.CALL_PHONE_PERMISSIONS)) {
+                                    // 跳转系统电话
+                                    Intent intent = new Intent(Intent.ACTION_CALL, Uri
+                                            .parse("tel:" + school_phone));
+                                    startActivity(intent);
+                                } else {
+                                    PermissionsChecker.requestPermissions(
+                                            OrderConfirmationActivity.this,
+                                            PermissionsChecker.CALL_PHONE_PERMISSIONS
+                                    );
+                                }
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 break;
             case R.id.rl_name_tel://联系人
                 Intent intent = new Intent(this, ContactShopCartActivity.class);
@@ -1146,22 +1149,22 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                     }
                 });
                 break;
-            case R.id.tv_order_detail_money://课程费用
-                Intent intent_rooms = new Intent(this, Common_Show_WebPage_Activity.class);
-                // url
-                intent_rooms.putExtra(UIUtils.getString(R.string.redirect_open_url),
-                        UrlUtils.SERVER_WEB_STORE_PRICE + "oid2=" + dataEntity.getId());
-                intent_rooms.putExtra(Common_Show_WebPage_Activity.Param_String_Title, "课室费用明细");
-                startActivity(intent_rooms);
-                break;
-            case R.id.tv_device_fee://设备费用
-                Intent intent_device = new Intent(this, Common_Show_WebPage_Activity.class);
-                // url
-                intent_device.putExtra(UIUtils.getString(R.string.redirect_open_url),
-                        UrlUtils.SERVER_WEB_DEVICE_PRICE + "oid2=" + dataEntity.getId());
-                intent_device.putExtra(Common_Show_WebPage_Activity.Param_String_Title, "收费设备费用明细");
-                startActivity(intent_device);
-                break;
+//            case tv_order_detail_money://课程费用
+//                Intent intent_rooms = new Intent(this, Common_Show_WebPage_Activity.class);
+//                // url
+//                intent_rooms.putExtra(UIUtils.getString(R.string.redirect_open_url),
+//                        UrlUtils.SERVER_WEB_STORE_PRICE + "oid2=" + dataEntity.getId());
+//                intent_rooms.putExtra(Common_Show_WebPage_Activity.Param_String_Title, "课室费用明细");
+//                startActivity(intent_rooms);
+//                break;
+//            case tv_device_fee://设备费用
+//                Intent intent_device = new Intent(this, Common_Show_WebPage_Activity.class);
+//                // url
+//                intent_device.putExtra(UIUtils.getString(R.string.redirect_open_url),
+//                        UrlUtils.SERVER_WEB_DEVICE_PRICE + "oid2=" + dataEntity.getId());
+//                intent_device.putExtra(Common_Show_WebPage_Activity.Param_String_Title, "收费设备费用明细");
+//                startActivity(intent_device);
+//                break;
             case R.id.tv_item_detail_sname://跳转门店详情
                 /*Intent intent_store = new Intent(UIUtils.getContext(),
                         IndexDetailActivity.class);
@@ -1172,6 +1175,22 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 bundle.putString("tags", dataEntity.getSchool_tags());
                 intent_store.putExtras(bundle);
                 startActivity(intent_store);*/
+                break;
+            case R.id.rl_class_fee://课室费用
+                Intent intent_rooms = new Intent(this, Common_Show_WebPage_Activity.class);
+                // url
+                intent_rooms.putExtra(UIUtils.getString(R.string.redirect_open_url),
+                        UrlUtils.SERVER_WEB_STORE_PRICE + "oid2=" + dataEntity.getId());
+                intent_rooms.putExtra(Common_Show_WebPage_Activity.Param_String_Title, "课室费用明细");
+                startActivity(intent_rooms);
+                break;
+            case R.id.rl_charge://收费项目
+                Intent intent_device = new Intent(this, Common_Show_WebPage_Activity.class);
+                // url
+                intent_device.putExtra(UIUtils.getString(R.string.redirect_open_url),
+                        UrlUtils.SERVER_WEB_DEVICE_PRICE + "oid2=" + dataEntity.getId());
+                intent_device.putExtra(Common_Show_WebPage_Activity.Param_String_Title, "收费设备费用明细");
+                startActivity(intent_device);
                 break;
         }
     }

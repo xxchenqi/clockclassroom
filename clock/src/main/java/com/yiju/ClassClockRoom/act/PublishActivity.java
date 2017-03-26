@@ -13,11 +13,11 @@ import com.yiju.ClassClockRoom.bean.ChooseStoreBean;
 import com.yiju.ClassClockRoom.bean.Course_DataInfo;
 import com.yiju.ClassClockRoom.bean.Course_Edit_Info;
 import com.yiju.ClassClockRoom.bean.Course_Person_Detail;
-import com.yiju.ClassClockRoom.bean.ReservationDate;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,9 +40,6 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
 
     @ViewInject(R.id.tv_course_address)
     private TextView tv_course_address;
-
-    @ViewInject(R.id.tv_course_class_address)
-    private TextView tv_course_class_address;
 
     @ViewInject(R.id.rl_course_date)
     private RelativeLayout rl_course_date;
@@ -76,7 +73,6 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
     private String reservationTime;
     //门店id
     private String sid;
-    private ChooseStoreBean.DataEntity info;
     private Course_Edit_Info course_detail;
     private String start_time;
     private String end_time;
@@ -105,7 +101,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
             course_detail = (Course_Edit_Info) intent.getSerializableExtra("COURSE_DETAIL");
             course_list_data = (Course_DataInfo) intent.getSerializableExtra("COURSE_LIST_DATA");
             course_detail_data = (Course_Person_Detail) intent.getSerializableExtra("COURSE_DETAIL_DATA");
-
+            ca = Calendar.getInstance();
             if (null != course_detail) {
                 showEditPage();
             }
@@ -203,42 +199,6 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
         return 0;
     }
 
-    /**
-     * 根据日期中阿拉伯数字转化为自定义星期
-     *
-     * @param i 日期中的天
-     * @return 星期字符串
-     */
-    private String getWeek(int i) {
-        String week = null;
-        switch (i - 1) {
-            case 0:
-                week = "周日";
-                break;
-            case 1:
-                week = "周一";
-                break;
-            case 2:
-                week = "周二";
-                break;
-            case 3:
-                week = "周三";
-                break;
-            case 4:
-                week = "周四";
-                break;
-            case 5:
-                week = "周五";
-                break;
-            case 6:
-                week = "周六";
-                break;
-            default:
-                break;
-        }
-        return week;
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -277,7 +237,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
      */
     private void showReservationActivity(int what) {
         Intent intent = null;
-        ReservationDate reservationDate = new ReservationDate();
+//        ReservationDate reservationDate = new ReservationDate();
         switch (what) {
             case ADDRESS:
                 intent = new Intent(this, ChooseStoreActivity.class);
@@ -289,9 +249,9 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                     return;
                 }
                 intent = new Intent(this, ReservationDateActivity.class);
+                intent.putExtra("reservation_flag", false);
                 if (null != selectedDates && selectedDates.size() > 0) {
-                    reservationDate.setDate(selectedDates);
-                    intent.putExtra("reservationHaveDate", reservationDate);
+                    intent.putExtra("reservationHaveDate", (Serializable) selectedDates);
                 }
                 break;
             case WEEK:
@@ -302,18 +262,10 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                 intent = new Intent(this, ReservationWeekActivity.class);
                 if (null != selectedDates
                         && selectedDates.size() > 0) {
-                    reservationDate.setDate(selectedDates);
-                    intent.putExtra("reservationHaveDate", reservationDate);
+                    intent.putExtra("reservationHaveDate", (Serializable) selectedDates);
                 } else {
-                    Calendar ca = Calendar.getInstance();
-                    ca.add(Calendar.DATE, 1);
-                    List<Date> ls = new ArrayList<>();
-                    ls.add(ca.getTime());
-                    ca.setTime(new Date());
-                    ca.add(Calendar.DATE, 2);
-                    ls.add(ca.getTime());
-                    reservationDate.setDate(ls);
-                    intent.putExtra("reservationHaveDate", reservationDate);
+                    UIUtils.showToastSafe("请先选择上课的日期范围");
+                    return;
                 }
                 if (null != reservationWeekList) {
                     intent.putIntegerArrayListExtra("reservationHaveWeek", reservationWeekList);
@@ -324,18 +276,28 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                     UIUtils.showToastSafe(R.string.course_reservation_address);
                     return;
                 }
-                intent = new Intent(this, ReservationTimeActivity.class);
+                intent = new Intent(this, PublishTimeActivity.class);
                 intent.putExtra("room_start_time", start_time);
                 intent.putExtra("room_end_time", end_time);
-                intent.putExtra("start_time", start_time);
-                intent.putExtra("end_time", end_time);
-                if (null != reservationTime) {
+                if (! StringUtils.isNullString(reservationTime)) {
                     intent.putExtra("reservationHaveTime", reservationTime);
                 }
                 break;
             case PUBLISH:
                 if (getFlag()) {
                     UIUtils.showToastSafe(R.string.course_reservation_address);
+                    return;
+                }
+                if(tv_course_date.getText().toString().equals(UIUtils.getString(R.string.reservation_date_title))) {
+                    UIUtils.showToastSafe(R.string.toast_reservation_date_title);
+                    return;
+                }
+                if(tv_course_week.getText().toString().equals(UIUtils.getString(R.string.reservation_week_title))) {
+                    UIUtils.showToastSafe(R.string.toast_reservation_week_title);
+                    return;
+                }
+                if(tv_course_time.getText().toString().equals(UIUtils.getString(R.string.reservation_time_title))) {
+                    UIUtils.showToastSafe(R.string.toast_reservation_time_title);
                     return;
                 }
                 intent = new Intent(this, PublishCourseSecondActivity.class);
@@ -379,7 +341,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
             switch (resultCode) {
                 case ADDRESS:
                     tv_course_address.setVisibility(View.VISIBLE);
-                    info = (ChooseStoreBean.DataEntity) data.getSerializableExtra(ChooseStoreActivity.ACTION_SID);
+                    ChooseStoreBean.DataEntity info = (ChooseStoreBean.DataEntity) data.getSerializableExtra(ChooseStoreActivity.ACTION_SID);
                     start_time = info.getStart_time();
                     end_time = info.getEnd_time();
                     tv_course_address.setText(info.getName());
@@ -387,13 +349,10 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                     showPage();
                     break;
                 case DATE:
-                    ReservationDate reservationDate = (ReservationDate)
-                            data.getSerializableExtra("reservationDate");
-                    if (null != reservationDate) {
-                        selectedDates = reservationDate.getDate();
-                        if (null != selectedDates && selectedDates.size() > 0) {
-                            showDateContent();
-                        }
+                    selectedDates = (ArrayList<Date>) data.getSerializableExtra("reservationDate");
+                    if(null != selectedDates && selectedDates.size()>0){
+                        course_detail = null;
+                        showDateContent();
                     }
                     break;
                 case WEEK:
@@ -405,7 +364,9 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
 
                 case TIME:
                     reservationTime = data.getStringExtra("reservationTime");
-                    tv_course_time.setText(reservationTime);
+                    if(! StringUtils.isNullString(reservationTime)){
+                        tv_course_time.setText(reservationTime);
+                    }
                     break;
                 default:
                     break;
@@ -416,23 +377,12 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
     private void showPage() {
         // 获取当前的时间
         ca = Calendar.getInstance();
-        ca.add(Calendar.DATE, 1);// 获取第二天的时间
-        String start_date = getDateString(ca);
-        String weekBegin = getWeek(ca.get(Calendar.DAY_OF_WEEK));
-        ca.setTime(new Date());
-        ca.add(Calendar.DATE, 2);// 获取第三天的时间
-        String end_date = getDateString(ca);
-        String weekEnd = getWeek(ca.get(Calendar.DAY_OF_WEEK));
         tv_course_date.setVisibility(View.VISIBLE);
         tv_course_week.setVisibility(View.VISIBLE);
         tv_course_time.setVisibility(View.VISIBLE);
-        tv_course_date.setText(String.format(getString(R.string.to_symbol), start_date, end_date));
-        tv_course_week.setText(weekBegin + " " + weekEnd);
-        showFormatTime(info.getStart_time(), info.getEnd_time());
+
         if (null != course_detail) {
-            course_detail = null;
-            selectedDates = null;
-            reservationWeekList = null;
+            showEditPage();
         }
     }
 
@@ -454,7 +404,7 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
      * 显示用户选择的日期
      */
     private void showDateContent() {
-        ca = Calendar.getInstance();
+
         ca.setTime(selectedDates.get(0));
         String start_date = getDateString(ca);
         ca.setTime(selectedDates.get(selectedDates.size() - 1));
@@ -464,15 +414,21 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
         if (selectedDates.size() >= 7) {
             sb_week.append("周一 周二 周三 周四 周五 周六 周日");
         } else if (selectedDates.size() < 7) {
+            ArrayList<Integer> weekInts = new ArrayList<>();
             for (int i = 0; i < selectedDates.size(); i++) {
-                if (i == selectedDates.size()) {
-                    sb_week.append(getNewWeek((selectedDates.get(i).getDay())));
+                weekInts.add(selectedDates.get(i).getDay());
+            }
+            Collections.sort(weekInts);
+            for (int i = 0; i < weekInts.size(); i++) {
+                if (i == weekInts.size() - 1) {
+                    sb_week.append(getNewWeek((weekInts.get(i))));
+                } else {
+                    sb_week.append(getNewWeek((weekInts.get(i)))).append(" ");
                 }
-                sb_week.append(getNewWeek((selectedDates.get(i).getDay()))).append(" ");
             }
         }
         tv_course_week.setText(sb_week.toString());
-        if (null != reservationWeekList) {
+        if(null != reservationWeekList && reservationWeekList.size() >0){
             reservationWeekList.clear();
         }
     }
@@ -483,15 +439,14 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
      * @param list 保存星期的集合
      */
     private void showWeekContent(ArrayList<Integer> list) {
+
         Collections.sort(list);
         StringBuilder sbWeek = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
-            if (i == list.size()) {
+            if (i == list.size() - 1) {
                 sbWeek.append(getNewWeek(list.get(i)));
-
             } else {
                 sbWeek.append(getNewWeek(list.get(i))).append(" ");
-
             }
         }
         tv_course_week.setText(sbWeek.toString());
