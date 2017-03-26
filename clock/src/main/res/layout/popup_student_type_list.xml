@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lv_student_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/color_gay_f5"
+        android:dividerHeight="@dimen/DIMEN_1DP" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:background="@color/order_gray" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:background="@color/white"
+        android:clickable="true"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="@string/label_cancel"
+        android:textColor="@color/color_blue_1e"
+        android:textSize="@dimen/DIMEN_16DP"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

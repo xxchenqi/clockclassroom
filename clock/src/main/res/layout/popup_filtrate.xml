@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <GridView
+        android:id="@+id/gv_store_filtrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:horizontalSpacing="@dimen/DIMEN_20DP"
+        android:numColumns="2"
+        android:paddingBottom="@dimen/DIMEN_20DP"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP"
+        android:paddingTop="@dimen/DIMEN_20DP"
+        android:verticalSpacing="@dimen/DIMEN_15DP" />
+
+    <View
+        android:id="@+id/v_store_filtrate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

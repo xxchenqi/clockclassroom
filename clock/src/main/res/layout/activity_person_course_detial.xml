@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription">
+
+    <RelativeLayout
+        android:id="@+id/rl_per_cour_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/head_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:contentDescription="@string/desc"
+            android:focusable="false"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/person_mine_course_detial"
+            android:textColor="@color/black"
+            android:textSize="@dimen/DIMEN_17DP" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sv_per_cou"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_per_cour_title"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_per_cour_status"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_100DP"
+                android:background="@color/color_green_1e">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_24DP"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_per_cour_detail_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/DIMEN_18DP" />
+
+                    <TextView
+                        android:id="@+id/tv_per_cour_detail_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_6DP"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/DIMEN_12DP" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_24DP"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_img" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_per_cour_detail_reason"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_60DP"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_person_mine_course_detial_reason_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:text="@string/person_mine_course_detial_reason"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+                <TextView
+                    android:id="@+id/tv_person_mine_course_detial_reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:layout_toRightOf="@id/tv_person_mine_course_detial_reason_title"
+                    android:lines="2"
+                    android:text="@string/person_mine_course_detial_why"
+                    android:textColor="@color/red_ce"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_per_cour_detail_apply"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_60DP"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_apply_message"
+                    style="@style/person_course"
+                    android:text="@string/person_mine_course_detial_apply_message"
+                    android:textColor="@color/color_gay_99" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_apply"
+                    style="@style/person_course"
+                    android:layout_toRightOf="@id/tv_per_cour_detail_apply_message"
+                    android:textColor="@color/order_black" />
+
+                <com.yiju.ClassClockRoom.widget.CircleImageView
+                    android:id="@+id/civ_per_cour_detail_one"
+                    android:layout_width="@dimen/DIMEN_40DP"
+                    android:layout_height="@dimen/DIMEN_40DP"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_32DP"
+                    android:src="@drawable/girl"
+                    android:visibility="gone"
+                    app:border_color="@color/white"
+                    app:border_width="@dimen/DIMEN_1DP" />
+
+                <com.yiju.ClassClockRoom.widget.CircleImageView
+                    android:id="@+id/civ_per_cour_detail_two"
+                    android:layout_width="@dimen/DIMEN_40DP"
+                    android:layout_height="@dimen/DIMEN_40DP"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_64DP"
+                    android:src="@drawable/girl"
+                    android:visibility="gone"
+                    app:border_color="@color/white"
+                    app:border_width="@dimen/DIMEN_1DP" />
+
+                <com.yiju.ClassClockRoom.widget.CircleImageView
+                    android:id="@+id/civ_per_cour_detail_three"
+                    android:layout_width="@dimen/DIMEN_40DP"
+                    android:layout_height="@dimen/DIMEN_40DP"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_96DP"
+                    android:src="@drawable/girl"
+                    android:visibility="gone"
+                    app:border_color="@color/white"
+                    app:border_width="@dimen/DIMEN_1DP" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:src="@drawable/arrow" />
+            </RelativeLayout>
+
+            <View style="@style/linestyle_gray_12" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_60DP"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_person_mine_course_detial_name"
+                    style="@style/person_course"
+                    android:text="@string/person_mine_course_detial_name"
+                    android:textColor="@color/color_gay_99" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_class_name"
+                    style="@style/person_course"
+                    android:layout_toRightOf="@id/tv_person_mine_course_detial_name"
+                    android:textColor="@color/order_black" />
+
+            </RelativeLayout>
+
+            <View style="@style/linestyle_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_60DP">
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_class_title"
+                    style="@style/person_course"
+                    android:text="@string/person_mine_course_detial_date"
+                    android:textColor="@color/color_gay_99" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_class_date"
+                    style="@style/person_course"
+                    android:layout_toRightOf="@id/tv_per_cour_detail_class_title"
+                    android:textColor="@color/order_black" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_class_time"
+                    style="@style/person_course"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:textColor="@color/order_black" />
+            </RelativeLayout>
+
+            <View style="@style/linestyle_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_60DP"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_item_adress"
+                    style="@style/person_course"
+                    android:text="@string/person_mine_course_people_apply_count_item_adress"
+                    android:textColor="@color/color_gay_99" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_adress"
+                    style="@style/person_course"
+                    android:layout_toRightOf="@id/tv_item_adress"
+                    android:textColor="@color/app_theme_color" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_type"
+                    style="@style/person_course"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:textColor="@color/app_theme_color" />
+            </RelativeLayout>
+
+            <View style="@style/linestyle_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:text="@string/person_mine_course_people_apply_count_item_time"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+                <com.yiju.ClassClockRoom.widget.ListViewForScrollView
+                    android:id="@+id/lv_per_cour_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/DIMEN_20DP"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:background="@color/white"
+                    android:divider="@color/list" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_time_list_item_more"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:background="@color/white"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:text="@string/person_mine_course_people_apply_count_item_more_time"
+                    android:textColor="@color/app_theme_color"
+                    android:textSize="@dimen/DIMEN_14DP" />
+            </RelativeLayout>
+
+            <View style="@style/linestyle_gray_12" />
+
+            <RelativeLayout
+                android:id="@+id/rl_per_cour_detail_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_60DP">
+
+                <TextView
+                    android:id="@+id/tv_person_mine_course_detial_title"
+                    style="@style/person_course"
+                    android:text="@string/person_mine_course_detial_teacher"
+                    android:textColor="@color/color_gay_99" />
+
+                <TextView
+                    android:id="@+id/tv_person_mine_course_detial_teacher_name"
+                    style="@style/person_course"
+                    android:layout_toRightOf="@id/tv_person_mine_course_detial_title"
+                    android:textColor="@color/order_black" />
+
+                <ImageView
+                    android:id="@+id/iv_course_detail_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:src="@drawable/arrow" />
+            </RelativeLayout>
+
+            <View style="@style/linestyle_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_60DP">
+
+                <TextView
+                    android:id="@+id/tv_person_mine_course_detial_people_title"
+                    style="@style/person_course"
+                    android:text="@string/person_mine_course_detial_people_count"
+                    android:textColor="@color/color_gay_99" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_people_remain"
+                    style="@style/person_course"
+                    android:layout_toRightOf="@id/tv_person_mine_course_detial_people_title"
+                    android:textColor="@color/order_black" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_people_all"
+                    style="@style/person_course"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:textColor="@color/order_black" />
+            </RelativeLayout>
+
+            <View style="@style/linestyle_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_60DP">
+
+                <TextView
+                    android:id="@+id/tv_person_mine_course_detial_price_title"
+                    style="@style/person_course"
+                    android:text="@string/person_mine_course_detial_price"
+                    android:textColor="@color/color_gay_99" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_price"
+                    style="@style/person_course"
+                    android:layout_toRightOf="@id/tv_person_mine_course_detial_price_title"
+                    android:textColor="@color/order_black" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_before_price"
+                    style="@style/person_course"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:textColor="@color/order_black"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <View style="@style/linestyle_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_jianjie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:text="@string/person_mine_course_detial_content"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+                <TextView
+                    android:id="@+id/tv_per_cour_detail_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/DIMEN_20DP"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:layout_toRightOf="@id/tv_jianjie"
+                    android:textColor="@color/order_black"
+                    android:textSize="@dimen/DIMEN_14DP" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_12DP"
+                    android:text="@string/person_mine_course_detial_pic"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+                <com.yiju.ClassClockRoom.widget.GridViewForScrollView
+                    android:id="@+id/gv_per_cour_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/DIMEN_12DP"
+                    android:horizontalSpacing="@dimen/DIMEN_12DP"
+                    android:numColumns="2"
+                    android:verticalSpacing="@dimen/DIMEN_12DP" />
+            </LinearLayout>
+
+            <View style="@style/linestyle_gray" />
+
+            <RelativeLayout
+                android:id="@+id/rl_person_button"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_48DP">
+
+                <LinearLayout
+                    android:id="@+id/ll_person_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_12DP">
+
+                    <TextView
+                        android:id="@+id/tv_person_course_delete"
+                        android:layout_width="@dimen/DIMEN_80DP"
+                        android:layout_height="@dimen/DIMEN_28DP"
+                        android:background="@drawable/desc_course_chang"
+                        android:gravity="center"
+                        android:text="@string/delete"
+                        android:textColor="@color/order_black" />
+
+                    <TextView
+                        android:id="@+id/tv_person_course_edit"
+                        android:layout_width="@dimen/DIMEN_80DP"
+                        android:layout_height="@dimen/DIMEN_28DP"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:background="@drawable/desc_course_chang"
+                        android:gravity="center"
+                        android:text="@string/edit"
+                        android:textColor="@color/order_black" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_person_course_cancel"
+                    android:layout_width="@dimen/DIMEN_80DP"
+                    android:layout_height="@dimen/DIMEN_28DP"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:background="@drawable/desc_course_chang"
+                    android:gravity="center"
+                    android:text="@string/person_mine_course_cancel"
+                    android:textColor="@color/order_black" />
+
+                <TextView
+                    android:id="@+id/tv_test_ing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_12DP"
+                    android:layout_centerVertical="true"
+                    android:text="@string/person_mine_course_detial_cancel"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_14DP"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/iv_empty_mess"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/empty_mess"
+        android:visibility="gone"/>
+
+</RelativeLayout>

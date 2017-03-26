@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <!-- 顶部搜索栏 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_megs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:drawableLeft="@drawable/message"
+            android:drawablePadding="@dimen/DIMEN_6DP"
+            android:gravity="center_vertical"
+            android:text="@string/text_message"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_15DP" />
+
+        <TextView
+            android:id="@+id/iv_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_28DP"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/tv_more_store"
+            android:layout_toRightOf="@id/tv_megs"
+            android:background="@drawable/pop_search_bg_white"
+            android:drawableLeft="@drawable/seach_btn_icon"
+            android:drawablePadding="@dimen/DIMEN_12DP"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:text="@string/text_input_hint"
+            android:textColor="@color/color_gay_99"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+        <TextView
+            android:id="@+id/tv_more_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:text="@string/text_all_store"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_15DP" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/tab_content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--<android.support.design.widget.TabLayout
+                android:id="@+id/tl_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabIndicatorColor="@color/color_green_1e"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/color_green_1e"
+                app:tabTextColor="@color/color_gay_8f" />-->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.yiju.ClassClockRoom.widget.wheel.HorizontalWheelView
+                    android:id="@+id/hWalking"
+                    android:layout_width="@dimen/DIMEN_500DP"
+                    android:layout_height="@dimen/DIMEN_34DP"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/white" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_index_tab"
+                    tools:ignore="ContentDescription" />
+            </FrameLayout>
+
+            <com.yiju.ClassClockRoom.widget.LoopViewPager
+                android:id="@+id/vp_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_gay_f5" />
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/ly_wifi"
+            layout="@layout/wifi_fail"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/background_black_radius_4"
+            android:padding="@dimen/DIMEN_15DP"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/loadingImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/progress_round" />
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>

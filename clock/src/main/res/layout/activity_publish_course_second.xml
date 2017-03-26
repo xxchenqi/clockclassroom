@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gay_f5"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/include_head_greenbg_left_icon_right_icon_layout" />
+
+    <ScrollView
+        android:id="@+id/sv_course"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top"
+        android:layout_marginBottom="@dimen/DIMEN_50DP">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_course_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_70DP"
+                    android:layout_marginTop="@dimen/DIMEN_12DP"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_course_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:contentDescription="@string/desc"
+                        android:src="@drawable/course_name_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_course_name_none"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:layout_toRightOf="@id/iv_course_name"
+                        android:text="请输入课程名称"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_16DP" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_course_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:layout_toRightOf="@id/iv_course_name"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_course_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_green_1e"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/DIMEN_6DP"
+                            android:text="课程名称"
+                            android:textColor="@color/color_gay_99"
+                            android:textSize="@dimen/DIMEN_12DP" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:background="@color/color_gay_f5" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_course_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_70DP"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_course_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:src="@drawable/course_price_icon"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_course_price_none"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:layout_toRightOf="@id/iv_course_price"
+                        android:text="请输入单次课程价格"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_16DP" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_course_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:layout_toRightOf="@id/iv_course_price"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_course_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_green_1e"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/DIMEN_6DP"
+                            android:text="单次课程价格"
+                            android:textColor="@color/color_gay_99"
+                            android:textSize="@dimen/DIMEN_12DP" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:background="@color/color_gay_f5" />
+                <!--招生人数-->
+                <RelativeLayout
+                    android:id="@+id/rl_people_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_70DP"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_people_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:contentDescription="@string/desc"
+                        android:src="@drawable/course_people_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_people_num_none"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:layout_toRightOf="@id/iv_people_num"
+                        android:text="请输入招生剩余以及总人数"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_16DP" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_people_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:layout_toRightOf="@id/iv_people_num"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_course_people_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_green_1e"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/DIMEN_6DP"
+                            android:text="招生剩余人数以及总人数"
+                            android:textColor="@color/color_gay_99"
+                            android:textSize="@dimen/DIMEN_12DP" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--授课老师-->
+            <RelativeLayout
+                android:id="@+id/rl_course_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_70DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/iv_course_teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/course_teacher_icon" />
+
+                <TextView
+                    android:id="@+id/tv_course_teacher_none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_toRightOf="@id/iv_course_teacher"
+                    android:text="请选择授课老师(选填)"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_16DP" />
+
+                <LinearLayout
+                    android:id="@+id/ll_course_teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_toRightOf="@id/iv_course_teacher"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_course_teacher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_green_1e"
+                        android:textSize="@dimen/DIMEN_16DP" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_6DP"
+                        android:text="授课老师"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_12DP" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_course_desc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_70DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_course_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:src="@drawable/course_describe_icon"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tv_course_desc_none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_toRightOf="@id/iv_course_desc"
+                    android:text="请输入课程描述"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_16DP" />
+
+                <LinearLayout
+                    android:id="@+id/ll_course_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_toRightOf="@id/iv_course_desc"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_course_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/color_green_1e"
+                        android:textSize="@dimen/DIMEN_16DP" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_6DP"
+                        android:text="课程描述"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_12DP" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:gravity="center_vertical"
+                android:text="课程风采"
+                android:textColor="@color/order_black"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:text="请勿上传与课程无关图片"
+                android:textSize="@dimen/DIMEN_12DP"
+                android:textColor="@color/color_gay_99"/>
+
+            <com.yiju.ClassClockRoom.widget.GridViewForScrollView
+                android:id="@+id/gv_course_mien"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/DIMEN_15DP"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_15DP"
+                android:horizontalSpacing="@dimen/DIMEN_12DP"
+                android:numColumns="2"
+                android:verticalSpacing="@dimen/DIMEN_12DP" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_publish_course"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_green_1e"
+        android:text="发布课程"
+        android:textColor="@color/white"
+        android:textSize="@dimen/DIMEN_18DP" />
+
+</RelativeLayout>

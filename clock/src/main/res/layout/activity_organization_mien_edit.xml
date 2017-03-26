@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <com.yiju.ClassClockRoom.widget.ZoomImageView
+        android:id="@+id/iv_zoom_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_head"
+        android:scaleType="matrix"
+        android:src="@drawable/clock_wait" />
+
+</RelativeLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:ignore="contentDescription">
+
+    <TextView
+        android:id="@+id/tv_time_fail"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:textColor="@color/order_black"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/DIMEN_16DP" />
+
+    <ImageView
+        android:id="@+id/iv_time_fail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:src="@drawable/order_choose_btn"/>
+</RelativeLayout>

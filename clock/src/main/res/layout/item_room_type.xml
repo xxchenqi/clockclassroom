@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:ignore="HardcodedText">
+
+    <RelativeLayout
+        android:id="@+id/rl_item_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/DIMEN_98DP"
+        android:paddingLeft="@dimen/DIMEN_14DP"
+        android:paddingRight="@dimen/DIMEN_14DP">
+
+        <ImageView
+            android:id="@+id/iv_item_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/order_nonechoose_btn"
+            tools:ignore="ContentDescription" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:layout_toRightOf="@id/rl_item_choose"
+        tools:ignore="ContentDescription">
+
+        <ImageView
+            android:id="@+id/iv_item_roompic"
+            android:layout_width="@dimen/DIMEN_74DP"
+            android:layout_height="@dimen/DIMEN_74DP"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/clock_wait" />
+
+        <LinearLayout
+            android:id="@+id/ll_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_toRightOf="@id/iv_item_roompic"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="中间"
+                android:textColor="@color/color_gay_8f"
+                android:textSize="@dimen/DIMEN_16DP" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_item_aere"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:text="7~9m"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_10DP" />
+
+                <TextView
+                    android:id="@+id/tv_item_desk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最多容纳5人"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_12DP" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_5DP"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="平日:"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_12DP" />
+
+                <TextView
+                    android:id="@+id/tv_item_day_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元/小时"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_10DP" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="周末:"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_12DP" />
+
+                <TextView
+                    android:id="@+id/tv_item_week_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="40"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元/小时"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_10DP" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_room_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/order_new_more_btn"
+        tools:ignore="ContentDescription" />
+    <!-- <ImageView
+        android:id="@+id/iv_item_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/selected_type"
+        android:visibility="gone" /> -->
+    <View
+        style="@style/linestyle_6"
+        android:layout_below="@id/rl_all" />
+</RelativeLayout>

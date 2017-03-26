@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_course_root"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/DIMEN_120DP"
+    android:background="@color/white"
+    tools:ignore="HardcodedText">
+
+    <ImageView
+        android:id="@+id/iv_course_pic"
+        android:layout_width="@dimen/DIMEN_100DP"
+        android:layout_height="@dimen/DIMEN_100DP"
+        android:layout_marginBottom="@dimen/DIMEN_6DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_16DP"
+        android:layout_marginTop="@dimen/DIMEN_6DP"
+        android:background="@drawable/clock_wait"
+        android:scaleType="centerCrop"
+        tools:ignore="contentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:layout_toRightOf="@id/iv_course_pic"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_item_course_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:text="正在加载正在加载正在加载正在加载正在加载"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/tv_item_course_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:gravity="center_vertical"
+            android:text="老师/机构"
+            android:textColor="@color/color_gay_99"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_item_course_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="徐汇虹梅中心"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_item_course_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥99.00/"
+                    android:textColor="@color/color_green_1e"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="时"
+                    android:textColor="@color/color_green_1e"
+                    android:textSize="@dimen/DIMEN_10DP" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_item_course_reservation"
+            android:layout_width="@dimen/DIMEN_180DP"
+            android:layout_height="@dimen/DIMEN_30DP"
+            android:layout_marginTop="@dimen/DIMEN_8DP"
+            android:background="@drawable/background_green_1eb482_radius_3"
+            android:gravity="center"
+            android:text="@string/course_reservation"
+            android:textColor="@color/white"
+            android:textSize="@dimen/DIMEN_16DP"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/ll_webpage"
+        layout="@layout/include_head_greenbg_left_icon_right_icon_layout" />
+
+
+    <FrameLayout
+        android:id="@+id/lr_webpage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/lr_webpage2"
+        android:layout_below="@+id/ll_webpage">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" />
+        <include
+            android:id="@+id/ly_broken_fail"
+            layout="@layout/broken_fail"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/ly_wifi"
+            layout="@layout/wifi_fail"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/lr_webpage2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_alignParentBottom="true"
+        android:background="@color/order_gray"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_webpage_reserve"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_50DP"
+            android:background="@color/app_theme_color"
+            android:text="@string/reserve"
+            android:textColor="@color/white"
+            android:textSize="@dimen/DIMEN_18DP" />
+    </LinearLayout>
+
+</RelativeLayout>

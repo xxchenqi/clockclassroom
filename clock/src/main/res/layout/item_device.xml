@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/DIMEN_35DP"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/DIMEN_12DP"
+    android:paddingRight="@dimen/DIMEN_12DP"
+    android:paddingTop="@dimen/DIMEN_12DP"
+    tools:ignore="HardcodedText">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="麦克风"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_14DP" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x1"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_16DP" />
+
+</LinearLayout>

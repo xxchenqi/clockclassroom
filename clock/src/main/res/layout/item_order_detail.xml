@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/unfocused"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <!--<View style="@style/linestyle_h_unfocused" />-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+        <ImageView
+            android:id="@+id/iv_item_detail_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/DIMEN_8DP"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/ziying" />
+
+        <TextView
+            android:id="@+id/tv_item_detail_sname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            tools:text="闵行中心店"
+            android:textColor="@color/color_blue_1e"
+            android:textSize="@dimen/DIMEN_16DP"
+            tools:ignore="HardcodedText" />
+        <!--<TextView
+            android:id="@+id/tv_item_detail_use_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跆拳道教学"
+            android:textColor="@color/color_blue_1e"
+            android:textSize="@dimen/DIMEN_16DP"/>
+
+        <TextView
+            android:id="@+id/tv_item_detail_room_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="共18小时"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP"
+            tools:ignore="HardcodedText" />-->
+    </LinearLayout>
+
+    <View style="@style/linestyle_h_unfocused" />
+
+    <RelativeLayout
+        android:id="@+id/rl_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+        <ImageView
+            android:id="@+id/iv_order_pic"
+            android:layout_width="@dimen/DIMEN_92DP"
+            android:layout_height="@dimen/DIMEN_92DP"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:scaleType="centerCrop"
+            android:src="@drawable/clock_wait"
+            tools:ignore="contentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:layout_toRightOf="@+id/iv_order_pic"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_28DP">
+
+                <TextView
+                    android:id="@+id/tv_item_detail_room_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    tools:text="中间课室"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_16DP" />
+
+                <TextView
+                    android:id="@+id/tv_item_detail_max_member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_6DP"
+                    android:layout_toRightOf="@id/tv_item_detail_room_type"
+                    tools:text="(最多容纳10人)"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_12DP" />
+
+                <TextView
+                    android:id="@+id/tv_item_detail_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    tools:text="X1"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_16DP" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_item_detail_date"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:gravity="center_vertical"
+                tools:text="2015-9-13 ~ 2015/9/13"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_item_detail_repeat"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:gravity="center_vertical"
+                tools:text="周一"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_item_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:gravity="center_vertical"
+                tools:text="13:00 ~ 19:00"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_course_nearly"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_40DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:paddingRight="@dimen/DIMEN_12DP">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_40DP"
+                android:gravity="center_vertical"
+                android:text="近期课室"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_15DP" />
+
+            <TextView
+                android:id="@+id/tv_course_nearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                tools:text="2016-09-13 18:00 ~ 19:00 A103"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_14DP" />
+        </RelativeLayout>
+
+        <View style="@style/linestyle_h_unfocused" />
+
+        <RelativeLayout
+            android:id="@+id/rl_all_course"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_40DP"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:paddingRight="@dimen/DIMEN_12DP">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_40DP"
+                android:gravity="center_vertical"
+                android:text="全部课室"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_15DP" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/DIMEN_12DP"
+                android:drawableRight="@drawable/dark_more_btn"
+                android:gravity="center_vertical"
+                android:text="明细"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_check_classroom_detail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_35DP"
+            android:gravity="center_vertical">
+
+
+
+          &lt;!&ndash;  <TextView
+                android:id="@+id/tv_check_classroom_relevance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="课室已关联课程"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_14DP"
+                tools:ignore="HardcodedText" />&ndash;&gt;
+
+            &lt;!&ndash; 点击进入可退单的页面&ndash;&gt;
+            <TextView
+                android:id="@+id/tv_check_classroom_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/DIMEN_12DP"
+                android:drawableRight="@drawable/dark_more_btn"
+                android:gravity="center_vertical"
+                android:text="明细"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_16DP" />
+        </LinearLayout>
+
+    </LinearLayout>-->
+    <!--</LinearLayout>-->
+    <LinearLayout
+        android:id="@+id/ll_all_up_down"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_up_down"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_40DP"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:paddingRight="@dimen/DIMEN_12DP">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/DIMEN_40DP"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="个别日期调整"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_15DP" />
+
+            <ImageView
+                android:id="@+id/iv_up_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/more_btn_up" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_edit_individuation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_4DP"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:paddingRight="@dimen/DIMEN_12DP"
+            android:visibility="visible">
+
+            <View style="@style/linestyle_h_unfocused" />
+
+            <TextView
+                android:id="@+id/tv_cancel_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_35DP"
+                android:gravity="center_vertical"
+                android:text="取消课室"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <LinearLayout
+                android:id="@+id/ll_cancel_classroom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_add_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_35DP"
+                android:gravity="center_vertical"
+                android:text="增加课室"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <LinearLayout
+                android:id="@+id/ll_add_classroom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/DIMEN_10DP" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_can_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+        <TextView
+            android:id="@+id/tv_can_select"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_40DP"
+            android:gravity="center_vertical"
+            android:text="可选设备"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP" />
+
+        <View style="@style/linestyle_h_unfocused" />
+
+        <!-- 可选设备 列表-->
+        <LinearLayout
+            android:id="@+id/ll_no_free_device_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/DIMEN_12DP"/>
+
+    </LinearLayout>
+    <View style="@style/linestyle_h_unfocused" />
+
+    <!-- 课室布置 -->
+    <LinearLayout
+        android:id="@+id/ll_set_classroom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+        <LinearLayout
+            android:id="@+id/ll_set_classroom_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_40DP"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/order_classroom_arrangement"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_15DP" />
+
+            <!-- 点击进入课室布置页面-->
+            <TextView
+                android:id="@+id/tv_edit_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/DIMEN_12DP"
+                android:drawableRight="@drawable/dark_more_btn"
+                android:gravity="center_vertical"
+                android:text="修改"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+        </LinearLayout>
+
+        <View style="@style/linestyle_h_unfocused" />
+
+        <!-- 课室布置 列表头-->
+        <TextView
+            android:id="@+id/tv_dec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_gay_99"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+        <LinearLayout
+            android:id="@+id/ll_classroom_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/DIMEN_12DP"/>
+
+
+    </LinearLayout>
+
+    <View style="@style/linestyle_h_unfocused" />
+
+    <!--<RelativeLayout
+        android:id="@+id/rl_item_detail_subtotal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_40DP"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_item_detail_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/DIMEN_12DP"
+            android:drawableRight="@drawable/dark_more_btn"
+            android:gravity="center_vertical"
+            android:text="¥3245.34"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP"
+            tools:ignore="HardcodedText" />
+
+        &lt;!&ndash; 点击进入费用明细&ndash;&gt;
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单小计"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>-->
+
+</LinearLayout>

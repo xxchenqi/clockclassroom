@@ -1,0 +1,210 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <TextView
+        android:id="@+id/tv_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_23DP"
+        android:text="@string/change_mobile_content"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_14DP" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_17DP"
+        android:background="@drawable/bg_et_gray_login"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:text="@string/add_eight_six"
+            android:textColor="@color/black"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+        <View
+            android:layout_width="@dimen/DIMEN_1DP"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:background="@color/gray_8f" />
+
+        <EditText
+            android:id="@+id/et_change_mobile_new_mobile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/please_input_phone_number"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textSize="@dimen/DIMEN_17DP"
+            tools:ignore="HardcodedText" />
+
+
+        <!-- <Button
+             android:id="@+id/btn_change_mobile_get_verify"
+             android:layout_width="@dimen/DIMEN_104DP"
+             android:layout_height="@dimen/DIMEN_30DP"
+             android:layout_marginBottom="@dimen/DIMEN_10DP"
+             android:layout_marginRight="@dimen/DIMEN_12DP"
+             android:layout_marginTop="@dimen/DIMEN_10DP"
+             android:background="@drawable/bg_search_textview2"
+             android:text="@string/get_verify"
+             android:textColor="@color/app_theme_color"
+             android:textSize="@dimen/DIMEN_15DP" />-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_17DP"
+        android:background="@drawable/bg_et_gray_login"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_8DP"
+            android:background="@drawable/keyboard"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:layout_width="@dimen/DIMEN_1DP"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:background="@color/gray_8f" />
+
+        <EditText
+            android:id="@+id/et_change_mobile_verify"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/register_input_verification_code"
+            android:inputType="number"
+            android:maxLength="4"
+            android:maxLines="1"
+            android:textSize="@dimen/DIMEN_17DP"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_change_mobile_get_verify"
+            android:layout_width="@dimen/DIMEN_104DP"
+            android:layout_height="@dimen/DIMEN_30DP"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@drawable/bg_search_textview2"
+            android:text="@string/get_verify"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_15DP" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_change_mobile_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_17DP"
+        android:background="@drawable/bg_et_gray_login"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:background="@drawable/lock"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:layout_width="@dimen/DIMEN_1DP"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:background="@color/gray_8f" />
+
+        <EditText
+            android:id="@+id/et_change_mobile_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/log_in_v2_01_imput"
+            android:hint="设置新密码,6-18位字母或数字"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textSize="@dimen/DIMEN_17DP"
+            tools:ignore="HardcodedText" />
+
+        <CheckBox
+            android:id="@+id/cb_change_mobile_password_isshow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_16DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@drawable/cb_password_bg"
+            android:button="@null" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_9DP"
+        android:layout_marginRight="@dimen/DIMEN_9DP"
+        android:layout_marginTop="@dimen/DIMEN_29DP"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <com.yiju.ClassClockRoom.widget.circular.CircularProgressButton
+            android:id="@+id/btn_change_mobile_commit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_44DP"
+            android:textColor="@color/color_lucency_white"
+            android:textSize="@dimen/DIMEN_18DP"
+            app:cpb_cornerRadius="@dimen/DIMEN_30DP"
+            app:cpb_paddingProgress="@dimen/DIMEN_1DP"
+            app:cpb_textIdle="@string/confirm"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+</LinearLayout>

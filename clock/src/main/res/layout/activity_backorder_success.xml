@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_80DP"
+        android:drawableLeft="@drawable/order_sucess_icon"
+        android:drawablePadding="@dimen/DIMEN_10DP"
+        android:gravity="center"
+        android:text="@string/back_order_success"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_16DP" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_40DP"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_sucess_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_sucess_classroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_14DP"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tv_sucess_fee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_14DP"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:text="@string/back_order_content"
+        android:textColor="@color/red"
+        android:textSize="@dimen/DIMEN_14DP"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_146DP"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_sucess_backhome"
+            style="@style/style_bt_back_order"
+            android:text="@string/back_home" />
+
+        <Button
+            android:id="@+id/btn_sucess_checkorder"
+            style="@style/style_bt_back_order"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/check_order" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_gay_f5"
+    android:padding="@dimen/DIMEN_14DP"
+    tools:ignore="HardcodedText">
+
+    <TextView
+        android:id="@+id/tv_item_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/DIMEN_14DP"
+        android:layout_marginTop="@dimen/DIMEN_14DP"
+        android:gravity="center"
+        android:text="20:05"
+        android:textColor="@color/color_gay_99"
+        android:textSize="@dimen/DIMEN_12DP" />
+
+    <LinearLayout
+        android:id="@+id/ll_msg_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/DIMEN_18DP"
+        android:background="@drawable/bg_message_box">
+
+        <TextView
+            android:id="@+id/tv_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_gay_99"
+            android:text="亲爱的小苹果" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_1DP"
+            android:layout_marginBottom="@dimen/DIMEN_18DP"
+            android:layout_marginTop="@dimen/DIMEN_18DP"
+            android:background="@color/color_gay_c8" />
+
+        <TextView
+            android:id="@+id/tv_item_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_gay_99"
+            android:drawableRight="@drawable/arrow"
+            android:textSize="@dimen/DIMEN_15DP"
+            android:text="@string/check_detail" />
+    </LinearLayout>
+
+</LinearLayout>

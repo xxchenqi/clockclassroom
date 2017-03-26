@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+
+    <TextView
+        android:id="@+id/tv_contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:text="丽丽"
+        android:textColor="@color/app_theme_color"
+        android:textSize="@dimen/DIMEN_16DP"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tv_contact_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_contact_name"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_toRightOf="@id/tv_contact_name"
+        android:background="@color/app_theme_color"
+        android:padding="@dimen/DIMEN_1DP"
+        android:text="@string/contact_default"
+        android:textColor="@color/white"
+        android:textSize="@dimen/DIMEN_10DP"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tv_contact_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_contact_name"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:text="13020169902"
+        android:textColor="@color/app_theme_color"
+        android:textSize="@dimen/DIMEN_12DP"
+        tools:ignore="HardcodedText" />
+
+    <View
+        style="@style/linestyle_h_unfocused"
+        android:layout_below="@id/tv_contact_phone"
+        android:layout_marginTop="@dimen/DIMEN_12DP" />
+
+    <ImageView
+        android:id="@+id/iv_contact_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:src="@drawable/order_choose_btn"
+        tools:ignore="ContentDescription" />
+
+</RelativeLayout>

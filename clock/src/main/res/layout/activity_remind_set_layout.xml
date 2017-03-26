@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <!--<View style="@style/linestyle_h_unfocused" />-->
+
+    <RelativeLayout
+        android:id="@+id/remind_order_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:layout_marginTop="@dimen/DIMEN_30DP"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/textstyle_15p_black37"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/remind_order" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/remind_order_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:background="@null"
+            android:checked="true"
+            app:theme="@style/Color1SwitchStyle" />
+    </RelativeLayout>
+
+    <!--<View style="@style/linestyle_h_unfocused" />-->
+
+    <RelativeLayout
+        android:id="@+id/remind_system_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/textstyle_15p_black37"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/remind_system" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/remind_system_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:background="@null"
+            android:checked="true"
+            app:theme="@style/Color1SwitchStyle" />
+        <!--<CheckBox
+            android:id="@+id/cb_pay_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:button="@drawable/cb_default_bg" />-->
+    </RelativeLayout>
+
+    <!--<View style="@style/linestyle_h_unfocused" />-->
+
+    <RelativeLayout
+        android:id="@+id/remind_accompany_read_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/textstyle_15p_black37"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/remind_accompany" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/remind_accompany_read_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:background="@null"
+            android:checked="true"
+            app:theme="@style/Color1SwitchStyle" />
+        <!--<CheckBox
+            android:id="@+id/cb_pay_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:button="@drawable/cb_default_bg" />-->
+    </RelativeLayout>
+
+    <!--<View style="@style/linestyle_h_unfocused" />-->
+
+    <RelativeLayout
+        android:id="@+id/remind_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/textstyle_15p_black37"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/remind_time" />
+
+        <ImageView
+            android:id="@+id/remind_accompany_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:src="@drawable/arrow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/remind_time_text"
+            style="@style/textstyle_14p_99"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:layout_toLeftOf="@+id/remind_accompany_arrow"
+            android:text="提醒5分钟" />
+    </RelativeLayout>
+
+    <View style="@style/linestyle_h_unfocused" />
+
+    <RelativeLayout
+        android:id="@+id/quiet_hours_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/textstyle_15p_black37"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/remind_nodisturbing_time" />
+
+        <ImageView
+            android:id="@+id/remind_nodisturbing_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:src="@drawable/arrow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/quiet_hours_text"
+            style="@style/textstyle_14p_99"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:layout_toLeftOf="@+id/remind_nodisturbing_arrow"
+            android:text="每日22:00-次日8:00" />
+    </RelativeLayout>
+
+    <!--<View style="@style/linestyle_h_unfocused" />-->
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="vertical" >
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/layout_pop"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:orientation="vertical" >-->
+
+        <View
+            android:id="@+id/v_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:alpha="0.3"
+            android:background="@color/black"  />
+
+        <Button
+            android:id="@+id/btn_baidu_map"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/DIMEN_56DP"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="使用百度地图导航"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_17DP"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_1DP"
+            android:background="@color/order_gray" />
+
+        <Button
+            android:id="@+id/btn_auto_nav_map"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/DIMEN_56DP"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="使用高德地图导航"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_17DP"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_4DP"
+            android:background="@color/order_gray" />
+
+        <Button
+            android:id="@+id/btn_map_cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/DIMEN_56DP"
+            android:background="@color/white"
+            android:clickable="true"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="@string/label_cancel"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_17DP"
+            tools:ignore="HardcodedText" />
+    <!--</LinearLayout>-->
+
+</LinearLayout>

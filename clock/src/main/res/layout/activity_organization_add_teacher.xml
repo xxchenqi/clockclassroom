@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/unfocused"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_60DP"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+        <TextView
+            android:id="@+id/tv_member_name"
+            android:layout_width="@dimen/DIMEN_112DP"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/icon_name_job"
+            android:drawablePadding="@dimen/DIMEN_10DP"
+            android:gravity="center_vertical"
+            android:text="@string/name"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+        <EditText
+            android:id="@+id/et_member_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/DIMEN_8DP"
+            android:layout_marginTop="@dimen/DIMEN_8DP"
+            android:layout_toLeftOf="@+id/iv_member_tel_address"
+            android:layout_toRightOf="@id/tv_member_name"
+            android:background="@null"
+            android:hint="@string/mustfill"
+            android:textColor="@color/gray_8f"
+            android:textColorHint="@color/gray_8f"
+            android:textSize="@dimen/DIMEN_12DP"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/iv_member_tel_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/contacts"
+            android:drawablePadding="@dimen/DIMEN_8DP"
+            android:gravity="center_vertical"
+            android:text="@string/choose"
+            android:textColor="@color/color_green_1e" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_1DP"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_60DP"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+
+        <TextView
+            android:id="@+id/tv_member_tel"
+            android:layout_width="@dimen/DIMEN_110DP"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/icon_phone_number_job"
+            android:drawablePadding="@dimen/DIMEN_10DP"
+            android:gravity="center_vertical"
+            android:text="@string/phone_number"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+        <EditText
+            android:id="@+id/et_member_tel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/DIMEN_8DP"
+            android:layout_marginRight="@dimen/DIMEN_20DP"
+            android:layout_marginTop="@dimen/DIMEN_8DP"
+            android:layout_toRightOf="@id/tv_member_tel"
+            android:background="@null"
+            android:hint="@string/mustfill"
+            android:textColor="@color/gray_8f"
+            android:textColorHint="@color/gray_8f"
+            android:textSize="@dimen/DIMEN_12DP"
+            android:maxLines="1" />
+    </RelativeLayout>
+</LinearLayout>

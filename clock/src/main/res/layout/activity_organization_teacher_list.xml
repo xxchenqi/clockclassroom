@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <TextView
+        android:id="@+id/tv_teacher_choose_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_40DP"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:text="@string/txt_course_teacher_explain"
+        android:textColor="@color/color_gay_99"
+        android:textSize="@dimen/DIMEN_12DP" />
+
+    <RelativeLayout
+        android:id="@+id/rl_no_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/DIMEN_10DP"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_56DP"
+            android:gravity="center_vertical"
+            android:text="不选择老师"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+        <ImageView
+            android:id="@+id/iv_no_teacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/order_choose_btn"
+            android:contentDescription="@string/desc"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_teacher_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:choiceMode="singleChoice" />
+</LinearLayout>

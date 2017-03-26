@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/lable_teacher"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_17DP" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:background="@color/color_gay_f5" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/ly_wifi"
+            layout="@layout/wifi_fail"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/lv_teacher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/color_gay_f5"
+            android:dividerHeight="@dimen/DIMEN_1DP" />
+
+        <LinearLayout
+            android:id="@+id/ll_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/background_black_radius_4"
+            android:padding="@dimen/DIMEN_15DP"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/loadingImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/progress_round" />
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>

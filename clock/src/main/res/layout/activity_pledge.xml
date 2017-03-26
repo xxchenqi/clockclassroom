@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <ListView
+        android:id="@+id/lv_pledge"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/unfocused"
+        android:dividerHeight="@dimen/DIMEN_12DP" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/DIMEN_18DP"
+        android:layout_marginLeft="@dimen/DIMEN_24DP"
+        android:layout_marginRight="@dimen/DIMEN_24DP"
+        android:layout_marginTop="@dimen/DIMEN_18DP"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_pledge_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/note_msg_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_pledge_note"
+                android:text="@string/tips"
+                android:textColor="@color/app_theme_color"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pledge_content"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP" />
+    </LinearLayout>
+
+
+</LinearLayout>

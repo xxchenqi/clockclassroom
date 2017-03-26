@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 字体相关 -->
+    <style name="textstyle_parent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="textstyle_10p_black66" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/black66</item>
+        <item name="android:textSize">@dimen/DIMEN_10DP</item>
+    </style>
+
+    <style name="textstyle_12p_white" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/DIMEN_12DP</item>
+    </style>
+
+    <style name="textstyle_12p_8f" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_gay_8f</item>
+        <item name="android:textSize">@dimen/DIMEN_12DP</item>
+    </style>
+
+    <style name="textstyle_12p_1e" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_green_1e</item>
+        <item name="android:textSize">@dimen/DIMEN_12DP</item>
+    </style>
+
+    <style name="textstyle_12p_black" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_black_33</item>
+        <item name="android:textSize">@dimen/DIMEN_12DP</item>
+    </style>
+
+    <style name="textstyle_13p_gay_8f" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_gay_8f</item>
+        <item name="android:textSize">@dimen/DIMEN_13DP</item>
+    </style>
+
+    <style name="textstyle_13p_gay_b4" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_gay_b4</item>
+        <item name="android:textSize">@dimen/DIMEN_13DP</item>
+    </style>
+
+    <style name="textstyle_13p_orange" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/app_theme_color</item>
+        <item name="android:textSize">@dimen/DIMEN_13DP</item>
+    </style>
+
+    <style name="textstyle_14p_8f" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_gay_8f</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>
+
+    <style name="textstyle_14p_99" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_gay_99</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>
+
+    <style name="textstyle_14p_black" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_black_33</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>
+
+    <style name="textstyle_14p_green_21" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_green_1e</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>
+
+    <style name="textstyle_14p_white" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>
+
+    <style name="textstyle_15p_black37" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_black_37</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>
+
+    <style name="textstyle_15p_99" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_gay_99</item>
+        <item name="android:textSize">@dimen/DIMEN_15DP</item>
+    </style>
+
+    <style name="textstyle_16p_white" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/DIMEN_16DP</item>
+    </style>
+
+    <style name="textstyle_17p_black" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_black_33</item>
+        <item name="android:textSize">@dimen/DIMEN_17DP</item>
+    </style>
+
+    <style name="textstyle_17p_white" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/DIMEN_17DP</item>
+    </style>
+
+    <style name="textstyle_17p_orange" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/app_theme_color</item>
+        <item name="android:textSize">@dimen/DIMEN_17DP</item>
+    </style>
+
+    <style name="textstyle_17p_blue" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/color_blue_31</item>
+        <item name="android:textSize">@dimen/DIMEN_17DP</item>
+    </style>
+
+    <style name="textstyle_18p_orange" parent="@style/textstyle_parent">
+        <item name="android:textColor">@color/app_theme_color</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>
+
+    <!-- 分割线 -->
+    <style name="linestyle_h_unfocused">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/color_gay_ee</item>
+    </style>
+
+    <!-- 分割线 -->
+    <style name="linestyle_h_color_c1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/color_gay_c1</item>
+    </style>
+
+    <style name="linestyle_v_unfocused">
+        <item name="android:layout_width">@dimen/DIMEN_1DP</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/unfocused</item>
+    </style>
+
+    <style name="linestyle_h_orange">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/app_theme_color</item>
+    </style>
+
+    <!-- 分割线2 -->
+    <style name="linestyle_order_divider_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/order_divider_view</item>
+    </style>
+
+    <!-- 分割线3 -->
+    <style name="linestyle_order_divider_view2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_12DP</item>
+        <item name="android:background">@color/unfocused</item>
+    </style>
+    <!-- 分割线4 -->
+    <style name="linestyle_order_divider_view_orange">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/color_gay_c8</item>
+    </style>
+    <!-- 分割线5 -->
+    <style name="linestyle_order_divider_view_blackde5">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/color_gay_ee</item>
+    </style>
+    <!-- 分割线6 -->
+   <!-- <style name="btup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/app_theme_color_no</item>
+    </style>-->
+    <!-- 分割线7 -->
+    <style name="linestyle_6">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_6DP</item>
+        <item name="android:background">@color/unfocused</item>
+    </style>
+    <!-- 分割线gray_1 -->
+    <style name="linestyle_gray">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_12DP</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+    <!-- 分割线gray_12 -->
+    <style name="linestyle_gray_12">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_12DP</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+    <!-- 分割线gray_5 -->
+    <style name="linestyle_gray_f5">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/color_gay_f5</item>
+    </style>
+    <!-- 分割线gray_dd -->
+    <style name="linestyle_gray_dd">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/gray_dd</item>
+    </style>
+
+    <!-- 新建联系人EditText -->
+    <style name="newcontact_et">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_56DP</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_12DP</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">@dimen/DIMEN_15DP</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/color_gay_8f</item>
+    </style>
+
+    <!-- TextView -->
+    <style name="text_seven_balck">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/DIMEN_17DP</item>
+        <item name="android:textColor">@color/order_black</item>
+    </style>
+
+    <style name="text_four_orenge">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+        <item name="android:textColor">@color/app_theme_color</item>
+    </style>
+
+    <style name="text_four_gay_8f">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+        <item name="android:textColor">@color/color_gay_8f</item>
+    </style>
+
+    <style name="text_two_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/DIMEN_12DP</item>
+        <item name="android:textColor">@color/order_black</item>
+    </style>
+
+    <!--<style name="week">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/week</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_6DP</item>
+        <item name="android:layout_marginRight">@dimen/DIMEN_6DP</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>-->
+
+    <style name="text_year">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/app_theme_color</item>
+        <item name="android:textSize">@dimen/DIMEN_12DP</item>
+    </style>
+
+    <style name="text_write_month">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/app_theme_color</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+    </style>
+
+    <style name="text_reservation_week">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_12DP</item>
+        <item name="android:textColor">@color/order_divider_view</item>
+        <item name="android:textSize">@dimen/DIMEN_16DP</item>
+    </style>
+    <!-- 偏移RelativeLayout -->
+
+    <!--<style name="relativeLayout_fail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_38DP</item>
+        <item name="android:textColor">@color/unfocused</item>
+    </style>-->
+    <!-- ButtonNext -->
+   <!-- <style name="button_next">
+        <item name="android:layout_width">@dimen/DIMEN_120DP</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background_green_1eb482_radius_5</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/DIMEN_17DP</item>
+    </style>-->
+    <!-- loadingdialog -->
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+    <style name="CustomProgressDialog" parent="@style/CustomDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="style_bt_back_order">
+        <item name="android:layout_width">@dimen/DIMEN_102DP</item>
+        <item name="android:layout_height">@dimen/DIMEN_32DP</item>
+        <item name="android:textSize">@dimen/DIMEN_17DP</item>
+        <item name="android:background">@drawable/order_coupon_orange_border</item>
+        <item name="android:textColor">@color/app_theme_color</item>
+    </style>
+    <!--消息箱相关-->
+
+    <style name="mess_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/DIMEN_15DP</item>
+        <item name="android:textColor">@color/order_black</item>
+        <item name="android:layout_marginTop">@dimen/DIMEN_15DP</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_70DP</item>
+    </style>
+
+    <style name="mess_one">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+        <item name="android:textColor">@color/color_gay_99</item>
+        <item name="android:layout_marginTop">@dimen/DIMEN_4DP</item>
+        <item name="android:layout_marginRight">@dimen/DIMEN_12DP</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_70DP</item>
+    </style>
+
+    <style name="mess_line">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/color_gay_ee</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_48DP</item>
+        <item name="android:layout_marginRight">@dimen/DIMEN_12DP</item>
+    </style>
+
+    <style name="mess_time">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_gay_99</item>
+        <item name="android:textSize">@dimen/DIMEN_12DP</item>
+        <item name="android:layout_marginTop">@dimen/DIMEN_15DP</item>
+        <item name="android:layout_marginRight">@dimen/DIMEN_12DP</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="Color1SwitchStyle">
+        <item name="colorControlActivated">@color/color_green_1e</item>
+    </style>
+
+    <style name="style_personal_center_info_end">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">@dimen/DIMEN_12DP</item>
+        <item name="android:drawablePadding">@dimen/DIMEN_14DP</item>
+        <item name="android:drawableRight">@drawable/arrow</item>
+        <item name="android:textColor">@color/color_gay_8f</item>
+        <item name="android:textSize">@dimen/DIMEN_15DP</item>
+    </style>
+    <!-- 预订 TextView-->
+    <style name="reservation_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/DIMEN_16DP</item>
+        <item name="android:textColor">@color/app_theme_color</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_60DP</item>
+    </style>
+
+    <style name="reservation_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/DIMEN_12DP</item>
+        <item name="android:textColor">@color/color_gay_99</item>
+        <item name="android:layout_marginTop">@dimen/DIMEN_3DP</item>
+        <item name="android:layout_marginRight">@dimen/DIMEN_12DP</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_60DP</item>
+    </style>
+    <!-- ImageView-->
+    <style name="reservation_week_choose">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">@dimen/DIMEN_12DP</item>
+        <item name="android:src">@drawable/order_choose_btn</item>
+        <item name="android:visibility">gone</item>
+    </style>
+    <!--Relativelayout-->
+    <style name="reservation_rl_week">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_50DP</item>
+        <item name="android:background">@color/white</item>
+    </style>
+    <!--我的课程详情的TextView-->
+    <style name="person_course">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">@dimen/DIMEN_14DP</item>
+        <item name="android:layout_marginLeft">@dimen/DIMEN_12DP</item>
+    </style>
+</resources>

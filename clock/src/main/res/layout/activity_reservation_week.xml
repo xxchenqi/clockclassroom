@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray"
+    android:fitsSystemWindows="true"
+    tools:ignore="contentDescription">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_every"
+        style="@style/reservation_rl_week"
+        android:layout_marginTop="@dimen/DIMEN_12DP">
+
+        <TextView
+            android:id="@+id/tv_reservation_every"
+            style="@style/text_reservation_week"
+            android:text="@string/reservation_every" />
+
+        <ImageView
+            android:id="@+id/iv_reservation_every"
+            style="@style/reservation_week_choose"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_mon"
+        style="@style/reservation_rl_week"
+        android:layout_marginTop="@dimen/DIMEN_12DP">
+
+        <TextView
+            android:id="@+id/tv_reservation_mon"
+            style="@style/text_reservation_week"
+            android:text="@string/reservation_mon" />
+
+        <ImageView
+            android:id="@+id/iv_reservation_mon"
+            style="@style/reservation_week_choose" />
+    </RelativeLayout>
+
+    <View style="@style/linestyle_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_tue"
+        style="@style/reservation_rl_week">
+
+        <TextView
+            android:id="@+id/tv_reservation_tue"
+            style="@style/text_reservation_week"
+            android:text="@string/reservation_tue" />
+
+        <ImageView
+            android:id="@+id/iv_reservation_tue"
+            style="@style/reservation_week_choose" />
+    </RelativeLayout>
+
+    <View style="@style/linestyle_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_wed"
+        style="@style/reservation_rl_week">
+
+        <TextView
+            android:id="@+id/tv_reservation_wed"
+            style="@style/text_reservation_week"
+            android:text="@string/reservation_wed" />
+
+        <ImageView
+            android:id="@+id/iv_reservation_wed"
+            style="@style/reservation_week_choose" />
+    </RelativeLayout>
+
+    <View style="@style/linestyle_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_thu"
+        style="@style/reservation_rl_week">
+
+        <TextView
+            android:id="@+id/tv_reservation_thu"
+            style="@style/text_reservation_week"
+            android:text="@string/reservation_thu" />
+
+        <ImageView
+            android:id="@+id/iv_reservation_thu"
+            style="@style/reservation_week_choose" />
+    </RelativeLayout>
+
+    <View style="@style/linestyle_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_fri"
+        style="@style/reservation_rl_week">
+
+        <TextView
+            android:id="@+id/tv_reservation_fri"
+            style="@style/text_reservation_week"
+            android:text="@string/reservation_fri" />
+
+        <ImageView
+            android:id="@+id/iv_reservation_fri"
+            style="@style/reservation_week_choose" />
+    </RelativeLayout>
+
+    <View style="@style/linestyle_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_sat"
+        style="@style/reservation_rl_week">
+
+        <TextView
+            android:id="@+id/tv_reservation_sat"
+            style="@style/text_reservation_week"
+            android:text="@string/reservation_sat" />
+
+        <ImageView
+            android:id="@+id/iv_reservation_sat"
+            style="@style/reservation_week_choose" />
+    </RelativeLayout>
+
+    <View style="@style/linestyle_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_sun"
+        style="@style/reservation_rl_week">
+
+        <TextView
+            android:id="@+id/tv_reservation_sun"
+            style="@style/text_reservation_week"
+            android:text="@string/reservation_sun" />
+
+        <ImageView
+            android:id="@+id/iv_reservation_sun"
+            style="@style/reservation_week_choose" />
+    </RelativeLayout>
+
+    <View style="@style/linestyle_gray" />
+
+
+</LinearLayout>

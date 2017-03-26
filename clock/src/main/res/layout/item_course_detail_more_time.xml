@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/DIMEN_12DP"
+    android:paddingTop="@dimen/DIMEN_12DP"
+    tools:ignore="HardcodedText">
+
+    <TextView
+        android:id="@+id/tv_item_course_time_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="@color/app_theme_color"
+        android:textSize="@dimen/DIMEN_12DP" />
+
+    <TextView
+        android:id="@+id/tv_item_course_time_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:text="2016年06月01日 13:00 - 14:00"
+        android:textColor="@color/color_gay_99"
+        android:textSize="@dimen/DIMEN_12DP" />
+
+    <TextView
+        android:id="@+id/tv_item_course_time_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:text="已结束"
+        android:textColor="@color/color_gay_99"
+        android:textSize="@dimen/DIMEN_12DP" />
+</LinearLayout>

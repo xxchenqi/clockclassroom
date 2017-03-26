@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gay_f5"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/ly_wifi"
+            layout="@layout/wifi_fail"
+            android:visibility="gone" />
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/lv_mineorder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/color_gay_f5"
+            android:dividerHeight="@dimen/DIMEN_12DP"
+            android:visibility="visible"
+            ptr:ptrAnimationStyle="flip" />
+
+        <RelativeLayout
+            android:id="@+id/rl_mine_order3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_mineorder_none"
+                android:layout_width="@dimen/DIMEN_140DP"
+                android:layout_height="@dimen/DIMEN_140DP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/DIMEN_116DP"
+                android:src="@drawable/none_order"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_mineorder_none"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_mineorder_none"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/DIMEN_26DP"
+                android:text="@string/order_none"
+                android:textColor="@color/color_gay_8f"
+                android:textSize="@dimen/DIMEN_17DP" />
+
+            <TextView
+                android:id="@+id/tv_mineorder_see"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_mineorder_none"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:text="@string/order_see"
+                android:textColor="@color/color_gay_8f"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <Button
+                android:id="@+id/btn_mineorder_stroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_mineorder_see"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/DIMEN_64DP"
+                android:layout_marginRight="@dimen/DIMEN_64DP"
+                android:layout_marginTop="@dimen/DIMEN_68DP"
+                android:background="@drawable/bg_exit_or"
+                android:text="@string/order_stroll"
+                android:textColor="@color/white"
+                android:textSize="@dimen/DIMEN_17DP" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

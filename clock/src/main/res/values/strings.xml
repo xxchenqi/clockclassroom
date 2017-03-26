@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--scheme管理开始-->
+    <!--预定义-->
+    <string name="scheme">hourclassroom</string>
+    <string name="host">51shizhong.com</string>
+    <!--path定义-->
+    <string name="scheme_home_path">/home</string>
+    <string name="scheme_store_list_path">/store_list</string>
+    <string name="scheme_store_detail_path">/store_detail</string>
+    <string name="scheme_place_detail_path">/place_detail</string>
+    <string name="scheme_classroom_detail_path">/classroom_detail</string>
+    <string name="scheme_map_path">/map</string>
+    <string name="scheme_atlas_list_path">/atlas_list</string>
+    <string name="scheme_reserve_path">/reserve</string>
+    <string name="scheme_course_home_path">/course_home</string>
+    <string name="scheme_course_subject_path">/course_subject</string>
+    <string name="scheme_course_list_path">/course_list</string>
+    <string name="scheme_course_detail_path">/course_detail</string>
+    <string name="scheme_teacher_home_path">/teacher_home</string>
+    <string name="scheme_teacher_subject_path">/teacher_subject</string>
+    <string name="scheme_organization_teacher_list_path">/organization_teacher_list</string>
+    <string name="scheme_personal_teacher_list_path">/personal_teacher_list</string>
+    <string name="scheme_teacher_detail_path">/teacher_detail</string>
+    <string name="scheme_personal_home_path">/personal_home</string>
+    <string name="scheme_authentication_wifi_path">/authentication_wifi</string>
+    <string name="scheme_accompany_read_path">/accompany_read</string>
+    <string name="scheme_mine_message_path">/mine_message</string>
+    <string name="scheme_order_message_path">/order_message</string>
+    <string name="scheme_system_message_path">/system_message</string>
+    <string name="scheme_accompany_read_remind_path">/accompany_read_remind</string>
+    <string name="scheme_search_path">/search</string>
+    <string name="scheme_search_result_path">/search_result</string>
+    <string name="scheme_around_environment_path">/around_environment</string>
+    <string name="scheme_around_environment_map_path">/around_environment_map</string>
+    <string name="scheme_personal_information_path">/personal_information</string>
+    <string name="scheme_organization_authentication_path">/organization_authentication</string>
+    <string name="scheme_personal_teacher_information_path">/personal_teacher_information</string>
+    <string name="scheme_mine_organization_path">/mine_organization</string>
+    <string name="scheme_mine_course_path">/mine_course</string>
+    <string name="scheme_publish_course_path">/publish_course</string>
+    <string name="scheme_mine_order_all_path">/mine_order_all</string>
+    <string name="scheme_mine_order_wait_pay_path">/mine_order_wait_pay</string>
+    <string name="scheme_mine_order_underway_path">/mine_order_underway</string>
+    <string name="scheme_mine_order_finish_path">/mine_order_finish</string>
+    <string name="scheme_mine_discount_coupon_path">/mine_discount_coupon</string>
+    <string name="scheme_mine_attention_path">/mine_attention</string>
+    <string name="scheme_remind_set_path">/remind_set</string>
+    <string name="scheme_more_path">/more</string>
+    <!--uri内部跳转定义-->
+    <string name="scheme_home_uri">hourclassroom://51shizhong.com/home</string>
+    <string name="scheme_course_home_uri">hourclassroom://51shizhong.com/course_home</string>
+    <string name="scheme_teacher_home_uri">hourclassroom://51shizhong.com/teacher_home</string>
+    <string name="scheme_personal_home_uri">hourclassroom://51shizhong.com/personal_home</string>
+
+
+    <!--scheme管理结束-->
+
+
+    <string name="desc">~</string>
+    <string name="app_name">时钟教室</string>
+    <string name="action_settings">Settings</string>
+    <string name="lable_teacher">老师</string>
+    <string name="course">课程</string>
+    <string name="course_fee">课室费用</string>
+    <string name="charge_device_fee">收费设备费用</string>
+    <string name="course_zhuan">专题</string>
+    <string name="affirm">确定</string>
+    <string name="fail_network_request">请求网络失败!</string>
+    <string name="fail_data_request">数据获取失败!</string>
+    <string name="fail_load">加载失败，请重试！</string>
+    <string name="user_agreement">时钟教室用户协议</string>
+    <string name="coupon_explain">优惠券说明</string>
+    <string name="action_page">活动页</string>
+    <string name="is_share_accompany_pwd">分享陪读密码</string>
+    <string name="choose">选择</string>
+    <string name="mustfill">必填</string>
+    <string name="txt_phone_number">400 608 2626</string>
+    <string name="txt_phone_number_">400–608–2626</string>
+    <string name="toast_show_course_no_exist">课程不存在</string>
+    <string name="course_not_audit">课程未审核通过</string>
+    <string name="course_canceled">课程已取消</string>
+    <string name="apply_over_hint">报名已完成，下次请赶早哦</string>
+    <string name="course_over_hint">课程已结束，下次请赶早哦</string>
+    <string name="dialog_show_coupon_use">优惠券已失效，是否确定删除优惠券</string>
+
+
+    <!-- 通用Wev View加载的页面来源 -->
+    <!-- 1:  get_page_teacher_detail -->
+    <!-- 2:  get_page_user_agent -->
+    <!-- 3:  get_page_coupon_detail -->
+    <!-- 4:  get_page_find_open_new_page -->
+    <string name="get_page_name">get_page_name</string>
+
+    <!-- Login登录页面的来源标示 -->
+    <string name="login_pre_page">PrePage</string>
+    <string name="from_page_find">from_page_find</string>
+
+    <!-- 良师页面处理H5页面跳转间的参数 -->
+    <string name="redirect_open_url">redirect_open_url</string>
+    <string name="redirect_tid">redirect_tid</string>
+    <string name="redirect_owner">redirect_owner</string>
+    <!-- 获取跳转的页面是内部还是外部，内部为owner_inside，外部为owner_outside -->
+
+    <!-- 个人中心Label -->
+    <string name="label_immediately_login">立即登录</string>
+    <string name="label_chooseLogin">账号登录</string>
+    <string name="label_myOrder">我的订单</string>
+    <string name="label_myBalance">我的余额</string>
+    <string name="label_myBankcard">我的银行卡</string>
+    <string name="label_myDiscount">我的优惠券</string>
+    <string name="label_myAttention">我的关注</string>
+    <string name="label_myWallet">我的钱包</string>
+    <string name="label_wifi">认证Wi-Fi</string>
+    <string name="label_setting">设置</string>
+    <string name="label_selectable">可选</string>
+    <string name="label_finish">完成</string>
+    <string name="label_checkAllOrder">查看全部订单</string>
+    <string name="label_wait_pay">待支付</string>
+    <string name="label_use">进行中</string>
+    <string name="label_alreadyFinish">已完成</string>
+    <string name="label_mineInvoice">我的发票</string>
+    <string name="label_service">联系客服、用户协议等</string>
+    <string name="label_more">更多</string>
+    <string name="label_chooseLogin_or_registered">登录/注册</string>
+
+    <!-- 登录页面Label -->
+    <string name="label_immediately_register">立即注册</string>
+    <string name="label_login">登录</string>
+    <string name="label_hint_password">请输入密码</string>
+    <string name="label_forget_password">忘记密码</string>
+    <string name="label_social_account">其他登录方式</string>
+    <string name="label_login_beUse">用户名必须为手机号或者邮箱</string>
+    <string name="label_login_hasContent">用户名与密码不能为空</string>
+    <string name="label_login_bePassword">密码必须是字母或数字组成，且长度为6至18位</string>
+    <string name="label_hint_phonelogin">手机号登录</string>
+
+    <!-- 个人信息页面Label -->
+    <string name="label_avatar">头像</string>
+    <string name="label_nickname">昵称</string>
+    <string name="label_login_password">登录密码</string>
+    <string name="label_pay_password">支付密码</string>
+    <string name="label_sex">性别</string>
+    <string name="label_mobile">手机号</string>
+    <string name="label_email">邮箱</string>
+    <string name="label_contact_info">联系人信息</string>
+    <string name="label_male">男</string>
+    <string name="label_female">女</string>
+    <string name="label_cancel">取消</string>
+    <string name="label_quit">退出当前账号</string>
+    <string name="label_modify_mail">绑定/修改邮箱</string>
+    <string name="label_save">保存</string>
+    <string name="label_help_find_password">绑定邮箱后可以帮助您找回密码</string>
+    <string name="label_password_format">由字母、数字、汉字或下划线组成,限4&#8211;16个字符(1个汉字为2个字符),不能以下划线开头或结尾</string>
+    <string name="label_affirm_commit">确认提交</string>
+    <string name="label_binding">第三方账号绑定</string>
+    <string name="label_go_binding">去绑定</string>
+    <string name="label_has_binding">已绑定</string>
+    <string name="label_course">我的课程</string>
+    <string name="label_show_course">发布课程</string>
+    <string name="label_person_mine_course">我发布的课程</string>
+
+    <!-- 本地存储的用户信息字段：SharedPerferences对象名为userinfo，其余为字段 -->
+
+
+    <!-- 在线陪读Lable -->
+    <string name="accompany_read_online">在线陪读</string>
+    <string name="accompany_pwd_hint">输入陪读课室密码</string>
+    <string name="accompany_help_page">在线陪读帮助页</string>
+    <string name="accompany_help_str1">如何获取直播陪读密码？</string>
+    <string name="accompany_help_str2">●</string>
+    <string name="accompany_help_str3">如果您是家长，您可以从老师处获取直播陪读密码。</string>
+    <string name="accompany_help_str4">如果您是老师，在您预订课室后即可获得直播陪读密码。</string>
+    <string name="accompany_help_str5">关于直播陪读</string>
+    <string name="accompany_help_str6">可以更方便家长朋友们观看孩子们上课的即时视频。</string>
+    <string name="accompany_help_str7"> 当前开放直播陪读的门店：徐汇虹梅中心、普陀友通中心、静安达人湾中心、浦东龙阳中心、闵行新乐坊中心，须连接门店无线网络后才可以观看，后续将会开放外网观看功能，届时您足不出户也可以观看到孩子上课的即时视频，敬请期待！</string>
+    <string name="accompany_help_str8">直播陪读提醒</string>
+    <string name="accompany_help_str9">家长可在课程未开始前，在陪读页输入陪读密码。在3天内开始的课程可以被加入提醒，避免错过。距课程开始超过3天的课室密码无效</string>
+    <string name="accompany_help_str10">请输入3天内开课的陪读密码</string>
+    <string name="accompany_staystart_hint">请连接陪读课室所在门店的Wi-Fi并登录认证后刷新</string>
+    <string name="accompany_staystart_wifi">请连接陪读课室所在门店的Wi-Fi</string>
+    <string name="accompany_add_remind">加入提醒</string>
+    <string name="accompany_set_remind">设置提醒</string>
+    <string name="accompany_cancel_remind">取消提醒</string>
+    <string name="accompany_add_remind_success">加入提醒成功！</string>
+    <string name="accompany_add_remind_fail">加入提醒失败！</string>
+    <string name="accompany_cancel_remind_success">取消提醒成功！</string>
+    <string name="accompany_cancel_remind_fail">取消提醒失败！</string>
+    <string name="accompany_change_room">切换课室</string>
+    <string name="video_play_nofund">老师还未赶来!</string>
+    <string name="accompany_dialog_wifi">请连接课室所在门店WIFI并认证</string>
+
+
+    <!-- 本地存储的用户信息字段：SharedPerferences对象名为userinfo，其余为字段 -->
+
+    <string name="shared_username">username</string>
+    <string name="shared_password">password</string>
+    <string name="shared_third_source">third_source</string>
+    <string name="shared_isLogin">isLogin</string>
+    <string name="shared_id">id</string>
+    <string name="shared_data">shared_data</string>
+    <string name="shared_name">name</string>
+    <string name="shared_sex">sex</string>
+    <string name="shared_age">age</string>
+    <string name="shared_mobile">mobile</string>
+    <string name="shared_email">email</string>
+    <string name="shared_nickname">nickname</string>
+    <string name="shared_avatar">avatar</string>
+    <string name="shared_praise">praise</string>
+    <string name="shared_credit">credit</string>
+    <string name="shared_create_time">create_time</string>
+    <string name="shared_login_time">login_time</string>
+    <string name="shared_is_teacher">is_teacher</string>
+    <string name="shared_third_id">third_id</string>
+    <string name="shared_remerber">remerber</string>
+    <string name="shared_is_remerber">is_remerber</string>
+    <string name="shared_is_reserve_remerber">is_reserve_remerber</string>
+    <string name="shared_is_pay_remerber">is_pay_remerber</string>
+    <string name="shared_trouble_btime">trouble_btime</string>
+    <string name="shared_trouble_etime">trouble_etime</string>
+    <string name="shared_is_sys_remerber">is_sys_remerber</string>
+    <string name="shared_is_order_remerber">is_order_remerber</string>
+    <string name="shared_badge">badge</string>
+    <string name="shared_cnum">cnum</string>
+    <string name="shared_third_qq">third_qq</string>
+    <string name="shared_third_wechat">third_wechat</string>
+    <string name="shared_third_weibo">third_weibo</string>
+    <string name="shared_real_name">real_name</string>
+    <string name="shared_show_teacher">show_teacher</string>
+    <string name="shared_org_id">org_id</string>
+    <string name="shared_org_name">org_name</string>
+    <string name="shared_is_auth">is_auth</string>
+    <string name="shared_org_auth">org_auth</string>
+    <string name="shared_teacher_id">teacher_id</string>
+    <string name="shared_teacher_info">teacher_info</string>
+    <string name="shared_black_count">black_count</string>
+    <string name="shared_is_pay">is_pay</string>
+    <string name="shared_accompany_read_pwd">accompany_read_pwd</string>
+    <!--发票类型-->
+    <string name="shared_invoice_type">invoice_type_</string>
+    <!-- 我的订单 -->
+    <string name="need">需要</string>
+    <string name="need_content">内须提交</string>
+
+    <!-- 我的订单状态码 -->
+    <!-- 0未支付 1已支付 2过期未支付 3已支付退款 4已取消 5支付失败 status是状态 -->
+    <!--
+ 0未支付 1已支付 2过期未支付 3已删除 4已取消 5回调参数异常，非法请求 
+ 6收到支付宝异步支付通知但实际上订单已过期或被取消（2或4状态），等待后台客服联系用户
+ is Refund > 0 已退款
+    -->
+
+    <string name="status_zero">待支付</string>
+    <string name="status_affirm">待确认</string>
+    <string name="status_ing">进行中</string>
+    <string name="status_close">已关闭</string>
+    <!--<string name="status_three">已删除</string>-->
+    <string name="status_cancel">已取消</string>
+    <string name="status_finish">已完成</string>
+    <string name="status_overtime">订单超时</string>
+
+    <string name="all_order">全部订单</string>
+    <string name="finish_order">已完成订单</string>
+    <string name="pay_order">进行中订单</string>
+    <string name="wait_pay_order">待支付订单</string>
+
+    <string name="order_close">关闭订单</string>
+    <string name="order_delete">删除订单</string>
+    <string name="order_cancel">取消订单</string>
+    <string name="order_classroom_arrangement">课室布置</string>
+    <!--<string name="order_draw_up_invoices">如何开具发票</string>-->
+    <string name="added_value_tax">增值税专用发票信息采集表</string>
+    <string name="classroom_value_tax">课室含税与不含税单价一览表</string>
+    <string name="order_pay_sure">订单支付完成后将在工作时间内尽快完成确认</string>
+    <string name="order_sure_pay">订单将在工作时间内尽快完成确认，确认后需及时支付</string>
+
+
+    <!-- 账号注册 -->
+    <string name="verify">验证码</string>
+    <string name="get_verify">获取验证码</string>
+    <string name="register_agree">注册即同意</string>
+    <string name="register_protocol">《时钟教室用户协议》</string>
+    <!--<string name="register_input_phone">请输入注册手机号</string>-->
+    <string name="register_input_verification_code">请输入验证码</string>
+
+    <!-- 联系人 -->
+    <string name="contact_list">联系人列表</string>
+    <string name="new_contact">新建联系人</string>
+    <string name="contact_default">默认</string>
+    <string name="confirm">确认</string>
+    <string name="determine">确定</string>
+    <string name="et_contact_name">联系人姓名 (必填)</string>
+    <string name="et_contact_phone">手机号码 (必填)</string>
+    <string name="default_contact">设为默认联系人</string>
+    <string name="edit_contact">编辑联系人</string>
+    <string name="delete_contact">删除联系人</string>
+
+    <!-- 搜索 -->
+    <string name="reserve">预订</string>
+    <string name="reserve_space">预&#160;&#160;&#160;&#160;订</string>
+    <string name="input_search_key">请输入搜索关键词</string>
+
+    <!-- 订单详情 -->
+    <string name="order_detail">订单详情</string>
+    <string name="order_total">订单总计</string>
+    <string name="order_invoice">发票信息</string>
+    <string name="save_invoice">保存电子发票至本地</string>
+    <string name="order_money">课室费用</string>
+    <string name="order_privilege">优惠</string>
+    <string name="order_device">收费设备费用</string>
+    <string name="order_ought_pay">实付</string>
+    <string name="order_wait_pay">待付</string>
+    <string name="order_pay_way">支付方式</string>
+    <string name="wait_pay">待付</string>
+    <string name="order_alipay">支付宝</string>
+    <string name="order_online">在线支付</string>
+    <string name="order_wx">微信</string>
+    <string name="order_time">下单时间</string>
+    <string name="order_total_price">合计：</string>
+    <string name="order_reimburse_price">退款金额</string>
+    <string name="txt_fees_refunds">退款明细</string>
+    <string name="order_immediate_pay">立即支付</string>
+    <string name="order_choose_pay_way">选择支付方式</string>
+    <string name="order_log">订单日志</string>
+    <string name="classroom_price">课室费用</string>
+    <string name="order_none">您没有相关的订单哦</string>
+    <string name="orderback_none">您没有可以退单的课室哦</string>
+    <string name="order_see">看看别的吧</string>
+    <string name="order_stroll">随便逛逛</string>
+    <string name="order_status_content_one">若需要退单，请在课程开始24小时前，联系客服400 608 2626进行退单</string>
+    <string name="order_status_content_two">订单支付超时，请联系客服 400 608 2626 进行处理</string>
+    <string name="order_status_content_three">学费将在10个工作日内原路退回，若有疑问请咨询客服 400 608 2626 </string>
+    <string name="order_status_content_four">因老师取消课程,学费将在10个工作日内原路退回，若有疑问请咨询客服 400 608 2626 </string>
+    <string name="order_times">共%s次课时</string>
+    <!--<string name="order_no_relevance">课室未关联课程</string>-->
+    <!--<string name="order_relevance">课室已关联课程</string>-->
+    <!-- 课室详情 -->
+    <string name="classroom_detail">课室详情</string>
+    <string name="unfinished">【未完成】</string>
+    <string name="back_order">退单</string>
+    <string name="has_use">【已使用】</string>
+    <string name="has_back_order">【已退单】</string>
+    <string name="has_coupon_content">该笔订单使用优惠券，不可退单</string>
+
+    <!-- 认证WIFI -->
+    <string name="wifi">认证Wi-Fi</string>
+
+    <!-- 退单 -->
+    <string name="backorder_content1">可以取消1天后使用的尚未绑定课程的课室;</string>
+    <string name="backorder_content2">取消课室将收取取消金额的1%手续费;</string>
+    <string name="backorder_content3">退款将在3&#8211;5个工作日原路退回。</string>
+    <string name="all_choose">全选</string>
+    <string name="total">合计：</string>
+    <string name="backorder_sure">确认退单</string>
+    <string name="back_order_result">退单结果</string>
+    <string name="back_order_fail">退单失败!</string>
+    <string name="contact_service">客服电话：</string>
+    <string name="back_home">返回首页</string>
+    <string name="check_order">查看订单</string>
+    <string name="back_order_success">退单成功!</string>
+
+    <!-- 发票 -->
+    <string name="invoice_head_title">填写发票信息</string>
+    <string name="please_write_true_company">请正确填写公司名称</string>
+    <string name="company_name">公司名称</string>
+    <string name="nsrsbh">纳税人识别号</string>
+    <string name="invoice_title">可开发票订单</string>
+    <string name="invoice_next">下一步</string>
+    <string name="invoice_personal">个人</string>
+    <string name="company">公司</string>
+    <string name="register_address">注册地址</string>
+    <string name="register_mobile">注册电话</string>
+    <string name="open_bank">开户银行</string>
+    <string name="open_account">开户账号</string>
+    <string name="invoice_content">发票内容</string>
+    <string name="invoice_rental_fee">租赁服务费</string>
+    <string name="invoice_detail">明细</string>
+    <string name="invoice_head">发票抬头</string>
+    <string name="invoice_company">个人姓名/公司名称</string>
+    <string name="invoice_type">发票类型</string>
+    <string name="invoice_paper">纸质普通发票</string>
+    <string name="invoice_electron">电子普通发票</string>
+    <string name="invoice_special">专用发票</string>
+    <string name="invoice_electronic">电子发票</string>
+    <string name="invoice_mail">邮寄地址</string>
+    <string name="invoice_province">省、市、区</string>
+    <string name="invoice_detailed_address">街道详细地址</string>
+    <string name="invoice_contact_information">联系方式</string>
+    <string name="invoice_content_special_no">专用发票信息尚未填写，请填写完成后保存</string>
+    <string name="invoice_content_write">填写专用发票信息</string>
+    <string name="invoice_content_info">领取方式\n电子发票,订单支付完成1个工作日后在订单详情页面下载;\n纸质发票,订单支付完成5–10个工作日后至对应门店前台领取。</string>
+    <!-- 第三方名称 -->
+    <string name="wechat">微信</string>
+    <string name="wechat_circle">朋友圈</string>
+    <string name="qq">QQ</string>
+    <string name="sina">新浪微博</string>
+    <string name="sms">短信</string>
+
+    <!-- 个人信息 -->
+    <string name="person_information_input_nickname">请输入用户名</string>
+    <string name="person_information_modify_password">修改密码</string>
+    <string name="person_information_current_password">当前密码</string>
+    <string name="person_information_new_password">新密码</string>
+    <string name="person_information_new_password_check">确认新密码</string>
+    <string name="person_information">个人信息</string>
+    <string name="person_modify">修改</string>
+    <string name="person_modify_and_add">添加/修改</string>
+    <string name="person_modify_mobile">更换手机号</string>
+
+    <!-- 提醒设置 -->
+    <string name="remind_setting">提醒设置</string>
+    <string name="remind_accompany">陪读提醒</string>
+    <string name="remind_nodisturbing_time">免打扰时间</string>
+    <string name="remind_closed">提醒已关闭</string>
+    <string name="remind_set_fail">设置失败</string>
+    <string name="remind_set_success">设置成功</string>
+
+    <!-- 搜索 -->
+    <string name="search_clean_notes">清除历史</string>
+    <string name="search_notes">搜索历史</string>
+    <string name="search_hot">热门搜索</string>
+
+    <!-- 引导页 -->
+    <string name="skip">跳过</string>
+    <string name="experience">立即体验</string>
+
+    <!-- 无wifu -->
+    <string name="nowifi_content1">哎哟,当前网络无法连接</string>
+    <string name="nowifi_content2">试着刷新看看哦</string>
+    <string name="nowifi_refresh">刷新</string>
+    <string name="broken_content1">很抱歉,服务器故障</string>
+    <string name="broken_content2">请刷新页面或稍后再试</string>
+    <!-- 统计 页面名 -->
+    <string name="title_act_startvideo">陪读详情页</string>
+    <string name="title_act_shopcart">购物车页</string>
+    <string name="title_shop_car">购物车</string>
+    <string name="title_act_search">首页-搜索历史记录页</string>
+    <string name="title_act_coupon">提交订单-优惠券列表页</string>
+    <string name="title_act_shopcar_contact_list">提交订单-联系人列表页</string>
+    <string name="title_act_personal_center">个人中心首页</string>
+    <string name="title_act_personal_center_information">个人中心-个人信息页</string>
+    <string name="title_act_personal_center_my_order">个人中心-全部订单列表页</string>
+    <string name="title_act_classroom_detail">个人中心-订单详情页-房间密码展示页</string>
+    <string name="title_act_invoice_order">个人中心-发票列表</string>
+    <string name="title_act_invoice_order_detail">个人中心-开发票详情页</string>
+    <string name="title_act_personal_center_change_emial">个人中心-修改邮箱页</string>
+    <string name="title_act_personal_center_change_password">个人中心-修改密码页</string>
+    <string name="title_act_personal_center_couponlist">个人中心-优惠券列表</string>
+    <string name="title_act_personal_center_contact_list">个人中心-联系人列表</string>
+    <string name="title_act_personal_center_contact_detail">编辑联系人页</string>
+    <string name="title_act_personal_center_mobile_binding">个人中心-个人信息页-绑定手机/修改手机号</string>
+    <string name="title_act_personal_center_binding_threeway_account">个人中心-个人信息页-第三方账号绑定</string>
+    <string name="title_act_personal_center_contact_new">新建联系人</string>
+    <string name="title_act_personal_center_more_version">个人中心-更多-关于时钟教室</string>
+    <string name="title_act_common_show_webpage_for_coupon">优惠券说明页</string>
+    <string name="title_act_common_show_webpage_for_register">用户协议</string>
+    <string name="title_act_common_show_webpage_for_type_detail">课室详情页</string>
+    <string name="title_act_common_show_webpage_for_imagelist">门店图集页</string>
+    <string name="title_act_common_show_webpage_for_around">周边环境页</string>
+    <string name="title_act_common_show_webpage_for_around_map">地图导航页</string>
+    <string name="title_act_common_show_webpage_for_teacher">良师详情页</string>
+    <string name="title_act_common_show_webpage_for_ad">广告详情页面</string>
+    <string name="title_act_common_show_webpage_for_wifi">个人中心-WiFi认证</string>
+    <string name="title_act_common_show_webpage_for_attention">个人中心-我的关注</string>
+    <string name="title_act_accompanyread_staystartvideo">在线陪读-视频未开始/视频结束/未认证WiFi页</string>
+    <string name="title_act_remind_set">个人中心-提醒设置</string>
+    <string name="title_act_room_type">课室布置-课室用途页</string>
+    <string name="title_act_remind_accompany">个人中心-提醒设置-直播提醒</string>
+    <string name="title_act_index_detail">门店详情页</string>
+    <string name="title_act_back_order">退单页</string>
+    <string name="title_act_back_order_result">退单结果页</string>
+    <string name="title_act_login">登录页</string>
+    <string name="title_act_register">注册页-获取验证码</string>
+    <string name="title_act_register_forgetpassword">忘记密码-获取验证码</string>
+    <string name="title_act_password">密码重设页(忘记密码/注册)</string>
+    <string name="title_act_pay_fail">支付失败页</string>
+    <string name="title_act_pay_success">支付成功页</string>
+    <string name="title_act_launch">启动页面</string>
+    <string name="title_act_order_detail">订单详情页面</string>
+    <string name="title_act_order_edite_detail">购物车预订详情页</string>
+    <string name="title_act_personal_edite_nickname">修改用户名称页面</string>
+    <string name="title_act_personal_more">个人中心-更多</string>
+    <string name="title_act_reservation">预订页</string>
+    <string name="title_act_reservation_date">上课起止日期页</string>
+    <string name="title_act_reservation_date_little">个别日期调整页</string>
+    <string name="title_act_reservation_date_little_day">具体某天单独调整页</string>
+    <string name="title_act_reservation_time_fail">推荐时间预订页</string>
+    <string name="title_act_reservation_week">每周课程安排页</string>
+    <string name="title_act_reservation_time">上课时间选择页</string>
+    <string name="title_act_reservation_device">可选设备页</string>
+    <string name="title_act_index_guide">首页引导页面</string>
+    <string name="title_fragment_index">首页</string>
+    <string name="title_fragment_teacher">老师首页</string>
+    <string name="title_fragment_accompanyread">在线陪读页</string>
+    <string name="title_fragment_course">课程首页</string>
+    <string name="title_act_pledge">押金明细页</string>
+    <string name="title_act_search_result">搜索页面</string>
+    <string name="title_act_my_message">消息箱首页</string>
+    <string name="title_act_my_message_order">消息箱详情页</string>
+    <string name="title_act_my_message_mech">消息箱详情页</string>
+    <string name="title_act_my_message_peidu">消息箱详情页</string>
+    <string name="title_act_my_teacher_detail">个人中心-个人老师资料</string>
+    <string name="title_act_my_teacher_detail_fail">个人中心-我的老师信息资料尚未完善页</string>
+    <string name="title_act_my_teacher_edit_name">老师姓名修改页</string>
+    <string name="title_act_my_teacher_edit_brief">老师简介修改页</string>
+    <string name="title_act_my_teacher_mine_delete">老师风采删除页</string>
+    <string name="title_act_my_teacher_edit_tag">个人中心-我的老师信息-修改标签页</string>
+    <string name="title_act_my_teacher_new_tag">个人中心-我的老师信息-修改标签页-新建标签页</string>
+    <string name="title_act_my_org">个人中心-我的机构</string>
+    <string name="title_act_my_org_mine">个人中心-我的机构-机构风采列表页</string>
+    <string name="title_act_my_org_mine_delete">个人中心-我的机构-机构风采列表页-机构风采删除页</string>
+    <string name="title_act_my_org_info">个人中心-我的机构-认证信息详情页</string>
+    <string name="title_act_my_org_edit_brief">个人中心-我的机构-机构简介页</string>
+    <string name="title_act_my_org_edit_tag">个人中心-我的机构-修改标签页</string>
+    <string name="title_act_my_org_new_tag">个人中心-我的机构-修改标签页-新建标签页</string>
+    <string name="title_act_my_org_member_edit_tag">个人中心-我的机构-成员详情页-修改标签页</string>
+    <string name="title_act_my_org_member_new_tag">个人中心-我的机构-成员详情页-修改标签页-新建标签页</string>
+    <string name="title_act_my_org_certification_status">个人中心-我的机构认证状态页</string>
+    <string name="title_act_my_org_add_teacher">个人中心-我的机构-添加成员页</string>
+    <string name="title_act_teacher_detail">个人中心-老师资料页</string>
+    <string name="title_act_my_org_teacher_list">个人中心-我的机构-转让管理权页</string>
+    <string name="title_act_org_auth">个人中心-机构认证</string>
+    <string name="title_act_my_info_black_list">个人信息-机构黑名单管理页</string>
+    <string name="title_act_nopay_order">个人中心-待支付订单列表页</string>
+    <string name="title_act_haspay_order">个人中心-已支付订单列表页</string>
+    <string name="title_act_done_order">个人中心已完成订单列表页</string>
+    <string name="title_act_classroom_arrangement">课室布置页</string>
+    <string name="title_act_classroom_choose">课室布置-课室选择页</string>
+    <string name="title_act_order_confirmation">订单确认页</string>
+    <string name="title_act_Draw_up_invoices_Page">如何开具发票页</string>
+    <string name="title_act_write_invoices_Page">填写发票信息页</string>
+    <string name="title_act_Added_value_tax_Page">增值税专用发票信息采集表页</string>
+    <string name="title_act_publish_second_course_name_Page">发布课程第二步-课程名称</string>
+    <string name="title_act_publish_second_course_price_Page">发布课程第二步-单次课程价格</string>
+    <string name="title_act_publish_second_course_number_Page">发布课程第二步-上课人数</string>
+    <string name="title_act_publish_second_course_teacher_choose_Page">发布课程第二步-授课老师选择页</string>
+    <string name="title_act_publish_second_course_info_Page">发布课程第二步-课程描述编辑</string>
+    <string name="title_act_publish_second_Page">发布课程第二步</string>
+    <string name="title_act_publish_result_Page">发布结果</string>
+    <string name="title_act_publish_first_choose_store_Page">发布课程第一步-门店选择页</string>
+    <string name="title_act_teacher_more_person_Page">个人老师列表页</string>
+    <string name="title_act_teacher_more_organization_Page">机构老师列表页</string>
+    <string name="title_act_teacher_detail_Page">老师详情页</string>
+    <string name="title_act_special_Page">专题页</string>
+    <string name="title_act_store_list_Page">门店列表页</string>
+    <string name="title_act_place_detail_Page">场地详情页</string>
+    <string name="title_act_commit_result_Page">支付前确认-提交结果页</string>
+    <string name="title_act_pay_result_Page">支付后确认-支付结果页</string>
+    <string name="title_act_dedicated_invoice_Page">专用发票资质信息页</string>
+    <!-- 订单编辑详情 -->
+    <string name="reserve_detail">预订详情</string>
+
+    <!-- 预订 详情页2 -->
+    <string name="free">免费</string>
+    <string name="unit_price">%1$s元/%2$s</string>
+    <string name="toast_max">最多可订购%1$s%2$s</string>
+
+    <!-- 分享相关 -->
+    <string name="share_success">分享成功</string>
+    <string name="share_fail">分享失败</string>
+    <string name="share_cancel">取消分享</string>
+
+    <!-- 费用清单 -->
+    <string name="pic">图集</string>
+
+    <!--押金相关-->
+    <string name="pledge_detail">押金详情</string>
+    <string name="pledge_content">根据预订的课室类型,到店消费时需支付押金,若无物品损坏,消费完成时将退还押金</string>
+
+    <!--绑定内容-->
+    <string name="binding_content">绑定后，您可以与更多朋友分享足迹和体验。为了您的账号安全，在未绑定手机且已绑定唯一第三方账号的情况下,不允许解绑。</string>
+    <string name="password_text">设置新密码,6&#8211;18位字母或数字</string>
+    <string name="input_email">请输入邮箱</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+
+    <string name="about_clock_classroom">关于时钟教室</string>
+    <string name="use_coupon">使用优惠券</string>
+    <string name="tips">小贴士</string>
+    <string name="change_mobile_content">更换手机后，下次登录需使用新手机号登录</string>
+    <string name="account_register">账号注册</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="network_anomaly">网络异常</string>
+    <string name="reserve_ok">支付成功!</string>
+    <string name="pay_result">支付结果</string>
+    <string name="reserve_fail">支付失败!</string>
+    <string name="user_discount_coupon">使用优惠券</string>
+    <string name="add">添加</string>
+    <string name="usage_rule">使用规则：</string>
+    <string name="txt_cancel">取消</string>
+    <string name="sure">确定</string>
+
+    <!--20160218-->
+    <string name="douhao">,</string>
+
+    <string name="password_fail">密码输入错误超过5次，请%d小时后再试</string>
+    <string name="password_chance">密码错误，您还有%d次输入机会</string>
+
+    <string name="use_desc_content">(%s)</string>
+    <string name="sum_room_count">等共%d间</string>
+
+    <string name="how_much_money">¥%s</string>
+    <string name="negative_how_much_money">-¥%s</string>
+
+    <string name="order_num">订单编号：%s</string>
+
+    <string name="desc_and_type_content">%1$s%2$s</string>
+    <string name="sum_room_classroom">共%1$s间X%2$s天课室</string>
+    <string name="sum_room_money">合计：¥%1$s，手续费：¥%2$s</string>
+
+    <string name="satisfy_how_much_usable">满%s可用</string>
+    <string name="apostrophe">%s…</string>
+    <string name="to">%1$s至%2$s</string>
+    <string name="overdue">%s天后过期</string>
+    <string name="wee_hours">00:00</string>
+
+    <!--<string name="date_segmentation">20%1$s/%2$d/%3$d—20%4$s/%5$d/%6$d(%7$d日)</string>-->
+
+    <string name="unit">%1$s元/%2$s</string>
+
+    <string name="vertical_symbol_2">|</string>
+    <string name="minute_second">%1$s分%2$s秒</string>
+    <string name="minute_second_need">%1$s分%2$s秒 内须完成支付</string>
+    <string name="minute_second_need_hour">%1$s小时%2$s分%3$s秒 内须完成支付</string>
+    <string name="order_id">订单编号：%1$s</string>
+    <string name="total_money">合计：¥%1$s</string>
+    <string name="max_member_text">(最多容纳%1$s人)</string>
+    <string name="total_hour_text">共%1$s小时课室使用时长</string>
+    <string name="total_hour_short_text">共%1$s小时</string>
+    <string name="wait_pay_sum">待支付(%s)</string>
+
+    <string name="to_symbol">%1$s ~ %2$s</string>
+    <string name="tan_hao">%1$s、%2$s</string>
+    <string name="second">%s秒</string>
+    <string name="clock_id">时钟教室%s</string>
+    <string name="piece_of">%s张</string>
+
+    <string name="one">%d1</string>
+    <string name="colon">%1$s:%2$s</string>
+
+    <string name="course_will_start">课程将于%s开始。</string>
+    <string name="course_over">课程已于%s结束。</string>
+    <string name="course_start">课程已于%s开始。</string>
+
+    <string name="sum_order_no_pay">%s笔订单未支付</string>
+    <string name="rmb_float_zero">¥%.2f</string>
+    <string name="rmb_equals_negative_zero">-¥0.00</string>
+    <string name="rmb_equals_zero">¥0.00</string>
+
+    <string name="negative_rmb_how_much">-¥%s</string>
+    <string name="rmb_how_much">¥%s</string>
+    <string name="course_how_much">%s次课</string>
+    <string name="course_how_much_total">共%s次课</string>
+
+    <string name="multiply">x%s</string>
+    <string name="format_count">%s数量</string>
+    <string name="format_count_more">上课需要%s的数量</string>
+    <string name="charging_equipment">收费设备：%s</string>
+    <string name="add_eight_six">+86</string>
+
+    <!--机构-->
+    <string name="organization_blacklist">机构黑名单管理</string>
+    <string name="i_need_authentication">机构认证</string>
+    <string name="teacher_info">个人老师资料</string>
+    <string name="mine_organization">我的机构</string>
+    <string name="exit_organization">退出机构</string>
+    <string name="add_menber">添加成员</string>
+    <string name="edit_organization_mien">编辑机构风采</string>
+    <!--消息箱-->
+    <string name="order_mess">订单消息</string>
+    <string name="mech_mess">系统提醒</string>
+    <string name="peidu_mess">陪读提醒</string>
+    <string name="my_message">我的消息</string>
+    <string name="jiujiujia">99+</string>
+    <string name="yestoday">昨天</string>
+    <string name="check_detail">查看详情</string>
+    <string name="teacher">老师</string>
+    <string name="brief">简介</string>
+    <string name="transfer_of_power">转让管理权</string>
+    <string name="phone_number">手机号码</string>
+    <string name="name">姓名</string>
+    <string name="teacher_brief">老师简介</string>
+    <string name="tags">标签</string>
+    <string name="teacher_mien">老师风采</string>
+    <string name="business_license">营业执照</string>
+    <string name="legal_person_information">法人信息</string>
+    <string name="proposer_information">申请人信息</string>
+    <string name="business_license_no">营业执照号码</string>
+    <string name="legal_person_name">法人姓名</string>
+    <string name="legal_person_id_number">法人身份证号</string>
+    <string name="proposer">申请人姓名</string>
+    <string name="proposer_id_number">申请人身份证号</string>
+    <string name="check_authentication_information">查看认证信息</string>
+    <string name="how_to_teacher_certification_and_agency_information">如何进行机构认证</string>
+    <string name="teacher_content_one">老师资料尚未完善</string>
+    <string name="teacher_content_two">机构老师资料只能由所属机构的管理员进行完善,若需修改或完善请联系所属机构的管理员</string>
+    <string name="remove_organization">移出机构</string>
+    <string name="transfer">转让</string>
+    <string name="dialog_msg_delete_mine">确定要删除当前机构风采图片吗？</string>
+    <string name="dialog_msg_delete_teacher">确定要删除当前老师风采图片吗？</string>
+    <string name="dialog_msg_delete_course_mine">确定要删除当前课程风采图片吗？</string>
+    <string name="dialog_msg_delete_organization">确定要将此机构移出黑名单吗？</string>
+    <string name="dialog_msg_delete_from_organization">确定要将此成员移出机构吗？</string>
+    <string name="authentication_fail">认证失败</string>
+    <string name="authentication_ing">认证中</string>
+    <string name="teacher_detail">个人老师资料</string>
+    <string name="member_detail">老师资料</string>
+    <string name="member_is_admin">该成员为管理员</string>
+    <string name="member_no_public">该成员设置不公开个人信息</string>
+    <string name="organization_detail">机构详情</string>
+    <string name="modify_name">修改名称</string>
+    <string name="modify_tag">修改标签</string>
+    <string name="new_tag">新建标签</string>
+    <string name="text_show_open">所有用户可查看我的老师资料</string>
+    <string name="text_show_close">仅我所在机构的成员可查看我的老师资料</string>
+    <string name="organization_all_name">(机构全称)</string>
+    <string name="please_input_phone_number">请输入手机号</string>
+    <string name="no_message">暂无消息</string>
+    <string name="location_message"><![CDATA[定位服务未开启，请进入系统【设置】>【隐私】>【定位服务】中打开开关，并允许时钟教室使用定位服务]]></string>
+    <string name="location_open">立即开启</string>
+
+    <!-- 预订 -->
+    <string name="reservation_date_title">选择上课起止日期</string>
+    <string name="reservation_date_content">选择课室的使用日期范围</string>
+    <string name="reservation_week_title">选择每周课程编排</string>
+    <string name="reservation_week_content">选择每周几上课，可多选</string>
+    <string name="reservation_time_title">选择上课时间</string>
+    <string name="reservation_date_little">若有个别日期需要单独调整可选择</string>
+    <string name="reservation_time_content">选择几点到几点上课</string>
+    <string name="reservation_room_count_title">课室数量</string>
+    <string name="reservation_room_count_content">上课需要课室的数量</string>
+    <string name="reservation_device_title">可选设备</string>
+    <string name="reservation_device_content">可选设备(每间)</string>
+    <string name="reservation_date">上课起止日期</string>
+    <string name="reservation_time_fail">推荐预订时间</string>
+    <string name="reservation_date_little_title">个别日期调整</string>
+    <string name="reservation_week">每周课程安排</string>
+    <string name="reservation_time">上课时间</string>
+    <string name="reservation_device">可选设备</string>
+    <string name="reservation_start_time">上课开始时间</string>
+    <string name="reservation_end_time">上课结束时间</string>
+    <string name="reservation_start_time_xml">09:00</string>
+    <string name="reservation_end_time_xml">10:00</string>
+    <string name="reservation_every">每天</string>
+    <string name="reservation_mon">周一</string>
+    <string name="reservation_tue">周二</string>
+    <string name="reservation_wed">周三</string>
+    <string name="reservation_thu">周四</string>
+    <string name="reservation_fri">周五</string>
+    <string name="reservation_sat">周六</string>
+    <string name="reservation_sun">周日</string>
+    <string name="reservation_use_date">课室租用日期</string>
+    <string name="reservation_change_date">已调整的日期</string>
+    <string name="reservation_has_date">被占用日期</string>
+    <string name="reservation_add_room">增加课室</string>
+    <string name="remind_time">提醒时间</string>
+    <string name="remind_order">订单提醒</string>
+    <string name="remind_system">系统提醒</string>
+    <string name="back_order_content">已开具发票用户需退还发票后才可退款</string>
+    <!-- 已开具发票用户时钟工作人员会联系您退还发票后退款-->
+    <string name="reserve_success_content1">发布课程,招收更多学生</string>
+    <string name="arrangement_classroom">布置课室</string>
+    <string name="order_affirm">提交订单</string>
+    <string name="coupon_content">温馨提示：优惠券仅适用于课室费用</string>
+    <string name="toast_select_device">请先选择设备</string>
+    <string name="txt_weixin_pay">微信支付</string>
+    <string name="toast_edit_classroom">需至少提前一天修改或设置课室布置</string>
+    <string name="txt_no_classroom_arragment">暂无课室布置</string>
+    <string name="toast_save_success">保存成功</string>
+    <string name="toast_open_location">打开定位将提高位置准确性!</string>
+    <string name="txt_commit">提交</string>
+    <string name="toast_no_order">没有订单</string>
+    <string name="dialog_msg_for_delete_classroom">客官确定要删除已选中的课室吗？</string>
+    <!--课程-->
+    <string name="course_reservation">去订课</string>
+    <string name="course_more">课程列表页</string>
+    <string name="course_more_title">更多课程</string>
+    <string name="course_detial_page">课程详情页</string>
+    <string name="course_detial">课程详情</string>
+    <string name="course_detial_apply">报名</string>
+    <string name="course_detial_rmb">¥</string>
+    <string name="course_detial_intro">课程简介</string>
+    <string name="course_detial_more_intro">展开</string>
+    <string name="course_detial_more_intro_pull">收起</string>
+    <string name="course_detial_time">课程时间</string>
+    <string name="course_detial_teacher">老师介绍</string>
+    <string name="course_detial_open_time">开课时间</string>
+    <!--老师-->
+    <string name="teacher_orangan">机构老师</string>
+    <string name="teacher_person">个人老师</string>
+    <string name="more_teacher_orangan">更多机构老师</string>
+    <string name="more_teacher_person">更多个人老师</string>
+    <string name="member_content">机构老师资料只能由所属机构的管理员进行完善，若需修改或完善请联系所属机构的管理员</string>
+    <string name="txt_photos">图集</string>
+    <string name="txt_recommend_course">推荐课程</string>
+    <string name="txt_recommend_teacher">推荐老师</string>
+    <string name="txt_shrink">收起</string>
+    <string name="txt_unfold">更多课程展开</string>
+
+    <!--个人中心—我的课程-->
+    <string name="person_mine_course_page">个人中心-我的课程列表页</string>
+    <string name="person_mine_course">我的课程</string>
+    <string name="person_course_status_wait_check">待审核</string>
+    <string name="person_course_status_fail_check">审核未通过</string>
+    <string name="person_course_status_cancel">已取消</string>
+    <string name="person_course_status_finish">已完结</string>
+    <string name="person_course_status_applying_single">进行中</string>
+    <string name="person_mine_course_detial">课程详情</string>
+    <string name="person_mine_course_cancel">取消课程</string>
+    <string name="person_mine_course_detial_page">个人中心-我的课程详情页</string>
+    <string name="person_mine_course_detial_reason">未通过原因：</string>
+    <string name="person_mine_course_detial_apply_message">报名信息：</string>
+    <string name="person_mine_course_detial_name">课程名称：</string>
+    <string name="person_mine_course_detial_date">授课日期：</string>
+    <string name="person_mine_course_detial_teacher">授课老师：</string>
+    <string name="person_mine_course_detial_people_count">招生人数：</string>
+    <string name="person_mine_course_detial_price">课程价格：</string>
+    <string name="person_mine_course_detial_content">课程简介：</string>
+    <string name="person_mine_course_detial_pic">课程图片：</string>
+    <string name="person_mine_course_detial_cancel">最后一次课程开始之前,该课程可以被取消</string>
+    <string name="person_mine_course_detial_why">你必须要清晰的填写各种信息，以及图片要好好上传。</string>
+    <string name="person_mine_course_people_apply_count_page">个人-报名人数页面</string>
+    <string name="person_mine_course_people_apply_count_item_all">合计：¥</string>
+    <string name="person_mine_course_people_apply_count_item_course">课程：</string>
+    <string name="person_mine_course_people_apply_count_item_tel">联系人：</string>
+    <string name="person_mine_course_people_apply_count_item_adress">授课教室：</string>
+    <string name="person_mine_course_people_apply_count_item_time">授课时间：</string>
+    <string name="person_mine_course_people_apply_count_item_more_time">更多时间</string>
+    <string name="txt_open_course">课程：%s</string>
+    <string name="txt_subsidiary_organ">机构：%s</string>
+    <string name="txt_personal_teacher">个人老师</string>
+    <string name="txt_format_price">¥%s/</string>
+
+    <!--个人中心-发布课程-->
+    <string name="title_act_course_reservation">发布课程第一步</string>
+    <string name="course_reservation_title">发布课程</string>
+    <string name="course_reservation_address">请选择上课门店</string>
+    <string name="course_reservation_class_address">上课门店</string>
+    <string name="course_reservation_date">选择上课的日期范围</string>
+
+    <string name="choose_store">选择门店</string>
+    <string name="publish_course_success">课程发布成功</string>
+    <string name="publish_course_content">工作人员审核通过后展示课程信息</string>
+    <string name="publish_course_result">发布结果</string>
+    <string name="publish_success">发布成功</string>
+
+    <string name="service_hotline">服务热线</string>
+    <string name="service_mail">服务邮箱</string>
+    <string name="tax_policy">税率政策</string>
+    <string name="txt_course_people_total">该班课总人数</string>
+    <string name="edit_hint_course_name">不超过20个字</string>
+    <string name="edit_hint_course_price">最多两位小数</string>
+    <string name="txt_money_symbol">¥</string>
+    <string name="txt_hour">/小时</string>
+    <string name="txt_course_people_remain">招生剩余人数</string>
+    <string name="txt_course_name">课程名称</string>
+    <string name="txt_course_price">课程单价</string>
+    <string name="txt_course_people_num">上课人数</string>
+    <string name="txt_course_desc">课程描述</string>
+    <string name="toast_course_name_length">超出最大长度!</string>
+    <string name="toast_course_name_null">课程名称不能为空</string>
+    <string name="toast_course_price_null">课程单价不能为空</string>
+    <string name="toast_course_people_num_null">招生剩余及总人数不能为空</string>
+    <string name="toast_course_people_num_compare">招生剩余人数不可大于该班课总人数</string>
+    <string name="toast_input_course_name">请填写课程名称</string>
+    <string name="toast_input_course_price">请填写课程单价</string>
+    <string name="toast_input_course_people_num">请填写招生剩余人数及总人数</string>
+    <string name="toast_input_course_teacher">请填写授课老师</string>
+    <string name="string_format_money_hour">¥%s/小时</string>
+    <string name="txt_course_mine">课程风采</string>
+    <string name="hint_course_people_num_max">不超过999人</string>
+    <string name="toast_course_desc_null">课程描述不能为空</string>
+    <string name="toast_input_course_desc">请填写课程描述</string>
+    <string name="toast_input_course_mine">请至少上传一张课程风采图</string>
+    <string name="toast_course_people_total_num_zero">招生总人数不能为0</string>
+    <string name="label_course_special">课程专题</string>
+    <string name="label_teacher_special">老师专题</string>
+    <string name="label_peidu">陪读</string>
+    <string name="label_attention_fail">关注失败</string>
+    <string name="label_cancel_attention_fail">取消关注失败</string>
+    <string name="label_order_remark_hint">特殊需求可填写备注，最多100字</string>
+
+    <!--小米push所需-->
+    <string name="string_format_course_money">¥%s/时</string>
+    <!--<string name="string_format_date_show">%1$s-%2$s</string>-->
+
+    <!--价格筛选相关-->
+    <string name="price_old">默认排序</string>
+    <string name="price_from_low_to_high">价格从低到高</string>
+    <string name="price_from_high_to_low">价格从高到低</string>
+    <string name="all_address">全部门店</string>
+    <string name="text_all_store">全部门店</string>
+    <string name="text_input_hint">输入您要搜索的关键词</string>
+    <string name="text_message">消息</string>
+    <string name="all_area">全部区域</string>
+    <string name="toast_permission_call_phone">请点击系统设置-权限-打开电话权限。</string>
+    <string name="toast_permission_read_phone_state">请点击系统设置-权限-打开手机信息权限。</string>
+    <string name="toast_permission_read_write_sdcard">请点击系统设置-权限-打开存储权限</string>
+    <string name="toast_permission_read_contacts">请点击系统设置-权限-打开通讯录权限</string>
+    <string name="coming_reserve_space">即将开放预订</string>
+    <string name="reserve_reminder">预订提示</string>
+
+    <string name="peidu_title">时钟教室\"旗舰店\"门店可用</string>
+
+    <string name="dialog_show_close_order">你确定要关闭订单吗？</string>
+    <string name="dialog_show_delete_order">你确定要删除订单吗？</string>
+    <string name="dialog_show_cancel_order">你确定要取消订单吗？</string>
+    <string name="dialog_show_delete_contact">是否删除该联系人</string>
+    <string name="dialog_show_means">去意已决</string>
+    <string name="dialog_show_think_again">我在想想</string>
+    <string name="dialog_show_give_up_order">确定放弃该订单？</string>
+    <string name="dialog_show_goon_reservation">继续预订</string>
+    <string name="dialog_show_reservation_complete">您已成功加入购物车,由于库存有限请尽快完成支付？</string>
+    <string name="dialog_show_complete_pay">完成支付</string>
+    <string name="dialog_show_delete_course">是否确定删除课程？删除后将不可恢复!</string>
+    <string name="title_single_store">场地详情</string>
+    <string name="count_about_people">%s人</string>
+    <string name="course_total_count">班课总%s人</string>
+    <string name="course_single_price">%s元/小时</string>
+    <string name="dialog_show_cancle_course">取消课程，将自动退还学费给该课程的学员建议取消课程前先与学员完成协商</string>
+    <string name="toast_show_cancle_course">取消成功</string>
+    <string name="toast_show_parameter_is_not_complete">参数不全</string>
+    <string name="toast_show_course_cannot_delete">待审核或审核通过课程不可删除</string>
+    <string name="toast_show_approval_to_complete_registration">审核通过才可完成报名</string>
+    <string name="toast_show_course_registration_has_been_completed">课程已完成报名</string>
+    <string name="toast_show_approved_to_cancel_course">审核通过才可取消开课</string>
+    <string name="toast_show_less_than_many_hours_to_cancle_course">当前时间距课程开始时间已不足24小时，无法取消开课</string>
+    <string name="toast_show_network_busy">网络繁忙</string>
+    <string name="select_start_time">请选择开始时间</string>
+    <string name="select_end_time">请选择结束时间</string>
+    <string name="txt_open_course_info">课程：%s</string>
+    <string name="toast_show_cannot_exceed_maximum_length_limit">不能超过最大长度限制</string>
+    <string name="txt_classroom">教室：%s</string>
+    <string name="txt_insufficient_inventory">%s 库存不足</string>
+    <string name="txt_order_create_time">下单时间：%s</string>
+    <string name="txt_no_data">无数据</string>
+    <string name="txt_check_version">检测到新版本,更新至%s</string>
+    <string name="txt_company_name">公司名称：%s</string>
+    <string name="txt_taxpayer_registration_number">纳税人识别号：%s</string>
+    <string name="txt_register_address">注册地址：%s</string>
+    <string name="txt_register_mobile">注册电话：%s</string>
+    <string name="txt_open_bank">开户银行：%s</string>
+    <string name="txt_open_account">开户账号：%s</string>
+    <string name="title_class_room_type">课室用途</string>
+    <string name="txt_course_over">课程已经结束</string>
+    <string name="format_surplus_course">剩余课程%d次</string>
+    <string name="title_course_particulars">课程明细</string>
+    <string name="txt_no_complete">未完成</string>
+    <string name="txt_has_been_used">已使用</string>
+    <string name="txt_retired_single">已退单</string>
+    <string name="txt_continue_to_book_class">继续订课</string>
+    <string name="txt_continue_to_pay">继续支付</string>
+    <string name="title_the_instructor">授课老师</string>
+    <string name="title_special_invoice_qualification_information">专用发票资质信息</string>
+    <string name="txt_order_submitted_successfully">订单提交成功</string>
+    <string name="txt_will_be_confirm">门店将在工作时间内尽快完成确认</string>
+    <string name="title_submit_the_results">提交结果</string>
+    <string name="txt_order_payment_success">订单支付成功</string>
+    <string name="txt_order_payment_failure">订单支付失败</string>
+    <string name="txt_resubmit">请重新提交</string>
+    <string name="format_multiply_rooms">x%s间</string>
+    <string name="toast_select_contact">客官，要选择您的联系方式哦</string>
+    <string name="txt_select_contact">请选择联系人</string>
+    <!--<string name="format_please_complete_the_payment">请在%d分%d秒内完成支付，超时订单自动关闭</string>-->
+    <!--<string name="format_one_complete_the_payment">1.请在%d分%d秒内完成支付，超时订单自动关闭</string>-->
+    <!--<string name="format_complete_the_payment_in_hour">请在%d时%d分%d秒内完成支付，超时订单自动关闭</string>-->
+    <!--<string name="format_one_complete_the_payment_int_hour">1.请在%d时%d分%d秒内完成支付，超时订单自动关闭</string>-->
+    <string name="title_classroom_choose">课室选择</string>
+    <string name="title_authentication_information">认证信息</string>
+    <string name="title_institutional_presence">机构风采</string>
+    <string name="txt_institutional_profile">机构简介</string>
+    <string name="txt_binding">绑定</string>
+    <string name="txt_change">更换</string>
+    <string name="title_binding_mobile_phone_number">绑定手机号</string>
+    <string name="txt_access_to_verify">获取验证</string>
+    <string name="txt_not_set_up_nickname">您还没有设置昵称</string>
+    <string name="txt_not_binding_mobile_phone">未绑定手机</string>
+    <string name="txt_no_validation">未验证</string>
+    <string name="txt_strapped_down_email">未绑邮箱</string>
+    <string name="txt_unbound">未绑定</string>
+    <string name="txt_reservation_describe">课室预订订单将在订单确认通过后生效</string>
+    <string name="txt_suggest_change_date">当前课室库存不足，请调整日期，或删除当天课室更改其他日期</string>
+    <string name="txt_suggest_change_date_for_device">当前课室设备不足，请调整日期，或删除当天课室更改其他日期</string>
+    <string name="lable_contact">联系方式：</string>
+    <string name="txt_have_expired">已过期</string>
+    <string name="format_single_price">¥%s/课时</string>
+    <string name="toast_input_contact_name">请输入联系人姓名</string>
+    <string name="toast_input_contact_phone">请输入联系电话</string>
+    <string name="toast_contact_phone_number_format_error">联系电话格式错误</string>
+    <string name="dialog_title_downloading">正在下载</string>
+    <string name="toast_request_fail">获取失败</string>
+    <string name="toast_edit_success">修改成功</string>
+    <string name="toast_deleted_coupons">已删除优惠券</string>
+    <string name="toast_parameter_is_not_complete">创建报文体请求参数不全</string>
+    <string name="toast_transfer_management">请先转让管理权</string>
+    <string name="toast_cannot_add_new_people">机构暂不可添加新成员，任何疑问请和时钟教室客服联系</string>
+    <string name="toast_most_remaining_six">最多存6个</string>
+    <string name="toast_server_busy">服务器繁忙</string>
+    <string name="toast_cancel_failed">取消失败</string>
+    <string name="toast_order_have_been_deleted">订单已删除</string>
+    <string name="txt_device_no_free">收费设备：</string>
+    <string name="toast_user_name_phone_not_empty">用户名和手机不能为空</string>
+    <string name="toast_no_black_list">暂无黑名单列表！</string>
+    <string name="toast_delete_success">删除成功</string>
+    <string name="toast_content_can_not_empty">内容不能为空</string>
+    <string name="toast_new_tag_success">新增标签成功</string>
+    <string name="toast_the_currently_selected_for_administrators">当前选中成员已为管理员！</string>
+    <string name="toast_input_rule">请输入6–18位字母或数字</string>
+    <string name="toast_enter_the_correct_email_format">请输入正确的邮箱格式</string>
+    <string name="toast_enter_a_correct_phone_number_format">请输入正确的手机号格式</string>
+    <string name="toast_input_rule_password">请输入6–18位字母或数字密码</string>
+    <string name="toast_input_correct_nickname_length">昵称长度为4–16个字符，请重新输入</string>
+    <string name="toast_input_correct_nickname">请输入正确格式昵称</string>
+    <string name="toast_update_nickname_success">昵称更新成功</string>
+    <string name="toast_enter_same_password_twice">新密码两次输入不一致</string>
+    <string name="toast_old_and_new_password_cannot_be_consistent">新密码不能和原密码一致</string>
+    <string name="toast_password_input_rule">格式不正确，密码只能是6–18位字母或数字</string>
+    <string name="toast_password_update_success">密码修改成功</string>
+    <string name="content_feed_back">#时钟教室意见反馈##时钟教室|分时出租#</string>
+    <string name="toast_no_new_version">没有最新版本</string>
+    <string name="toast_enter_correct_verification_code">请输入正确的验证码</string>
+    <string name="toast_the_user_is_not_registered">用户未被注册</string>
+    <string name="toast_user_already_exists">用户已存在</string>
+    <string name="toast_verification_code_error">验证码不正确</string>
+    <string name="toast_select_one_classroom_at_least">请至少选择一间课室</string>
+    <string name="txt_lack_of_room_inventory">房间库存不足</string>
+    <string name="toast_select_one_day_at_least">请至少选择一天</string>
+    <string name="toast_network_is_a_little_slow">网络有点慢,请稍后再试</string>
+    <string name="toast_course_use_start_time">课程开始使用时间必须晚于预订时间30分钟以上</string>
+    <string name="toast_course_start_time">课程开始时间必须晚于当前时间30分钟</string>
+    <string name="toast_select_delete_order">请选择要删除的订单</string>
+    <string name="toast_selecta_contact">请选择联系方式</string>
+    <string name="toast_special_invoice">公司主体为一般纳税人方可开具增值税专用发票</string>
+    <string name="toast_run_out_of_memory">内存不足</string>
+    <string name="toast_recommend_count">编辑数量已超过库存数量,已为您设置推荐数量</string>
+    <string name="txt_check_stores">查看可用门店列表</string>
+    <string name="txt_data_for_completion">资料待补全</string>
+    <string name="txt_data_for_completion_teacher">老师资料待补全</string>
+    <string name="txt_data_integrity_notice">资料填写完整的老师方可在前台展示</string>
+    <string name="txt_course_teacher_explain">资料填写完整的老师方可被选择为授课老师</string>
+    <string name="txt_order_refund">退款</string>
+    <string name="loading">加载中</string>
+    <string name="page_name_available_wifi_store">可用wifi门店列表页</string>
+    <string name="title_available_wifi_store_list">可用门店列表</string>
+    <string name="txt_select_able">(可选)</string>
+    <string name="toast_show_webview_error">网页加载失败</string>
+</resources>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_invoice_all"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/lv_inovice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/rl_invoice1"
+                android:divider="@color/unfocused"
+                android:dividerHeight="@dimen/DIMEN_12DP" />
+
+            <RelativeLayout
+                android:id="@+id/rl_invoice1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_58DP"
+                android:layout_alignParentBottom="true"
+                android:background="@color/blackde5">
+
+                <CheckBox
+                    android:id="@+id/cb_invoice_choose_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:background="@drawable/cb_pay_choose_bg"
+                    android:button="@null"
+                    android:checked="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_toRightOf="@id/cb_invoice_choose_all"
+                    android:text="@string/all_choose"
+                    android:textColor="@color/order_black"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+                <Button
+                    android:id="@+id/btn_invoice_next"
+                    android:layout_width="@dimen/DIMEN_120DP"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/DIMEN_12DP"
+                    android:background="@drawable/background_green_1eb482_radius_5"
+                    android:text="@string/invoice_next"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/DIMEN_17DP"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/btn_invoice_next"
+                    android:text="￥0.00"
+                    android:textColor="@color/app_theme_color"
+                    android:textSize="@dimen/DIMEN_14DP"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_invoice_price"
+                    android:text="@string/order_total_price"
+                    android:textColor="@color/order_black"
+                    android:textSize="@dimen/DIMEN_14DP"
+                    tools:ignore="HardcodedText" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <!-- 无订单显示的 -->
+
+        <RelativeLayout
+            android:id="@+id/rl_mine_order3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_mineorder_none"
+                android:layout_width="@dimen/DIMEN_140DP"
+                android:layout_height="@dimen/DIMEN_140DP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/DIMEN_116DP"
+                android:src="@drawable/none_order"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_mineorder_none"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_mineorder_none"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/DIMEN_26DP"
+                android:text="@string/order_none"
+                android:textColor="@color/color_gay_8f"
+                android:textSize="@dimen/DIMEN_17DP" />
+
+            <TextView
+                android:id="@+id/tv_mineorder_see"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_mineorder_none"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:text="@string/order_see"
+                android:textColor="@color/color_gay_8f"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <Button
+                android:id="@+id/btn_mineorder_stroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_mineorder_see"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/DIMEN_64DP"
+                android:layout_marginRight="@dimen/DIMEN_64DP"
+                android:layout_marginTop="@dimen/DIMEN_68DP"
+                android:background="@drawable/bg_exit_or"
+                android:text="@string/order_stroll"
+                android:textColor="@color/white"
+                android:textSize="@dimen/DIMEN_17DP" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/ly_wifi"
+            layout="@layout/wifi_fail"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

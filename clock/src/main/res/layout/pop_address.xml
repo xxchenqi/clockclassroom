@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <View
+        android:id="@+id/view_popview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_pop"
+        android:background="@color/color_lucency" />
+
+    <RelativeLayout
+        android:id="@+id/rl_pop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_38DP"
+        android:layout_above="@+id/lr_pop"
+        android:background="@color/unfocused" >
+
+        <TextView
+            android:id="@+id/tv_pop_cancel"
+            style="@style/textstyle_15p_black37"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/DIMEN_24DP"
+            android:gravity="center"
+            android:text="@string/label_cancel" />
+
+        <TextView
+            android:id="@+id/tv_pop_affirm"
+            style="@style/textstyle_15p_black37"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/DIMEN_24DP"
+            android:gravity="center"
+            android:text="@string/affirm" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lr_pop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/wv_province"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white" />
+
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/wv_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

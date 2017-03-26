@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_status_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_122DP"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_authentication_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_authentication_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_20DP"
+            android:textColor="@color/black"
+            android:textSize="@dimen/DIMEN_16DP" />
+
+        <com.yiju.ClassClockRoom.widget.ListViewForScrollView
+            android:id="@+id/lv_authentication_fail_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_20DP"
+            android:divider="@null"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_authentication_information"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:layout_below="@id/ll_status_icon"
+        android:layout_marginTop="@dimen/DIMEN_63DP"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_organization_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_organization_name"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:text="@string/check_authentication_information"
+            android:textColor="@color/gray_8f"
+            android:textSize="@dimen/DIMEN_10DP" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:src="@drawable/arrow"
+            tools:ignore="ContentDescription" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_how_authentication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/DIMEN_15DP"
+        android:gravity="center"
+        android:text="@string/how_to_teacher_certification_and_agency_information"
+        android:textColor="@color/blue" />
+    <!-- <TextView
+         android:id="@+id/tv_how_authentication"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_centerHorizontal="true"
+         android:layout_marginBottom="@dimen/DIMEN_15DP"
+         android:background="@drawable/want_regedit"
+         android:textSize="@dimen/DIMEN_12DP" />-->
+</RelativeLayout>

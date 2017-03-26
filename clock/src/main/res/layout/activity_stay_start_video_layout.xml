@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/unfocused"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <RelativeLayout
+        android:id="@+id/stay_start_video_hint"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_20DP"
+        android:background="@color/color_black_60">
+
+        <TextView
+            style="@style/textstyle_12p_white"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/accompany_staystart_hint" />
+
+        <ImageView
+            android:id="@+id/stay_start_video_hint_close"
+            android:layout_width="@dimen/DIMEN_15DP"
+            android:layout_height="@dimen/DIMEN_15DP"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/cancel_white" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/stay_start_video_time"
+        style="@style/textstyle_18p_orange"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_30DP"
+        android:background="@color/unfocused"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:text="课程已于2015年3月12日13:30结束" />
+
+    <RelativeLayout
+        android:id="@+id/stay_start_video_remind"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:layout_marginBottom="@dimen/DIMEN_1DP"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/stay_start_video_remind_text"
+            style="@style/textstyle_17p_blue"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/accompany_set_remind" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/stay_start_video_remind_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:background="@null"
+            android:checked="false"
+            app:theme="@style/Color1SwitchStyle" />
+        <!--<CheckBox
+            android:id="@+id/stay_start_video_remind_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:button="@drawable/cb_green_white_bg"
+            android:checked="false" />-->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/stay_start_video_change_room"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/textstyle_17p_blue"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/accompany_change_room" />
+    </RelativeLayout>
+
+</LinearLayout>

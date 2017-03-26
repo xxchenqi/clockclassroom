@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coupon_back"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:background="@color/color_green_1e">
+
+        <ImageView
+            android:id="@+id/iv_back_coupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:background="@drawable/white_back"
+            android:contentDescription="@string/desc" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="@string/user_discount_coupon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/DIMEN_17DP" />
+
+        <ImageView
+            android:id="@+id/iv_coupon_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_coupon_add"
+            android:background="@drawable/coupon_ask_icon"
+            android:contentDescription="@string/desc" />
+
+        <ImageView
+            android:id="@+id/iv_coupon_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/coupon_add_icon"
+            android:contentDescription="@string/desc" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_coupon_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/DIMEN_4DP"
+                android:layout_marginTop="@dimen/DIMEN_4DP"
+                android:gravity="center"
+                android:text="@string/coupon_content"
+                android:textColor="@color/color_green_1e"
+                android:textSize="@dimen/DIMEN_14DP"
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/list_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:divider="@color/white"
+                android:dividerHeight="@dimen/DIMEN_12DP"
+                android:listSelector="@color/list" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_coupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/none_coupon"
+            android:visibility="gone" />
+    </FrameLayout>
+
+
+</LinearLayout>

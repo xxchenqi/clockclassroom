@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reservation_start_time"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        style="@style/reservation_rl_week">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/order_black"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/DIMEN_16DP"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/reservation_start_time"/>
+        <TextView
+            android:id="@+id/tv_reservation_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/DIMEN_16DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:text="@string/reservation_start_time_xml"
+            android:textColor="@color/app_theme_color"/>
+
+    </RelativeLayout>
+    <View style="@style/linestyle_gray" />
+    <RelativeLayout
+        android:id="@+id/rl_reservation_end_time"
+        style="@style/reservation_rl_week">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/order_black"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/DIMEN_16DP"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/reservation_end_time"/>
+        <TextView
+            android:id="@+id/tv_reservation_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/DIMEN_16DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:text="@string/reservation_end_time_xml"
+            android:textColor="@color/app_theme_color"/>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--我的关注 课程-->
+
+    <include
+        android:id="@+id/ly_wifi"
+        layout="@layout/wifi_fail"
+        android:visibility="gone" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/lv_watchlist_course"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/color_gay_f5"
+        android:dividerHeight="@dimen/DIMEN_12DP"
+        ptr:ptrAnimationStyle="flip" />
+
+    <ImageView
+        android:id="@+id/iv_mine_watchlist_course_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/none_follow"
+        tools:ignore="ContentDescription"
+        android:visibility="gone"/>
+
+
+</FrameLayout>

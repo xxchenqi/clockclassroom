@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/iv_contact_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:background="@drawable/order_nonechoose_btn"
+        tools:ignore="ContentDescription" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_toRightOf="@id/iv_contact_choose">
+
+        <TextView
+            android:id="@+id/tv_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:text="丽丽"
+            android:textColor="@color/color_gay_8f"
+            android:textSize="@dimen/DIMEN_17DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_contact_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_contact_name"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_toRightOf="@id/tv_contact_name"
+            android:background="@color/app_theme_color"
+            android:padding="@dimen/DIMEN_1DP"
+            android:text="@string/contact_default"
+            android:textColor="@color/white"
+            android:textSize="@dimen/DIMEN_10DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_contact_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_contact_name"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="13020169902"
+            android:textColor="@color/color_gay_8f"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_item_shopcart_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:src="@drawable/contact_edit_btn"
+        tools:ignore="ContentDescription" />
+
+</RelativeLayout>

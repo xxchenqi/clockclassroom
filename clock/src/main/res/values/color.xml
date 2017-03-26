@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+
+    <color name="app_theme_color">#1EA77E</color>
+    <color name="app_theme_color_no">#9cb5ad</color>
+
+    <color name="gray">#ececec</color>
+    <color name="gray_cccccc">#cccccc</color>
+    <color name="gray_de">#dedede</color>
+    <color name="gray_8f">#8f8f8f</color>
+    <color name="gray_dd">#dddddd</color>
+    <color name="red">#f10000</color>
+    <color name="time">#f00000</color>
+    <color name="blue">#0079ff</color>
+    <color name="order_gray">#f3f3f3</color>
+    <color name="order_black">#333333</color>
+    <color name="order_divider">#e2e2e2</color>
+    <color name="order_divider_view">#cacaca</color>
+    <color name="week">#e0e0e0</color>
+    <color name="white">#ffffff</color>
+    <color name="whitee5">#e5ffffff</color>
+    <color name="unfocused">#f1f1f1</color>
+    <color name="goonno">#b2cac2</color>
+    <color name="goonyes">#46d2aa</color>
+    <color name="black">#373737</color>
+    <color name="black0f">#0000ff</color>
+    <color name="blackd8">#d8d8d8</color>
+    <color name="black66">#666666</color>
+    <color name="black68">#686868</color>
+    <color name="blackdc">#dcdcdc</color>
+    <color name="blackde5">#E5f6f1ea</color>
+    <color name="black_80">#D9000000</color>
+    <color name="black_99">#99000000</color>
+    <color name="black_cc">#CC000000</color>
+    <color name="white_80">#D9ffffff</color>
+
+    <color name="list">#00000000</color>
+    <!-- 灰色ececec -->
+    <color name="color_gay_ec">#ececec</color>
+    <!-- 灰色c5c5c5 -->
+    <color name="color_gay_c5">#c5c5c5</color>
+    <!-- 灰色f5f5f5 -->
+    <color name="color_gay_f5">#f5f5f5</color>
+    <!-- 灰色b4b4b4 -->
+    <color name="color_gay_b4">#b4b4b4</color>
+    <!-- 灰色#c8c8c8 -->
+    <color name="color_gay_c8">#c8c8c8</color>
+    <!-- 灰色E7E7E7 -->
+    <color name="color_gay_e7">#E7E7E7</color>
+    <color name="color_gay_f7">#F7F7F7</color>
+    <!-- 灰色8f8f8f -->
+    <color name="color_gay_8f">#8f8f8f</color>
+    <!-- 灰色dadada -->
+    <color name="color_gay_da">#DADADA</color>
+    <!-- 蓝色#319FD9 -->
+    <color name="color_blue_31">#319FD9</color>
+    <!-- 蓝色#1ea0e6 -->
+    <color name="color_blue_1e">#1ea0e6</color>
+    <!-- 蓝色#1aa1e6 -->
+    <color name="color_blue_1a">#1aa1e6</color>
+    <color name="color_blue_00A0E9">#00A0E9</color>
+
+
+    <!-- 黑色333333 -->
+    <color name="color_black_33">#333333</color>
+    <!-- 黑色373737 -->
+    <color name="color_black_37">#373737</color>
+    <!-- 黑色606060 -->
+    <color name="color_black_60">#606060</color>
+
+    <!-- 黑色666666 -->
+    <color name="color_black_login">#666666</color>
+    <!-- 灰色999999 -->
+    <color name="color_gay_99">#999999</color>
+    <!-- 灰色c1c1c1 -->
+    <color name="color_gay_c1">#c1c1c1</color>
+    <!-- 灰色b6b6b6 -->
+    <color name="color_gay_b6">#b6b6b6</color>
+    <!-- 灰色eeeeee -->
+    <color name="color_gay_ee">#eeeeee</color>
+
+    <!-- 草绿1eb482 -->
+    <color name="color_green_1e">#1eb482</color>
+    <color name="color_green_5f">#088b5f</color>
+    <color name="color_green_cc1e">#cc1eb482</color>
+    <color name="color_green_00">#00ffaa</color>
+    <color name="color_green_ef">#EFF9EE</color>
+    <!-- 淡黄 -->
+    <color name="color_yellowish">#f6f1ea</color>
+    <!-- 透明 -->
+    <color name="color_lucency">#b0000000</color>
+    <!-- 透明黑 -->
+    <color name="color_lucency_white">#40ffffff</color>
+
+    <color name="color_gay_7d">#7d7d7d</color>
+    <color name="color_gay_eb">#ebebeb</color>
+    <color name="color_gay_aa">#aaaaaa</color>
+    <color name="color_80000000">#80000000</color>
+    <color name="color_fe">#fefcef</color>
+    <color name="orange">#f06000</color>
+    <color name="red_ce">#ce1c17</color>
+    <color name="color_lucency_0">#000000</color>
+    <color name="black_b2">#b2000000</color>
+
+    <!--剩余进度条的空白部分-->
+    <color name="cpb_grey">#ffdedede</color>
+    <!--转圈的进度条-->
+    <color name="cpb_blue">#1eb482</color>
+    <color name="cpb_blue_dark">#1eb482</color>
+    <!--按钮的背景颜色-->
+    <color name="cpb_red">#1eb482</color>
+    <!--瞬间收缩消失的颜色?-->
+    <color name="cpb_red_dark">#1eb482</color>
+    <color name="cpb_green">#ff99cc00</color>
+    <color name="cpb_green_dark">#ff6d9b00</color>
+    <color name="cpb_white">@android:color/white</color>
+    <!--橘色-->
+    <color name="color_orange_fa">#FA6000</color>
+</resources>

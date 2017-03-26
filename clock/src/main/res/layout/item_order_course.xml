@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/DIMEN_12DP"
+    android:paddingRight="@dimen/DIMEN_12DP">
+    <!--订单列表 adapter 布局 cq  ,wh -->
+
+    <RelativeLayout
+        android:id="@+id/rl_mineorder1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_16DP">
+
+        <CheckBox
+            android:id="@+id/cb_order_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/cb_pay_choose_bg"
+            android:button="@null"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_item_course_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/cb_order_choose"
+            android:text="订单编号:15468974234"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_course_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="待支付"
+            android:textColor="@color/color_blue_1e"
+            android:textSize="@dimen/DIMEN_15DP"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_order_need_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:drawableLeft="@drawable/cart_clock_icon"
+        android:drawablePadding="@dimen/DIMEN_5DP"
+        android:text="0分0秒 内须提交"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_12DP"
+        tools:ignore="HardcodedText" />
+
+    <View style="@style/linestyle_order_divider_view"
+        android:layout_marginTop="@dimen/DIMEN_16DP"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:background="@color/color_gay_f5">
+
+        <ImageView
+            android:id="@+id/iv_item_course_pic"
+            android:layout_width="@dimen/DIMEN_106DP"
+            android:layout_height="@dimen/DIMEN_106DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:background="@drawable/clock_wait"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_36DP"
+                android:gravity="center"
+                android:text="跆拳道教学"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_16DP"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_item_course_address"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:gravity="center_vertical"
+                android:text="闵行中心店"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_item_course_date"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:gravity="center_vertical"
+                android:text="2015/9/13 - 2015/9/13"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_total_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:gravity="center_vertical"
+                android:text="共18次课程"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_course_price"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:gravity="end|center_vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP"
+        android:text="合计 ¥3245.33"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_17DP"
+        tools:ignore="HardcodedText" />
+
+    <View style="@style/linestyle_order_divider_view" />
+
+    <RelativeLayout
+        android:id="@+id/rl_mine_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:background="@color/white"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+        <Button
+            android:id="@+id/btn_mine_order_right"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_35DP"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:background="@drawable/background_green_1eb482_stroke"
+            android:paddingLeft="@dimen/DIMEN_10DP"
+            android:paddingRight="@dimen/DIMEN_10DP"
+            android:textColor="@color/color_green_1e" />
+
+        <Button
+            android:id="@+id/btn_mine_order_left"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_35DP"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_mine_order_right"
+            android:background="@drawable/background_gray_stroke"
+            android:paddingLeft="@dimen/DIMEN_10DP"
+            android:paddingRight="@dimen/DIMEN_10DP"
+            android:textSize="@dimen/DIMEN_14DP" />
+    </RelativeLayout>
+
+</LinearLayout>

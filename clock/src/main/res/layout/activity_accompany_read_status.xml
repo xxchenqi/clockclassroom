@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_accompany_back"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:contentDescription="@string/desc"
+                android:focusable="false"
+                android:src="@drawable/back" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_accompany_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="@dimen/DIMEN_100DP"
+            android:text="@string/loading"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_17DP" />
+
+        <View
+            android:id="@+id/rl_accompany_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/ly_wifi"
+            layout="@layout/wifi_fail"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

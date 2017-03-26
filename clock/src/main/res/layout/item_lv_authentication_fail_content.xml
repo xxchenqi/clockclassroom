@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_item_teacher_fail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_24DP"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_14DP" />
+
+</RelativeLayout>

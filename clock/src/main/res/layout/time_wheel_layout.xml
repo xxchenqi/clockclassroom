@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_38DP"
+        android:background="@color/unfocused" >
+
+        <TextView
+            android:id="@+id/trouble_cancel"
+            style="@style/textstyle_15p_black37"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_24DP"
+            android:text="@string/txt_cancel" />
+
+        <TextView
+            android:id="@+id/trouble_ok"
+            style="@style/textstyle_15p_black37"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_24DP"
+            android:text="@string/sure" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_choose_begin_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:text="请选择xx时间" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_200DP" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/DIMEN_36DP"
+            android:layout_marginRight="@dimen/DIMEN_36DP"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/DIMEN_12DP"
+            android:paddingTop="@dimen/DIMEN_12DP" >
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/wv_trouble_hour"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/white" />
+
+            <TextView
+                style="@style/textstyle_17p_orange"
+                android:text=":" />
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/wv_trouble_min"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/DIMEN_2DP" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_32DP"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP" >
+
+            <View
+                style="@style/linestyle_order_divider_view"
+                android:layout_alignParentTop="true" />
+
+            <View
+                style="@style/linestyle_order_divider_view"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

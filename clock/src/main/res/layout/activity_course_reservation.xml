@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+    <!-- =======================================标题================================================= -->
+
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_back_reservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:background="@drawable/back"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="@string/course_reservation_title"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_17DP" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_course_address"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_70DP"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/DIMEN_12DP"
+            android:src="@drawable/course_add_icon"
+            tools:ignore="ContentDescription" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_course_address"
+                style="@style/reservation_title"
+                android:text="@string/course_reservation_address" />
+
+            <TextView
+                android:id="@+id/tv_course_class_address"
+                style="@style/reservation_content"
+                android:layout_below="@+id/tv_course_address"
+                android:text="@string/course_reservation_class_address" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_course_date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_70DP"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/DIMEN_12DP"
+            android:src="@drawable/reserve_moon_icon"
+            tools:ignore="ContentDescription" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_course_date"
+                style="@style/reservation_title"
+                android:text="@string/reservation_date_title" />
+
+            <TextView
+                style="@style/reservation_content"
+                android:layout_below="@+id/tv_course_date"
+                android:text="@string/course_reservation_date" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_course_week"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_70DP"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/DIMEN_12DP"
+            android:src="@drawable/reserve_week_icon"
+            tools:ignore="ContentDescription" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_course_week"
+                style="@style/reservation_title"
+                android:text="@string/reservation_week_title" />
+
+            <TextView
+                style="@style/reservation_content"
+                android:layout_below="@+id/tv_course_week"
+                android:text="@string/reservation_week_content" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_course_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_70DP"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/DIMEN_12DP"
+            android:src="@drawable/reserve_time_icon"
+            tools:ignore="ContentDescription" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_course_time"
+                style="@style/reservation_title"
+                android:text="@string/reservation_time_title" />
+
+            <TextView
+                style="@style/reservation_content"
+                android:layout_below="@+id/tv_course_time"
+                android:text="@string/reservation_time_content" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/DIMEN_12DP">
+        <TextView
+            android:id="@+id/tv_publish"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_49DP"
+            android:layout_alignParentBottom="true"
+            android:background="@color/app_theme_color"
+            android:gravity="center"
+            android:text="@string/invoice_next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/DIMEN_18DP" />
+    </RelativeLayout>
+
+</LinearLayout>

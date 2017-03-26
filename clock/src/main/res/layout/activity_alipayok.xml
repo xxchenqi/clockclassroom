@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_70DP"
+        android:drawableLeft="@drawable/order_sucess_icon"
+        android:drawablePadding="@dimen/DIMEN_10DP"
+        android:text="@string/reserve_ok"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_16DP" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_50DP"
+        android:text="@string/reserve_success_content1"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_14DP" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_50DP"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_continue_reserve"
+            android:layout_width="@dimen/DIMEN_100DP"
+            android:layout_height="@dimen/DIMEN_32DP"
+            android:background="@drawable/background_green_1eb482_radius_2"
+            android:text="@string/label_show_course"
+            android:textColor="@color/white"
+            android:textSize="@dimen/DIMEN_18DP" />
+
+        <Button
+            android:id="@+id/btn_arrangement_classroom"
+            android:layout_width="@dimen/DIMEN_100DP"
+            android:layout_height="@dimen/DIMEN_32DP"
+            android:layout_marginLeft="@dimen/DIMEN_14DP"
+            android:background="@drawable/background_green_1eb482_stroke_radius_2"
+            android:text="@string/arrangement_classroom"
+            android:textColor="@color/color_green_1e"
+            android:textSize="@dimen/DIMEN_18DP" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_back_home"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_40DP"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/DIMEN_80DP"
+            android:gravity="center"
+            android:text="返回首页"
+            android:textColor="@color/color_blue_1a"
+            android:textSize="@dimen/DIMEN_14DP" />
+    </RelativeLayout>
+
+</LinearLayout>

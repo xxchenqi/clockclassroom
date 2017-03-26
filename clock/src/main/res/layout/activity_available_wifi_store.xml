@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gay_ee"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/DIMEN_12DP"
+        tools:ignore="HardcodedText">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="认证Wi-Fi"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:text="通过“时钟教室”APP或微信公众号认证上网，否则通过输入无线密码上网"
+            android:textColor="@color/color_gay_99"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_wifi_store"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:divider="@color/color_gay_ee"
+        android:dividerHeight="@dimen/DIMEN_1DP" />
+
+    <include
+        android:id="@+id/ly_wifi"
+        layout="@layout/wifi_fail"
+        android:visibility="gone" />
+
+</LinearLayout>

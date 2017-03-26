@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+
+    <TextView
+        android:id="@+id/tv_item_detail_list_sname"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_40DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:gravity="center_vertical"
+        android:text="闵行中心店"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_16DP" />
+
+    <View
+        style="@style/linestyle_h_unfocused"
+        android:layout_marginLeft="@dimen/DIMEN_12DP" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_35DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_item_detail_list_use_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跆拳道教学"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+        <TextView
+            android:id="@+id/tv_item_detail_list_room_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="x3"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_item_detail_list_date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_35DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:gravity="center_vertical"
+        android:text="2015/9/13 - 2015/9/13"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_14DP" />
+
+    <TextView
+        android:id="@+id/tv_item_detail_list_repeat"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/DIMEN_35DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:gravity="center_vertical"
+        android:text="周一"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_14DP" />
+
+
+    <TextView
+        android:id="@+id/tv_item_detail_list_time"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/DIMEN_35DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:gravity="center_vertical"
+        android:text="13:00 - 19:00"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_14DP" />
+
+    <View
+        style="@style/linestyle_h_unfocused"
+        android:layout_marginLeft="@dimen/DIMEN_12DP" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:gravity="right|center_vertical"
+        android:paddingRight="@dimen/DIMEN_12DP">
+
+        <Button
+            android:id="@+id/bt_detail_list_classroom_arrangement"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_35DP"
+            android:background="@drawable/background_green_1eb482_stroke"
+            android:paddingLeft="@dimen/DIMEN_10DP"
+            android:paddingRight="@dimen/DIMEN_10DP"
+            android:text="课室配置"
+            android:textColor="@color/color_green_1e"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/unfocused"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include
+        android:id="@+id/start_video_v_head_layout"
+        layout="@layout/include_head_greenbg_left_icon_right_icon_layout" />
+
+    <LinearLayout
+        android:layout_below="@+id/start_video_v_head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/unfocused"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/play_video_relayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_208DP">
+
+            <SurfaceView
+                android:id="@+id/play_sufaceview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/play_default_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/desc"
+                android:scaleType="fitXY"
+                android:src="@drawable/video_nonesignal_picture" />
+
+            <ProgressBar
+                android:id="@+id/play_video_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/play_video_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/player_small" />
+
+            <RelativeLayout
+                android:id="@+id/play_video_operation_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_34DP"
+                android:layout_alignParentBottom="true"
+                android:background="@color/black_80">
+
+                <ImageView
+                    android:id="@+id/play_video"
+                    android:layout_width="@dimen/DIMEN_24DP"
+                    android:layout_height="@dimen/DIMEN_24DP"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/play_v_icon" />
+
+                <ImageView
+                    android:id="@+id/video_zoom"
+                    android:layout_width="@dimen/DIMEN_24DP"
+                    android:layout_height="@dimen/DIMEN_24DP"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/full_screen_view" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_18DP"
+                    android:layout_marginRight="@dimen/DIMEN_18DP"
+                    android:layout_toLeftOf="@+id/video_zoom"
+                    android:layout_toRightOf="@+id/play_video"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/video_name"
+                        style="@style/textstyle_14p_white"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/start_video_h_head_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_50DP"
+                android:background="@color/black_80"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/start_video_h_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/white_back" />
+
+                <TextView
+                    style="@style/textstyle_17p_white"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_toRightOf="@+id/start_video_h_back"
+                    android:text="@string/accompany_read_online" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/DIMEN_12DP"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:paddingRight="@dimen/DIMEN_12DP"
+            android:paddingTop="@dimen/DIMEN_12DP">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/map" />
+
+            <TextView
+                android:id="@+id/start_room_address_txt"
+                style="@style/textstyle_14p_8f"
+                android:layout_gravity="center_vertical"
+                android:text="上海市黄浦区六合路98号港陆黄浦中心11楼徐汇虹梅" />
+        </LinearLayout>
+
+        <WebView
+            android:id="@+id/web_referrer_teach"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:background="@color/white" />
+    </LinearLayout>
+    <include
+        android:id="@+id/ly_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/start_video_v_head_layout"
+        layout="@layout/wifi_fail"
+        android:visibility="gone" />
+</RelativeLayout>

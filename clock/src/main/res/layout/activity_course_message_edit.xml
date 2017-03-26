@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <!--课程名称-->
+    <com.yiju.ClassClockRoom.widget.edittext.ContainsEmojiEditText
+        android:id="@+id/et_course_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_60DP"
+        android:layout_marginTop="@dimen/DIMEN_20DP"
+        android:background="@color/white"
+        android:hint="@string/edit_hint_course_name"
+        android:inputType="text"
+        android:maxLength="20"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP"
+        android:textColor="@color/order_black"
+        android:textColorHint="@color/color_gay_da"
+        android:textSize="@dimen/DIMEN_16DP" />
+
+    <!--课程单价-->
+    <LinearLayout
+        android:id="@+id/ll_course_price"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_60DP"
+        android:layout_marginTop="@dimen/DIMEN_20DP"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:text="@string/txt_money_symbol"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_16DP" />
+
+        <com.yiju.ClassClockRoom.widget.edittext.AmountEditText
+            android:id="@+id/et_course_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:digits="1234567890."
+            android:hint="@string/edit_hint_course_price"
+            android:inputType="numberDecimal"
+            android:textColor="@color/order_black"
+            android:textColorHint="@color/color_gay_da"
+            android:textSize="@dimen/DIMEN_16DP" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:text="@string/txt_hour"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_16DP" />
+    </LinearLayout>
+    <!--上课人数-->
+    <LinearLayout
+        android:id="@+id/ll_course_people_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_20DP"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_60DP"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/DIMEN_12DP"
+                android:paddingRight="@dimen/DIMEN_12DP"
+                android:text="@string/txt_course_people_remain"
+                android:textColor="@color/order_black"
+                android:textSize="@dimen/DIMEN_16DP" />
+
+            <EditText
+                android:id="@+id/et_course_people_remain_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="end|center_vertical"
+                android:hint="@string/hint_course_people_num_max"
+                android:inputType="number"
+                android:maxLength="3"
+                android:paddingLeft="@dimen/DIMEN_12DP"
+                android:paddingRight="@dimen/DIMEN_12DP"
+                android:textColor="@color/order_black"
+                android:textColorHint="@color/color_gay_da"
+                android:textSize="@dimen/DIMEN_16DP" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_1DP"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:background="@color/color_gay_f5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_60DP"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/DIMEN_12DP"
+                android:paddingRight="@dimen/DIMEN_12DP"
+                android:text="@string/txt_course_people_total"
+                android:textColor="@color/order_black"
+                android:textSize="@dimen/DIMEN_16DP" />
+
+            <EditText
+                android:id="@+id/et_course_people_total_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="end|center_vertical"
+                android:hint="@string/hint_course_people_num_max"
+                android:inputType="number"
+                android:maxLength="3"
+                android:paddingLeft="@dimen/DIMEN_12DP"
+                android:paddingRight="@dimen/DIMEN_12DP"
+                android:textColor="@color/order_black"
+                android:textColorHint="@color/color_gay_da"
+                android:textSize="@dimen/DIMEN_16DP" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--课程描述-->
+    <RelativeLayout
+        android:id="@+id/rl_course_desc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.yiju.ClassClockRoom.widget.edittext.ContainsEmojiEditText
+            android:id="@+id/et_course_desc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="top"
+            android:maxLength="1000"
+            android:padding="@dimen/DIMEN_12DP"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+        <TextView
+            android:id="@+id/tv_txt_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/et_course_desc"
+            android:layout_alignRight="@id/et_course_desc"
+            android:layout_margin="@dimen/DIMEN_12DP"
+            android:textColor="@color/red_ce"
+            android:textSize="@dimen/DIMEN_14DP" />
+    </RelativeLayout>
+</LinearLayout>

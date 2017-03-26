@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_12DP"
+        android:background="@color/unfocused" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/DIMEN_10DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_three_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="白板"
+            android:textColor="@color/color_gay_8f"
+            android:textSize="@dimen/DIMEN_18DP" />
+
+        <TextView
+            android:id="@+id/tv_three_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(张)"
+            android:textColor="@color/color_gay_8f"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+        <TextView
+            android:id="@+id/tv_three_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="免费"
+            android:textColor="@color/color_gay_8f"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal"
+            tools:ignore="ContentDescription">
+
+            <ImageView
+                android:id="@+id/iv_three_reduce"
+                android:layout_width="@dimen/DIMEN_28DP"
+                android:layout_height="@dimen/DIMEN_28DP"
+                android:src="@drawable/order_reduce_btn_click"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:id="@+id/rl_vvvv"
+                android:layout_width="@dimen/DIMEN_40DP"
+                android:layout_height="@dimen/DIMEN_28DP"
+                android:visibility="visible">
+
+                <View
+                    android:layout_width="@dimen/DIMEN_40DP"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/order_divider_view" />
+
+                <EditText
+                    android:id="@+id/et_three_choose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:textColor="@color/app_theme_color" />
+
+                <View
+                    android:layout_width="@dimen/DIMEN_40DP"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/order_divider_view" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_three_add"
+                android:layout_width="@dimen/DIMEN_28DP"
+                android:layout_height="@dimen/DIMEN_28DP"
+                android:src="@drawable/order_add_btn_click" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

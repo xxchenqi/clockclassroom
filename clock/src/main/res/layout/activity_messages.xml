@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <RelativeLayout
+        android:id="@+id/rl_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:src="@drawable/order"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_order"
+            style="@style/mess_title"
+            android:text="@string/order_mess" />
+
+        <TextView
+            android:id="@+id/tv_order_one"
+            style="@style/mess_one"
+            android:layout_below="@+id/tv_order"
+            android:text="@string/no_message" />
+
+        <TextView
+            android:id="@+id/tv_order_time"
+            style="@style/mess_time" />
+    </RelativeLayout>
+
+    <View style="@style/mess_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_mech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_mech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:src="@drawable/our"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_mech"
+            style="@style/mess_title"
+            android:text="@string/mech_mess" />
+
+        <TextView
+            android:id="@+id/tv_mech_one"
+            style="@style/mess_one"
+            android:layout_below="@+id/tv_mech"
+            android:text="@string/no_message" />
+
+
+        <TextView
+            android:id="@+id/tv_mech_time"
+            style="@style/mess_time" />
+    </RelativeLayout>
+
+    <View
+        style="@style/mess_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_peidu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_peidu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:src="@drawable/remind"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_peidu"
+            style="@style/mess_title"
+            android:text="@string/peidu_mess" />
+
+        <TextView
+            android:id="@+id/tv_peidu_one"
+            style="@style/mess_one"
+            android:layout_below="@+id/tv_peidu"
+            android:text="@string/no_message" />
+
+
+        <TextView
+            android:id="@+id/tv_peidu_time"
+            style="@style/mess_time" />
+    </RelativeLayout>
+
+    <View
+        style="@style/mess_line"
+        android:visibility="gone" />
+</LinearLayout>

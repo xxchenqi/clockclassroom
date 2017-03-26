@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <com.squareup.timessquare.CalendarPickerView
+
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/DIMEN_16DP"
+        android:paddingLeft="@dimen/DIMEN_16DP"
+        android:paddingRight="@dimen/DIMEN_16DP"
+        android:scrollbarStyle="outsideOverlay"
+        app:tsquare_dividerColor="@color/white"/>
+</LinearLayout>

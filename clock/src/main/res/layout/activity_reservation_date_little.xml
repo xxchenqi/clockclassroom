@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_40DP"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:drawableLeft="@drawable/reserve_schoose_icon"
+                android:drawablePadding="@dimen/DIMEN_6DP"
+                android:text="@string/reservation_use_date"
+                android:textColor="@color/order_black"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:drawableLeft="@drawable/reserve_sadjustment_icon"
+                android:drawablePadding="@dimen/DIMEN_6DP"
+                android:text="@string/reservation_change_date"
+                android:textColor="@color/order_black"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+            <TextView
+                android:id="@+id/tv_has_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:drawableLeft="@drawable/reserve_sban_icon"
+                android:drawablePadding="@dimen/DIMEN_6DP"
+                android:text="@string/reservation_has_date"
+                android:textColor="@color/order_black"
+                android:textSize="@dimen/DIMEN_12DP"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <com.squareup.timessquare.CalendarPickerView
+
+            android:id="@+id/calendar_view_little"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/DIMEN_16DP"
+            android:paddingLeft="@dimen/DIMEN_16DP"
+            android:paddingRight="@dimen/DIMEN_16DP"
+            android:scrollbarStyle="outsideOverlay"
+            app:tsquare_dividerColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_right_now_reservation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_49DP"
+            android:background="@color/app_theme_color"
+            android:gravity="center"
+            android:text="@string/order_immediate_pay"
+            android:textColor="@color/white"
+            android:textSize="@dimen/DIMEN_18DP"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/glide_pop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pop"
+        android:visibility="gone" />
+</FrameLayout>

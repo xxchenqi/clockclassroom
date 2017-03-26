@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_left_school"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gay_f5"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_left_school"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_43DP"
+        android:textSize="@dimen/DIMEN_15DP"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:gravity="center_vertical"
+        android:textColor="@color/order_black"/>
+
+</RelativeLayout>

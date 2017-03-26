@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!-- 头部 ：left_icon  right_icon -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_accompany_back"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:contentDescription="@string/desc"
+                android:focusable="false"
+                android:src="@drawable/back" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_accompany_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="@dimen/DIMEN_100DP"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_17DP" />
+
+        <View
+            android:id="@+id/rl_accompany_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View style="@style/linestyle_gray_f5" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_34DP"
+        android:layout_marginTop="@dimen/DIMEN_26DP"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/textstyle_18p_orange"
+            android:text="@string/accompany_pwd_hint" />
+
+        <ImageView
+            android:id="@+id/accompany_help"
+            android:layout_width="@dimen/DIMEN_14DP"
+            android:layout_height="@dimen/DIMEN_14DP"
+            android:layout_marginLeft="@dimen/DIMEN_6DP"
+            android:src="@drawable/video_question_icon"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+    <!-- ===============================-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:layout_marginLeft="@dimen/DIMEN_24DP"
+        android:layout_marginRight="@dimen/DIMEN_24DP"
+        android:layout_marginTop="@dimen/DIMEN_16DP"
+        android:background="@drawable/bg_et_peidu"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_8DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:background="@drawable/lock"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:background="@color/gray" />
+
+        <EditText
+            android:id="@+id/accompany_password_edit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/accompany_help_str10"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+    <!--===========================-->
+
+    <TextView
+        android:id="@+id/accompany_affirm"
+        style="@style/textstyle_17p_white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:layout_marginLeft="@dimen/DIMEN_24DP"
+        android:layout_marginRight="@dimen/DIMEN_24DP"
+        android:layout_marginTop="@dimen/DIMEN_16DP"
+        android:background="@drawable/bg_et_peidu_ok"
+        android:gravity="center"
+        android:text="@string/affirm" />
+
+    <!-- ======================== -->
+    <TextView
+        android:id="@+id/accompany_error_hint"
+        style="@style/textstyle_14p_black"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_16DP" />
+</LinearLayout>

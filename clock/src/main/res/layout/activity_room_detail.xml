@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_webView_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+
+    <include
+        android:id="@+id/ll_room_detail_title_1"
+        layout="@layout/include_head_greenbg_left_icon_right_icon_layout" />
+
+    <FrameLayout
+        android:id="@+id/fl_wv_and_back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_room_detail_reserve"
+        android:layout_below="@id/ll_room_detail_title_1">
+
+        <WebView
+            android:id="@+id/wv_room_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            android:id="@+id/ly_broken_fail"
+            layout="@layout/broken_fail"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/ly_wifi"
+            layout="@layout/wifi_fail"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/ll_room_detail_title_2"
+            layout="@layout/include_head_transparentbg_left_icon_right_icon_layout" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="@dimen/DIMEN_44DP"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:layout_alignBottom="@id/fl_wv_and_back"
+        android:layout_marginBottom="@dimen/DIMEN_12DP"
+        android:layout_marginLeft="@dimen/DIMEN_6DP"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_root_detail_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/index_cart_btn"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/btn_room_detail_reserve"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_alignParentBottom="true"
+        android:background="@color/app_theme_color"
+        android:text="@string/reserve"
+        android:textColor="@color/white"
+        android:textSize="@dimen/DIMEN_18DP"
+        android:visibility="gone" />
+
+</RelativeLayout>

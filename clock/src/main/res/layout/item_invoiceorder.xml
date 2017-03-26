@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants" >
+
+    <RelativeLayout
+        android:id="@+id/rl_mineorder1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_30DP"
+        android:background="@color/white" >
+
+        <CheckBox
+            android:id="@+id/cb_item_invoice_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:background="@drawable/cb_pay_choose_bg"
+            android:button="@null"
+            android:checked="false" />
+
+        <ImageView
+            android:id="@+id/iv_mineorder_no_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:layout_toRightOf="@id/cb_item_invoice_choose"
+            android:src="@drawable/the_order_no_icon"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_mineorder_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_mineorder_no_icon"
+            android:text="订单编号:15468974234"
+            android:textColor="#333333"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_mineorder_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:text="代付款"
+            android:textColor="@color/red"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_mineorder2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_42DP"
+        android:layout_below="@+id/lv_mineorder_inner"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/tv_order_need"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/need"
+            android:textColor="@color/color_gay_8f"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+        <TextView
+            android:id="@+id/tv_order_need_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_order_need"
+            android:text="4分32秒"
+            android:textColor="@color/red"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_order_need_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_order_need_time"
+            android:text="@string/need_content"
+            android:textColor="@color/color_gay_8f"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+        <TextView
+            android:id="@+id/tv_mineorder_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:text="￥3245.33"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+    <com.yiju.ClassClockRoom.widget.MyListView
+        android:id="@+id/lv_mineorder_inner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_mineorder1"
+        android:divider="@color/unfocused"
+        android:dividerHeight="@dimen/DIMEN_6DP" >
+    </com.yiju.ClassClockRoom.widget.MyListView>
+
+    <View
+        style="@style/linestyle_order_divider_view"
+        android:layout_below="@id/rl_mineorder2" />
+
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/DIMEN_44DP"
+    android:background="@drawable/top_shadow"
+    android:orientation="horizontal"
+    android:visibility="gone"
+    android:baselineAligned="false">
+    <!-- 透明背景_头部 ：left_icon  right_icon -->
+
+    <RelativeLayout
+        android:id="@+id/head_gradual_back_relative"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/head_gradual_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:contentDescription="@string/desc"
+            android:focusable="false"
+            android:src="@drawable/back" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:minWidth="@dimen/DIMEN_100DP">
+
+        <TextView
+            android:id="@+id/head_gradual_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_17DP" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/head_gradual_right_relative"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/head_gradual_right_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/share_btn_icon"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</LinearLayout>

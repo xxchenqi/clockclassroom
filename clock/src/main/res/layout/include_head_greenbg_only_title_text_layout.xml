@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!-- 头部 ：only title_text -->
+
+    <TextView
+        android:id="@+id/head_title_txt"
+        style="@style/textstyle_17p_black"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_44DP"
+        android:gravity="center"
+        android:text="@string/accompany_read_online"
+        android:textColor="@color/black66" />
+
+    <View style="@style/linestyle_gray_f5" />
+</LinearLayout>

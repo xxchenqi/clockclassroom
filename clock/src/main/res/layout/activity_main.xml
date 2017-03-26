@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+
+    </FrameLayout>
+    <!-- <RelativeLayout
+         android:id="@+id/fl_container"
+         android:layout_width="match_parent"
+         android:layout_height="0dip"
+         android:layout_weight="1" >
+
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentBottom="true"
+             android:layout_marginBottom="62dp"
+             android:layout_marginLeft="12dp"
+             android:src="@drawable/index_cart_btn" />
+     </RelativeLayout> -->
+
+    <View style="@style/linestyle_order_divider_view_orange" />
+
+    <RadioGroup
+        android:background="@color/white"
+        android:id="@+id/rbs_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_index"
+            style="@style/tab_style"
+            android:drawableTop="@drawable/bar_index_bg" />
+
+        <RadioButton
+            android:id="@+id/rb_course"
+            style="@style/tab_style"
+            android:drawableTop="@drawable/bar_video_bg" />
+
+        <RadioButton
+            android:id="@+id/rb_find"
+            style="@style/tab_style"
+            android:drawableTop="@drawable/bar_find_bg" />
+
+        <RadioButton
+            android:id="@+id/rb_my"
+            style="@style/tab_style"
+            android:drawableTop="@drawable/bar_my_bg" />
+    </RadioGroup>
+
+</LinearLayout>

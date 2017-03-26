@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/include_head_greenbg_left_icon_right_icon_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/DIMEN_40DP"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <com.yiju.ClassClockRoom.widget.NewFlowLayout
+                android:id="@+id/fl_modify_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_56DP"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@drawable/tag_background"
+            android:contentDescription="@string/desc" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/DIMEN_20DP"
+        android:text="至多只能选择6个标签"
+        android:textColor="@color/gray_8f"
+        android:textSize="@dimen/DIMEN_12DP" />
+
+    <Button
+        android:id="@+id/btn_modify_tag_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_49DP"
+        android:background="@color/color_green_1e"
+        android:text="@string/label_save"
+        android:textColor="@color/white"
+        android:textSize="@dimen/DIMEN_17DP" />
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/gray"
+    tools:ignore="contentDescription">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <TextView
+        android:id="@+id/tv_time_fail_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:padding="@dimen/DIMEN_12DP"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/DIMEN_14DP"
+        android:textColor="@color/color_gay_99"/>
+
+    <ListView
+        android:id="@+id/time_fail_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/list"/>
+
+</LinearLayout>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gay_f5"
+    tools:ignore="HardcodedText">
+
+    <ListView
+        android:id="@+id/lv_types"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/color_gay_f5"
+        android:dividerHeight="1dip" />
+
+    <FrameLayout
+        android:id="@+id/fl_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.yiju.ClassClockRoom.widget.StoreImageView
+            android:id="@+id/siv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_placeholder" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_80DP"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:paddingRight="@dimen/DIMEN_12DP"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_1DP"
+                android:background="@color/white_80"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_8DP"
+                android:drawableLeft="@drawable/adress"
+                android:gravity="center"
+                android:text="上海市黄浦区六合路98号港"
+                android:textColor="@color/white"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+            <TextView
+                android:id="@+id/tv_type_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_8DP"
+                android:drawableLeft="@drawable/category_icon"
+                android:gravity="center"
+                android:text="全课教学"
+                android:textColor="@color/white"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_bg_color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_fe" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_10DP"
+            android:layout_gravity="bottom"
+            android:background="@color/color_gay_f5" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP"
+        android:paddingTop="@dimen/DIMEN_12DP">
+
+        <RelativeLayout
+            android:id="@+id/rl_top_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/background_white_radius_4"
+                android:drawableLeft="@drawable/guide"
+                android:text="0km"
+                android:gravity="center"
+                android:paddingLeft="@dimen/DIMEN_5DP"
+                android:paddingRight="@dimen/DIMEN_8DP"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_8DP" />
+
+            <TextView
+                android:id="@+id/tv_top_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="中心店"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_15DP"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_imgs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/album_hover_left" />
+
+                <TextView
+                    android:id="@+id/tv_imgs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/album_hover_right"
+                    android:gravity="center"
+                    android:text="@string/txt_photos"
+                    android:textSize="@dimen/DIMEN_8DP" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_address_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_62DP"
+            android:drawableLeft="@drawable/adress_gray"
+            android:drawablePadding="@dimen/DIMEN_4DP"
+            android:gravity="center_vertical"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_12DP"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_type_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_address_top"
+            android:layout_marginTop="@dimen/DIMEN_5DP"
+            android:drawableLeft="@drawable/category_gray_icon"
+            android:drawablePadding="@dimen/DIMEN_4DP"
+            android:gravity="center_vertical"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_12DP" />
+    </RelativeLayout>
+
+</FrameLayout>

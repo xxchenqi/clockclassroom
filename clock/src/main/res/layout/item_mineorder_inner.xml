@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/DIMEN_12DP"
+    android:layout_marginRight="@dimen/DIMEN_12DP"
+    android:layout_marginTop="@dimen/DIMEN_10DP"
+    android:background="@color/color_gay_f5">
+
+
+    <ImageView
+        android:id="@+id/iv_item_mineorder_pic"
+        android:layout_width="@dimen/DIMEN_106DP"
+        android:layout_height="@dimen/DIMEN_106DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:background="@drawable/clock_wait"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_36DP">
+
+            <TextView
+                android:id="@+id/tv_item_mineorder_use_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="跆拳道教学"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_16DP"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_item_mineorder_room_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/tv_item_mineorder_use_desc"
+                android:text="(最多容纳10人)"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_item_mineorder_sname"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_20DP"
+            android:gravity="center_vertical"
+            android:text="闵行中心店"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_item_mineorder_date"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_20DP"
+            android:gravity="center_vertical"
+            android:text="2015/9/13 - 2015/9/13"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_total_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_20DP"
+            android:gravity="center_vertical"
+            android:text="共18小时课室使用时长"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

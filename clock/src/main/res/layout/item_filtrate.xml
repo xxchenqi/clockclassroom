@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_item_filtrate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:background="@drawable/background_gray_stroke_radius_6"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:padding="@dimen/DIMEN_12DP"
+        android:textColor="@color/black66"
+        android:textSize="@dimen/DIMEN_12DP"
+        android:maxLines="1" />
+</LinearLayout>

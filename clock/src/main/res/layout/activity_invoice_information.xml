@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <include
+        android:id="@+id/rl_invoice_information1"
+        layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_invoice_information2"
+        android:layout_below="@+id/rl_invoice_information1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_56DP">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:text="@string/invoice_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/DIMEN_15DP"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/DIMEN_16DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:text="@string/invoice_detail"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_14DP"
+                    tools:ignore="HardcodedText" />
+            </RelativeLayout>
+
+            <View style="@style/linestyle_order_divider_view2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_100DP"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:text="@string/invoice_head"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/DIMEN_15DP"
+                    tools:ignore="HardcodedText" />
+
+                <EditText
+                    android:id="@+id/et_invoice_information_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:background="@null"
+                    android:hint="@string/invoice_company"
+                    android:textSize="@dimen/DIMEN_14DP"
+                    android:maxLines="1" />
+
+                <View
+                    style="@style/linestyle_h_unfocused"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_10DP" />
+            </LinearLayout>
+
+            <View style="@style/linestyle_order_divider_view2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_100DP"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:text="@string/invoice_type"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/DIMEN_15DP"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="@dimen/DIMEN_110DP"
+                    android:layout_height="@dimen/DIMEN_30DP"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_14DP"
+                    android:background="@drawable/invoice_type"
+                    android:gravity="center"
+                    android:text="@string/invoice_paper"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_14DP"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <View style="@style/linestyle_order_divider_view2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_140DP"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:text="@string/invoice_mail"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/DIMEN_15DP"
+                    tools:ignore="HardcodedText" />
+
+                <LinearLayout
+                    android:id="@+id/lr_invoice_province"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/et_invoice_province"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:hint="@string/invoice_province"
+                        android:textSize="@dimen/DIMEN_14DP"
+                        android:maxLines="1" />
+
+                    <View
+                        style="@style/linestyle_h_unfocused"
+                        android:layout_marginTop="@dimen/DIMEN_10DP" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_invoice_detailed_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_16DP"
+                    android:background="@null"
+                    android:hint="@string/invoice_detailed_address"
+                    android:textSize="@dimen/DIMEN_14DP"
+                    android:maxLines="1" />
+
+                <View
+                    style="@style/linestyle_h_unfocused"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:layout_marginTop="@dimen/DIMEN_10DP" />
+            </LinearLayout>
+
+            <View style="@style/linestyle_order_divider_view2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_56DP"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_invoice_contact_information"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_12DP"
+                    android:layout_marginRight="@dimen/DIMEN_12DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:background="@null"
+                    android:hint="@string/invoice_contact_information"
+                    android:inputType="phone"
+                    android:textSize="@dimen/DIMEN_15DP"
+                    android:maxLines="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/rl_invoice_information2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blackde5"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_invoice_affirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_50DP"
+            android:layout_margin="@dimen/DIMEN_12DP"
+            android:background="@drawable/background_green_1eb482_radius_5"
+            android:text="@string/affirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/DIMEN_18DP" />
+    </LinearLayout>
+
+</RelativeLayout>

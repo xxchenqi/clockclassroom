@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".act.PersonalCenter_MoreVersionActivity">
+
+    <!-- 头部 -->
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <ImageView
+        android:layout_width="@dimen/DIMEN_82DP"
+        android:layout_height="@dimen/DIMEN_82DP"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_32DP"
+        android:background="@drawable/clock_logo"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_version_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/DIMEN_12DP"
+        tools:ignore="HardcodedText" />
+
+    <View
+        style="@style/linestyle_h_unfocused"
+        android:layout_marginTop="@dimen/DIMEN_32DP" />
+
+    <TextView
+        android:id="@+id/rl_app_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_52DP"
+        android:drawableRight="@drawable/arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP"
+        android:text="意见反馈"
+        android:textColor="@color/black"
+        android:textSize="@dimen/DIMEN_15DP"
+        tools:ignore="HardcodedText" />
+
+    <View style="@style/linestyle_h_unfocused" />
+
+    <TextView
+        android:id="@+id/rl_app_version_check"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_52DP"
+        android:drawableRight="@drawable/arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP"
+        android:text="新版本检测"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_15DP"
+        tools:ignore="HardcodedText" />
+
+    <View style="@style/linestyle_h_unfocused" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/DIMEN_20DP"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_copy_right"
+            android:gravity="center"
+            android:text="易进文化 版权所有"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_copy_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/DIMEN_6DP"
+            android:gravity="center"
+            android:text="Copyright 2015-2018 yijin.ALL Right Reserved"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+</LinearLayout>

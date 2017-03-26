@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_organization_information"
+        layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.yiju.ClassClockRoom.widget.CircleImageView
+                    android:id="@+id/cv_user_avatar"
+                    android:layout_width="@dimen/DIMEN_70DP"
+                    android:layout_height="@dimen/DIMEN_70DP"
+                    android:layout_margin="@dimen/DIMEN_12DP"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_organization_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_black_33"
+                    android:textSize="@dimen/DIMEN_15DP" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/organization_all_name"
+                    android:textColor="@color/color_gay_8f"
+                    android:textSize="@dimen/DIMEN_10DP" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_proposer_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:drawableLeft="@drawable/icon_phone_number_institution"
+                android:drawablePadding="@dimen/DIMEN_12DP"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+            <TextView
+                android:id="@+id/tv_proposer_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:drawableLeft="@drawable/icon_address_institution"
+                android:drawablePadding="@dimen/DIMEN_12DP"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_12DP" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_12DP"
+                android:text="@string/business_license"
+                android:textColor="@color/color_green_1e"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_1DP"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@color/gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_12DP">
+
+                <com.yiju.ClassClockRoom.widget.FrameImageView
+                    android:id="@+id/iv_business_license"
+                    android:layout_width="@dimen/DIMEN_117DP"
+                    android:layout_height="@dimen/DIMEN_78DP"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:layout_toRightOf="@id/iv_business_license"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/business_license_no"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_10DP" />
+
+                    <TextView
+                        android:id="@+id/tv_business_license_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_6DP"
+                        android:textColor="@color/color_black_33"
+                        android:textSize="@dimen/DIMEN_12DP" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:background="@color/gray" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_12DP"
+                android:text="@string/legal_person_information"
+                android:textColor="@color/color_green_1e"
+                android:textSize="@dimen/DIMEN_16DP" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_1DP"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@color/gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_12DP">
+
+                <com.yiju.ClassClockRoom.widget.FrameImageView
+                    android:id="@+id/iv_legal_person"
+                    android:layout_width="@dimen/DIMEN_117DP"
+                    android:layout_height="@dimen/DIMEN_78DP"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:layout_toRightOf="@id/iv_legal_person"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/legal_person_name"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_10DP" />
+
+                    <TextView
+                        android:id="@+id/tv_legal_person_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_6DP"
+                        android:textColor="@color/color_black_33"
+                        android:textSize="@dimen/DIMEN_12DP" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_15DP"
+                        android:text="@string/legal_person_id_number"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_10DP" />
+
+                    <TextView
+                        android:id="@+id/tv_legal_person_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_6DP"
+                        android:textColor="@color/color_black_33"
+                        android:textSize="@dimen/DIMEN_12DP" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_12DP"
+                android:text="@string/proposer_information"
+                android:textColor="@color/color_green_1e"
+                android:textSize="@dimen/DIMEN_16DP" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_1DP"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@color/gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_12DP">
+
+                <com.yiju.ClassClockRoom.widget.FrameImageView
+                    android:id="@+id/iv_proposer"
+                    android:layout_width="@dimen/DIMEN_117DP"
+                    android:layout_height="@dimen/DIMEN_78DP"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:layout_toRightOf="@id/iv_proposer"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/proposer"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_12DP" />
+
+                    <TextView
+                        android:id="@+id/tv_proposer_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_6DP"
+                        android:textColor="@color/color_black_33"
+                        android:textSize="@dimen/DIMEN_10DP" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_10DP"
+                        android:text="@string/proposer_id_number"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_10DP" />
+
+                    <TextView
+                        android:id="@+id/tv_proposer_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_6DP"
+                        android:textColor="@color/color_black_33"
+                        android:textSize="@dimen/DIMEN_12DP" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_12DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

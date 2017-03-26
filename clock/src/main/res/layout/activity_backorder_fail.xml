@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_80DP"
+        android:drawableLeft="@drawable/order_error_icon"
+        android:drawablePadding="@dimen/DIMEN_10DP"
+        android:gravity="center"
+        android:text="@string/back_order_fail"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_16DP" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_40DP"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_backorder_fail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:text="数学"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_backorder_fail_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="(会议室)"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_10DP"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_backorder_fail_room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:text="闸北中心店"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_14DP"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tv_backorder_fail_oid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:text="订单编号:342"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_14DP"
+        tools:ignore="HardcodedText" />
+
+    <View
+        style="@style/linestyle_h_unfocused"
+        android:layout_marginTop="@dimen/DIMEN_26DP" />
+
+    <LinearLayout
+        android:id="@+id/lr_backorder_fail_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_26DP"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/contact_service"
+            android:textColor="@color/color_gay_8f"
+            android:textSize="@dimen/DIMEN_12DP" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:text="@string/txt_phone_number"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_14DP" />
+    </LinearLayout>
+
+    <include layout="@layout/include_error_layout" />
+
+</LinearLayout>

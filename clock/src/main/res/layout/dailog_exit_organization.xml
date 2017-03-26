@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <Button
+        android:id="@+id/btn_exit_organization"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="退出机构"
+        android:textColor="@color/order_black"
+        android:textSize="@dimen/DIMEN_17DP"
+        tools:ignore="HardcodedText" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/order_gray" />
+
+    <LinearLayout
+        android:id="@+id/ll_organization_exit_and_backlist"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出机构并加入黑名单"
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_17DP" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加入黑名单的机构不可再次邀请我加入" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/order_gray" />
+
+    <Button
+        android:id="@+id/btn_organization_cancel"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/DIMEN_56DP"
+        android:background="@color/white"
+        android:clickable="true"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/DIMEN_17DP"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

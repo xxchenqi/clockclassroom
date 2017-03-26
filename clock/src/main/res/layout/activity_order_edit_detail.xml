@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:background="@color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unfocused"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/ll_order_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_order_edit_pic"
+                            android:layout_width="@dimen/DIMEN_80DP"
+                            android:layout_height="@dimen/DIMEN_80DP"
+                            android:layout_margin="@dimen/DIMEN_12DP"
+                            android:background="@drawable/clock_wait"
+                            tools:ignore="ContentDescription" />
+
+
+                        <LinearLayout
+                            android:id="@+id/lr_order_edit_web"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/DIMEN_12DP"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_order_edit_use_desc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="小间"
+                                    android:textSize="@dimen/DIMEN_16DP"
+                                    tools:ignore="HardcodedText" />
+
+                                <TextView
+                                    android:id="@+id/tv_order_edit_use_type"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBottom="@id/tv_order_edit_use_desc"
+                                    android:layout_toRightOf="@id/tv_order_edit_use_desc"
+                                    android:text="(跆拳道)"
+                                    android:textSize="@dimen/DIMEN_14DP"
+                                    tools:ignore="HardcodedText" />
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/tv_order_edit_room"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/DIMEN_3DP"
+                                android:text="徐汇虹梅旗舰店"
+                                android:textSize="@dimen/DIMEN_12DP"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:id="@+id/tv_order_edit_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2015/9/13 - 2015/9/13"
+                                android:textSize="@dimen/DIMEN_12DP"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:id="@+id/tv_order_edit_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="13:00 - 19:00"
+                                android:textSize="@dimen/DIMEN_10DP"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:id="@+id/tv_order_edit_repeat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="周一"
+                                android:textSize="@dimen/DIMEN_10DP"
+                                tools:ignore="HardcodedText" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_order_edit_device"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ll_order_edit"
+                        android:layout_marginBottom="@dimen/DIMEN_12DP"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:text="配套设施:无"
+                        android:textColor="@color/color_gay_8f"
+                        android:textSize="@dimen/DIMEN_12DP"
+                        tools:ignore="HardcodedText" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_cart_change"
+                    android:layout_width="@dimen/DIMEN_58DP"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_green_1e"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/DIMEN_16DP"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_all_up_down"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_up_down"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_40DP"
+                    android:paddingLeft="@dimen/DIMEN_12DP"
+                    android:paddingRight="@dimen/DIMEN_12DP">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/DIMEN_40DP"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="个别日期调整"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_14DP"
+                        tools:ignore="HardcodedText" />
+
+                    <ImageView
+                        android:id="@+id/iv_up_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/desc"
+                        android:src="@drawable/more_btn_up" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_edit_individuation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    tools:ignore="HardcodedText">
+
+                    <View
+                        style="@style/linestyle_h_unfocused"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP" />
+
+                    <TextView
+                        android:id="@+id/tv_cancel_classroom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/DIMEN_35DP"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:gravity="center_vertical"
+                        android:text="取消课室"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_14DP" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_cancel_classroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:id="@+id/tv_add_classroom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/DIMEN_35DP"
+                        android:layout_marginLeft="@dimen/DIMEN_12DP"
+                        android:layout_marginTop="@dimen/DIMEN_10DP"
+                        android:gravity="center_vertical"
+                        android:text="增加课室"
+                        android:textColor="@color/color_gay_99"
+                        android:textSize="@dimen/DIMEN_14DP" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_add_classroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/DIMEN_10DP" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/linestyle_order_divider_view" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

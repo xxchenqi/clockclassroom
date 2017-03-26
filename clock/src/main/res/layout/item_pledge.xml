@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_36DP">
+
+        <TextView
+            android:id="@+id/tv_item_pledge_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_18DP"
+            android:text="迷你间"
+            android:textColor="@color/color_black_37"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_item_pledge_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_18DP"
+            android:text="¥200"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    <View
+        style="@style/linestyle_h_unfocused"
+        android:layout_marginLeft="@dimen/DIMEN_9DP"
+        android:layout_marginRight="@dimen/DIMEN_9DP" />
+
+</LinearLayout>

@@ -1,0 +1,150 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_qqbind"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP">
+
+
+        <ImageView
+            android:id="@+id/iv_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:src="@drawable/qq_share_icon"
+            tools:ignore="ContentDescription" />
+
+
+        <ImageView
+            android:id="@+id/iv_threeway_qq_arrow"
+            android:layout_width="@dimen/DIMEN_15DP"
+            android:layout_height="@dimen/DIMEN_15DP"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:src="@drawable/arrow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_threeway_qq_arrow"
+            android:text="@string/label_go_binding"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+    </RelativeLayout>
+
+    <!-- 分隔线 -->
+
+    <View style="@style/linestyle_h_unfocused" />
+
+    <RelativeLayout
+        android:id="@+id/rl_wxbind"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP">
+
+
+        <ImageView
+            android:id="@+id/iv_wx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:src="@drawable/wechat_share_icon"
+            tools:ignore="ContentDescription" />
+
+
+        <ImageView
+            android:id="@+id/iv_threeway_wx_arrow"
+            android:layout_width="@dimen/DIMEN_15DP"
+            android:layout_height="@dimen/DIMEN_15DP"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:src="@drawable/arrow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_wx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_threeway_wx_arrow"
+            android:text="@string/label_go_binding"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+    </RelativeLayout>
+
+
+    <!-- 分隔线 -->
+
+    <View style="@style/linestyle_h_unfocused" />
+
+    <RelativeLayout
+        android:id="@+id/rl_sinabind"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_56DP">
+
+
+        <ImageView
+            android:id="@+id/iv_sina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_12DP"
+            android:src="@drawable/weibo_share_icon"
+            tools:ignore="ContentDescription" />
+
+
+        <ImageView
+            android:id="@+id/iv_threeway_sina_arrow"
+            android:layout_width="@dimen/DIMEN_15DP"
+            android:layout_height="@dimen/DIMEN_15DP"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:src="@drawable/arrow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_sina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_threeway_sina_arrow"
+            android:text="@string/label_go_binding"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_14DP" />
+
+    </RelativeLayout>
+
+    <View style="@style/linestyle_h_unfocused" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_16DP"
+        android:lineSpacingExtra="@dimen/DIMEN_12DP"
+        android:text="@string/binding_content"
+        android:textColor="@color/color_gay_99"
+        android:textSize="@dimen/DIMEN_14DP" />
+</LinearLayout>
