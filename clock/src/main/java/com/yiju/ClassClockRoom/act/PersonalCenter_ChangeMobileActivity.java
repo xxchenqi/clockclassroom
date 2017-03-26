@@ -24,6 +24,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.UserVerifyInfo;
@@ -496,9 +497,11 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_068");
                 finish();
                 break;
             case R.id.btn_change_mobile_get_verify://获取验证码
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_069");
                 phoneNumber = et_change_mobile_new_mobile.getText().toString();
                 if (!phoneNumber.equals("") && phoneNumber.length() == 11 && InputValidate.checkedIsTelephone(phoneNumber)) {
 
@@ -509,6 +512,7 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
                 }
                 break;
             case R.id.btn_change_mobile_commit: //更换手机
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_070");
                 phoneNumber = et_change_mobile_new_mobile.getText().toString();
                 if (null != phoneNumber && !phoneNumber.equals("")
                         && phoneNumber.length() == 11

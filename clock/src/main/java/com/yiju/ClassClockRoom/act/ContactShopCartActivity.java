@@ -16,6 +16,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.ShopcartContactAdapter;
@@ -80,8 +81,8 @@ public class ContactShopCartActivity extends BaseActivity implements
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
                 // 选中联系人
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_229");
                 Intent intent = new Intent();
-
                 intent.putExtra("name", mLists.get(arg2).getName());
                 intent.putExtra("tel", mLists.get(arg2).getMobile());
                 intent.putExtra("id", mLists.get(arg2).getId());
@@ -105,9 +106,11 @@ public class ContactShopCartActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_228");
                 backPress();
                 break;
             case R.id.rl_contact:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_227");
                 Intent intent = new Intent(this, EditContactActivity.class);
                 intent.putExtra("flag", "new");
                 startActivityForResult(intent, 0);

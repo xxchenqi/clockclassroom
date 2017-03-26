@@ -3,9 +3,8 @@ package com.yiju.ClassClockRoom.act;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +15,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.ContactBean.Data;
@@ -104,6 +104,7 @@ public class EditContactActivity extends BaseActivity implements
         flag = getIntent().getStringExtra("flag");
 
         head_right_text.setText(getResources().getString(R.string.confirm));
+
     }
 
     @Override
@@ -125,6 +126,16 @@ public class EditContactActivity extends BaseActivity implements
             }
             id = data.getId();
         }
+        cb_default_contact.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_233");
+                }else{
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_234");
+                }
+            }
+        });
 
 
     }
@@ -132,8 +143,8 @@ public class EditContactActivity extends BaseActivity implements
     /**
      * 编辑联系人
      *
-     * @param name 名称
-     * @param mobile 手机
+     * @param name       名称
+     * @param mobile     手机
      * @param is_default s
      */
     private void getHttpUtils(String name, String mobile, String is_default) {
@@ -269,9 +280,11 @@ public class EditContactActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_231");
                 finish();
                 break;
             case R.id.head_right_relative: // 编辑联系人请求
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_232");
                 String name = et_name_editcontact.getText().toString();
                 String mobile = et_phone_editcontact.getText().toString();
                 if ("".equals(name)) {

@@ -49,6 +49,8 @@ public class SchemeControl {
     public static final String SUBJECT_ID = "subject_id";
     //课程
     public static final String COURSE_ID = "course_id";
+    //课程类型(1是体验课,0是正式课)
+    public static final String CTYPE = "ctype";
     //老师id
     public static final String TEACHER_ID = "teacher_id";
     //标题

@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.TimeListAdapter;
@@ -122,6 +123,7 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void onDeleteItem(View v, int position) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_216");
                 deleteCell(v, position);
             }
         });
@@ -144,14 +146,17 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_218");
                 onBackPressed();
                 break;
             // 选择开始时间
             case R.id.tv_reservation_start_time:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_214");
                 showBegin();
                 break;
             // 选择结束时间
             case R.id.tv_reservation_end_time:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_215");
                 if (UIUtils.getString(R.string.reservation_start_time).equals(tv_reservation_start_time.getText().toString())) {
                     UIUtils.showLongToastSafe("请选择开始时间");
                 } else {
@@ -160,6 +165,7 @@ public class ReservationTimeActivity extends BaseActivity implements View.OnClic
                 break;
             // 增加时间段
             case R.id.tv_add_time:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_217");
                 if (mList.size() != maxCount) {
                     //是否有冲突,默认无冲突
                     boolean flag = false;

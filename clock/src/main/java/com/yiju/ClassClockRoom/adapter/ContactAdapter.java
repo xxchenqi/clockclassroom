@@ -10,11 +10,9 @@ import com.yiju.ClassClockRoom.bean.ContactBean.Data;
 import com.yiju.ClassClockRoom.adapter.holder.ViewHolder;
 
 public class ContactAdapter extends CommonBaseAdapter<Data> {
-	private int color;
 
 	public ContactAdapter(Context context, List<Data> datas, int layoutId) {
 		super(context, datas, layoutId);
-		color = mContext.getResources().getColor(R.color.color_gay_8f);
 	}
 
 	@Override
@@ -22,15 +20,12 @@ public class ContactAdapter extends CommonBaseAdapter<Data> {
 		String isdefault = data.getIsdefault();
 
 		if ("1".equals(isdefault)) {
-			holder.setText(R.id.tv_contact_name, data.getName()).setText(
-					R.id.tv_contact_phone, data.getMobile());
+			holder.setText(R.id.tv_contact_name, data.getName())
+					.setText(R.id.tv_contact_phone, data.getMobile());
 		} else {
-			holder.setTextAndColor(R.id.tv_contact_name, data.getName(), color)
-					.setTextAndColor(R.id.tv_contact_phone, data.getMobile(),
-							color);
+			holder.setText(R.id.tv_contact_name, data.getName())
+					.setText(R.id.tv_contact_phone, data.getMobile());
 			holder.getView(R.id.tv_contact_default).setVisibility(View.GONE);
-			holder.getView(R.id.iv_contact_choose).setVisibility(View.GONE);
-
 		}
 
 	}

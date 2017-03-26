@@ -1,7 +1,5 @@
 package com.yiju.ClassClockRoom.control;
 
-import android.graphics.Color;
-
 import com.ejupay.sdk.EjuPayConfiguration;
 import com.ejupay.sdk.EjuPayManager;
 import com.ejupay.sdk.service.EjuPayConfigBuilder;

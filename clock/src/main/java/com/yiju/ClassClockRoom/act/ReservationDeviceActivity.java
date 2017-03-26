@@ -7,10 +7,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.DeviceTypeAdapter;
 import com.yiju.ClassClockRoom.bean.ReservationBean.ReservationDevice;
+import com.yiju.ClassClockRoom.util.UIUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -80,6 +82,7 @@ public class ReservationDeviceActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_222");
                 onBackPressed();
                 break;
         }

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
@@ -114,6 +115,7 @@ public class PersonalCenter_CouponListActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_168");
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

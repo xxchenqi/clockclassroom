@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
+import com.yiju.ClassClockRoom.util.UIUtils;
 
 public class CustomDialog {
 	private AlertDialog.Builder alertDialog;
@@ -61,7 +63,7 @@ public class CustomDialog {
 		alertDialog
 				.setMessage(msg)
 				.setTitle(title)
-				.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+				.setPositiveButton(UIUtils.getString(R.string.confirm), new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -84,7 +86,7 @@ public class CustomDialog {
 		alertDialog = new AlertDialog.Builder(context);
 		alertDialog
 				.setMessage(msg)
-				.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+				.setPositiveButton(UIUtils.getString(R.string.confirm), new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

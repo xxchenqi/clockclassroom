@@ -3,13 +3,10 @@ package com.yiju.ClassClockRoom.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.common.callback.InitView;
 import com.yiju.ClassClockRoom.util.net.ClassEvent;
 
@@ -67,18 +64,6 @@ public abstract class BaseFragment extends Fragment implements InitView {
         onRefreshEvent(event);
     }
 
-    // fragment之间的切换
-    protected void changeFragment(Fragment fragment, Bundle args) {
-        if (args != null) {
-            fragment.setArguments(args);
-        }
-
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction beginTransaction = fm.beginTransaction();
-        beginTransaction.replace(R.id.fl_container, fragment);
-        beginTransaction.commit();
-    }
-
     public abstract int setContentViewId();
 
     @Override
@@ -89,7 +74,6 @@ public abstract class BaseFragment extends Fragment implements InitView {
     @Override
     public void onStart() {
         super.onStart();
-//        CountControl.getInstance().skipRuning(this);
     }
 
     @Override
@@ -103,7 +87,6 @@ public abstract class BaseFragment extends Fragment implements InitView {
     @Override
     public void onStop() {
         super.onStop();
-//        CountControl.getInstance().skipUnRuning(fatherActivity);
     }
 
     public abstract String getPageName();

@@ -18,10 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.location.BDLocation;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
-import com.yiju.ClassClockRoom.control.map.LocationSingle;
 
 public class UIUtils {
 
@@ -245,38 +243,6 @@ public class UIUtils {
         int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         v.measure(w, h);
         return v.getMeasuredHeight();
-    }
-
-    /**
-     * 获取当前经度
-     *
-     * @return lng
-     */
-    public static String getLng() {
-        String lng = "";
-        BDLocation currentLocation = LocationSingle.getInstance()
-                .getCurrentLocation();
-
-        if (currentLocation != null) {
-            lng = currentLocation.getLongitude() + "";
-        }
-        return lng;
-    }
-
-    /**
-     * 获取当前维度
-     *
-     * @return lat
-     */
-    public static String getLat() {
-        String lat = "";
-        BDLocation currentLocation = LocationSingle.getInstance()
-                .getCurrentLocation();
-
-        if (currentLocation != null) {
-            lat = currentLocation.getLatitude() + "";
-        }
-        return lat;
     }
 
     /**

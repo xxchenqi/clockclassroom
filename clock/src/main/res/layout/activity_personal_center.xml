@@ -28,8 +28,8 @@
                 android:layout_height="@dimen/DIMEN_85DP"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/DIMEN_16DP"
-                android:src="@drawable/personal_center_logo"
                 android:contentDescription="@string/app_name"
+                android:src="@drawable/personal_center_logo"
                 app:border_color="@color/color_lucency_white"
                 app:border_overlay="false"
                 app:border_width="@dimen/DIMEN_2DP" />
@@ -132,8 +132,8 @@
             android:id="@+id/rl_my_interactive_arrow"
             android:layout_width="match_parent"
             android:layout_height="@dimen/DIMEN_55DP"
-            android:background="@color/white"
-            android:layout_marginTop="@dimen/DIMEN_1DP">
+            android:layout_marginTop="@dimen/DIMEN_1DP"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/iv_my_interactive"
@@ -802,46 +802,6 @@
                 android:textColor="@color/color_gay_99"
                 android:textSize="@dimen/DIMEN_13DP"
                 tools:ignore="HardcodedText" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_myfocuson_arrow"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_55DP"
-            android:background="@color/white"
-            android:visibility="gone">
-
-            <ImageView
-
-                android:id="@+id/iv_mine_attention"
-                android:layout_width="@dimen/DIMEN_20DP"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/personal_center_my_attention"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_toRightOf="@id/iv_mine_attention"
-                android:text="@string/label_myAttention"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_15DP"
-                tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_6DP"
-                android:layout_marginRight="@dimen/DIMEN_12DP"
-                android:background="@drawable/arrow"
-                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <RelativeLayout

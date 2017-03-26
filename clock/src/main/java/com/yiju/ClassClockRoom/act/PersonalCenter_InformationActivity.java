@@ -24,11 +24,13 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.UploadImageBean;
 import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.common.DataManager;
+import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
 import com.yiju.ClassClockRoom.control.CountControl;
@@ -48,6 +50,7 @@ import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.util.net.api.HttpPhotoApi;
 import com.yiju.ClassClockRoom.util.net.api.HttpUserApi;
 import com.yiju.ClassClockRoom.widget.CircleImageView;
+import com.yiju.ClassClockRoom.widget.dialog.CustomDialog;
 import com.yiju.ClassClockRoom.widget.dialog.ProgressDialog;
 import com.yiju.ClassClockRoom.widget.windows.SexPopUpWindow;
 
@@ -398,9 +401,11 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
         switch (v.getId()) {
             case R.id.head_back_relative:
                 //退出
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_049");
                 onBackPressed();
                 break;
             case R.id.rl_layout_avatar:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_050");
                 //检测是否打开读写权限
                 if (!PermissionsChecker.checkPermission(
                         PermissionsChecker.READ_WRITE_SDCARD_PERMISSIONS)) {
@@ -416,17 +421,20 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
                 break;
             case R.id.rl_layout_nickname:
                 //修改昵称
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_051");
                 intent = new Intent(UIUtils.getContext(),
                         PersonalCenter_ChangeNicknameActivity.class);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.rl_layout_password:
                 //修改密码
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_052");
                 intent = new Intent(UIUtils.getContext(),
                         PersonalCenter_ChangePasswordActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rl_layout_pay_password:// 修改支付密码
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_053");
                 EjuPaySDKUtil.initEjuPaySDK(new EjuPaySDKUtil.IEjuPayInit() {
                     @Override
                     public void onSuccess() {
@@ -450,12 +458,14 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
                 break;
             case R.id.rl_layout_email:
                 //修改邮箱
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_055");
                 intent = new Intent(UIUtils.getContext(),
                         PersonalCenter_ChangeEmailActivity.class);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.rl_layout_contact:
                 //修改联系人
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_056");
                 intent = new Intent(UIUtils.getContext(),
                         ContactInformationActivity.class);
                 startActivity(intent);
@@ -463,44 +473,46 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
 
             case R.id.rl_layout_mobile:
                 // 设置手机号
-                String mobile = SharedPreferencesUtils.getString(UIUtils.getContext(),
-                        UIUtils.getString(R.string.shared_mobile), "");
-
-//                手机用户-->有手机-->发送验证码-->验证验证码-->修改手机成功modify_phone type1
-//                三方用户-->无手机-->跳third_bind_mobile,显示密码 type2
-//                三方用户-->有手机-->跳third_bind_mobile,隐藏密码 type3
-
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_054");
                 Intent changeMobileIntent = new Intent(this, PersonalCenter_ChangeMobileActivity.class);
-//                changeMobileIntent.putExtra("mobile", mobile);
-//                if (mobile != null && !"".equals(mobile)) {
-//                    //有手机号
-//                    //判断是否是第三方绑定,
-//                    if ("".equals(shared_third_qq) && "".equals(shared_third_wechat) && "".equals(shared_third_weibo)) {
-//                        //无绑定过三方账号
-//                        changeMobileIntent.putExtra("type", 1);
-//                    } else {
-//                        //有绑定过三方账号
-//                        changeMobileIntent.putExtra("type", 3);
-//                    }
-//                } else {
-//                    //无手机号,
-//                    changeMobileIntent.putExtra("type", 2);
-//                }
                 startActivityForResult(changeMobileIntent, 0);
                 break;
 
             case R.id.rl_layout_binding:
                 // 账号绑定
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_057");
                 intent = new Intent(UIUtils.getContext(),
                         PersonalCenter_BindingThreeWayAccountActivity.class);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.btn_quit:
                 // 登出
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_058");
                 if ("-1".equals(StringUtils.getUid())) {
                     return;
                 }
-                HttpUserApi.getInstance().logout(StringUtils.getUid(), StringUtils.getUsername(), StringUtils.getPassword(), StringUtils.getThirdSource());
+                CustomDialog customDialog = new CustomDialog(
+                        PersonalCenter_InformationActivity.this,
+                        UIUtils.getString(R.string.confirm),
+                        UIUtils.getString(R.string.label_cancel),
+                        getString(R.string.dialog_show_quit_login));
+                customDialog.setOnClickListener(
+                        new IOnClickListener() {
+                            @Override
+                            public void oncClick(boolean isOk) {
+                                if (isOk) {
+                                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_059");
+                                    HttpUserApi.getInstance().logout(
+                                            StringUtils.getUid(),
+                                            StringUtils.getUsername(),
+                                            StringUtils.getPassword(),
+                                            StringUtils.getThirdSource()
+                                    );
+                                }else{
+                                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_060");
+                                }
+                            }
+                        });
                 break;
             default:
                 break;
@@ -700,20 +712,7 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
     @Override
     public void onRefreshEvent(ClassEvent<Object> event) {
         super.onRefreshEvent(event);
-        if (DataManager.UPLOAD_PHOTO_DATA == event.getType()) {                         //上传图片返回数据
-//            PictureWrite pictureWrite = (PictureWrite) event.getData();
-//            if (pictureWrite != null
-//                    && pictureWrite.getResult() != null
-//                    && pictureWrite.getResult().getPic_id() != null) {                  //拼接图片地址
-//                headUrl = CommonUtil.jointHeadUrl(UrlUtils.PHOTO_LOAD_DOMAIN_NAME
-//                        + pictureWrite.getResult().getPic_id(), 350, 350);
-//                if ("-1".equals(StringUtils.getUid())) {
-//                    return;
-//                }
-//                HttpPhotoApi.getInstance().saveUploadPhotoUrl(StringUtils.getUid(),
-//                        StringUtils.getUsername(), StringUtils.getPassword(), StringUtils.getThirdSource(), headUrl);                 //保存图片地址
-//            }
-        } else if (DataManager.SAVE_PHOTO_URL == event.getType()) {                        //保存图片地址返回数据
+        if (DataManager.SAVE_PHOTO_URL == event.getType()) {                        //保存图片地址返回数据
             if (StringUtils.isNotNullString(headUrl)) {                               //根据头像地址加载图像
                 if (!destroyFlag) {
                     Glide.with(this)
@@ -738,7 +737,7 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
         } else if (DataManager.LOGOUT_DATA == event.getType()) {                           //注销返回数据
             BaseEntity bean = (BaseEntity) event.data;
             UIUtils.showToastSafe(bean.getMsg());
-            CountControl.getInstance().loginOut(false);
+            CountControl.getInstance().loginOut();
             SharedPreferencesUtils.clearData();
             EjuPaySDKUtil.isInitSuccess = false;
             onBackPressed();

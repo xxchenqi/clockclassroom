@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioButton;
@@ -12,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.HttpHandler;
@@ -19,6 +21,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseFragmentActivity;
 import com.yiju.ClassClockRoom.bean.VersionBean;
@@ -26,11 +29,14 @@ import com.yiju.ClassClockRoom.common.constant.RequestCodeConstant;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
 import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.FragmentFactory;
+import com.yiju.ClassClockRoom.control.map.LocationSingle;
 import com.yiju.ClassClockRoom.fragment.BaseFragment;
 import com.yiju.ClassClockRoom.fragment.ExperienceClassFragment;
 import com.yiju.ClassClockRoom.fragment.IndexFragment;
 import com.yiju.ClassClockRoom.fragment.ThemeTemplateFragment;
 import com.yiju.ClassClockRoom.util.GsonTools;
+import com.yiju.ClassClockRoom.util.PermissionsChecker;
+import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.dialog.VersionUpdateDialog;
@@ -64,32 +70,32 @@ public class MainActivity extends BaseFragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (PermissionsChecker.checkPermission(PermissionsChecker.LOCATION_PERMISSIONS)) {
+            //缺少权限,请求打开权限
+            PermissionsChecker.requestPermissions(this, PermissionsChecker.LOCATION_PERMISSIONS);
+        } else {
+            BDLocation bdLocation = LocationSingle.getInstance().getCurrentLocation();
+            if (bdLocation != null) {
+                StringUtils.setLat(bdLocation.getLatitude() + "");
+                StringUtils.setLng(bdLocation.getLongitude() + "");
+            } else {
+                LocationSingle.getInstance().init(UIUtils.getContext(), !SplashActivity.isLocationInit,
+                        new LocationSingle.ILocationRunnable() {
+                            @Override
+                            public void locationResult(BDLocation bdLocation) {
+                                if (bdLocation != null) {
+                                    StringUtils.setLat(bdLocation.getLatitude() + "");
+                                    StringUtils.setLng(bdLocation.getLongitude() + "");
+                                }
+                            }
+                        });
+            }
+        }
         initIntent();
         rbs = (RadioGroup) findViewById(R.id.rbs_fragment);
         initFragments();
         initProgressDialog();
         getHttpUtils();
-//        switch (BaseApplication.FORMAL_ENVIRONMENT) {
-//            case 1:
-//            case 2:
-//                PgyUpdateManager.register(this);
-//                break;
-//            case 3:
-//                break;
-//        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-//        switch (BaseApplication.FORMAL_ENVIRONMENT) {
-//            case 1:
-//            case 2:
-//                PgyUpdateManager.unregister();
-//                break;
-//            case 3:
-//                break;
-//        }
     }
 
     private void initIntent() {
@@ -156,12 +162,15 @@ public class MainActivity extends BaseFragmentActivity implements
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_index:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_001");
                 changeFragment(FragmentFactory.TAB_INDEX);
                 break;
             case R.id.rb_course:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_002");
                 changeFragment(FragmentFactory.TAB_THEME);
                 break;
             case R.id.rb_find:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_003");
                 changeFragment(FragmentFactory.TAB_EXPERIENCE);
                 break;
         }
@@ -368,5 +377,25 @@ public class MainActivity extends BaseFragmentActivity implements
         //关掉首页时要把所有页面全部销毁
         super.onDestroy();
         ActivityControlManager.getInstance().finishAllActivity();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionsChecker.REQUEST_EXTERNAL_STORAGE
+                && PermissionsChecker.hasAllPermissionsGranted(grantResults)) {
+            LocationSingle.getInstance().init(UIUtils.getContext(), SplashActivity.isLocationInit,
+                    new LocationSingle.ILocationRunnable() {
+                        @Override
+                        public void locationResult(BDLocation bdLocation) {
+                            if (bdLocation != null) {
+                                StringUtils.setLat(bdLocation.getLatitude() + "");
+                                StringUtils.setLng(bdLocation.getLongitude() + "");
+                            }
+                        }
+                    }
+            );
+        } else {
+            UIUtils.showToastSafe(UIUtils.getString(R.string.toast_open_location));
+        }
     }
 }

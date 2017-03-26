@@ -21,6 +21,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.AddInvoiceContactBean;
@@ -302,9 +303,11 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_155");
                 finish();
                 break;
             case R.id.head_right_relative://保存
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_156");
                 // 保存发票类型
                 SharedPreferencesUtils.saveString(this,
                         getResources().getString(R.string.shared_invoice_type) + uid,
@@ -347,9 +350,11 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                 startActivityForResult(intent_modify, 0);
                 break;
             case R.id.ll_invoice_type://发票类型
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_157");
                 typeDialog.createView();
                 break;
             case R.id.ll_invoice_head://发票抬头
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_158");
                 headDialog.createView();
                 break;
 
@@ -361,6 +366,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
         dialog.dismiss();
         switch (view.getId()) {
             case R.id.tv_personal://个人
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_163");
                 invoice_head = "个人";
                 companyName = "个人";
                 ll_company_name.setVisibility(View.GONE);
@@ -369,6 +375,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                 changeStatus(true);
                 break;
             case R.id.tv_company://公司
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_164");
                 invoice_head = "公司";
                 ll_company_name.setVisibility(View.VISIBLE);
                 tv_head_desc.setText("公司");
@@ -382,6 +389,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                 }
                 break;
             case R.id.tv_paper://纸质
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_159");
                 typeid = 1;
                 //发票领取方式
                 tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));
@@ -412,6 +420,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
 
                 break;
             case R.id.tv_electron://电子
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_160");
                 typeid = 2;
                 //发票领取方式
                 tv_invoice_info.setText(UIUtils.getString(R.string.invoice_content_info));
@@ -441,6 +450,7 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                 }
                 break;
             case R.id.tv_special://专用
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_161");
                 if (click == 0) {
                     UIUtils.showLongToastSafe(getString(R.string.toast_special_invoice));
                     click++;
@@ -465,6 +475,12 @@ public class WriteInvoiceInformationActivity extends BaseActivity implements Vie
                     //不可点击保存
                     changeStatus(false);
                 }
+                break;
+            case R.id.tv_head_cancel://抬头取消
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_165");
+                break;
+            case R.id.tv_cancel://类型取消
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_162");
                 break;
 
         }

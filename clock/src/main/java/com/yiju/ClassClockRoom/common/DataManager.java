@@ -2,7 +2,6 @@ package com.yiju.ClassClockRoom.common;
 
 import com.yiju.ClassClockRoom.bean.AccompanyRead;
 import com.yiju.ClassClockRoom.bean.HotSearch;
-import com.yiju.ClassClockRoom.bean.PictureWrite;
 import com.yiju.ClassClockRoom.bean.PushBean;
 import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.bean.result.MemberDetailResult;
@@ -168,13 +167,8 @@ public class DataManager {
     }
 
     //上传的图片信息
-    public static final int UPLOAD_PHOTO_DATA = 4;
-    private PictureWrite _pictureWrite;
-
-    public void uploadPhoto(PictureWrite pictureWrite) {
-        this._pictureWrite = pictureWrite;
-        EventBus.getDefault().post(new ClassEvent<>(UPLOAD_PHOTO_DATA, _pictureWrite));
-    }
+//    public static final int UPLOAD_PHOTO_DATA = 4;
+//    private PictureWrite _pictureWrite;
 
 
     //存储图片链接

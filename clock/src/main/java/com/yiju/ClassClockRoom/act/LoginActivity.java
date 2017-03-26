@@ -529,7 +529,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
     }
 
     private void processData(String result) {
-        UserInfo userInfo = GsonTools.fromJson(result, UserInfo.class);
+        UserInfo userInfo = GsonTools.changeGsonToBean(result, UserInfo.class);
         if(userInfo==null){
             return;
         }
@@ -762,8 +762,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                     ActivityControlManager.getInstance().finishCurrentAndOpenOther(this, intent);
                 } else if (path.equals(UIUtils.getString(R.string.scheme_mine_discount_coupon_path))) {
                     ActivityControlManager.getInstance().finishCurrentAndOpenOther(this, PersonalCenter_CouponListActivity.class);
-                } else if (path.equals(UIUtils.getString(R.string.scheme_mine_attention_path))) {//我的关注
-                    ActivityControlManager.getInstance().finishCurrentAndOpenOther(this, MineWatchlistActivity.class);
                 } else if (path.equals(UIUtils.getString(R.string.scheme_remind_set_path))) {//提醒设置
                     ActivityControlManager.getInstance().finishCurrentAndOpenOther(this, RemindSetActivity.class);
                 } else {//默认

@@ -99,10 +99,7 @@ public class DateUtil {
             if (date2b.compareTo(date1e) * date2e.compareTo(date1b) > 0)
                 return false;
             else {// 判断是否是时间交接点:08:00-12:00 12:00-15:00
-                if (date2b.equals(date1e) || date2e.equals(date1b)) {
-                    return false;
-                } else
-                    return true;
+                return !(date2b.equals(date1e) || date2e.equals(date1b));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +115,7 @@ public class DateUtil {
      * @return str
      */
     public static String getDateAndWeek(String timestamp) {
-        String result = "";
+        String result;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         long lt = Long.valueOf(timestamp + "000");
         Date date = new Date(lt);
@@ -165,11 +162,11 @@ public class DateUtil {
             } else {
                 if (hour > 0) {
                     // 显示xx小时前
-                    sb.append(hour + "小时前");
+                    sb.append(hour).append("小时前");
                 } else {
                     // 显示xx分钟前
                     if (min > 0) {
-                        sb.append(min + "分钟前");
+                        sb.append(min).append("分钟前");
                     }else{
                         sb.append("1分钟前");
                     }
@@ -199,4 +196,16 @@ public class DateUtil {
         return date;
     }
 
+    /**
+     * 时间转化
+     * @param str
+     * @return
+     */
+    public static String changeTimeCourseTimes(String str){
+        str+="000";
+        SimpleDateFormat format =  new SimpleDateFormat("MM月dd日  HH:mm",Locale.CHINA);
+        Long time=Long.valueOf(str);
+        String d = format.format(time);
+        return d;
+    }
 }

@@ -3,7 +3,6 @@ package com.yiju.ClassClockRoom.util.net;
 import com.yiju.ClassClockRoom.BaseApplication;
 
 public class UrlUtils {
-    //TODO 准备修改
     // 测试地址为: http://172.28.70.47
     // 正式地址为: http://api.51shizhong.com
     // JAVA测试地址:http://172.28.70.47:8102
@@ -47,7 +46,7 @@ public class UrlUtils {
     }
 
     public static final String API_VERSION = "api_v9";
-    //    public static final String API_VERSION = "api_develop";//api_develop(测试环境打包时使用)
+    public static final String H5_VERSION = "h5_v11";
 
     /**
      * 以下url固定不变
@@ -55,11 +54,6 @@ public class UrlUtils {
     // 迁移接口
     public static String REMOVAL_API = "http://101.231.84.177/weburl.html";
     //==========================okhttp使用的参数========================================
-    //图片查阅域名
-//    public static final String PHOTO_LOAD_DOMAIN_NAME = "http://get.file.dc.cric.com/";
-    public static final String PHOTO_LOAD_DOMAIN_NAME = "http://szjs.essintra.ejucloud.cn/";
-    // 上传图片接口
-    public static final String UPLOAD_PHOTO = "FileWriterInner.php";
     // 用户相关接口
     public static final String SERVER_USER_ABOUT_API = UrlUtils.API_VERSION + "/user_api.php";
 
@@ -227,7 +221,7 @@ public class UrlUtils {
     public static void changeUrl(String BASE_URL, String WEB_BASE_URL, String EJU_PAY_URL, String JAVA_URL, String BASE_PIC_WRITE) {
         PIC_WIRTE = BASE_PIC_WRITE + "FileWriterInner.php";
         TEST_BASE_URL = BASE_URL + "/" + API_VERSION;
-        H5_BASE_URL = WEB_BASE_URL + "/h5_v10";
+        H5_BASE_URL = WEB_BASE_URL + "/" + H5_VERSION;
         SERVER_INDEX_NEW = JAVA_URL + "/dubboServiceConsumer/v2.6/school/findSchool.action?";
         SERVER_RESERVATION = TEST_BASE_URL + "/schedule_api.php?";
         SERVER_COMMIT_CART = TEST_BASE_URL + "/order_api.php";

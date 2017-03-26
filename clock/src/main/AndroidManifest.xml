@@ -336,9 +336,6 @@
             android:name=".act.InvoiceRecordsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".act.MineWatchlistActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".act.PersonMineCourseActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -421,7 +418,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".act.NewCourseDetailActivity"
+            android:name=".act.FormalCourseDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.CourseCommitActivity"
@@ -455,6 +452,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.ClassroomPayResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".act.ExperienceCourseDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 微信 -->
         <activity
@@ -603,7 +603,7 @@
 
         <provider
             android:name="com.igexin.download.DownloadProvider"
-            android:authorities="downloads.com.yiju.ClassClockRoom"
+            android:authorities="downloads.${applicationId}"
             android:exported="true"
             android:process=":pushservice" />
 

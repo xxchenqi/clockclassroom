@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.bean.ReservationBean.ReservationDevice;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -73,6 +74,7 @@ public class DeviceTypeAdapter extends BaseAdapter {
         rl_item_reduce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_224");
                 reduceCount(iv_item_reduce, iv_item_add, et_item_device);
                 data.setCount(Integer.valueOf(et_item_device.getText().toString()));
                 changePrice();
@@ -81,8 +83,10 @@ public class DeviceTypeAdapter extends BaseAdapter {
         rl_item_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_223");
                 addCount(iv_item_reduce, iv_item_add, et_item_device, Integer.valueOf(data.getStock()));
                 data.setCount(Integer.valueOf(et_item_device.getText().toString()));
+
                 changePrice();
             }
         });

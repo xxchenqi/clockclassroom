@@ -62,18 +62,23 @@ public class MoreStoreAdapter extends CommonBaseAdapter<MoreStoreEntity> {
                         UIUtils.getString(R.string.txt_address_before),
                         moreStoreEntity.getAddress()
                 ));
-        if (moreStoreEntity.getDistances() >= 1) {
-            tv_item_index_store_distance.setText(
-                    String.format(
-                            UIUtils.getString(R.string.txt_more_store_diatance),
-                            moreStoreEntity.getDistances()
-                    ));
+        if (moreStoreEntity.getDistances() == 0) {
+            tv_item_index_store_distance.setVisibility(View.GONE);
         } else {
-            tv_item_index_store_distance.setText(
-                    String.format(
-                            UIUtils.getString(R.string.txt_more_store_distance_m),
-                            moreStoreEntity.getDistances() * 1000
-                    ));
+            tv_item_index_store_distance.setVisibility(View.VISIBLE);
+            if (moreStoreEntity.getDistances() >= 1) {
+                tv_item_index_store_distance.setText(
+                        String.format(
+                                UIUtils.getString(R.string.txt_more_store_diatance),
+                                moreStoreEntity.getDistances()
+                        ));
+            } else {
+                tv_item_index_store_distance.setText(
+                        String.format(
+                                UIUtils.getString(R.string.txt_more_store_distance_m),
+                                moreStoreEntity.getDistances() * 1000
+                        ));
+            }
         }
         Glide.with(UIUtils.getContext())
                 .load(moreStoreEntity.getPic_small())

@@ -3,6 +3,7 @@ package com.yiju.ClassClockRoom.act;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
@@ -140,8 +142,8 @@ public class IndexDetailActivity extends BaseActivity implements
         btn_no_wifi_refresh.setOnClickListener(this);
         btn_broken_refresh.setOnClickListener(this);
 
-        lng = UIUtils.getLng();
-        lat = UIUtils.getLat();
+        lng = StringUtils.getLng();
+        lat = StringUtils.getLat();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -234,7 +236,8 @@ public class IndexDetailActivity extends BaseActivity implements
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (title.contains("404")) {
+                if (!TextUtils.isEmpty(title) &&
+                        (title.toLowerCase().contains("error") || title.contains("404"))) {
                     view.stopLoading();
                     ly_broken_fail.setVisibility(View.VISIBLE);
                 }
@@ -244,6 +247,7 @@ public class IndexDetailActivity extends BaseActivity implements
         netWebViewClient.setiWebViewHandleError(new NetWebViewClient.IWebViewHandleError() {
             @Override
             public void handleWebViewError() {
+                wv_room_detail.setVisibility(View.GONE);
                 ly_broken_fail.setVisibility(View.VISIBLE);
             }
         });
@@ -286,7 +290,7 @@ public class IndexDetailActivity extends BaseActivity implements
 //                intent.putExtra("room_end_time", room_end_time);
 //                intent.putExtra("room_name", room_name);//desc: "大间课室(有窗)",
 //                startActivity(intent);
-
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_207");
                 Intent intent = new Intent(this, ReservationActivity.class);
                 intent.putExtra(ExtraControl.EXTRA_SID, sid);
                 intent.putExtra(ExtraControl.EXTRA_TYPE_ID, typeid);

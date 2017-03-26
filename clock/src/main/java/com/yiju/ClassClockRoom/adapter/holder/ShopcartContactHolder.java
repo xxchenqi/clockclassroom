@@ -7,6 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.EditContactActivity;
 import com.yiju.ClassClockRoom.BaseApplication;
@@ -43,6 +44,7 @@ public class ShopcartContactHolder extends BaseHolder<Data> {
             @Override
             public void onClick(View v) {
                 // 修改联系人
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_230");
                 Intent intent = new Intent(context, EditContactActivity.class);
                 intent.putExtra("data", info);
                 intent.putExtra("flag", "edit");
@@ -72,7 +74,7 @@ public class ShopcartContactHolder extends BaseHolder<Data> {
             } else {
                 tv_contact_name.setText(info.getName());
                 tv_contact_name.setTextColor(UIUtils
-                        .getColor(R.color.color_gay_8f));
+                        .getColor(R.color.color_black_33));
                 tv_contact_phone.setText(info.getMobile());
                 tv_contact_phone.setTextColor(UIUtils
                         .getColor(R.color.color_gay_8f));
@@ -84,7 +86,7 @@ public class ShopcartContactHolder extends BaseHolder<Data> {
                 tv_contact_phone.setTextColor(UIUtils.getColor(R.color.app_theme_color));
             } else {
                 iv_contact_choose.setVisibility(View.GONE);
-                tv_contact_name.setTextColor(UIUtils.getColor(R.color.color_gay_8f));
+                tv_contact_name.setTextColor(UIUtils.getColor(R.color.color_black_33));
                 tv_contact_phone.setTextColor(UIUtils.getColor(R.color.color_gay_8f));
             }
         }

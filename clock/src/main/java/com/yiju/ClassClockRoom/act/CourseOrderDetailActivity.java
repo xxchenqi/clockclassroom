@@ -21,6 +21,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.CourseOrderDetailBean;
@@ -29,12 +30,16 @@ import com.yiju.ClassClockRoom.bean.OrderCourseResult;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
+import com.yiju.ClassClockRoom.util.MD5;
 import com.yiju.ClassClockRoom.util.PermissionsChecker;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.dialog.CustomDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -163,6 +168,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
     private String sname;
     private String course_id;
     private CourseOrderDetailBean.DataEntity data;
+    private String pay_method;
 
     @Override
     public void initIntent() {
@@ -256,7 +262,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                 tv_course_price_should.setText(String.format(
                         UIUtils.getString(R.string.how_much_money), data.getReal_fee()));
             }
-
+            pay_method = data.getPay_method();
             switch (Integer.valueOf(data.getStatus())) {
                 case 0://未支付
                     tv_tip.setVisibility(View.VISIBLE);
@@ -370,29 +376,91 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_131");
                 onBackPressed();
                 break;
             case R.id.ll_course_detial_store://门店
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_132");
                 Intent intent = new Intent(UIUtils.getContext(), StoreDetailActivity.class);
                 intent.putExtra(ExtraControl.EXTRA_STORE_ID, data.getSid());
                 UIUtils.startActivity(intent);
                 break;
             case R.id.ll_course://课程
-                Intent intentCourse = new Intent(UIUtils.getContext(), NewCourseDetailActivity.class);
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_133");
+                Intent intentCourse;
+                if (data == null) {
+                    return;
+                }
+                if ("1".equals(data.getCtype())) {
+                    //体验课
+                    intentCourse = new Intent(UIUtils.getContext(), ExperienceCourseDetailActivity.class);
+                } else {
+                    //正式课
+                    intentCourse = new Intent(UIUtils.getContext(), FormalCourseDetailActivity.class);
+                }
                 intentCourse.putExtra(ExtraControl.EXTRA_COURSE_ID, course_id);
                 UIUtils.startActivity(intentCourse);
                 break;
             case R.id.tv_pay_order://立即支付
-                getRequestCreateOrder();
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_136");
+                if ("6".equals(pay_method)) {
+                    getRequestCreateOrder();
+                } else {
+                    //切换支付方式
+                    changePayWayH5();
+                }
                 break;
             case R.id.tv_close_order://删除订单和取消订单操作
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_135");
                 cancelOrder();
                 break;
             //删除订单
             case R.id.tv_change_order:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_134");
                 deleteOrder();
                 break;
         }
+    }
+
+    private void changePayWayH5() {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "update_pay_method");
+        params.addBodyParameter("order_id", oid);
+        params.addBodyParameter("pay_method", "6");
+        try {
+            String sign = MD5.md5(oid + "|6");
+            params.addBodyParameter("sign", sign);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        httpUtils.send(HttpRequest.HttpMethod.POST,
+                UrlUtils.SERVER_API_PAY, params,
+                new RequestCallBack<String>() {
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        // 请求网络失败
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+
+                        JSONObject json;
+                        try {
+                            json = new JSONObject(arg0.result);
+                            String code = json.getString("code");
+                            if ("1".equals(code)) {
+                                getRequestCreateOrder();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
     }
 
     /**
@@ -454,6 +522,9 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                             intent.putExtra(ExtraControl.EXTRA_ENTRANCE, SignUpResultActivity.ENTRANCE_DETAIL);
                             //订单id
                             intent.putExtra(ExtraControl.EXTRA_ORDER_ONE_ID, data.getId());
+                            if ("1".equals(data.getCtype())) {//课次
+                                intent.putExtra(ExtraControl.EXTRA_CLASS_TIMES, data.getCourse_str());
+                            }
                             if (code == EjuPayResultCode.PAY_SUCCESS_CODE.getCode()) {
                                 //支付成功
                                 intent.putExtra(ExtraControl.EXTRA_PAY_STATUS, ExtraControl.EXTRA_PAY_SUCCESS);

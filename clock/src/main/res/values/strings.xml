@@ -68,7 +68,7 @@
 
 
     <string name="desc">~</string>
-    <string name="app_name">时钟教室</string>
+    <!--<string name="app_name">时钟教室</string>-->
     <string name="lable_teacher">老师</string>
     <string name="course">课程</string>
     <string name="course_zhuan">专题</string>
@@ -110,6 +110,7 @@
     <string name="sign_up_success">报名成功</string>
     <string name="sign_up_fail">报名失败</string>
     <string name="invoice_price">发票金额</string>
+    <string name="choose_course_times">选择课次</string>
 
     <!--动画传值-->
     <string name="image_transition">image_transition</string>
@@ -1110,7 +1111,7 @@
     <string name="txt_default_amout">2000</string>
     <string name="txt_invoice_records_tips">纸质发票可在订单支付完成5&#8211;10个工作日后至对应门店前台领取</string>
     <string name="txt_amout">%s元</string>
-    <string name="course_over_info">课程已结束，下次请赶早哦</string>
+    <string name="course_over_info">报名已结束，下次请赶早哦</string>
     <string name="write_comment_info">写评论&#8230;</string>
     <string name="write_comment">写评论</string>
     <string name="none_comment_info">暂时还没有评论，快来抢沙发吧!</string>
@@ -1162,6 +1163,7 @@
     <string name="format_order_phone_tip">发票信息请咨询门店前台，电话：%s</string>
     <string name="format_course_people_num">招生人数：%s</string>
     <string name="format_course_has_people_num">已报名人数：%s</string>
+    <string name="format_pic_size">1/%s</string>
     <string name="txt_no_new_message">没有新消息哦</string>
     <string name="format_amount_add">+%s</string>
     <string name="to_reserve_the_classroom">去预订课室</string>
@@ -1176,4 +1178,12 @@
     <string name="hint_set_pwd_again">确认密码</string>
     <string name="toast_show_close_success">关闭成功</string>
     <string name="toast_show_delete_success">删除成功</string>
+    <string name="dialog_show_quit_login">确定要退出登录吗?</string>
+
+    <string name="no_more">没有更多了</string>
+    <string name="work_day">(08:30–20:30,仅工作日)</string>
+    <string name="text_near_store">附近门店</string>
+    <string name="text_all">全部</string>
+    <string name="order_content">订单备注</string>
+    <string name="no_order_content">暂无备注</string>
 </resources>

@@ -13,10 +13,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
@@ -243,6 +245,16 @@ public class ShareDialog implements OnClickListener {
             }
         }
 
+        accompany_pwd_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_116");
+                }else{
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_117");
+                }
+            }
+        });
     }
 
     public void showDialog() {
@@ -297,6 +309,7 @@ public class ShareDialog implements OnClickListener {
                 dialog.dismiss();
                 break;*/
             case R.id.share_cancel:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_118");
                 dialog.dismiss();
                 break;
             default:

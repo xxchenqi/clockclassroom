@@ -12,6 +12,9 @@ import com.yiju.ClassClockRoom.util.ui.ImageUtil;
 
 import java.io.File;
 
+import static com.yiju.ClassClockRoom.control.camera.CameraImage.tempFile;
+import static com.yiju.ClassClockRoom.control.camera.CameraImage.uri_tempFile;
+
 
 /**
  * 相机返回处理类
@@ -42,12 +45,13 @@ public class ResultCameraHandler {
 
     /**
      * 获得照片文件
-     * @param mActivity ac
-     * @param data d
-     * @param requestCode   请求码
-     * @param resultCode    返回码
-     * @param cameraImage   相机操作类
-     * @param cameraResult  回调接口
+     *
+     * @param mActivity    ac
+     * @param data         d
+     * @param requestCode  请求码
+     * @param resultCode   返回码
+     * @param cameraImage  相机操作类
+     * @param cameraResult 回调接口
      */
     public void getPhotoFile(Activity mActivity, Intent data, int requestCode,
                              int resultCode, CameraImage cameraImage, CameraResult cameraResult) {
@@ -59,8 +63,8 @@ public class ResultCameraHandler {
             uriFile = data.getData();
         }
         if (uriFile == null) {
-            if (CameraImage.tempFile != null) {
-                uriFile = Uri.fromFile(CameraImage.tempFile);
+            if (uri_tempFile != null) {
+                uriFile = uri_tempFile;
             }
         }
         if (uriFile != null) {
@@ -69,11 +73,13 @@ public class ResultCameraHandler {
                     if (isCrop) {
                         cameraImage.crop(uriFile, widthCrop, heightCrop);
                     } else {
-                        cameraResult.result(ImageUtil.zoomFileXY(CameraImage.tempFile, widthScreen, heightScreen));
+                        cameraResult.result(ImageUtil.zoomFileXY(new File(tempFile), widthScreen, heightScreen));
                     }
                     break;
                 case CameraImage.PHOTO_REQUEST_CUT: // 剪切完毕
-                    cameraResult.result(CameraImage.tempFile);
+//                    cameraResult.result(CameraImage.tempFile);
+                    cameraResult.result(new File(tempFile));
+
                     break;
                 case CameraImage.PHOTO_REQUEST_GALLERY: // 相册
                     dataHandler(mActivity, isCrop, cameraImage,
@@ -86,12 +92,11 @@ public class ResultCameraHandler {
     }
 
     /**
-     *
-     * @param mActivity ac
-     * @param isCrop        是否裁剪
-     * @param cameraImage   相机操作类
-     * @param cameraResult  回调接口
-     * @param uriFile       文件地址
+     * @param mActivity    ac
+     * @param isCrop       是否裁剪
+     * @param cameraImage  相机操作类
+     * @param cameraResult 回调接口
+     * @param uriFile      文件地址
      */
     private void dataHandler(Activity mActivity, boolean isCrop,
                              CameraImage cameraImage,
@@ -112,7 +117,8 @@ public class ResultCameraHandler {
     }
 
     /**
-     *  设置是否裁剪
+     * 设置是否裁剪
+     *
      * @param isCrop b
      */
     public ResultCameraHandler setCrop(boolean isCrop) {

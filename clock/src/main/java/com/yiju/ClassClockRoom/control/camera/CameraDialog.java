@@ -10,8 +10,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.util.CommonUtil;
+import com.yiju.ClassClockRoom.util.UIUtils;
 
 
 /**
@@ -71,6 +73,7 @@ public class CameraDialog implements OnClickListener {
         switch (view.getId()) {
             case R.id.btn_take_photo:
                 // 拍照
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_061");
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -79,6 +82,7 @@ public class CameraDialog implements OnClickListener {
                 }
                 break;
             case R.id.btn_pick_photo:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_062");
                 // 照片
                 if (dialog != null) {
                     dialog.dismiss();
@@ -88,6 +92,7 @@ public class CameraDialog implements OnClickListener {
                 }
                 break;
             case R.id.btn_photo_cancel:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_063");
                 // 取消
                 if (dialog != null) {
                     dialog.dismiss();

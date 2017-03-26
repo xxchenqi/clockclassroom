@@ -338,7 +338,7 @@
                     <TextView
                         android:id="@+id/tv_add_classroom"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/DIMEN_35DP"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/DIMEN_10DP"
                         android:layout_marginTop="@dimen/DIMEN_10DP"
                         android:gravity="center_vertical"
@@ -362,9 +362,10 @@
                         android:orientation="vertical" />-->
 
                     <TextView
+                        android:layout_marginTop="@dimen/DIMEN_22DP"
                         android:id="@+id/tv_cancel_classroom"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/DIMEN_35DP"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/DIMEN_10DP"
                         android:gravity="center_vertical"
                         android:text="减少日期"
@@ -656,7 +657,7 @@
                     android:layout_marginLeft="@dimen/DIMEN_10DP"
                     android:text="温馨提示：到店需另付押金"
                     android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_16DP"
+                    android:textSize="@dimen/DIMEN_12DP"
                     tools:ignore="HardcodedText" />
 
                 <ImageView

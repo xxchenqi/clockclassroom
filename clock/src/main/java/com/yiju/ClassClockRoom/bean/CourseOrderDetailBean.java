@@ -81,6 +81,16 @@ public class CourseOrderDetailBean {
         private String course_str;
         private String course_id;
         private String pay_name;
+        private String pay_method;
+
+        public String getPay_method() {
+            return pay_method;
+        }
+
+        public void setPay_method(String pay_method) {
+            this.pay_method = pay_method;
+        }
+
         private String receipt_no_pay;
         private String pic;
         private String sid;

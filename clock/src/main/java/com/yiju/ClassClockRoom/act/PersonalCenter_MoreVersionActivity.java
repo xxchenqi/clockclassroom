@@ -21,6 +21,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.ShareBean;
@@ -114,9 +115,11 @@ public class PersonalCenter_MoreVersionActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_182");
                 this.finish();
                 break;
             case R.id.rl_app_feedback:// 用户意见反馈窗口
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_183");
                 ShareBean bean = new ShareBean();
                 bean.setTitle("");
                 bean.setContent(getString(R.string.content_feed_back));
@@ -126,6 +129,7 @@ public class PersonalCenter_MoreVersionActivity extends BaseActivity implements
                 break;
             case R.id.rl_app_version_check:
                 // 检测APP版本
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_185");
                 getHttpUtils();
                 break;
             default:

@@ -13,9 +13,10 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
+import com.yiju.ClassClockRoom.act.ExperienceCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.GuideActivity;
 import com.yiju.ClassClockRoom.act.MainActivity;
-import com.yiju.ClassClockRoom.act.NewCourseDetailActivity;
+import com.yiju.ClassClockRoom.act.FormalCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.SplashActivity;
 import com.yiju.ClassClockRoom.act.SupplierDetailActivity;
 import com.yiju.ClassClockRoom.act.ThemeWebAboutActivity;
@@ -178,7 +179,12 @@ public class HttpRemovalApi extends BaseSingleton {
                                 break;
                             case 5:
                                 //课程
-                                intent = new Intent(UIUtils.getContext(), NewCourseDetailActivity.class);
+                                //1是体验课 0 是正式课
+                                if("1".equals(splashResult.getObj().getCtype())){
+                                    intent = new Intent(UIUtils.getContext(), ExperienceCourseDetailActivity.class);
+                                }else{
+                                    intent = new Intent(UIUtils.getContext(), FormalCourseDetailActivity.class);
+                                }
                                 intent.putExtra(ExtraControl.EXTRA_COURSE_ID, splashResult.getObj().getTeacher_id() + "");
                                 UIUtils.startActivity(intent);
                                 break;

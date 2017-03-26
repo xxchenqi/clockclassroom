@@ -95,10 +95,13 @@
     <!-- 透明黑 -->
     <color name="color_lucency_white">#40ffffff</color>
     <color name="color_lucency_black">#e0000000</color>
+    <!-- 透明灰 -->
+    <color name="color_lucency_gray">#66eeeeee</color>
 
     <color name="color_gay_7d">#7d7d7d</color>
     <color name="color_gay_eb">#ebebeb</color>
     <color name="color_gay_aa">#aaaaaa</color>
+    <color name="color_gay_fa">#fafafa</color>
     <color name="color_80000000">#80000000</color>
     <color name="color_fe">#fefcef</color>
     <color name="orange">#f06000</color>

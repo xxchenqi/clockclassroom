@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.ClassroomAdapter;
@@ -421,6 +422,7 @@ public class ClassroomDetailActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_classroom_back_order://退单
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_114");
 //                if (!"0".equals(course_id)) {
 //                    UIUtils.showToastSafe("已关联课程的课室不可进行退单，需要取消课程发布方可进行退单");
 //                }else{
@@ -464,6 +466,7 @@ public class ClassroomDetailActivity extends BaseActivity implements
 //                }
                 break;
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_113");
                 finish();
                 break;
             default:

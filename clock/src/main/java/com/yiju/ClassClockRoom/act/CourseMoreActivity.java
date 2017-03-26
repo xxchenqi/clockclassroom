@@ -325,7 +325,7 @@ public class CourseMoreActivity extends BaseActivity implements View.OnClickList
         Object o = mCourseLists.get(position - 1);
         if (o instanceof CourseInfo) {
             CourseInfo courseInfo = (CourseInfo) o;
-            Intent intent = new Intent(UIUtils.getContext(), NewCourseDetailActivity.class);
+            Intent intent = new Intent(UIUtils.getContext(), FormalCourseDetailActivity.class);
             intent.putExtra(ExtraControl.EXTRA_COURSE_ID, courseInfo.getId());
             UIUtils.startActivity(intent);
         }

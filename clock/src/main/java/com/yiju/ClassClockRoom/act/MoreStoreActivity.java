@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -27,7 +28,6 @@ import com.yiju.ClassClockRoom.bean.SchoolAll;
 import com.yiju.ClassClockRoom.bean.SchoolLeft;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
 import com.yiju.ClassClockRoom.control.ExtraControl;
-import com.yiju.ClassClockRoom.fragment.IndexFragment;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -96,11 +96,18 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
     private boolean is_down_refresh = true;
     //pop
     private MoreStorePopUpWindow popUpWindow;
+    private View footView;
 
     @Override
     protected void initView() {
         /*lng_g = LocationSingle.getInstance().getLongitude();
         lat_g = LocationSingle.getInstance().getLatitude();*/
+        footView = View.inflate(UIUtils.getContext(), R.layout.include_no_more, null);
+        footView.setVisibility(View.GONE);
+        ListView refreshableView = lv_more_store.getRefreshableView();
+        FrameLayout footerLayoutHolder = new FrameLayout(UIUtils.getContext());
+        footerLayoutHolder.addView(footView);
+        refreshableView.addFooterView(footerLayoutHolder);
     }
 
     @Override
@@ -171,9 +178,10 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
         if (dist_id != null && !"-1".equals(dist_id)) {
             params.addBodyParameter("dist_id", dist_id);
         }
-        if (StringUtils.isNotNullString(IndexFragment.lat) && StringUtils.isNotNullString(IndexFragment.lng)) {
-            params.addBodyParameter("lng_g", IndexFragment.lng);
-            params.addBodyParameter("lat_g", IndexFragment.lat);
+        if (StringUtils.isNotNullString(StringUtils.getLng())
+                && StringUtils.isNotNullString(StringUtils.getLat())) {
+            params.addBodyParameter("lng_g", StringUtils.getLng());
+            params.addBodyParameter("lat_g", StringUtils.getLat());
         }
         params.addBodyParameter("page", page + "");
         params.addBodyParameter("rows", rows);
@@ -210,12 +218,14 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
             if (is_down_refresh) {
                 //是下拉刷新就清除数据
                 datas.clear();
-            }
-            if (moreStoreBean.getObj().size() != 0) {
                 datas.addAll(moreStoreBean.getObj());
                 adapter.notifyDataSetChanged();
-            } else {
+            }
+            if (moreStoreBean.getObj() != null &&
+                    moreStoreBean.getObj().size() > 0 &&
+                    moreStoreBean.getObj().size() < 10) {
                 lv_more_store.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                footView.setVisibility(View.VISIBLE);
             }
             lv_more_store.setVisibility(View.VISIBLE);
             tv_empty_stores.setVisibility(View.GONE);
@@ -226,7 +236,7 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
                 tv_empty_stores.setVisibility(View.VISIBLE);
             } else {
                 lv_more_store.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-                UIUtils.showLongToastSafe(moreStoreBean.getMsg());
+                footView.setVisibility(View.VISIBLE);
             }
         }
     }

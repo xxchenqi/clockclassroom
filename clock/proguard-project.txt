@@ -185,9 +185,6 @@
 -dontwarn android.support.graphics.drawable.**
 -keep class android.support.graphics.drawable.** { *; }
 
--dontwarn com.nineoldandroids.**
--keep class com.nineoldandroids.** { *; }
-
 -dontwarn kankan.wheel.widget.**
 -keep class kankan.wheel.widget.** { *; }
 

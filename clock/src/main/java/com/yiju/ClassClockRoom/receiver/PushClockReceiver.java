@@ -14,6 +14,7 @@ import android.os.Bundle;
 import com.igexin.sdk.PushConsts;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
+import com.yiju.ClassClockRoom.act.CourseOrderDetailActivity;
 import com.yiju.ClassClockRoom.act.MemberDetailActivity;
 import com.yiju.ClassClockRoom.act.MineOrganizationActivity;
 import com.yiju.ClassClockRoom.act.OrderDetailActivity;
@@ -28,7 +29,6 @@ import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.control.SchemeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
-import com.yiju.ClassClockRoom.util.LogUtil;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -359,7 +359,12 @@ public class PushClockReceiver extends BroadcastReceiver {
                     return;
                 }
                 if (bean_skip != null && StringUtils.isNotNullString(bean_skip.getOid())) {
-                    Intent intentOrder = new Intent(context, OrderDetailActivity.class);
+                    Intent intentOrder;
+                    if ("3".equals(bean_skip.getOrder_type())){
+                        intentOrder = new Intent(context, CourseOrderDetailActivity.class);
+                    }else {
+                        intentOrder = new Intent(context, OrderDetailActivity.class);
+                    }
                     intentOrder.putExtra("oid", bean_skip.getOid());
 //                    intentOrder.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     BaseApplication.getmForegroundActivity().startActivity(intentOrder);

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.baidu.location.BDLocation;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.MainActivity;
@@ -28,6 +29,7 @@ import com.yiju.ClassClockRoom.common.NetWebViewClient;
 import com.yiju.ClassClockRoom.control.map.LocationSingle;
 import com.yiju.ClassClockRoom.util.KeyBoardManager;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
+import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 
 public class Search_Result_Activity extends BaseActivity implements
@@ -150,11 +152,13 @@ public class Search_Result_Activity extends BaseActivity implements
 
         switch (v.getId()) {
             case R.id.iv_search_back:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_257");
                 KeyBoardManager.closeInput(this, et_input_keywords);
                 finish();
                 overridePendingTransition(R.anim.anim_xv, R.anim.anim_act_right_out);
                 break;
             case R.id.tv_search_cancel:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_258");
                 KeyBoardManager.closeInput(this, et_input_keywords);
                 et_input_keywords.clearFocus();
                 Intent intent = new Intent(Search_Result_Activity.this, MainActivity.class);

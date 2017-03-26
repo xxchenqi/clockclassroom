@@ -34,6 +34,10 @@ import java.util.regex.Pattern;
 
 public class StringUtils extends BaseSingleton {
 
+    public static String lat = "";
+    public static String lng = "";
+
+
     /**
      * 实例化
      */
@@ -41,6 +45,21 @@ public class StringUtils extends BaseSingleton {
         return getSingleton(StringUtils.class);
     }
 
+    public static String getLat() {
+        return lat;
+    }
+
+    public static void setLat(String lat) {
+        StringUtils.lat = lat;
+    }
+
+    public static String getLng() {
+        return lng;
+    }
+
+    public static void setLng(String lng) {
+        StringUtils.lng = lng;
+    }
 
     /**
      * 判断字符串是 空
@@ -252,7 +271,6 @@ public class StringUtils extends BaseSingleton {
     }
 
 
-
     /**
      * 获取昵称
      */
@@ -269,7 +287,6 @@ public class StringUtils extends BaseSingleton {
         return SharedPreferencesUtils.getString(UIUtils.getContext(),
                 UIUtils.getString(R.string.shared_avatar), "");
     }
-
 
 
     /**
@@ -363,6 +380,25 @@ public class StringUtils extends BaseSingleton {
     }
 
     /**
+     * 距离解析 k或者km
+     *
+     * @param distance 距离字符串
+     * @return
+     */
+    public static String changeDistance(String distance) {
+        if (StringUtils.isNotNullString(distance)) {
+            Double dis = Double.valueOf(distance);
+            if (dis >= 1000) {
+                return NumberUtil.getDecimal((dis / 1000) + "", 1) + "km";
+            } else {
+                return NumberUtil.getDecimal(dis + "", 1) + "m";
+            }
+        } else {
+            return "";
+        }
+    }
+
+    /**
      * String 转 double 并保留2位小数
      * 6.2041   -->  6.20
      *
@@ -388,12 +424,8 @@ public class StringUtils extends BaseSingleton {
             Date d = format.parse(date);
             Calendar cal = Calendar.getInstance();
             cal.setTime(d);
-            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-                    || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                return true;
-            } else {
-                return false;
-            }
+            return cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+                    || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
         } catch (ParseException e) {
             return false;
         }
@@ -402,6 +434,7 @@ public class StringUtils extends BaseSingleton {
 
     /**
      * 生成随机数，由数字或大小写字母组成
+     *
      * @param len
      * @return
      */
@@ -429,11 +462,7 @@ public class StringUtils extends BaseSingleton {
                 Class<?> clazz = Class.forName("android.content.Context");
                 Method method = clazz.getMethod("checkSelfPermission", String.class);
                 int rest = (Integer) method.invoke(context, permission);
-                if (rest == PackageManager.PERMISSION_GRANTED) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = rest == PackageManager.PERMISSION_GRANTED;
             } catch (Exception e) {
                 result = false;
             }
@@ -445,6 +474,7 @@ public class StringUtils extends BaseSingleton {
         }
         return result;
     }
+
     public static String getDeviceInfo(Context context) {
         try {
             org.json.JSONObject json = new org.json.JSONObject();
@@ -455,7 +485,7 @@ public class StringUtils extends BaseSingleton {
                 device_id = tm.getDeviceId();
             }
             String mac = null;
-            FileReader fstream = null;
+            FileReader fstream;
             try {
                 fstream = new FileReader("/sys/class/net/wlan0/address");
             } catch (FileNotFoundException e) {
@@ -467,6 +497,7 @@ public class StringUtils extends BaseSingleton {
                     in = new BufferedReader(fstream, 1024);
                     mac = in.readLine();
                 } catch (IOException e) {
+                    e.printStackTrace();
                 } finally {
                     if (fstream != null) {
                         try {
@@ -495,9 +526,8 @@ public class StringUtils extends BaseSingleton {
             json.put("device_id", device_id);
             return json.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            return "";
         }
-        return null;
     }
 
 }

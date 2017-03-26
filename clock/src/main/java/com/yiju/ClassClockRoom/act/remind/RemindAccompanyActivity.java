@@ -14,6 +14,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.RemindAccompanyBean;
@@ -130,6 +131,7 @@ public class RemindAccompanyActivity extends BaseActivity implements
         switch (v.getId()) {
             case R.id.head_back_relative:
 //                backActivity();
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_181");
                 finish();
                 break;
         }

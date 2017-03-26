@@ -31,6 +31,15 @@ public class OrderCourseData {
     private String school_type;
     private String trade_id;
     private String ctype;
+    private String pay_method;
+
+    public String getPay_method() {
+        return pay_method;
+    }
+
+    public void setPay_method(String pay_method) {
+        this.pay_method = pay_method;
+    }
 
     private int time;
 

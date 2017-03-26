@@ -31,6 +31,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
@@ -674,19 +675,24 @@ public class OrderDetailActivity extends BaseActivity implements
             tv_order_detail_conf_tips.setText(spanStr.getResult());
             pay_method = data.getPay_method();
             if (!StringUtils.isNullString(pay_method)) {
-                if (pay_method.equals("1")) {
-                    tv_order_alipay.setText(UIUtils.getString(R.string.order_alipay));
-                    iv_order_alipay.setVisibility(View.VISIBLE);
-                    tv_order_alipay.setVisibility(View.GONE);
-                } else if (pay_method.equals("5")) {
-                    tv_order_alipay.setText(UIUtils.getString(R.string.reservation_pay_balance));
-                    tv_order_alipay.setVisibility(View.VISIBLE);
-                } else if (pay_method.equals("6")) {
-                    tv_order_alipay.setText(UIUtils.getString(R.string.order_online));
-                    iv_order_alipay.setVisibility(View.GONE);
-                    tv_order_alipay.setVisibility(View.VISIBLE);
-                } else {
-                    tv_order_alipay.setText(UIUtils.getString(R.string.reservation_pay_other));
+                switch (pay_method) {
+                    case "1":
+                        tv_order_alipay.setText(UIUtils.getString(R.string.order_alipay));
+                        iv_order_alipay.setVisibility(View.VISIBLE);
+                        tv_order_alipay.setVisibility(View.GONE);
+                        break;
+                    case "5":
+                        tv_order_alipay.setText(UIUtils.getString(R.string.reservation_pay_balance));
+                        tv_order_alipay.setVisibility(View.VISIBLE);
+                        break;
+                    case "6":
+                        tv_order_alipay.setText(UIUtils.getString(R.string.order_online));
+                        iv_order_alipay.setVisibility(View.GONE);
+                        tv_order_alipay.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        tv_order_alipay.setText(UIUtils.getString(R.string.reservation_pay_other));
+                        break;
                 }
             }
             //获取当前状态
@@ -1104,7 +1110,7 @@ public class OrderDetailActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
-
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_102");
                 onBackPressed();
                 break;
             //关闭订单
@@ -1114,8 +1120,10 @@ public class OrderDetailActivity extends BaseActivity implements
             //删除订单
             case R.id.tv_change_order:
                 if (UIUtils.getString(R.string.order_close).equals(tv_change_order.getText().toString().trim())) {
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_111");
                     cancelOrder();
                 } else if (UIUtils.getString(R.string.order_delete).equals(tv_change_order.getText().toString().trim())) {
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_110");
                     deleteOrder();
                 } else {
                     payAfterCancel();
@@ -1139,6 +1147,7 @@ public class OrderDetailActivity extends BaseActivity implements
             // startActivity(intent2);
 //                break;
             case R.id.tv_rl_reimburse_prices://退款费用
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_106");
                 String uid = "-1".equals(StringUtils.getUid()) ? "" : StringUtils.getUid();
                 Intent intent_web = new Intent(this,
                         Common_Show_WebPage_Activity.class);
@@ -1150,11 +1159,12 @@ public class OrderDetailActivity extends BaseActivity implements
                 break;
 
             case R.id.lr_order_detail_remind://押金详情
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_107");
                 Intent pledgeIntent = new Intent(this, Pledge_Activity.class);
                 startActivity(pledgeIntent);
                 break;
             case R.id.tv_pay_order://支付
-
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_112");
                 if ("1".equals(school_type)) {
                     mPopupWindow = PayWayUtil.getPopu(OrderDetailActivity.this.getWindow(),
                             OrderDetailActivity.this,
@@ -1203,6 +1213,8 @@ public class OrderDetailActivity extends BaseActivity implements
                 UIUtils.startActivity(intent_price);
                 break;*/
             case R.id.tv_order_detail_money://课室费用
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_105");
+
                 Intent intent_store = new Intent(
                         this,
                         Common_Show_WebPage_Activity.class);
@@ -1238,6 +1250,7 @@ public class OrderDetailActivity extends BaseActivity implements
                 break;
             case R.id.rl_electronic_invoice:
                 //下载发票
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_109");
                 downLoadInvoice();
                 break;
             default:

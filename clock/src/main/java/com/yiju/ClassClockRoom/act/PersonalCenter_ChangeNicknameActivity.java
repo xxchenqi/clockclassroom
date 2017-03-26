@@ -17,6 +17,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
@@ -150,9 +151,11 @@ public class PersonalCenter_ChangeNicknameActivity extends BaseActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_064");
                 this.finish();
                 break;
             case R.id.bt_nickname_confirm_edit://保存
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_065");
                 if (InputValidate.checkNickname(et_change_nickname.getText()
                         .toString())) {
                     // 请求后，打印toast，finish

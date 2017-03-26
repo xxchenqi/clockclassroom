@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
-import com.yiju.ClassClockRoom.control.CountControl;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 

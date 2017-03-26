@@ -51,7 +51,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        CountControl.getInstance().skipRuning(this);
     }
 
     @Override

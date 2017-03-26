@@ -5,12 +5,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.bean.Order2;
 import com.yiju.ClassClockRoom.bean.Order3;
 import com.yiju.ClassClockRoom.adapter.holder.ViewHolder;
 import com.yiju.ClassClockRoom.control.share.ShareDialog;
 import com.yiju.ClassClockRoom.util.StringUtils;
+import com.yiju.ClassClockRoom.util.UIUtils;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class ClassroomInnerAdapter extends CommonBaseAdapter<Order3> {
 
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_115");
                     ShareDialog
                             .getInstance()
                             .setCurrent_Type(ShareDialog.Type_Share_Accompany_Key)

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.HotSearch;
@@ -22,6 +23,7 @@ import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
 import com.yiju.ClassClockRoom.util.KeyBoardManager;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
+import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.ClassEvent;
 import com.yiju.ClassClockRoom.util.net.api.HttpClassRoomApi;
 import com.yiju.ClassClockRoom.widget.GridViewForScrollView;
@@ -87,6 +89,7 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (mHotList != null && mHotList.get(i) != null) {
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_254");
                     String content = mHotList.get(i).getWord().trim();
                     updateNoteData(content);
                     skipResult(content);
@@ -98,6 +101,7 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (mNotesList != null) {
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_255");
                     String content = mNotesList.get(i);
                     updateNoteData(content);
                     skipResult(content);
@@ -107,12 +111,14 @@ public class SearchActivity extends BaseActivity {
         tv_canlce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_253");
                 exitSearch();
             }
         });
         tv_clean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_256");
                 mNotesList.clear();
                 refreshListView();
                 closeNotes();

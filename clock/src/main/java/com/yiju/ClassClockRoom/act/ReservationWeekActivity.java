@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -161,7 +162,7 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
                 showChoose(7);
             } else if (mDates.size() < 7) {
                 for (int i = 0; i < mDates.size(); i++) {
-                    showChoose((mDates.get(i).getDay()+1));
+                    showChoose((mDates.get(i).getDay() + 1));
                 }
             }
             showChooseView(tv_reservation_every, iv_reservation_every, rl_reservation_every, Integer.MAX_VALUE);
@@ -217,9 +218,12 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back:
+
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_249");
                 onBackPressed();
                 break;
             case R.id.rl_reservation_every:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_248");
                 // 每天的点击事件，点击之后将所有星期置为未选中状态
                 if (iv_reservation_every.getVisibility() == View.VISIBLE) {
                     backColor(iv_reservation_every);
@@ -250,24 +254,31 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
                 }
                 break;
             case R.id.rl_reservation_mon:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_248");
                 chooseWeek(iv_reservation_mon, Calendar.MONDAY);
                 break;
             case R.id.rl_reservation_tue:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_248");
                 chooseWeek(iv_reservation_tue, Calendar.TUESDAY);
                 break;
             case R.id.rl_reservation_wed:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_248");
                 chooseWeek(iv_reservation_wed, Calendar.WEDNESDAY);
                 break;
             case R.id.rl_reservation_thu:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_248");
                 chooseWeek(iv_reservation_thu, Calendar.THURSDAY);
                 break;
             case R.id.rl_reservation_fri:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_248");
                 chooseWeek(iv_reservation_fri, Calendar.FRIDAY);
                 break;
             case R.id.rl_reservation_sat:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_248");
                 chooseWeek(iv_reservation_sat, Calendar.SATURDAY);
                 break;
             case R.id.rl_reservation_sun:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_248");
                 chooseWeek(iv_reservation_sun, Calendar.SUNDAY);
                 break;
             default:
@@ -348,13 +359,13 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
                 zhouMo = getDays(Calendar.SUNDAY);
             } else if (week == Calendar.SATURDAY && iv_reservation_sun.getVisibility() == View.GONE) {
                 zhouMo = 0;
-            } else if(iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.GONE){
+            } else if (iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.GONE) {
                 zhouMo = 0;
-            } else if(iv_reservation_sat.getVisibility() == View.VISIBLE && iv_reservation_sun.getVisibility() == View.GONE){
+            } else if (iv_reservation_sat.getVisibility() == View.VISIBLE && iv_reservation_sun.getVisibility() == View.GONE) {
                 zhouMo = getDays(Calendar.SATURDAY);
-            }else if(iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.VISIBLE){
+            } else if (iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.VISIBLE) {
                 zhouMo = getDays(Calendar.SUNDAY);
-            } else{
+            } else {
                 zhouMo = getDays(Calendar.SATURDAY) + getDays(Calendar.SUNDAY);
             }
         } else {
@@ -364,11 +375,11 @@ public class ReservationWeekActivity extends BaseActivity implements View.OnClic
             } else if (week == Calendar.SUNDAY && iv_reservation_sun.getVisibility() == View.VISIBLE &&
                     iv_reservation_sat.getVisibility() == View.GONE) {
                 zhouMo = getDays(Calendar.SUNDAY);
-            } else if(iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.GONE){
+            } else if (iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.GONE) {
                 zhouMo = 0;
-            } else if(iv_reservation_sat.getVisibility() == View.VISIBLE && iv_reservation_sun.getVisibility() == View.GONE){
+            } else if (iv_reservation_sat.getVisibility() == View.VISIBLE && iv_reservation_sun.getVisibility() == View.GONE) {
                 zhouMo = getDays(Calendar.SATURDAY);
-            } else if(iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.VISIBLE){
+            } else if (iv_reservation_sat.getVisibility() == View.GONE && iv_reservation_sun.getVisibility() == View.VISIBLE) {
                 zhouMo = getDays(Calendar.SUNDAY);
             } else {
                 zhouMo = getDays(Calendar.SATURDAY) + getDays(Calendar.SUNDAY);

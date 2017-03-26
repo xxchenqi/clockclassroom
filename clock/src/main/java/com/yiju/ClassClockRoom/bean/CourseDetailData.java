@@ -31,8 +31,10 @@ public class CourseDetailData implements Serializable {
     private String is_interest;//是否关注 0-未关注    1-已关注
     private String mapURL;//地图
     private String sp_sex;//性别 1-男 2-女 0-未填
-    private String finish_enroll;//0是未完成报名 1是已完成报名
+    private String finish_enroll;//0是未完成报名 1是已完成报名    体验课是用不到这个字段的
     private ContactTelName contact;
+    private List<ClassInfo> class_info;
+    private String class_info_low;
 
     //没用
     private String single_price;
@@ -40,6 +42,14 @@ public class CourseDetailData implements Serializable {
     private CourseTeacher teacher;
     private CourseSchool school;
     private CourseSchedule schedule;
+
+    public String getClass_info_low() {
+        return class_info_low;
+    }
+
+    public List<ClassInfo> getClass_info() {
+        return class_info;
+    }
 
     public ContactTelName getContact() {
         return contact;

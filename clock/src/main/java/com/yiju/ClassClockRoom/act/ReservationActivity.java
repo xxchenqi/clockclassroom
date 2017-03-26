@@ -23,6 +23,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.DeviceTypeFull;
@@ -216,7 +217,6 @@ public class ReservationActivity extends BaseActivity implements
     private String room_start_time;
     private String room_end_time;
     private ArrayList<Integer> reservationWeekList;
-    private ReservationBean reservationBean;
     private boolean flag = true;
     private List<ReservationDevice> haveDevices;
     private String uid;
@@ -235,11 +235,11 @@ public class ReservationActivity extends BaseActivity implements
     private List<StoreDetailClassRoom> classRooms;
     private String tel;
     private List<ReservationDevice> devices;
-    private int lineCount;
-    private String instruction;
-    private String confirm_type;
     private String school_type;
     private Boolean littleFlag = false;
+    private Boolean weekFlag = false;
+    private Boolean deviceFlag = false;
+    private Boolean littleShowFlag = false;
 
     @Override
     public int setContentViewId() {
@@ -283,8 +283,8 @@ public class ReservationActivity extends BaseActivity implements
         room_start_time = intent.getStringExtra("room_start_time");
         room_end_time = intent.getStringExtra("room_end_time");
         tel = intent.getStringExtra(ExtraControl.EXTRA_TEL);
-        instruction = intent.getStringExtra("instruction");
-        confirm_type = intent.getStringExtra("confirm_type");
+        String instruction = intent.getStringExtra("instruction");
+        String confirm_type = intent.getStringExtra("confirm_type");
         school_type = intent.getStringExtra(ExtraControl.EXTRA_SCHOOL_TYPE);
         if (StringUtils.isNotNullString(instruction)) {
             String str;
@@ -311,8 +311,10 @@ public class ReservationActivity extends BaseActivity implements
         classRooms = (List<StoreDetailClassRoom>) intent.getSerializableExtra("class_room");
         if (StringUtils.isNullString(type_id)) {
             //未选择课室类型
-            rl_room_count.setVisibility(View.GONE);
-            rl_device.setVisibility(View.GONE);
+            weekFlag = true;
+            deviceFlag = true;
+            rl_room_add.setEnabled(false);
+            iv_room_add.setImageResource(R.drawable.order_add_btn_noclick);
             ll_price.setVisibility(View.GONE);
             tv_store_tip.setVisibility(View.VISIBLE);
         } else {
@@ -380,8 +382,10 @@ public class ReservationActivity extends BaseActivity implements
 
     private void setStore(String type_id, StoreDetailClassRoom info) {
         getRoomDeviceCount(sid, type_id);
-        rl_room_count.setVisibility(View.VISIBLE);
-        rl_device.setVisibility(View.VISIBLE);
+        weekFlag = true;
+        deviceFlag = false;
+        rl_room_add.setEnabled(true);
+        iv_room_add.setImageResource(R.drawable.order_add_btn_click);
         ll_price.setVisibility(View.VISIBLE);
         tv_store_tip.setVisibility(View.GONE);
         tv_room_type.setText(info.getDesc());
@@ -399,11 +403,11 @@ public class ReservationActivity extends BaseActivity implements
      * @return 20xx/xx/xx
      */
     private String getDateString(Calendar ca) {
-        return ca.get(Calendar.YEAR) + "年"
+        return ca.get(Calendar.YEAR) + "-"
                 + (String.valueOf(ca.get(Calendar.MONTH) + 1).length() == 1 ?
-                ("0" + String.valueOf(ca.get(Calendar.MONTH) + 1)) : String.valueOf(ca.get(Calendar.MONTH) + 1)) + "月"
+                ("0" + String.valueOf(ca.get(Calendar.MONTH) + 1)) : String.valueOf(ca.get(Calendar.MONTH) + 1)) + "-"
                 + (String.valueOf(ca.get(Calendar.DAY_OF_MONTH)).length() == 1 ?
-                ("0" + String.valueOf(ca.get(Calendar.DAY_OF_MONTH))) : String.valueOf(ca.get(Calendar.DAY_OF_MONTH))) + "日";
+                ("0" + String.valueOf(ca.get(Calendar.DAY_OF_MONTH))) : String.valueOf(ca.get(Calendar.DAY_OF_MONTH)));
     }
 
     /**
@@ -442,7 +446,7 @@ public class ReservationActivity extends BaseActivity implements
      */
     private void processData(String result) {
 
-        reservationBean = GsonTools.changeGsonToBean(result, ReservationBean.class);
+        ReservationBean reservationBean = GsonTools.changeGsonToBean(result, ReservationBean.class);
 
         if (null != reservationBean) {
             if (reservationBean.getCode() == 1) {
@@ -472,55 +476,87 @@ public class ReservationActivity extends BaseActivity implements
                 break;
             case R.id.rl_store:
                 // 选择课室
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_208");
                 showReservationActivity(STORE);
                 break;
             case R.id.rl_date:
                 // 选择日历
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_211");
                 showReservationActivity(DATE);
                 break;
             case R.id.rl_week:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_247");
                 // 选择星期
-                showReservationActivity(WEEK);
+                if (weekFlag) {
+                    UIUtils.showToastSafe(getString(R.string.toast_show_select_date));
+                } else {
+                    showReservationActivity(WEEK);
+                }
                 break;
             case R.id.rl_time:
                 // 选择时间
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_213");
                 showReservationActivity(TIME);
                 break;
             case R.id.rl_reservation_little:
                 // 个别日期调整
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_250");
+                if (littleShowFlag) {
+                    UIUtils.showToastSafe(getString(R.string.toast_show_select_date));
+                    return;
+                }
+                String time_one1 = tv_time_one.getText().toString();
+                if (StringUtils.isNullString(time_one1) || "".equals(time_one1)) {
+                    UIUtils.showToastSafe(getString(R.string.toast_show_select_time));
+                    return;
+                }
                 showReservationActivity(DATE_LITTLE);
+
                 break;
             case R.id.rl_room_reduce:
                 // 减掉
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_220");
                 reduceCount(iv_room_reduce, iv_room_add, et_room_count);
                 break;
             case R.id.rl_room_add:
                 // 增加
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_219");
                 addCount(iv_room_reduce, iv_room_add, et_room_count, maxRoomCount);
                 break;
             case R.id.rl_device:
                 // 选择设备
-                showReservationActivity(DEVICE);
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_221");
+                if (deviceFlag) {
+                    UIUtils.showToastSafe(getString(R.string.toast_select_one_classroom_at_least));
+                } else {
+                    showReservationActivity(DEVICE);
+                }
                 break;
             case R.id.tv_reservation:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_225");
+                if (deviceFlag) {
+                    UIUtils.showToastSafe(getString(R.string.toast_select_one_classroom_at_least));
+                }
                 if (rl_room_count.getVisibility() == View.GONE) {
                     UIUtils.showToastSafe(getString(R.string.toast_select_one_classroom_at_least));
                     return;
                 }
                 String date_one = tv_date_one.getText().toString();
-                if (StringUtils.isNullString(date_one) || UIUtils.getString(R.string.reservation_choose).equals(date_one)) {
+                if (StringUtils.isNullString(date_one) || "".equals(date_one)) {
                     UIUtils.showToastSafe(getString(R.string.toast_show_select_date));
                     return;
                 }
                 String time_one = tv_time_one.getText().toString();
-                if (StringUtils.isNullString(time_one) || UIUtils.getString(R.string.reservation_choose).equals(time_one)) {
+                if (StringUtils.isNullString(time_one) || "".equals(time_one)) {
                     UIUtils.showToastSafe(getString(R.string.toast_show_select_time));
                     return;
                 }
-                String week = tv_week.getText().toString();
-                if (StringUtils.isNullString(week)) {
-                    UIUtils.showToastSafe(getString(R.string.toast_show_select_week));
-                    return;
+                if(! reservation_flag){
+                    String week = tv_week.getText().toString();
+                    if (StringUtils.isNullString(week)) {
+                        UIUtils.showToastSafe(getString(R.string.toast_show_select_week));
+                        return;
+                    }
                 }
                 boolean isLogin = SharedPreferencesUtils.getBoolean(UIUtils.getContext(),
                         getResources().getString(R.string.shared_isLogin), false);
@@ -582,6 +618,7 @@ public class ReservationActivity extends BaseActivity implements
 
                 break;
             case R.id.rl_sigle:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_210");
                 rl_sigle.setEnabled(false);
                 rl_more.setEnabled(true);
                 iv_sigle.setVisibility(View.VISIBLE);
@@ -595,30 +632,32 @@ public class ReservationActivity extends BaseActivity implements
                     ca.setTime(copySingleDates.get(0));
                     tv_date_one.setText(getDateString(ca));
                 } else {
-                    tv_date_one.setText(UIUtils.getString(R.string.reservation_choose));
+                    tv_date_one.setText("");
                 }
                 break;
 
             case R.id.rl_more:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_209");
                 rl_sigle.setEnabled(true);
                 rl_more.setEnabled(false);
                 iv_sigle.setVisibility(View.GONE);
                 iv_more.setVisibility(View.VISIBLE);
-                rl_reservation_little.setVisibility(View.GONE);
+                rl_week.setVisibility(View.VISIBLE);
+                rl_reservation_little.setVisibility(View.VISIBLE);
                 reservation_flag = false;
                 // 切换时保存数据
                 if (copyMoreDates.size() > 0) {
                     tv_date_two.setVisibility(View.VISIBLE);
-                    rl_reservation_little.setVisibility(View.VISIBLE);
+                    littleShowFlag = false;
                     ca.setTime(copyMoreDates.get(0));
                     tv_date_one.setText(getDateString(ca));
                     ca.setTime(copyMoreDates.get(copyMoreDates.size() - 1));
                     tv_date_two.setText(getDateString(ca));
-                    rl_week.setVisibility(View.VISIBLE);
                 } else {
-                    tv_date_one.setText(UIUtils.getString(R.string.reservation_choose));
+                    littleShowFlag = true;
+                    tv_week.setText("");
+                    tv_date_one.setText("");
                     tv_date_two.setVisibility(View.GONE);
-                    rl_week.setVisibility(View.GONE);
                 }
                 break;
             default:
@@ -726,9 +765,9 @@ public class ReservationActivity extends BaseActivity implements
                 break;
             case WEEK:
                 intent = new Intent(this, ReservationWeekActivity.class);
-                if (null != copyMoreDates
-                        && copyMoreDates.size() > 0) {
-                    intent.putExtra("reservationHaveDate", (Serializable) copyMoreDates);
+                if (null != copyMoreOriginalDates
+                        && copyMoreOriginalDates.size() > 0) {
+                    intent.putExtra("reservationHaveDate", (Serializable) copyMoreOriginalDates);
                 }
                 if (null != reservationWeekList && reservationWeekList.size() > 0) {
                     intent.putIntegerArrayListExtra("reservationHaveWeek", reservationWeekList);
@@ -753,6 +792,9 @@ public class ReservationActivity extends BaseActivity implements
                 break;
             case DATE_LITTLE:
                 intent = new Intent(this, ReservationDateLittleActivity.class);
+                if (null != copyMoreOriginalDates && copyMoreOriginalDates.size() > 0) {
+                    intent.putExtra("BEDates", (Serializable) copyMoreOriginalDates);
+                }
                 if (null != copyMoreDates && copyMoreDates.size() > 0) {
                     intent.putExtra("selectedDates", (Serializable) copyMoreDates);
                 }
@@ -784,6 +826,8 @@ public class ReservationActivity extends BaseActivity implements
                         if (StringUtils.isNotNullString(classRooms.get(index).getPic_small())) {
                             Glide.with(this).load(classRooms.get(index).getPic_small()).into(iv_store_back);
                         }
+                        rl_room_count.setEnabled(true);
+                        rl_device.setEnabled(true);
                     }
 
                     break;
@@ -824,7 +868,7 @@ public class ReservationActivity extends BaseActivity implements
                         tv_time_two.setVisibility(View.VISIBLE);
                         tv_time_two.setText("共 " + count + " 个小时");
                     } else {
-                        tv_time_one.setText(UIUtils.getString(R.string.reservation_choose));
+                        tv_time_one.setText("");
                         tv_time_two.setVisibility(View.GONE);
                     }
 
@@ -849,7 +893,7 @@ public class ReservationActivity extends BaseActivity implements
                             }
                         }
                         if (count == 0) {
-                            tv_reservation_little.setText(UIUtils.getString(R.string.reservation_choose));
+                            tv_reservation_little.setText("");
                         } else {
                             tv_reservation_little.setText("已调整 " + count + " 天");
                         }
@@ -877,12 +921,15 @@ public class ReservationActivity extends BaseActivity implements
             tv_date_two.setVisibility(View.GONE);
             tv_date_one.setText(start_date);
             rl_reservation_little.setVisibility(View.GONE);
+            rl_week.setVisibility(View.GONE);
         } else {
             tv_date_two.setVisibility(View.VISIBLE);
             rl_reservation_little.setVisibility(View.VISIBLE);
             tv_date_one.setText(start_date);
             tv_date_two.setText(end_date);
             rl_week.setVisibility(View.VISIBLE);
+            weekFlag = false;
+            littleShowFlag = false;
         }
 
         StringBuilder sb_week = new StringBuilder();
@@ -900,6 +947,8 @@ public class ReservationActivity extends BaseActivity implements
                     sb_week.append(getNewWeek((weekInts.get(i)))).append("、");
                 }
             }
+        } else {
+            sb_week.append("日、一、二、三、四、五、六");
         }
         tv_week.setText(sb_week.toString());
         if (null != reservationWeekList && reservationWeekList.size() > 0) {
@@ -911,7 +960,7 @@ public class ReservationActivity extends BaseActivity implements
     private void clearLittleData() {
         if (null != haveDates && haveDates.size() > 0) {
             haveDates.clear();
-            tv_reservation_little.setText(UIUtils.getString(R.string.reservation_choose));
+            tv_reservation_little.setText("");
         }
     }
 
@@ -933,6 +982,8 @@ public class ReservationActivity extends BaseActivity implements
                 }
             }
 
+        } else {
+            sbWeek.append("日、一、二、三、四、五、六");
         }
         tv_week.setText(sbWeek.toString());
         String weekStr = sbWeek.toString();
@@ -957,7 +1008,7 @@ public class ReservationActivity extends BaseActivity implements
         if (count != 0) {
             tv_reservation_device.setText(haveDevices.get(0).getName() + "等 " + count + " 项");
         } else {
-            tv_reservation_device.setText(UIUtils.getString(R.string.reservation_choose));
+            tv_reservation_device.setText("");
         }
     }
 
@@ -1082,7 +1133,7 @@ public class ReservationActivity extends BaseActivity implements
             for (Date d : mDates) {
                 ca.setTime(d);
                 RoomInfo roomInfo = new RoomInfo();
-                roomInfo.setDate(getDateString(ca).replace("年", "-").replace("月", "-").replace("日", ""));
+                roomInfo.setDate(getDateString(ca));
                 List<RoomInEntity> roomInEntities = new ArrayList<>();
                 for (String t : timeLists) {
 //                    String st = t.split("!")[1].split(" ~ ")[0].replace(":", "");
@@ -1129,6 +1180,29 @@ public class ReservationActivity extends BaseActivity implements
                     });
         }
     }
+
+    /*private void deleteWeek(List<Date> dates, String weekDays) {
+        List<Date> weekDates = new ArrayList<>();
+        if (!weekDays.equals("每周")) {
+            String[] weeks = weekDays.substring(2, weekDays.length()).split("、");
+            int counts = weeks.length;
+            if (counts < 7) {
+                for (int j = 0; j < dates.size(); j++) {
+                    ca.setTime(dates.get(j));
+                    int ca_week = ca.get(Calendar.DAY_OF_WEEK);
+                    for (String week : weeks) {
+                        int intWeek = formatWeek(week);
+                        if (ca_week == intWeek) {
+                            weekDates.add(dates.get(j));
+                            break;
+                        }
+                    }
+                }
+                dates.clear();
+                dates.addAll(weekDates);
+            }
+        }
+    }*/
 
     private void deleteWeek(List<Date> dates, String weekDays) {
         List<Date> weekDates = new ArrayList<>();
@@ -1442,10 +1516,10 @@ public class ReservationActivity extends BaseActivity implements
                     showTimeDialog();
                     return false;
                 }
-            } else if(week.equals("")){
+            } else if (week.equals("")) {
                 showTimeDialog();
                 return false;
-            } else{
+            } else {
                 return true;
             }
         } else {

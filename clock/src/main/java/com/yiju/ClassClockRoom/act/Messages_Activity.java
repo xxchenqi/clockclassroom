@@ -13,6 +13,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.MessageBox;
@@ -24,10 +25,8 @@ import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.BadgeView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class Messages_Activity extends BaseActivity implements View.OnClickListener {
@@ -102,9 +101,32 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
         head_title.setText(getResources().getText(R.string.my_message));
         uid = SharedPreferencesUtils.getString(UIUtils.getContext(),
                 "id", null);
-        sendHttp(uid, "message_box");
-
+        sendHttp(uid, "message_box_type");
     }
+
+    /*private void getHttp() {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "message_box_type");
+        params.addBodyParameter("uid", uid);
+        params.addBodyParameter("username", StringUtils.getUsername());
+        params.addBodyParameter("password", StringUtils.getPassword());
+        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
+                new RequestCallBack<String>() {
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        // 处理返回的数据
+                        processData(arg0.result);
+                    }
+                });
+    }*/
 
     /**
      * 请求数据
@@ -150,39 +172,12 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
     private void processData(String result, int length) {
         switch (length) {
             case 1:
-                messageBox = GsonTools.changeGsonToBean(result, MessageBox.class);
-                if (null != messageBox) {
-                    if (messageBox.getCode() == 1) {
-                        List<MessageBox.MessageData> data = messageBox.getData();
-                        ArrayList<MessageBox.MessageData> mOrders = new ArrayList<>();
-                        ArrayList<MessageBox.MessageData> mMechs = new ArrayList<>();
-                        ArrayList<MessageBox.MessageData> mPeiDus = new ArrayList<>();
-                        if (null != data && data.size() > 0) {
-                            for (int i = 0; i < data.size(); i++) {
-                                switch (data.get(i).getBig_type()) {
-                                    case "" + TYPE_ORDER:
-                                        mOrders.add(data.get(i));
-                                        break;
-                                    case "" + TYPE_MECH:
-                                        mMechs.add(data.get(i));
-                                        break;
-                                    case "" + TYPE_PEIDU:
-                                        mPeiDus.add(data.get(i));
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            if (mOrders.size() > 0) {
-                                showMessage(tv_order_one, tv_order_time, mOrders, badgeView_order);
-                            }
-                            if (mMechs.size() > 0) {
-                                showMessage(tv_mech_one, tv_mech_time, mMechs, badgeView_mech);
-                            }
-                            if (mPeiDus.size() > 0) {
-                                showMessage(tv_peidu_one, tv_peidu_time, mPeiDus, badgeView_peidu);
-                            }
-                        }
+                if(null != result){
+                    messageBox = GsonTools.changeGsonToBean(result, MessageBox.class);
+                    if(messageBox.getCode() == 1){
+                        showMessage(tv_order_one, tv_order_time, messageBox.getData().get(0), badgeView_order);
+                        showMessage(tv_mech_one, tv_mech_time, messageBox.getData().get(1), badgeView_mech);
+                        showMessage(tv_peidu_one, tv_peidu_time, messageBox.getData().get(2), badgeView_peidu);
                     }
                 }
                 break;
@@ -195,22 +190,15 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
 
     /**
      * 消息展示
-     *
-     * @param tv        消息内容
-     * @param time      时间
-     * @param lists     消息数据集合
-     * @param badgeView 右上角红色提醒
+     *  @param tv                   消息内容
+     * @param time                  时间
+     * @param messageTypeData       消息数据集合
+     * @param badgeView             右上角红色提醒
      */
-    private void showMessage(TextView tv, TextView time, ArrayList<MessageBox.MessageData> lists,
+    private void showMessage(TextView tv, TextView time, MessageBox.MessageTypeData messageTypeData,
                              BadgeView badgeView) {
-        Calendar ca = Calendar.getInstance();
-        Date today = ca.getTime();
-        int count = 0;
-        for (int i = 0; i < lists.size(); i++) {
-            if ("0".equals(lists.get(i).getIs_read())) {
-                count++;
-            }
-        }
+
+        Integer count = Integer.valueOf(messageTypeData.getNoread_count());
         if (count == 0) {
             badgeView.hide();
         } else {
@@ -223,37 +211,42 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
             badgeView.setBadgeMargin(1);
             badgeView.show();
         }
-        if ("".equals(lists.get(0).getContent())) {
+
+        if ("".equals(messageTypeData.getRecent_message())) {
             tv.setText(R.string.no_message);
         } else {
-            tv.setText(lists.get(0).getContent());
+            tv.setText(messageTypeData.getRecent_message());
         }
-        long O_time = Long.valueOf(lists.get(0).getCreate_time());
-        Date date = new Date(O_time * 1000);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String format = formatter.format(date);
-        if (date.getYear() == today.getYear()) {
-            if (date.getDate() == today.getDate()) {
-                // 今天
-                String minutes;
-                if (date.getMinutes() < 10) {
-                    minutes = "0" + date.getMinutes();
+        if(!"0".equals(messageTypeData.getCreate_time())){
+            Calendar ca = Calendar.getInstance();
+            Date today = ca.getTime();
+            long O_time = Long.valueOf(messageTypeData.getCreate_time());
+            Date date = new Date(O_time * 1000);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String format = formatter.format(date);
+            if (date.getYear() == today.getYear()) {
+                if (date.getDate() == today.getDate()) {
+                    // 今天
+                    String minutes;
+                    if (date.getMinutes() < 10) {
+                        minutes = "0" + date.getMinutes();
+                    } else {
+                        minutes = date.getMinutes() + "";
+                    }
+                    String s = String.format(getResources().getString(R.string.colon), date.getHours() + "",
+                            minutes);
+                    time.setText(s);
+                } else if (today.getDate() - date.getDate() == 1) {
+                    time.setText(getResources().getString(R.string.yestoday));
                 } else {
-                    minutes = date.getMinutes() + "";
+                    time.setText(format.substring(5));
                 }
-                String s = String.format(getResources().getString(R.string.colon), date.getHours() + "",
-                        minutes);
-                time.setText(s);
-            } else if (today.getDate() - date.getDate() == 1) {
-                time.setText(getResources().getString(R.string.yestoday));
             } else {
-                time.setText(format.substring(5));
+                time.setText(format);
             }
-        } else {
-            time.setText(format);
         }
-    }
 
+    }
     @Override
     public String getPageName() {
         return getString(R.string.title_act_my_message);
@@ -268,15 +261,19 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_080");
                 onBackPressed();
                 break;
             case R.id.rl_order://订单消息
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_081");
                 jumpDetial(TYPE_ORDER, badgeView_order);
                 break;
             case R.id.rl_mech://系统提醒
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_082");
                 jumpDetial(TYPE_MECH, badgeView_mech);
                 break;
             case R.id.rl_peidu://陪读提醒
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_083");
                 jumpDetial(TYPE_PEIDU, badgeView_peidu);
                 break;
         }
@@ -293,7 +290,6 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
         Intent intent = new Intent(this, MessageDetialActivity.class);
         if (null != messageBox) {
             intent.putExtra("big_type", i);
-            intent.putExtra("messageBox", messageBox);
             sendHttp(uid, "message_read", "" + i);
             startActivity(intent);
         }

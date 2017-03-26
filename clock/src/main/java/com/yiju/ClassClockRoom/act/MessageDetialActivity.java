@@ -1,18 +1,32 @@
 package com.yiju.ClassClockRoom.act;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yiju.ClassClockRoom.R;
+import com.yiju.ClassClockRoom.act.accompany.AccompanyReadStatusActivity;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
-import com.yiju.ClassClockRoom.adapter.MessageDetailAdapter;
-import com.yiju.ClassClockRoom.bean.MessageBox;
+import com.yiju.ClassClockRoom.adapter.MessageAdapter;
+import com.yiju.ClassClockRoom.bean.MessageDetialData;
+import com.yiju.ClassClockRoom.control.SchemeControl;
+import com.yiju.ClassClockRoom.util.GsonTools;
+import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
+import com.yiju.ClassClockRoom.util.net.UrlUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,29 +39,137 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
     @ViewInject(R.id.head_title)
     private TextView head_title;
 
-    @ViewInject(R.id.ll_all)
-    private LinearLayout ll_all;
     @ViewInject(R.id.tv_no_message)
     private TextView tv_no_message;
 
-    @ViewInject(R.id.recyclerview)
-    private RecyclerView recyclerView;
 
-    private MessageDetailAdapter adapter;
+    @ViewInject(R.id.lv_message)
+    private PullToRefreshListView lv_message;
+    private MessageAdapter messageAdapter;
+    private List<MessageDetialData.MessageInfo> mLists = new ArrayList<>();
     private int big_type;
     private final int TYPE_ORDER = 1;//订单消息
     private final int TYPE_MECH = 2;//系统提醒
     private final int TYPE_PEIDU = 3;//陪读提醒
+    //下拉刷新标志，默认为下来刷新
+    private boolean flag_down = true;
+    private int limit = 0;
+    private View footView;
 
     /**
      * 初始化页面
      */
     @Override
     protected void initView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(UIUtils.getContext());
-        recyclerView.setLayoutManager(layoutManager);
         head_back.setOnClickListener(this);
+        footView = View.inflate(this, R.layout.include_no_more, null);
+        lv_message.setMode(PullToRefreshBase.Mode.BOTH);
+        lv_message.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                flag_down = true;
+                limit = 0;
+                getData();
+                lv_message.setMode(PullToRefreshBase.Mode.BOTH);
+            }
 
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                flag_down = false;
+                limit += 5;
+
+                getData();
+            }
+        });
+        lv_message.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int type = Integer.valueOf(mLists.get(i-1).getType());
+                switch (type) {
+                    case 1://待支付订单
+                    case 7://退单申请(我的订单)
+                    case 10://订单成立(已支付页面)
+                    case 11://订单消费提醒
+                    case 12://订单消费完毕
+                    case 18://支付前确认通过
+                    case 19://支付前确认不通过
+                    case 20://支付后确认通过
+                    case 21://支付后确认不通过
+                    case 22://电子发票开票成功
+                        Intent intentOrder;
+                        if("3".equals(mLists.get(i-1).getOrder_type())){
+                            intentOrder = new Intent(UIUtils.getContext(), CourseOrderDetailActivity.class);
+                        }else{
+                            intentOrder = new Intent(UIUtils.getContext(), OrderDetailActivity.class);
+                        }
+                        intentOrder.putExtra("oid", mLists.get(i-1).getDetail_id());
+                        UIUtils.startActivity(intentOrder);
+                        break;
+                    case 2://购物车(已经没有购物车了)
+                        break;
+                    case 4://机构加人
+                    case 5://机构修改权限
+                    case 6://机构审核
+                    case 9://老师退出机构(我的机构)
+                        jumpMessageDetial("jigou", new Intent(UIUtils.getContext(), MineOrganizationActivity.class));
+                        break;
+                    case 3://陪读
+                        String content = mLists.get(i-1).getContent().split("：")[1].split("，")[0].trim();
+                        Intent intent = new Intent();
+                        intent.setClass(UIUtils.getContext(), AccompanyReadStatusActivity.class);
+                        intent.putExtra(SchemeControl.PASSWORD, content);
+                        UIUtils.startActivity(intent);
+                        break;
+
+                    case 8://机构移除老师(个人中心)
+                        jumpMessageDetial("person", new Intent(UIUtils.getContext(), PersonalCenterActivity.class));
+                        break;
+                    case 13://机构审核失败
+                        jumpMessageDetial("fail", new Intent(UIUtils.getContext(), OrganizationCertificationStatusActivity.class));
+                        break;
+                    case 14://课程审核通过
+                    case 15://课程审核不通过
+                    case 16://老师取消课程
+                    case 17://系统取消课程
+                        Intent intent_personMineCourse = new Intent(UIUtils.getContext(), PersonMineCourseDetailActivity.class);
+                        intent_personMineCourse.putExtra("course_id", mLists.get(i-1).getDetail_id());
+                        UIUtils.startActivity(intent_personMineCourse);
+                        break;
+                    case 23://审核通过
+                    case 24://审核不通过
+                        Intent intent_member_detail = new Intent(UIUtils.getContext(), MemberDetailActivity.class);
+                        intent_member_detail.putExtra(MemberDetailActivity.ACTION_UID, mLists.get(i-1).getDetail_id());
+                        intent_member_detail.putExtra(MemberDetailActivity.ACTION_TITLE,
+                                UIUtils.getString(R.string.teacher_detail));
+                        UIUtils.startActivity(intent_member_detail);
+                        break;
+
+                }
+            }
+        });
+    }
+
+    private void jumpMessageDetial(String s, Intent intent) {
+
+        if (null != s) {
+            if ("read".equals(s)) {
+                intent.putExtra("read", s);
+            } else if ("person".equals(s)) {
+                intent.putExtra("person", s);
+            }/*else if("jigou".equals(s)){
+                intent.putExtra("jigou", s);
+            }else if("cart".equals(s)){
+                UIUtils.startActivity(intent);
+            }*/ else if ("fail".equals(s)) {
+                intent.putExtra(OrganizationCertificationStatusActivity.STATUS,
+                        OrganizationCertificationStatusActivity.STATUS_FAIL);
+            } else if ("course".equals(s)) {
+                intent.putExtra("course", s);
+            } else {
+                intent.putExtra("status", s);
+            }
+        }
+        UIUtils.startActivity(intent);
     }
 
     /**
@@ -55,115 +177,102 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
      */
     @Override
     protected void initData() {
-        MessageBox messageBox = (MessageBox) getIntent().getSerializableExtra("messageBox");
         big_type = getIntent().getIntExtra("big_type", 0);
-        if (null != messageBox) {
-            /**
-             * 对消息进行归类（依据后台定义的类型）
-             */
-//            ll_all.setBackgroundColor(UIUtils.getColor(R.color.white));
-            List<MessageBox.MessageData> datas = messageBox.getData();
-            ArrayList<MessageBox.MessageData> mOrders = new ArrayList<>();
-            ArrayList<MessageBox.MessageData> mMechs = new ArrayList<>();
-            ArrayList<MessageBox.MessageData> mPeiDus = new ArrayList<>();
-            if (null != datas && datas.size() > 0) {
-                for (int i = 0; i < datas.size(); i++) {
-                    /*if ("1".equals(datas.get(i).getType()) ||
-                            "2".equals(datas.get(i).getType()) ||
-                            "7".equals(datas.get(i).getType()) ||
-                            "10".equals(datas.get(i).getType()) ||
-                            "11".equals(datas.get(i).getType()) ||
-                            "12".equals(datas.get(i).getType())) {
-                        mOrders.add(datas.get(i));
-                    } else if ("3".equals(datas.get(i).getType())) {
-                        mPeiDus.add(datas.get(i));
-                    } else if ("4".equals(datas.get(i).getType()) ||
-                            "5".equals(datas.get(i).getType()) ||
-                            "6".equals(datas.get(i).getType()) ||
-                            "8".equals(datas.get(i).getType()) ||
-                            "9".equals(datas.get(i).getType()) ||
-                            "13".equals(datas.get(i).getType())) {
-                        mMechs.add(datas.get(i));
-                    }
-                    */
-                    switch (datas.get(i).getBig_type()) {
-                        case "" + TYPE_ORDER:
-                            mOrders.add(datas.get(i));
-                            break;
-                        case "" + TYPE_MECH:
-                            mMechs.add(datas.get(i));
-                            break;
-                        case "" + TYPE_PEIDU:
-                            mPeiDus.add(datas.get(i));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                switch (big_type) {
-                    case TYPE_ORDER:
-                        // 订单
-                        showDetialMessaage(getString(R.string.order_mess), mOrders);
-                        break;
-                    case TYPE_MECH:
-                        // 系统
-                        showDetialMessaage(getString(R.string.mech_mess), mMechs);
-                        break;
-                    case TYPE_PEIDU:
-                        // 陪读
-                        showDetialMessaage(getString(R.string.peidu_mess), mPeiDus);
-                        break;
-                }
-            } else {
-                recyclerView.setVisibility(View.GONE);
-                tv_no_message.setVisibility(View.VISIBLE);
-//                ll_all.setBackgroundResource(R.drawable.empty);
-                switch (big_type) {
-                    case TYPE_ORDER:
-                        // 订单
-                        showDetialMessaage(getString(R.string.order_mess), null);
-                        break;
-                    case TYPE_MECH:
-                        // 系统
-                        showDetialMessaage(getString(R.string.mech_mess), null);
-                        break;
-                    case TYPE_PEIDU:
-                        // 陪读
-                        showDetialMessaage(getString(R.string.peidu_mess), null);
-                        break;
-                }
-            }
-        } else {
-            recyclerView.setVisibility(View.GONE);
-            tv_no_message.setVisibility(View.VISIBLE);
-//            ll_all.setBackgroundResource(R.drawable.empty);
+        String title = null;
+        switch (big_type) {
+            case TYPE_ORDER:
+                // 订单
+                title = getString(R.string.order_mess);
+                break;
+            case TYPE_MECH:
+                // 系统
+                title = getString(R.string.mech_mess);
+                break;
+            case TYPE_PEIDU:
+                // 陪读
+                title = getString(R.string.peidu_mess);
+                break;
         }
+        head_title.setText(title);
+        getData();
     }
 
     /**
-     * 展示消息列表
-     *
-     * @param s      消息列表页标题
-     * @param mLists 消息数据集合
+     * 获取数据
      */
-    private void showDetialMessaage(String s, ArrayList<MessageBox.MessageData> mLists) {
+    private void getData() {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "message_box");
+        params.addBodyParameter("uid", StringUtils.getUid());
+        params.addBodyParameter("username", StringUtils.getUsername());
+        params.addBodyParameter("password", StringUtils.getPassword());
+        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("big_type", String.valueOf(big_type));
+        int limit_end = 5;
+        params.addBodyParameter("limit", limit + "," + limit_end);
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
+                new RequestCallBack<String>() {
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                    }
 
-        head_title.setText(s);
-        if (null != mLists && mLists.size() > 0) {
-            recyclerView.setVisibility(View.VISIBLE);
-            if (null != adapter) {
-                adapter.notifyDataSetChanged();
-            } else {
-                adapter = new MessageDetailAdapter(mLists);
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        // 处理返回的数据
+                        processData(arg0.result);
+                    }
+                });
+    }
 
+    /**
+     * 处理返回的数据
+     *
+     * @param result 结果集
+     */
+    private void processData(String result) {
+        if (null != result) {
+            MessageDetialData messageDetialData = GsonTools.changeGsonToBean(result, MessageDetialData.class);
+            if (null != messageDetialData) {
+                if (messageDetialData.getCode() == 1) {
+                    List<MessageDetialData.MessageInfo> infos = messageDetialData.getData();
+                    if (null != infos && infos.size() > 0) {
+                        mLists.addAll(infos);
+                        footView.setVisibility(View.GONE);
+                    }else{
+                        if(limit != 0){
+                            footView.setVisibility(View.VISIBLE);
+                        }
+                        if (!flag_down) {
+                            lv_message.onRefreshComplete();
+                            lv_message.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        }
+                    }
+                    if(null != mLists && mLists.size() > 0){
+                        lv_message.setVisibility(View.VISIBLE);
+                        tv_no_message.setVisibility(View.GONE);
+                        lv_message.onRefreshComplete();
+                        if(null != messageAdapter){
+                            messageAdapter.notifyDataSetChanged();
+                        }else {
+                            ListView refreshableView =  lv_message.getRefreshableView();
+                            FrameLayout footerLayoutHolder = new FrameLayout(UIUtils.getContext());
+                            footerLayoutHolder.addView(footView);
+                            refreshableView.addFooterView(footerLayoutHolder);
+                            messageAdapter = new MessageAdapter(mLists);
+                            lv_message.setAdapter(messageAdapter);
+                        }
+                    }else {
+                        lv_message.setVisibility(View.GONE);
+                        tv_no_message.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    lv_message.setVisibility(View.GONE);
+                    tv_no_message.setVisibility(View.VISIBLE);
+                }
             }
-            recyclerView.setAdapter(adapter);
-        } else {
-            recyclerView.setVisibility(View.GONE);
-//            ll_all.setBackgroundResource(R.drawable.empty);
-            tv_no_message.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override

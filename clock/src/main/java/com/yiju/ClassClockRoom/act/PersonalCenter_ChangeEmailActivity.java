@@ -19,6 +19,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
@@ -199,9 +200,11 @@ public class PersonalCenter_ChangeEmailActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_071");
                 this.finish();
                 break;
             case R.id.bt_email_confirm_bind://保存
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_072");
                 if (InputValidate.checkedIsEmail(et_change_email.getText()
                         .toString())) {
                     bt_email_confirm_bind.setClickable(false);

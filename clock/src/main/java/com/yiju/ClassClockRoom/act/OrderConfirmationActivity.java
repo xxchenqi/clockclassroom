@@ -34,6 +34,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
@@ -367,6 +368,12 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         rl_class_fee.setOnClickListener(this);
         rl_charge.setOnClickListener(this);
         tv_order_conf_tips.setOnClickListener(this);
+        et_remark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_236");
+            }
+        });
     }
 
     /**
@@ -523,7 +530,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 tv_use_week.setVisibility(View.VISIBLE);
                 String repeat = dataEntity.getRepeat();
                 if (StringUtils.isNullString(repeat)) {
-                    tv_use_week.setVisibility(View.GONE);
+                    tv_use_week.setText("循环方式：每天");
                 } else {
                     tv_use_week.setVisibility(View.VISIBLE);
                     String[] repeats = repeat.split(",");
@@ -671,7 +678,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             if (i == add_date.size() - 1) {
                 addBuilder.append(add_date.get(i).getDate());
             } else {
-                addBuilder.append(add_date.get(i).getDate() + "、");
+                addBuilder.append(add_date.get(i).getDate()).append("、");
             }
         }
         return addBuilder;
@@ -684,7 +691,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             if (i == (repeats.length - 1)) {
                 stringBuilder.append(getWeekDay(Integer.valueOf(repeats[i])));
             } else {
-                stringBuilder.append(getWeekDay(Integer.valueOf(repeats[i])) + "、");
+                stringBuilder.append(getWeekDay(Integer.valueOf(repeats[i]))).append("、");
             }
         }
         return stringBuilder.toString();
@@ -1184,12 +1191,21 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_242");
                 onBackPressed();
                 break;
             case R.id.tv_order_conf_tips:
                 callPhone(store_tel);
                 break;
-            case R.id.head_right_relative://添加购物车
+            case R.id.head_right_relative://客服热线
+                //旗舰店显示设置
+                if ("1".equals(dataEntity.getSchool_type())) {
+                    //是旗舰店
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_240");
+                } else {
+                    //非旗舰店
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_241");
+                }
                 // 弹出电话呼叫窗口
                 if (StringUtils.isNullString(school_phone)) {
                     school_phone = UIUtils.getString(R.string.txt_phone_number);
@@ -1197,11 +1213,13 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 callPhone(school_phone);
                 break;
             case R.id.rl_name_tel://联系人
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_226");
                 Intent intent = new Intent(this, ContactShopCartActivity.class);
                 intent.putExtra("id", id);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.rl_coupon://优惠券
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_238");
                 Intent intentCoupon = new Intent(this, CouponActivity.class);
                 //2级订单id
                 intentCoupon.putExtra("order2_id", order2_id);
@@ -1209,10 +1227,12 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 startActivityForResult(intentCoupon, 0);
                 break;
             case R.id.lr_order_detail_remind://提示
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_239");
                 Intent pledgeIntent = new Intent(this, Pledge_Activity.class);
                 startActivity(pledgeIntent);
                 break;
             case R.id.btn_affirm_pay://确认付款
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_243");
                 String mobile = tv_order_detail_mobile.getText().toString();
                 if (StringUtils.isNotNullString(mobile)) {
                     if("1".equals(c_type)){
@@ -1229,6 +1249,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                                     balance, currentFee, new PayWayOnClickListener() {
                                         @Override
                                         public void onBalanceClick() {
+                                            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_245");
                                             commitCart(et_remark.getText().toString(),
                                                     tv_order_detail_name.getText().toString(),
                                                     tv_order_detail_mobile.getText().toString(),
@@ -1237,6 +1258,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
 
                                         @Override
                                         public void onOtherClick() {
+                                            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_244");
                                             mPopupWindow.dismiss();
                                             commitCart(et_remark.getText().toString(),
                                                     tv_order_detail_name.getText().toString(),
@@ -1268,6 +1290,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
 //                UIUtils.startActivity(intent_price);
 //                break;
             case R.id.rl_invoice://发票
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_237");
                 Intent intent_invoice = new Intent(this, WriteInvoiceInformationActivity.class);
                 intent_invoice.putExtra(WriteInvoiceInformationActivity.EXTRA_INVOICE_INFO, invoiceContacts);
                 intent_invoice.putExtra(WriteInvoiceInformationActivity.EXTRA_INVOICE_ID, invoice_contact_id);//未开过发票的话是要传进去的
@@ -1302,6 +1325,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 startActivity(intent_store);*/
                 break;
             case R.id.rl_class_fee://课室费用
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_235");
                 Intent intent_rooms = new Intent(this, Common_Show_WebPage_Activity.class);
                 // url
                 intent_rooms.putExtra(UIUtils.getString(R.string.redirect_open_url),

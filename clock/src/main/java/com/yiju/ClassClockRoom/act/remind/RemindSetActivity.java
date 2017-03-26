@@ -17,6 +17,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.result.CommonResultBean;
@@ -111,10 +112,8 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
         }
         if (remindPeiduValue.equals(Type_Remind_True)) {
             remind_accompany_read_switch.setChecked(true);
-            remind_time_layout.setVisibility(View.VISIBLE);
         } else {
             remind_accompany_read_switch.setChecked(false);
-            remind_time_layout.setVisibility(View.GONE);
         }
 
         initNoDisturb();
@@ -136,19 +135,6 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
         } else {
             remind_time_text.setText(UIUtils
                     .getString(R.string.remind_closed));
-        }
-    }
-
-    /**
-     * 当订单提醒与系统提醒都关闭时，免打扰时间一栏置灰
-     */
-    public void changeColor() {
-        if (!remind_order_switch.isChecked()
-                && !remind_system_switch.isChecked()
-                && !remind_accompany_read_switch.isChecked()) {
-            quiet_hours_layout.setVisibility(View.GONE);
-        } else {
-            quiet_hours_layout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -177,7 +163,6 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
                 } else {
                     setRemindRequest("is_order_remerber", Type_Remind_False);
                 }
-                changeColor();
             }
         });
         // 系统提醒开关
@@ -194,7 +179,6 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
                 } else {
                     setRemindRequest("is_sys_remerber", Type_Remind_False);
                 }
-                changeColor();
             }
         });
 
@@ -206,16 +190,14 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
                     return;
                 }
                 if (isChecked) {
-                    remind_time_layout.setVisibility(View.VISIBLE);
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_177");
                     setRemindRequest("is_remerber", Type_Remind_True);
                 } else {
-                    remind_time_layout.setVisibility(View.GONE);
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_178");
                     setRemindRequest("is_remerber", Type_Remind_False);
                 }
-                changeColor();
             }
         });
-        changeColor();
     }
 
     @Override
@@ -227,15 +209,18 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_176");
                 backActivity();
                 break;
             case R.id.remind_time_layout:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_179");
                 Intent intent = new Intent(RemindSetActivity.this,
                         RemindAccompanyActivity.class);
                 startActivityForResult(intent,
                         RequestCodeConstant.Remind_Skip_SetAccompany);
                 break;
             case R.id.quiet_hours_layout:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_180");
                 wv_trouble = new TroubleWheelDialog(RemindSetActivity.this);
                 wv_trouble.setITroubleRunnable(new ITroubleRunnable() {
                     @Override
@@ -321,7 +306,7 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
 
     private void backActivity() {
         setResult(RESULT_OK);
-        ActivityControlManager.getInstance().finishCurrentAndOpenHome(this,3);
+        ActivityControlManager.getInstance().finishCurrentAndOpenHome(this, 3);
     }
 
     @Override

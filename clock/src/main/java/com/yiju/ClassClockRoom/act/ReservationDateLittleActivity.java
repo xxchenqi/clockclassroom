@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -50,6 +51,7 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
 //    private String hasWeek;
     private List<Date> haveDates;
     private List<Date> selectedDates;
+    private List<Date> beDates;
     private Set<Date> grayDates;
     private long beginTime;
     private long endTime;
@@ -86,6 +88,8 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
         mDates.clear();
         fail = mReservationIntent.getStringExtra("FAIL");
 //        hasWeek = mReservationIntent.getStringExtra("hasWeek");
+        beDates = (ArrayList<Date>) mReservationIntent.
+                getSerializableExtra("BEDates");
         selectedDates = (ArrayList<Date>) mReservationIntent.
                 getSerializableExtra("selectedDates");
         haveDates = (ArrayList<Date>) mReservationIntent.
@@ -95,8 +99,8 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
         if (null != selectedDates && selectedDates.size() > 0) {
             mDates.clear();
             mDates.addAll(selectedDates);
-            beginTime = selectedDates.get(0).getTime() / 1000;
-            endTime = selectedDates.get(selectedDates.size() - 1).getTime() / 1000;
+            beginTime = beDates.get(0).getTime() / 1000;
+            endTime = beDates.get(beDates.size() - 1).getTime() / 1000;
         }
         if(null != haveDates && haveDates.size() > 0){
             mDates.clear();
@@ -128,11 +132,7 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
                 if (beginDate.getTime() <= (date.getTime() + (23 * 60 * 60 * 1000 + 59 * 60 * 1000)) &&
                         endDate.getTime() >= date.getTime()) {
                     // 此范围内可选
-                    if(null != grayDates && grayDates.size()>0 && grayDates.contains(date)){
-                        return true;
-                    }else {
-                        return false;
-                    }
+                    return null != grayDates && grayDates.size() > 0 && grayDates.contains(date);
 
                 }else {
                     return true;
@@ -194,9 +194,11 @@ public class ReservationDateLittleActivity extends BaseActivity implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_252");
                 onBackPressed();
                 break;
             case R.id.glide_pop:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_251");
                 SharedPreferencesUtils.saveInt(this,
                         "first_into_reservationAct", 1);
                 glide_pop.setVisibility(View.GONE);

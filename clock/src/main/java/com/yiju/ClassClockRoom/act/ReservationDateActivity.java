@@ -8,8 +8,10 @@ import android.widget.TextView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
+import com.yiju.ClassClockRoom.util.UIUtils;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -169,6 +171,7 @@ public class ReservationDateActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_212");
                 onBackPressed();
                 break;
             default:

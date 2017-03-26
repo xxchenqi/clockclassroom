@@ -15,6 +15,7 @@
         tools:ignore="ContentDescription" />
 
     <RelativeLayout
+        android:id="@+id/rl_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/iv_contact_choose">
@@ -23,12 +24,12 @@
             android:id="@+id/tv_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/DIMEN_12DP"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
             android:layout_marginLeft="@dimen/DIMEN_12DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:text="丽丽"
-            android:textColor="@color/color_gay_8f"
-            android:textSize="@dimen/DIMEN_17DP"
+            tools:text="丽丽"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -52,7 +53,7 @@
             android:layout_below="@+id/tv_contact_name"
             android:layout_marginBottom="@dimen/DIMEN_12DP"
             android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:text="13020169902"
+            tools:text="13020169911"
             android:textColor="@color/color_gay_8f"
             android:textSize="@dimen/DIMEN_12DP"
             tools:ignore="HardcodedText" />
@@ -67,5 +68,10 @@
         android:layout_marginRight="@dimen/DIMEN_12DP"
         android:src="@drawable/contact_edit_btn"
         tools:ignore="ContentDescription" />
+
+    <View
+        style="@style/linestyle_h_unfocused"
+        android:layout_below="@id/rl_contact"/>
+
 
 </RelativeLayout>

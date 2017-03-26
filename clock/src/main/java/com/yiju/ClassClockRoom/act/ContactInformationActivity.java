@@ -16,6 +16,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.ContactAdapter;
@@ -141,9 +142,11 @@ public class ContactInformationActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_073");
                 finish();
                 break;
             case R.id.rl_contact:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_075");
                 Intent intent = new Intent(this, EditContactActivity.class);
                 intent.putExtra("flag", "new");
                 startActivityForResult(intent, 0);
@@ -167,6 +170,7 @@ public class ContactInformationActivity extends BaseActivity implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
+        MobclickAgent.onEvent(UIUtils.getContext(), "v3200_074");
         Data data = datas.get(position);
         Intent intent = new Intent(this, EditContactActivity.class);
         intent.putExtra("data", data);

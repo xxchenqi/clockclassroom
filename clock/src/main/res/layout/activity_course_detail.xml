@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:ignore="ContentDescription">
 
@@ -34,11 +35,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.yiju.ClassClockRoom.widget.RatioLayout xmlns:sandy="http://schemas.android.com/apk/res/com.yiju.ClassClockRoom"
+                <com.yiju.ClassClockRoom.widget.RatioLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_placeholder"
-                    sandy:ratio="1.33">
+                    app:ratio="1.33">
 
                     <android.support.v4.view.ViewPager
                         android:id="@+id/vp_course_detail"

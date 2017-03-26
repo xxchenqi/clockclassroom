@@ -27,7 +27,7 @@ import java.net.URLDecoder;
 
 /**
  * ----------------------------------------
- * 注释:
+ * 注释: scheme 外部浏览器打开APP时调用
  * <p>
  * 作者: cq
  * <p>
@@ -39,9 +39,9 @@ public class EmptyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            Intent intent = getIntent();
-            if (intent != null) {
-                Uri uri = intent.getData();
+            Intent intent_uri = getIntent();
+            if (intent_uri != null) {
+                Uri uri = intent_uri.getData();
                 if (uri != null) {
                     String path = uri.getPath();
                     if (path != null) {
@@ -66,7 +66,11 @@ public class EmptyActivity extends Activity {
                         } else if (path.equals(UIUtils.getString(R.string.scheme_course_list_path))) {//课程列表
                             intent_start.setClass(this, CourseMoreActivity.class);
                         } else if (path.equals(UIUtils.getString(R.string.scheme_course_detail_path))) {//课程详情
-                            intent_start.setClass(this, NewCourseDetailActivity.class);
+                            if ("1".equals(uri.getQueryParameter(SchemeControl.CTYPE))) {
+                                intent_start.setClass(this, ExperienceCourseDetailActivity.class);
+                            } else {
+                                intent_start.setClass(this, FormalCourseDetailActivity.class);
+                            }
                             intent_start.putExtra(ExtraControl.EXTRA_COURSE_ID, uri.getQueryParameter(SchemeControl.COURSE_ID));
                         } else if (path.equals(UIUtils.getString(R.string.scheme_store_list_path))) {//门店列表
                             intent_start.setClass(this, MoreStoreActivity.class);
@@ -314,13 +318,6 @@ public class EmptyActivity extends Activity {
                                 intent_start.setClass(this, LoginActivity.class);
                                 intent_start.putExtra(SchemeControl.PATH, path);
                             }
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_mine_attention_path))) {//我的关注
-                            if (!"-1".equals(StringUtils.getUid())) {
-                                intent_start.setClass(this, MineWatchlistActivity.class);
-                            } else {
-                                intent_start.setClass(this, LoginActivity.class);
-                                intent_start.putExtra(SchemeControl.PATH, path);
-                            }
                         } else if (path.equals(UIUtils.getString(R.string.scheme_remind_set_path))) {//提醒设置
                             if (!"-1".equals(StringUtils.getUid())) {
                                 intent_start.setClass(this, RemindSetActivity.class);
@@ -334,14 +331,14 @@ public class EmptyActivity extends Activity {
                             intent_start.setClass(this, ThemeWebAboutActivity.class);
                             intent_start.putExtra(ExtraControl.EXTRA_THEME_CONTENT_TYPE, "2");
                             intent_start.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_news_Page);
-                            intent.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.ID));
-                            intent.putExtra(ExtraControl.EXTRA_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
+                            intent_start.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.ID));
+                            intent_start.putExtra(ExtraControl.EXTRA_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
                         } else if (path.equals(UIUtils.getString(R.string.scheme_web_activity_detail_path))) {//活动详情
                             intent_start.setClass(this, ThemeWebAboutActivity.class);
                             intent_start.putExtra(ExtraControl.EXTRA_THEME_CONTENT_TYPE, "3");
                             intent_start.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_activity_Page);
-                            intent.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.ID));
-                            intent.putExtra(ExtraControl.EXTRA_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
+                            intent_start.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.ID));
+                            intent_start.putExtra(ExtraControl.EXTRA_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
                         } else if (path.equals(UIUtils.getString(R.string.scheme_supplier_detail_path))) {//供应商详情
                             intent_start.setClass(this, SupplierDetailActivity.class);
                             intent_start.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.SUPPLIER_ID));

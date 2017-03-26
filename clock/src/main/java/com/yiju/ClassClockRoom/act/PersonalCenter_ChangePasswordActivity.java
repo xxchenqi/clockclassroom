@@ -19,6 +19,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
@@ -164,10 +165,11 @@ public class PersonalCenter_ChangePasswordActivity extends BaseActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_066");
                 this.finish();
                 break;
             case R.id.btn_commit://保存
-
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_067");
                 if (!et_new_password.getText().toString()
                         .equals(et_new_password_check.getText().toString())) {
                     UIUtils.showToastSafe(getString(R.string.toast_enter_same_password_twice));

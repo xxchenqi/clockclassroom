@@ -52,6 +52,10 @@ public class SplashActivity extends BaseActivity {
                 MobclickAgent.setDebugMode(true);
                 break;
             case 2:
+                isOnline = true;
+                //友盟统计
+                MobclickAgent.setDebugMode(true);
+                break;
             case 3:
                 isOnline = true;
                 MobclickAgent.setDebugMode(false);
@@ -72,7 +76,6 @@ public class SplashActivity extends BaseActivity {
         DataManager.isRequest = false;
         initYouYunPushSDK();
 
-        LogUtil.i("deviceInfo----", StringUtils.getDeviceInfo(this));
     }
 
     private void initYouYunPushSDK() {

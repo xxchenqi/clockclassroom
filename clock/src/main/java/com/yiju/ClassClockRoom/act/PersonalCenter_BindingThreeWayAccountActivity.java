@@ -16,6 +16,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yiju.ClassClockRoom.R;
@@ -167,19 +168,23 @@ public class PersonalCenter_BindingThreeWayAccountActivity extends BaseActivity 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_076");
                 this.setResult(3);
                 this.finish();
                 break;
 
             case R.id.rl_qqbind://绑定qq
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_077");
                 OtherLoginControl.binding(PersonalCenter_BindingThreeWayAccountActivity.this, mShareAPI,
                         SHARE_MEDIA.QQ);
                 break;
             case R.id.rl_wxbind://绑定微信
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_078");
                 OtherLoginControl.binding(PersonalCenter_BindingThreeWayAccountActivity.this, mShareAPI,
                         SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.rl_sinabind://绑定新浪
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_079");
                 OtherLoginControl.binding(PersonalCenter_BindingThreeWayAccountActivity.this, mShareAPI,
                         SHARE_MEDIA.SINA);
                 break;

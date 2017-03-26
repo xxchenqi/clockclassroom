@@ -11,6 +11,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -31,6 +32,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
@@ -257,6 +259,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     private Order2 order2;
     private String confirm_type;
     private String pay_method;
+    private View footView;
 
 
     @Override
@@ -284,6 +287,12 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void initView() {
+        footView = View.inflate(UIUtils.getContext(), R.layout.include_no_more, null);
+        footView.setVisibility(View.GONE);
+        ListView refreshableView = lv_mineorder.getRefreshableView();
+        FrameLayout footerLayoutHolder = new FrameLayout(UIUtils.getContext());
+        footerLayoutHolder.addView(footView);
+        refreshableView.addFooterView(footerLayoutHolder);
         data = new ArrayList<>();
         mineOrderAdapter = new MineOrderAdapter(this, data,
                 R.layout.item_mineorder, this, false);
@@ -482,6 +491,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         if (successfulCode.equals(mineOrder.getCode())) {
             if (is_down_refresh) {
                 data.clear();
+                footView.setVisibility(View.GONE);
             }
             ArrayList<MineOrderData> data2 = mineOrder.getData();
             if (data2.size() > 0) {
@@ -507,6 +517,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                     lv_mineorder.onRefreshComplete();
                     //数据如果我为0则只设置上拉刷新
                     lv_mineorder.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                    footView.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -542,10 +553,12 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         switch (v.getId()) {
             case R.id.head_back_relative:
                 //返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_088");
                 onBackPressed();
                 break;
             case R.id.btn_mineorder_stroll:
                 // 随便逛逛
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_101");
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra(MainActivity.Param_Start_Fragment, 0);
                 startActivity(intent);
@@ -572,6 +585,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 //                i.putExtra(UIUtils.getString(R.string.get_page_name),
 //                        WebConstant.Draw_up_invoices_Page);
 //                startActivity(i);
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_089");
                 if (popUpWindow != null) {
                     Drawable drawable = UIUtils.getDrawable(R.drawable.arrow_up);
                     if (drawable != null) {
@@ -592,6 +606,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         // <!-- 0未支付 1已支付 2过期未支付 3已支付退款 4已取消 5支付失败 status是状态 -->
+        MobclickAgent.onEvent(UIUtils.getContext(), "v3200_097");
         MineOrderData d = data.get(position - 1);
         Intent intent = new Intent(this, OrderDetailActivity.class);
         intent.putExtra("oid", d.getId());
@@ -997,7 +1012,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         switch (view.getId()) {
             case R.id.btn_mine_order_right:
                 if (UIUtils.getString(R.string.order_immediate_pay).equals(text)) {
-
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_100");
                     final MineOrderData o1 = data.get(position);//1级
                     //2级
                     order2 = o1.getOrder2().get(0);
@@ -1038,6 +1053,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
 
                 } else if (UIUtils.getString(R.string.order_delete).equals(text)) {
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_098");
                     deleteOrder(id);
                 } else if (UIUtils.getString(R.string.order_classroom_arrangement).equals(text)) {
                     //跳转到课室选择列表页
@@ -1060,10 +1076,12 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 //                    startActivityForResult(intent, 0);
 //                }
                 else if (UIUtils.getString(R.string.order_close).equals(text)) {
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_099");
                     cancelOrder(id);
                 }
                 break;
             case R.id.btn_mine_order_left:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_099");
                 if (UIUtils.getString(R.string.order_close).equals(text)) {
                     cancelOrder(id);
                 }
@@ -1285,18 +1303,25 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 //        adapter.notifyDataSetChanged();
         String dist_id = datas_filtrate.get(position).getId();
         if ("0".equals(dist_id)) {//全部
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_090");
             status = MineOrderActivity.STATUS_ALL;
         } else if ("1".equals(dist_id)) {//待支付
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_091");
             status = MineOrderActivity.STATUS_WAIT_PAY;
         } else if ("2".equals(dist_id)) {//进行中
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_092");
             status = MineOrderActivity.STATUS_USE;
         } else if ("3".equals(dist_id)) {//待确认
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_093");
             status = MineOrderActivity.STATUS_CONFIRM;
         } else if ("4".equals(dist_id)) {//已完成
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_094");
             status = MineOrderActivity.STATUS_FINISH;
         } else if ("5".equals(dist_id)) {//已取消
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_095");
             status = MineOrderActivity.STATUS_CANCLE;
         } else if ("6".equals(dist_id)) {//已关闭
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_096");
             status = MineOrderActivity.STATUS_CLOSE;
         }
         head_right_text.setText(datas_filtrate.get(position).getDist_name());

@@ -7,7 +7,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.yiju.ClassClockRoom.control.CountControl;
-import com.yiju.ClassClockRoom.util.StringUtils;
 
 /**
  * location新单例
@@ -72,7 +71,7 @@ public class LocationSingle {
         mLocClient.registerLocationListener(myListener);
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true);// 打开gps
-        option.setCoorType("gcj02"); // 设置坐标类型bd09ll
+        option.setCoorType("bd09ll"); // 设置坐标类型bd09ll,gcj02
 //		option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();

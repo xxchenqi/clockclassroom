@@ -1,11 +1,13 @@
 package com.yiju.ClassClockRoom.act.common;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.StatFs;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
@@ -29,6 +31,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.WifiBean;
@@ -116,6 +119,7 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void initView() {
         head_right_image.setBackgroundResource(R.drawable.new_share);
@@ -217,6 +221,7 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
         netWebViewClient.setiWebViewHandleError(new NetWebViewClient.IWebViewHandleError() {
             @Override
             public void handleWebViewError() {
+                webview.setVisibility(View.GONE);
                 ly_broken_fail.setVisibility(View.VISIBLE);
             }
         });
@@ -225,7 +230,8 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (title.contains("404")) {
+                if (!TextUtils.isEmpty(title) &&
+                        (title.toLowerCase().contains("error") || title.contains("404"))) {
                     view.stopLoading();
                     ly_broken_fail.setVisibility(View.VISIBLE);
                 }
@@ -264,6 +270,7 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative:
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_186");
                 onBackPressed();
                 break;
             case R.id.head_right_relative:

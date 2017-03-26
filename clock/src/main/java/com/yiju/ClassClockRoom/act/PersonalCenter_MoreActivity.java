@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
@@ -125,10 +126,12 @@ public class PersonalCenter_MoreActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.head_back_relative://返回
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_169");
                 onBackPressed();
                 break;
             case R.id.rl_remind_setting_arrow:
-                //提醒
+                //消息设置
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_170");
                 if (isLogin) {
                     intent = new Intent(PersonalCenter_MoreActivity.this, RemindSetActivity.class);
                     startActivityForResult(intent,
@@ -152,10 +155,12 @@ public class PersonalCenter_MoreActivity extends BaseActivity implements
                 break;
             case R.id.rl_call_email:
                 // 唤起邮件客户端
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_172");
                 toExecuteSave();
                 break;
             case R.id.rl_call_telephone:
                 // 弹出电话呼叫窗口
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_171");
                 CustomDialog customDialog = new CustomDialog(
                         PersonalCenter_MoreActivity.this,
                         UIUtils.getString(R.string.confirm),
@@ -181,17 +186,20 @@ public class PersonalCenter_MoreActivity extends BaseActivity implements
                 });
                 break;
             case R.id.rl_about_app://关于
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_173");
                 intent = new Intent(UIUtils.getContext(),
                         PersonalCenter_MoreVersionActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rl_user_contract://用户协议
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_175");
                 intent = new Intent(UIUtils.getContext(),
                         Common_Show_WebPage_Activity.class);
                 intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_Int_UserAgreement_Page);
                 startActivity(intent);
                 break;
             case R.id.rl_tax_policy://税率政策
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_174");
                 intent = new Intent(UIUtils.getContext(),
                         Common_Show_WebPage_Activity.class);
                 intent.putExtra(UIUtils.getString(R.string.get_page_name),

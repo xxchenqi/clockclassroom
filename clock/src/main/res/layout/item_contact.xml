@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/DIMEN_12DP"
         android:layout_marginTop="@dimen/DIMEN_12DP"
-        android:text="丽丽"
-        android:textColor="@color/app_theme_color"
-        android:textSize="@dimen/DIMEN_16DP"
+        tools:text="丽丽"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_15DP"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -36,9 +36,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_contact_name"
         android:layout_marginLeft="@dimen/DIMEN_12DP"
-        android:layout_marginTop="@dimen/DIMEN_12DP"
-        android:text="13020169902"
-        android:textColor="@color/app_theme_color"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        tools:text="13020169911"
+        android:textColor="@color/gray_8f"
         android:textSize="@dimen/DIMEN_12DP"
         tools:ignore="HardcodedText" />
 
@@ -47,14 +47,5 @@
         android:layout_below="@id/tv_contact_phone"
         android:layout_marginTop="@dimen/DIMEN_12DP" />
 
-    <ImageView
-        android:id="@+id/iv_contact_choose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/DIMEN_12DP"
-        android:src="@drawable/check_icon"
-        tools:ignore="ContentDescription" />
 
 </RelativeLayout>

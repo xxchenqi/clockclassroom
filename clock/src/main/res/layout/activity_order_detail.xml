@@ -208,7 +208,7 @@
                 <LinearLayout
                     android:id="@+id/ll_order_detail_remark"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/DIMEN_42DP"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/DIMEN_10DP"
                     android:background="@color/white"
                     android:gravity="center_vertical"
@@ -218,8 +218,9 @@
                     <TextView
                         android:id="@+id/tv_order_detail_remark"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="订单备注"
+                        android:layout_height="@dimen/DIMEN_42DP"
+                        android:text="@string/order_content"
+                        android:gravity="center_vertical"
                         android:textColor="@color/color_black_33"
                         android:textSize="@dimen/DIMEN_15DP"
                         tools:ignore="HardcodedText" />
@@ -228,11 +229,13 @@
                         android:id="@+id/tv_remark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/DIMEN_4DP"
+                        android:paddingBottom="@dimen/DIMEN_4DP"
                         android:layout_marginLeft="@dimen/DIMEN_12DP"
                         android:background="@null"
                         android:ellipsize="end"
                         android:gravity="right"
-                        android:hint="暂无备注"
+                        android:hint="@string/no_order_content"
                         android:textColor="@color/color_gay_8f"
                         android:textSize="@dimen/DIMEN_14DP" />
                 </LinearLayout>

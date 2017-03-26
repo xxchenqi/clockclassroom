@@ -17,6 +17,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.AvailableWifiStoreActivity;
 import com.yiju.ClassClockRoom.act.LoginActivity;
@@ -25,7 +26,6 @@ import com.yiju.ClassClockRoom.act.Messages_Activity;
 import com.yiju.ClassClockRoom.act.MineOrderActivity;
 import com.yiju.ClassClockRoom.act.MineOrderCourseActivity;
 import com.yiju.ClassClockRoom.act.MineOrganizationActivity;
-import com.yiju.ClassClockRoom.act.MineWatchlistActivity;
 import com.yiju.ClassClockRoom.act.MyWalletActivity;
 import com.yiju.ClassClockRoom.act.OrganizationCertificationStatusActivity;
 import com.yiju.ClassClockRoom.act.PersonMineCourseActivity;
@@ -90,8 +90,6 @@ public class PersonalCenterFragment extends BaseFragment implements
     private RelativeLayout rl_bankcard_arrow;
     //优惠券
     private RelativeLayout rl_mycoupons_arrow;
-    //我的关注
-    private RelativeLayout rl_myfocuson_arrow;
     //陪读
     private RelativeLayout rl_video_arrow;
     //我的消息
@@ -191,8 +189,6 @@ public class PersonalCenterFragment extends BaseFragment implements
                 .findViewById(R.id.rl_bankcard_arrow);
         rl_mycoupons_arrow = (RelativeLayout) currentView
                 .findViewById(R.id.rl_mycoupons_arrow);
-        rl_myfocuson_arrow = (RelativeLayout) currentView
-                .findViewById(R.id.rl_myfocuson_arrow);
         rl_video_arrow = (RelativeLayout) currentView
                 .findViewById(R.id.rl_video_arrow);
         rl_mywifi_arrow = (RelativeLayout) currentView
@@ -242,7 +238,6 @@ public class PersonalCenterFragment extends BaseFragment implements
         rl_balance_arrow.setOnClickListener(this);
         rl_bankcard_arrow.setOnClickListener(this);
         rl_mycoupons_arrow.setOnClickListener(this);
-        rl_myfocuson_arrow.setOnClickListener(this);
         rl_mywifi_arrow.setOnClickListener(this);
         rl_video_arrow.setOnClickListener(this);
 
@@ -643,9 +638,15 @@ public class PersonalCenterFragment extends BaseFragment implements
         switch (v.getId()) {
             case R.id.rl_avatar:
                 //头像点击个人中心信息
+                if(isLogin){
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_040");
+                }else{
+                    MobclickAgent.onEvent(UIUtils.getContext(), "v3200_039");
+                }
                 startActivityPage(PersonalCenter_InformationActivity.class, true);
                 break;
             case R.id.rl_message_arrow://我的消息
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_041");
                 if (!"-1".equals(StringUtils.getUid())) {
                     Intent intentMessage = new Intent(UIUtils.getContext(),
                             Messages_Activity.class);
@@ -658,6 +659,7 @@ public class PersonalCenterFragment extends BaseFragment implements
                 break;
             case R.id.rl_my_interactive_arrow:
                 //我的互动
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_042");
                 startActivityPage(PersonMineInteractionActivity.class, true);
                 break;
             case R.id.rl_mine_teacher_info:
@@ -717,9 +719,11 @@ public class PersonalCenterFragment extends BaseFragment implements
                 break;
             case R.id.rl_mine_order:
                 // 我的订单(全部订单)
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_043");
                 startActivityOrder(MineOrderActivity.class, MineOrderActivity.STATUS_ALL);
                 break;
             case R.id.rl_mine_course_order://我的课程订单
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_044");
                 startActivityOrder(MineOrderCourseActivity.class, MineOrderCourseActivity.STATUS_ALL);
                 break;
             /*case R.id.ll_will_pay_order:
@@ -739,6 +743,7 @@ public class PersonalCenterFragment extends BaseFragment implements
                 break;
             case R.id.rl_mywallet_arrow:
                 //我的钱包
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_045");
                 startActivityPage(MyWalletActivity.class, true);
                 break;
             case R.id.rl_balance_arrow://余额
@@ -773,28 +778,9 @@ public class PersonalCenterFragment extends BaseFragment implements
                 //优惠券
                 startActivityPage(PersonalCenter_CouponListActivity.class, true);
                 break;
-            case R.id.rl_myfocuson_arrow:
-                //我的关注
-                if (isLogin) {
-                  /*  intent = new Intent();
-                    intent.putExtra(UIUtils.getString(R.string.redirect_open_url),
-                            UrlUtils.SERVER_WEB_MYFAVORITE + "uid=" + uid);
-                    intent.putExtra(
-                            Common_Show_WebPage_Activity.Param_String_Title,
-                            UIUtils.getString(R.string.label_myAttention));
-                    intent.setClass(UIUtils.getContext(),
-                            Common_Show_WebPage_Activity.class);
-                    intent.putExtra(UIUtils.getString(R.string.get_page_name),
-                            WebConstant.Attention_Page);*/
-                    intent = new Intent(UIUtils.getContext(), MineWatchlistActivity.class);
-                    startActivity(intent);
-                } else {
-                    intent = new Intent(UIUtils.getContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
-                break;
             case R.id.rl_mywifi_arrow:
                 // 认证WIFI,如果电话号码为空，就传111，这里的url要写死，不能更改
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_046");
                 intent = new Intent(UIUtils.getContext(),
                         Common_Show_WebPage_Activity.class);
                 intent.putExtra(UIUtils.getString(R.string.get_page_name),
@@ -802,6 +788,7 @@ public class PersonalCenterFragment extends BaseFragment implements
                 startActivity(intent);
                 break;
             case R.id.tv_check_stores://查看可用门店列表
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_047");
                 intent = new Intent(UIUtils.getContext(), AvailableWifiStoreActivity.class);
                 startActivity(intent);
                 break;
@@ -811,6 +798,7 @@ public class PersonalCenterFragment extends BaseFragment implements
                 break;
             case R.id.rl_more_info:
                 //更多
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_048");
                 startActivityPage(PersonalCenter_MoreActivity.class, false);
                 break;
             default:

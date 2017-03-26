@@ -8,6 +8,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.bean.ShareBean;
+import com.yiju.ClassClockRoom.util.CommonUtil;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 
@@ -16,7 +17,7 @@ public class ShareControl {
     /**
      * 启动分享
      *
-     * @param mActivity ac
+     * @param mActivity   ac
      * @param share_MEDIA 分享类型
      * @param bean        分享数据
      */
@@ -72,9 +73,14 @@ public class ShareControl {
             shareAction.withTargetUrl(bean.getUrl());
         }
         if (StringUtils.isNotNullString(bean.getPicurl())) {
+            if (!bean.getPicurl().contains("@imageView")) {
+                bean.setPicurl(CommonUtil.jointHeadUrl(bean.getPicurl(), 200, 200));
+            } else {
+                bean.setPicurl(CommonUtil.jointHeadUrl(bean.getPicurl().split(".jpeg")[0], 200, 200));
+            }
             shareAction.withMedia(new UMImage(mActivity, bean.getPicurl()));
-        } else if (bean.getPicicon() != null) {
-            shareAction.withMedia(new UMImage(mActivity, bean.getPicicon()));
+        } else {
+            shareAction.withMedia(new UMImage(mActivity, R.drawable.weibo_link));
         }
         if (share_MEDIA != SHARE_MEDIA.SINA) {
             shareAction.withTitle(bean.getTitle());

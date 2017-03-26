@@ -377,7 +377,8 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="@dimen/DIMEN_10DP"
                 android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_12DP" />
+                android:textSize="@dimen/DIMEN_12DP"
+                android:paddingBottom="@dimen/DIMEN_4DP"/>
             <TextView
                 android:id="@+id/tv_cancel_classroom"
                 android:layout_width="wrap_content"
@@ -393,7 +394,8 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="@dimen/DIMEN_10DP"
                 android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_12DP" />
+                android:textSize="@dimen/DIMEN_12DP"
+                android:paddingBottom="@dimen/DIMEN_4DP"/>
 
         </LinearLayout>
     </LinearLayout>

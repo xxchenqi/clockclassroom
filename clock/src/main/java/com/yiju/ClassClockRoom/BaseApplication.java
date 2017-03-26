@@ -10,7 +10,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDexApplication;
-import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.bugtags.library.Bugtags;
@@ -116,8 +115,10 @@ public class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         String processName = getProcessName(this);
-        if (processName!= null) {
-            if(processName.equals("com.yiju.ClassClockRoom")){
+        if (processName != null) {
+            if (processName.equals("com.yiju.ClassClockRoom")||
+                    processName.equals("com.yiju.ClassClockRoom.debug")||
+                    processName.equals("com.yiju.ClassClockRoom.online")) {
                 switch (FORMAL_ENVIRONMENT) {
                     case 1:
                         //线下
@@ -217,7 +218,7 @@ public class BaseApplication extends MultiDexApplication {
             CYIO.startTracing(getApplicationContext(), "1066663095");
             if (!"-1".equals(StringUtils.getUid())) {
                 CYIO.getInstance().setUid(StringUtils.getUid());
-            }else{
+            } else {
                 CYIO.getInstance().setUid("");
             }
             isInitCYSDK = true;

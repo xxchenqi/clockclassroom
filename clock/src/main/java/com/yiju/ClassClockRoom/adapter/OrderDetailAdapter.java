@@ -20,6 +20,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.ClassroomArrangementActivity;
@@ -434,6 +435,7 @@ public class OrderDetailAdapter extends BaseAdapter {
         viewHolder.tv_item_detail_sname.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_103");
                 Intent intent = new Intent(UIUtils.getContext(), StoreDetailActivity.class);
                 intent.putExtra(ExtraControl.EXTRA_STORE_ID, o.getSid());
                 UIUtils.startActivity(intent);
@@ -443,6 +445,7 @@ public class OrderDetailAdapter extends BaseAdapter {
         viewHolder.rl_detail.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_104");
                 Intent intent = new Intent(UIUtils.getContext(), IndexDetailActivity.class);
                 intent.putExtra("sid", o.getSid());
                 intent.putExtra("sname", o.getSname());
@@ -464,6 +467,7 @@ public class OrderDetailAdapter extends BaseAdapter {
         viewHolder.rl_all_course.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_108");
                 Intent intent = new Intent(context,
                         ClassroomDetailActivity.class);
                 intent.putExtra("order2", o);

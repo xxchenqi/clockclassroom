@@ -17,13 +17,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.AffirmSignUpActivity;
 import com.yiju.ClassClockRoom.act.CourseMoreActivity;
+import com.yiju.ClassClockRoom.act.ExperienceCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.LoginActivity;
 import com.yiju.ClassClockRoom.act.MainActivity;
-import com.yiju.ClassClockRoom.act.NewCourseDetailActivity;
+import com.yiju.ClassClockRoom.act.FormalCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.PersonalCenter_ChangeMobileActivity;
 import com.yiju.ClassClockRoom.act.StoreDetailActivity;
 import com.yiju.ClassClockRoom.act.SupplierDetailActivity;
@@ -91,6 +93,12 @@ public class NetWebViewClient extends WebViewClient {
             iWebViewHandleError.handleWebViewError();
         }
     }
+
+    /*@Override
+    public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+        super.onReceivedHttpError(view, request, errorResponse);
+        iWebViewHandleError.handleWebViewError();
+    }*/
 
     private boolean processUrl(WebView view, final String url) {
         if (url.startsWith("tel:")) {
@@ -213,13 +221,9 @@ public class NetWebViewClient extends WebViewClient {
             if (url.contains("singlestore=singlestore")) {//跳转到门店课室类型列表
                 view.stopLoading();
                 String sid = Uri.parse(url).getQueryParameter("sid");
-                String store_name = Uri.parse(url).getQueryParameter("title");
-                String school_type = Uri.parse(url).getQueryParameter("school_type");
 
                 Intent intent = new Intent(UIUtils.getContext(), StoreDetailActivity.class);
                 intent.putExtra(ExtraControl.EXTRA_STORE_ID, sid);
-//                intent.putExtra("school_type", school_type);
-//                intent.putExtra("store_name", store_name);
                 startActivity(intent);
                 return false;
             }
@@ -341,6 +345,8 @@ public class NetWebViewClient extends WebViewClient {
                     Common_Show_WebPage_Activity.class);
             startActivity(intent);
         } else if (url.contains(WebConstant.varinvoice)) {
+            //增值税专用发票信息采集表
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_188");
             view.stopLoading();
             Intent intent = new Intent();
             // page
@@ -350,6 +356,8 @@ public class NetWebViewClient extends WebViewClient {
                     Common_Show_WebPage_Activity.class);
             startActivity(intent);
         } else if (url.contains(WebConstant.room_price)) {
+            //课室含税与不含税单价一览表
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_187");
             view.stopLoading();
             Intent intent = new Intent();
             // page
@@ -474,10 +482,12 @@ public class NetWebViewClient extends WebViewClient {
             //由往期主题列表跳转到往期主题首页
             skipPastTheme(url, "id");
         } else if (url.contains("#themeact_id")) {
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_011");
             skipThemeact(url, "themeact_id");
-        } else if (url.contains("#share_theme")) {//分享主题
+        } else if (url.contains("#share_theme")) {//主题详情分享
+            MobclickAgent.onEvent(UIUtils.getContext(), "v3200_006");
             skipThemeShare(url, ShareDialog.Type_Share_Theme);
-        } else if (url.contains("#share_past_theme")) {//分享主题
+        } else if (url.contains("#share_past_theme")) {//往期主题分享
             skipThemeShare(url, ShareDialog.Type_Share_Past_Theme);
         } else if (url.contains("#themeact_url")) {
             skipThemeAct(url, "themeact_url");
@@ -585,8 +595,8 @@ public class NetWebViewClient extends WebViewClient {
                 intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_activity_Page);
                 startActivity(intent);
             } else if ("4".equals(contentType)) {
-                //课程
-                intent = new Intent(UIUtils.getContext(), NewCourseDetailActivity.class);
+                //TODO 课程
+                intent = new Intent(UIUtils.getContext(), FormalCourseDetailActivity.class);
                 intent.putExtra(ExtraControl.EXTRA_COURSE_ID, id_value);
                 startActivity(intent);
             } else if ("5".equals(contentType)) {
@@ -621,8 +631,15 @@ public class NetWebViewClient extends WebViewClient {
      */
     public void skipCourseInfo(String url, String value) {
         String anchorId = getAnchorId(url, value);
+        String ctype = getAnchorId(url, "ctype");
         if (anchorId != null) {
-            Intent intent = new Intent(UIUtils.getContext(), NewCourseDetailActivity.class);
+            Intent intent = new Intent();
+            //1是体验课 0 是正式课
+            if(ctype.equals("1")){
+                intent.setClass(UIUtils.getContext(), ExperienceCourseDetailActivity.class);
+            }else{
+                intent.setClass(UIUtils.getContext(), FormalCourseDetailActivity.class);
+            }
             intent.putExtra(ExtraControl.EXTRA_COURSE_ID, anchorId);
             startActivity(intent);
         }
@@ -659,6 +676,18 @@ public class NetWebViewClient extends WebViewClient {
                             map.put(split2[0], "");
                         } else if (split2.length == 2) {
                             map.put(split2[0], split2[1]);
+                        }else {
+                            StringBuilder sb = new StringBuilder();
+                            for (int j = 0; j < split2.length; j++) {
+                                if(j!=0){
+                                    if(j==split2.length-1){
+                                        sb.append(split2[j]);
+                                    }else{
+                                        sb.append(split2[j]).append("=");
+                                    }
+                                }
+                            }
+                            map.put(split2[0],sb.toString());
                         }
                     }
                 }

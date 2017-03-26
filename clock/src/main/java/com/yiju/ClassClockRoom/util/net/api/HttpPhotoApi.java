@@ -1,7 +1,6 @@
 package com.yiju.ClassClockRoom.util.net.api;
 
 import com.yiju.ClassClockRoom.R;
-import com.yiju.ClassClockRoom.bean.PictureWrite;
 import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
 import com.yiju.ClassClockRoom.common.DataManager;
@@ -10,9 +9,6 @@ import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.HttpApiParam;
 import com.yiju.ClassClockRoom.util.net.HttpManage;
 import com.yiju.ClassClockRoom.util.net.ResultCallImpl;
-import com.yiju.ClassClockRoom.util.net.UrlUtils;
-
-import java.io.File;
 
 /**
  * 图片相关API
@@ -24,22 +20,6 @@ public class HttpPhotoApi extends BaseSingleton {
         return getSingleton(HttpPhotoApi.class);
     }
 
-    /**
-     * 图片上传
-     *
-     * @param file 图片文件
-     */
-    public void uploadPhoto(File file) {
-        HttpManage.getInstance().getObject(HttpManage.getInstance()
-                        .getApiService(UrlUtils.BASE_PIC_WRITE)
-                        .uploadPhoto(HttpApiParam.uploadPhoto(file)),false,
-                new ResultCallImpl<PictureWrite>() {
-                    @Override
-                    public void onNext(PictureWrite bean) {
-                        DataManager.getInstance().uploadPhoto(bean);
-                    }
-                });
-    }
 
     /**
      * 保存上传图片地址
@@ -50,7 +30,7 @@ public class HttpPhotoApi extends BaseSingleton {
     public void saveUploadPhotoUrl(String uid, String username, String password, String third_source, String url) {
         HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getApiService()
                         .saveUploadPhotoUrl(HttpApiParam.saveUploadPhotoUrl(
-                                uid,username,password,third_source, url)),
+                                uid, username, password, third_source, url)),
                 new ResultCallImpl<MineOrder>() {
                     @Override
                     public void onNext(MineOrder bean) {

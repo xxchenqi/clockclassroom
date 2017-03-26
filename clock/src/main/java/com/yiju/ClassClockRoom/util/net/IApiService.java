@@ -1,7 +1,6 @@
 package com.yiju.ClassClockRoom.util.net;
 
 
-import com.yiju.ClassClockRoom.bean.PictureWrite;
 import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.bean.result.AccompanyReadResult;
 import com.yiju.ClassClockRoom.bean.result.CourseApplyResult;
@@ -48,12 +47,6 @@ public interface IApiService {
     @POST(UrlUtils.SERVER_CALSS_ROOM_API)
     Call<BaseEntity> baseClassRoomApi(@PartMap Map<String, RequestBody> bodyMap);
 
-    /**
-     * 图片上传
-     */
-    @Multipart
-    @POST(UrlUtils.UPLOAD_PHOTO)
-    Call<PictureWrite> uploadPhoto(@PartMap Map<String, RequestBody> bodyMap);
 
     /**
      * 存储图片的URL

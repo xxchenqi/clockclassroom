@@ -14,6 +14,7 @@ public class PushBean implements Parcelable {
 
     private String action;
     private String oid;
+    private String order_type;
     private String course_id;
     private String title;
     private String content;
@@ -84,6 +85,14 @@ public class PushBean implements Parcelable {
 
     public void setOid(String oid) {
         this.oid = oid;
+    }
+
+    public String getOrder_type() {
+        return order_type;
+    }
+
+    public void setOrder_type(String order_type) {
+        this.order_type = order_type;
     }
 
     public String getTitle() {

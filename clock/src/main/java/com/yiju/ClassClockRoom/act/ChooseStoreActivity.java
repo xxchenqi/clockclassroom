@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -100,6 +101,7 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
     //pop
     private MoreStorePopUpWindow popUpWindow;
     private boolean from_prepaid;
+    private View footView;
 
     @Override
     public void initIntent() {
@@ -112,6 +114,12 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
     protected void initView() {
         lng_g = LocationSingle.getInstance().getLongitude();
         lat_g = LocationSingle.getInstance().getLatitude();
+        footView = View.inflate(UIUtils.getContext(), R.layout.include_no_more, null);
+        footView.setVisibility(View.GONE);
+        ListView refreshableView = lv_choose_store.getRefreshableView();
+        FrameLayout footerLayoutHolder = new FrameLayout(UIUtils.getContext());
+        footerLayoutHolder.addView(footView);
+        refreshableView.addFooterView(footerLayoutHolder);
     }
 
     @Override
@@ -229,10 +237,15 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
                 showHaveStore();
                 adapter.notifyDataSetChanged();
                 lv_choose_store.onRefreshComplete();
+                if (choose_data.size() < 10){
+                    lv_choose_store.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                    footView.setVisibility(View.VISIBLE);
+                }
             } else {
                 if (!is_down_refresh) {
                     lv_choose_store.onRefreshComplete();
                     lv_choose_store.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                    footView.setVisibility(View.VISIBLE);
                 } else {
                     data.clear();
                     adapter.notifyDataSetChanged();
