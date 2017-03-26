@@ -53,6 +53,10 @@ public class CameraImage {
      * 拍照
      */
     public void doTakePhoto() {
+        if(PHOTO_DIR==null){
+             /* 头像名称 */
+            tempFile = getTempFile();
+        }
         if (PHOTO_DIR != null && PHOTO_DIR.exists()) {
             Intent intent_camera = mActivity.getPackageManager()
                     .getLaunchIntentForPackage("com.android.camera");
@@ -66,8 +70,6 @@ public class CameraImage {
                 intent = new Intent("android.media.action.IMAGE_CAPTURE");
             }
             // 判断存储卡是否可以用，可用进行存储
-            /* 头像名称 */
-            tempFile = getTempFile();
             uri_tempFile = Uri.parse("file://" + "/" + tempFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri_tempFile);
             // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA

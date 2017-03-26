@@ -373,7 +373,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
             Intent intent = new Intent(this, PasswordActivity.class);
             intent.putExtra("phoneNumber", phoneNumber);//手机号
             intent.putExtra("title", title);//标题
-            startActivity(intent);
+            startActivityForResult(intent,0);
         } else {
             UIUtils.showToastSafe(getString(R.string.toast_verification_code_error));
         }

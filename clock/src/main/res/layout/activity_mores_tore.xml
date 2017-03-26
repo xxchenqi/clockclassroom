@@ -92,7 +92,6 @@
             android:background="@color/white"
             android:divider="#00000000"
             android:dividerHeight="0dip"
-            android:paddingBottom="@dimen/DIMEN_10DP"
             ptr:ptrAnimationStyle="flip" />
 
         <TextView

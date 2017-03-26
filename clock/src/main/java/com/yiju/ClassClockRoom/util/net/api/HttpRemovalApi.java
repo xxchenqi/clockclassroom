@@ -56,7 +56,7 @@ public class HttpRemovalApi extends BaseSingleton {
     public void getHttpRequestForServer(final boolean isFirst, ImageView iv_splash_bg) {
         this.isFirst = isFirst;
         this.iv_splash_bg = iv_splash_bg;
-        if (BaseApplication.FORMAL_ENVIRONMENT == 1) {
+        if (BaseApplication.FORMAL_ENVIRONMENT == 1||BaseApplication.FORMAL_ENVIRONMENT == 2) {
             if (iv_splash_bg != null) {
                 getHttpRequestSplashBg();
             } else {

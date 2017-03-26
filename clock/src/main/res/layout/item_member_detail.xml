@@ -13,7 +13,7 @@
         app:borderRadius="2dp"
         app:type="round"
         tools:ignore="ContentDescription"
-        android:background="@drawable/clock_wait"/>
+        android:background="@drawable/bg_placeholder_4_3"/>
 
 
 </FrameLayout>

@@ -273,7 +273,7 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
                 if (!buttonView.isPressed()) {
                     return;
                 }
-                if (isChecked) {//
+                if (isChecked) {
                     value = "1";//显示
                     tv_show_msg.setText(UIUtils.getString(R.string.text_show_open));
                 } else {
@@ -356,13 +356,18 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
         // 设置手机号
         String mobile = SharedPreferencesUtils.getString(UIUtils.getContext(),
                 UIUtils.getString(R.string.shared_mobile), "");
+        String existPassword = SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_existpassword), "0");
         if (mobile != null && !"".equals(mobile)) {
             tv_mobile.setText(mobile);
         } else {
             tv_mobile.setText(R.string.txt_not_binding_mobile_phone);
             // 三方登录后隐藏修改密码布局
             rl_layout_password.setVisibility(View.GONE);
+        }
 
+        if (!"1".equals(existPassword)) {
+            rl_layout_password.setVisibility(View.GONE);
         }
 
         // 设置邮箱
@@ -451,10 +456,6 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
                 sex_popup.showAtLocation(rl_layout_sex, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.rl_organization_blacklist:
-                //机构黑名单管理
-                intent = new Intent(UIUtils.getContext(),
-                        OrganizationBlacklistManagementActivity.class);
-                startActivityForResult(intent, 5);
                 break;
             case R.id.rl_layout_email:
                 //修改邮箱
@@ -508,7 +509,7 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
                                             StringUtils.getPassword(),
                                             StringUtils.getThirdSource()
                                     );
-                                }else{
+                                } else {
                                     MobclickAgent.onEvent(UIUtils.getContext(), "v3200_060");
                                 }
                             }

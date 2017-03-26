@@ -65,7 +65,7 @@
                 android:layout_marginTop="@dimen/DIMEN_12DP"
                 android:background="@color/gray" />
 
-            <EditText
+            <com.yiju.ClassClockRoom.widget.ClearEditText
                 android:id="@+id/et_username"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -75,25 +75,18 @@
                 android:inputType="number"
                 android:maxLength="13"
                 android:maxLines="1"
+                android:paddingRight="@dimen/DIMEN_10DP"
                 android:textColor="@color/color_black_33"
                 android:textColorHint="@color/color_gay_bb"
                 android:textSize="@dimen/DIMEN_16DP"
                 tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:id="@+id/iv_login_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingRight="@dimen/DIMEN_10DP"
-                android:src="@drawable/delete"
-                android:visibility="gone" />
-
         </LinearLayout>
 
         <com.yiju.ClassClockRoom.widget.FireworkView
             android:id="@+id/fire_work"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
     </FrameLayout>
 
 
@@ -106,55 +99,53 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_height="@dimen/DIMEN_60DP"
         android:layout_marginLeft="@dimen/DIMEN_35DP"
         android:layout_marginRight="@dimen/DIMEN_35DP"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
+        <LinearLayout
+            android:layout_width="@dimen/DIMEN_200DP"
+            android:layout_height="@dimen/DIMEN_44DP"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_register_verify"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/verify"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/DIMEN_10DP"
+                android:textColor="@color/color_black_33"
+                android:textColorHint="@color/color_gay_bb"
+                android:textSize="@dimen/DIMEN_16DP"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/DIMEN_12DP"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_marginRight="@dimen/DIMEN_10DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:background="@color/gray_dd" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_get_verify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/DIMEN_12DP"
-            android:layout_marginLeft="@dimen/DIMEN_10DP"
-            android:layout_marginRight="@dimen/DIMEN_8DP"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@drawable/lock"
-            android:visibility="gone"
-            tools:ignore="ContentDescription" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/DIMEN_12DP"
-            android:layout_marginLeft="@dimen/DIMEN_10DP"
-            android:layout_marginRight="@dimen/DIMEN_6DP"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/gray"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/et_password"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@null"
-            android:hint="@string/label_hint_password"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:paddingLeft="@dimen/DIMEN_10DP"
-            android:textColorHint="@color/color_gay_bb"
-            android:textSize="@dimen/DIMEN_16DP"
-            tools:ignore="HardcodedText" />
+            android:gravity="center"
+            android:text="@string/get_verify"
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_16DP" />
 
-        <CheckBox
-            android:id="@+id/cb_password_is_show"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/DIMEN_10DP"
-            android:background="@drawable/cb_password_bg"
-            android:button="@null"
-            android:visibility="visible" />
     </LinearLayout>
 
     <View
@@ -177,46 +168,25 @@
         app:cpb_paddingProgress="@dimen/DIMEN_1DP"
         app:cpb_textIdle="@string/label_login" />
 
-    <LinearLayout
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:gravity="center"
+        android:text="@string/create_phone_info"
+        android:textColor="@color/color_gay_99"
+        android:textSize="@dimen/DIMEN_12DP" />
+
+    <TextView
+        android:id="@+id/tv_password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/DIMEN_26DP"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:text="@string/label_password_login"
+        android:textColor="@color/black66"
+        android:textSize="@dimen/DIMEN_15DP" />
 
-
-        <TextView
-            android:id="@+id/tv_forgotpassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="@string/label_forget_password"
-            android:textColor="@color/black66"
-            android:textSize="@dimen/DIMEN_15DP"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
-            android:text="@string/vertical_symbol_2"
-            android:textColor="@color/gray_dd"
-            android:textSize="@dimen/DIMEN_14DP" />
-
-        <TextView
-            android:id="@+id/tv_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="@string/label_immediately_register"
-            android:textColor="@color/black66"
-            android:textSize="@dimen/DIMEN_15DP"
-            tools:ignore="HardcodedText" />
-
-    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_login"

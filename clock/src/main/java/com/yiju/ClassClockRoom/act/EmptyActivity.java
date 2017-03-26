@@ -55,16 +55,8 @@ public class EmptyActivity extends Activity {
                         } else if (path.equals(UIUtils.getString(R.string.scheme_classroom_home_path))) {//订课室首页
                             intent_start.setClass(this, MainActivity.class);
                             intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_INDEX);
-                        }
-//                        else if (path.equals(UIUtils.getString(R.string.scheme_teacher_home_path))) {//老师首页
-//                            intent_start.setClass(this, MainActivity.class);
-//                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_EXPERIENCE);
-//                        }
-                        else if (path.equals(UIUtils.getString(R.string.scheme_personal_home_path))) {//个人中心
+                        } else if (path.equals(UIUtils.getString(R.string.scheme_personal_home_path))) {//个人中心
                             intent_start.setClass(this, PersonalCenterActivity.class);
-//                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_course_list_path))) {//课程列表
-                            intent_start.setClass(this, CourseMoreActivity.class);
                         } else if (path.equals(UIUtils.getString(R.string.scheme_course_detail_path))) {//课程详情
                             if ("1".equals(uri.getQueryParameter(SchemeControl.CTYPE))) {
                                 intent_start.setClass(this, ExperienceCourseDetailActivity.class);
@@ -87,15 +79,6 @@ public class EmptyActivity extends Activity {
                             intent_start.putExtra("room_name", uri.getQueryParameter(SchemeControl.ROOM_NAME));
                             intent_start.putExtra("instruction", uri.getQueryParameter(SchemeControl.INSTRUCTION));
                             intent_start.putExtra("confirm_type", uri.getQueryParameter(SchemeControl.CONFIRM_TYPE));
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_organization_teacher_list_path))) {//机构老师列表
-                            intent_start.setClass(this, TeacherMoreActivity.class);
-                            intent_start.putExtra(TeacherMoreActivity.ACTION_TYPE, TeacherMoreActivity.ORGANIZATION_TYPE);
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_personal_teacher_list_path))) {//个人老师列表
-                            intent_start.setClass(this, TeacherMoreActivity.class);
-                            intent_start.putExtra(TeacherMoreActivity.ACTION_TYPE, TeacherMoreActivity.PERSONAL_TYPE);
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_teacher_detail_path))) {//老师详情
-                            intent_start.setClass(this, TeacherDetailActivity.class);
-                            intent_start.putExtra("id", uri.getQueryParameter(SchemeControl.TEACHER_ID));
                         } else if (path.equals(UIUtils.getString(R.string.scheme_accompany_read_path))) {//陪读
                             intent_start.setClass(this, AccompanyReadStatusActivity.class);
                             intent_start.putExtra(SchemeControl.PASSWORD, uri.getQueryParameter(SchemeControl.PASSWORD));
@@ -239,46 +222,6 @@ public class EmptyActivity extends Activity {
                             intent_start.setClass(UIUtils.getContext(), Common_Show_WebPage_Activity.class);
                             intent_start.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.Organization_authentication_Page);
                             intent_start.putExtra(Common_Show_WebPage_Activity.Param_String_Title, UIUtils.getString(R.string.i_need_authentication));
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_personal_teacher_information_path))) {//个人老师资料
-                            if (!"-1".equals(StringUtils.getUid())) {
-                                intent_start.setClass(UIUtils.getContext(), MemberDetailActivity.class);
-                                intent_start.putExtra(MemberDetailActivity.ACTION_UID, uri.getQueryParameter(SchemeControl.TEACHER_ID));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_SHOW_TEACHER, uri.getQueryParameter(SchemeControl.SHOW_TEACHER));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_ORG_AUTH, uri.getQueryParameter(SchemeControl.ORG_AUTH));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_MOBILE, uri.getQueryParameter(SchemeControl.MOBILE));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_COURSE_FLAG, uri.getBooleanQueryParameter(SchemeControl.COURSE_FLAG, false));
-                            } else {
-                                intent_start.setClass(this, LoginActivity.class);
-                                intent_start.putExtra(SchemeControl.PATH, path);
-                                intent_start.putExtra(MemberDetailActivity.ACTION_UID, uri.getQueryParameter(SchemeControl.TEACHER_ID));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_SHOW_TEACHER, uri.getQueryParameter(SchemeControl.SHOW_TEACHER));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_ORG_AUTH, uri.getQueryParameter(SchemeControl.ORG_AUTH));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_MOBILE, uri.getQueryParameter(SchemeControl.MOBILE));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
-                                intent_start.putExtra(MemberDetailActivity.ACTION_COURSE_FLAG, uri.getBooleanQueryParameter(SchemeControl.COURSE_FLAG, false));
-                            }
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_mine_organization_path))) {//我的机构
-                            if (!"-1".equals(StringUtils.getUid())) {
-                                intent_start.setClass(this, MineOrganizationActivity.class);
-                            } else {
-                                intent_start.setClass(this, LoginActivity.class);
-                                intent_start.putExtra(SchemeControl.PATH, path);
-                            }
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_mine_course_path))) {//我的课程
-                            if (!"-1".equals(StringUtils.getUid())) {
-                                intent_start.setClass(this, PersonMineCourseActivity.class);
-                            } else {
-                                intent_start.setClass(this, LoginActivity.class);
-                                intent_start.putExtra(SchemeControl.PATH, path);
-                            }
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_publish_course_path))) {//发布课程
-                            if (!"-1".equals(StringUtils.getUid())) {
-                                intent_start.setClass(this, PublishActivity.class);
-                            } else {
-                                intent_start.setClass(this, LoginActivity.class);
-                                intent_start.putExtra(SchemeControl.PATH, path);
-                            }
                         } else if (path.equals(UIUtils.getString(R.string.scheme_mine_order_all_path))) {//我的订单-全部订单
                             if (!"-1".equals(StringUtils.getUid())) {
                                 intent_start.setClass(this, MineOrderActivity.class);

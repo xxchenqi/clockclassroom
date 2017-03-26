@@ -119,17 +119,13 @@ public class ActivityControlManager {
      * @param page     0订课室，1主题，2体验课
      */
     public void finishCurrentAndOpenHome(Activity activity, int page) {
-        if (checkMainActivity()) {//如果首页存在直接finish
+        if (checkMainActivity() || activityStack.size() > 1) {//如果首页存在直接finish
             activity.finish();
         } else {
-            if (activityStack.size() > 1) {
-                activity.finish();
-            } else {
-                Intent intent = new Intent(activity, MainActivity.class);
-                intent.putExtra(MainActivity.Param_Start_Fragment, page);
-                activity.startActivity(intent);
-                activity.finish();
-            }
+            Intent intent = new Intent(activity, MainActivity.class);
+            intent.putExtra(MainActivity.Param_Start_Fragment, page);
+            activity.startActivity(intent);
+            activity.finish();
         }
     }
 

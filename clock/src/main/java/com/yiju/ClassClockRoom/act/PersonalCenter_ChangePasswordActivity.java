@@ -23,6 +23,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.InputValidate;
 import com.yiju.ClassClockRoom.util.MD5;
@@ -199,14 +200,13 @@ public class PersonalCenter_ChangePasswordActivity extends BaseActivity
         if (!"-1".equals(StringUtils.getUid())) {
             params.addBodyParameter("uid", StringUtils.getUid());
         }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("pwd", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("password", et_new_password_check.getText().toString());
         params.addBodyParameter("old_password", et_old_password.getText()
                 .toString());
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -240,6 +240,7 @@ public class PersonalCenter_ChangePasswordActivity extends BaseActivity
             }
             this.finish();
         } else {
+            FailCodeControl.checkCode(mineOrder.getCode());
             UIUtils.showToastSafe(mineOrder.getMsg());
         }
 
@@ -298,7 +299,7 @@ public class PersonalCenter_ChangePasswordActivity extends BaseActivity
                 && StringUtils.isNotNullString(et_new_password.getText().toString())
                 && StringUtils.isNotNullString(et_new_password_check.getText().toString())){
             btn_commit.setBackgroundResource(R.drawable.background_green_1eb482_radius_70);
-            btn_commit.setEnabled(false);
+            btn_commit.setEnabled(true);
         }
     }
 }

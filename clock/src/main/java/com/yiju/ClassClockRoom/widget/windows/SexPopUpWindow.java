@@ -19,6 +19,7 @@ import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.bean.result.MemberDetailResult;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -62,7 +63,7 @@ public class SexPopUpWindow extends PopupWindow {
                 } else {
                     //老师性别修改
                     bean.getData().setSex("1");
-                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true,true);
+                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true, true);
                 }
 
             }
@@ -78,7 +79,7 @@ public class SexPopUpWindow extends PopupWindow {
                 } else {
                     //老师性别修改
                     bean.getData().setSex("2");
-                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true,true);
+                    HttpClassRoomApi.getInstance().askModifyMemberInfo(title_flag, uid, bean, true, true);
                 }
 
             }
@@ -123,11 +124,10 @@ public class SexPopUpWindow extends PopupWindow {
         params.addBodyParameter("type", "sex");
         params.addBodyParameter("value", sex);
         params.addBodyParameter("uid", uid);
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -146,7 +146,7 @@ public class SexPopUpWindow extends PopupWindow {
     private void processData(String result, String sex) {
         MineOrder mineOrder = GsonTools.changeGsonToBean(result,
                 MineOrder.class);
-        if (mineOrder == null){
+        if (mineOrder == null) {
             return;
         }
         if ("1".equals(mineOrder.getCode())) {
@@ -154,6 +154,7 @@ public class SexPopUpWindow extends PopupWindow {
             SharedPreferencesUtils.saveString(UIUtils.getContext(), contentView
                     .getResources().getString(R.string.shared_sex), sex);
         } else {
+            FailCodeControl.checkCode(mineOrder.getCode());
             UIUtils.showToastSafe(mineOrder.getMsg());
         }
 

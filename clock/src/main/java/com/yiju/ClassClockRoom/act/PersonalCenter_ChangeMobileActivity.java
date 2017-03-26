@@ -28,6 +28,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.UserVerifyInfo;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.InputValidate;
 import com.yiju.ClassClockRoom.util.MD5;
@@ -327,47 +328,6 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
         }
     }
 
-
-//    /*
-//     * 验证短信
-//	 */
-//    private void getHttpUtils2(String verify_code) {
-//        HttpUtils httpUtils = new HttpUtils();
-//        RequestParams params = new RequestParams();
-//        params.addBodyParameter("action", "verify_code");
-//        params.addBodyParameter("username", phoneNumber);
-//        params.addBodyParameter("code", verify_code);
-//        params.addBodyParameter("type", "3");
-//
-//        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
-//                new RequestCallBack<String>() {
-//
-//                    @Override
-//                    public void onFailure(HttpException arg0, String arg1) {
-//                        UIUtils.showToastSafe(R.string.fail_network_request);
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(ResponseInfo<String> arg0) {
-//                        // 处理返回的数据
-//                        processData2(arg0.result);
-//                    }
-//                });
-//    }
-//
-//    private void processData2(String result) {
-//        UserVerifyInfo userVerifyInfo = GsonTools.changeGsonToBean(result,
-//                UserVerifyInfo.class);
-//        if (userVerifyInfo.getCode().equals("1")) {
-//            getHttpUtils3(phoneNumber);
-//
-//        } else {
-//            UIUtils.showToastSafe("验证码不正确");
-//        }
-//
-//    }
-
-
     /**
      * 更换手机请求
      */
@@ -378,13 +338,13 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
         if (!"-1".equals(StringUtils.getUid())) {
             params.addBodyParameter("uid", StringUtils.getUid());
         }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("phone", phoneNumber);
         params.addBodyParameter("code", verifyCode);
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -414,6 +374,7 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
             setResult(4);
             finish();
         } else {
+            FailCodeControl.checkCode(userVerifyInfo.getCode());
             UIUtils.showToastSafe(userVerifyInfo.getMsg());
         }
 
@@ -434,23 +395,16 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
             params.addBodyParameter("uid", StringUtils.getUid());
         }
         params.addBodyParameter("username", phoneNumber);
-        params.addBodyParameter("uname", StringUtils.getUsername());
-        try {
-            params.addBodyParameter("pwd", MD5.md5(password));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         params.addBodyParameter("code", verifyCode);
         params.addBodyParameter("type", "3");
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
-
         //有密码
         if (type == 2) {
             params.addBodyParameter("password", password);
         }
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -488,6 +442,7 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
             setResult(4);
             finish();
         } else {
+            FailCodeControl.checkCode(userVerifyInfo.getCode());
             UIUtils.showToastSafe(userVerifyInfo.getMsg());
         }
     }

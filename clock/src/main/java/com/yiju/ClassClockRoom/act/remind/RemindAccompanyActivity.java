@@ -19,6 +19,7 @@ import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.RemindAccompanyBean;
 import com.yiju.ClassClockRoom.control.AccompanyRemindControl;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -71,17 +72,6 @@ public class RemindAccompanyActivity extends BaseActivity implements
                 RemindAccompanyActivity.this,
                 getResources().getString(R.string.shared_remerber),
                 AccompanyRemindControl.lists.get(1));
-//        RemindAccompanyValue = SharedPreferencesUtils.getString(
-//                RemindAccompanyActivity.this,
-//                getResources().getString(R.string.shared_is_remerber),
-//                RemindSetActivity.Type_Remind_True);
-//        if (RemindAccompanyValue.equals(RemindSetActivity.Type_Remind_True)) {
-////            open_switch.setChecked(true);
-//            remind_accompany_list.setVisibility(View.VISIBLE);
-//        } else {
-////            open_switch.setChecked(false);
-//            remind_accompany_list.setVisibility(View.GONE);
-//        }
 
         arrayList = new ArrayList<>();
         for (String str : AccompanyRemindControl.lists) {
@@ -107,17 +97,6 @@ public class RemindAccompanyActivity extends BaseActivity implements
                 }
         );
         remind_accompany_list.setAdapter(accompanyAdapter);
-//        accompanyAdapter.setOnOffRemind(new IAccompanyRunnable() {
-//
-//            @Override
-//            public void onOffRemindAccompany(boolean isclose) {
-//                if (!isclose) {
-//                    open_switch.setChecked(false);
-//                }
-//            }
-//        });
-//        DrawViewMeasureUtils
-//                .setListViewHeightBasedOnChildren(remind_accompany_list);
 
     }
 
@@ -150,23 +129,12 @@ public class RemindAccompanyActivity extends BaseActivity implements
 
     // 退出Activity
     private void backActivity() {
-//        if (!open_switch.isChecked()
-//                && RemindAccompanyValue
-//                .equals(RemindSetActivity.Type_Remind_False)) {
-//            finish();
-//        } else {
-//            if (open_switch.isChecked()) {
         if (remerber.equals(accompanyAdapter.getCurrentTime())) {
             finish();
         } else {
             // 修改提醒值
             postSetRemindValue(accompanyAdapter.getCurrentTime());
         }
-//            } else {
-//                // 关闭提醒
-//                postCloseAccompanyRemind();
-//            }
-//        }
     }
 
     /**
@@ -179,12 +147,11 @@ public class RemindAccompanyActivity extends BaseActivity implements
         if (!"-1".equals(StringUtils.getUid())) {
             params.addBodyParameter("uid", StringUtils.getUid());
         }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("time", time);
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -205,60 +172,12 @@ public class RemindAccompanyActivity extends BaseActivity implements
                                 setResult(RESULT_OK);
                                 finish();
                             } else {
+                                FailCodeControl.checkCode(code);
                                 UIUtils.showToastSafe(R.string.remind_set_fail);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }
-
-                });
-    }
-
-    private void postCloseAccompanyRemind() {
-//        final String isRemind;
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("action", "is_remerber");
-        if (!"-1".equals(StringUtils.getUid())) {
-            params.addBodyParameter("uid", StringUtils.getUid());
-        }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
-//        if (open_switch.isChecked()) {
-//            isRemind = RemindSetActivity.Type_Remind_True;
-//
-//        } else {
-//            isRemind = RemindSetActivity.Type_Remind_False;
-//        }
-//        params.addBodyParameter("is_remerber", isRemind);
-
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
-                new RequestCallBack<String>() {
-
-                    @Override
-                    public void onFailure(HttpException arg0, String arg1) {
-                        finish();
-                    }
-
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(arg0.result);
-                            int code = jsonObject.getInt("code");
-                            if (code == 1) {
-//                                SharedPreferencesUtils.saveString(
-//                                        RemindAccompanyActivity.this,
-//                                        getResources().getString(
-//                                                R.string.shared_is_remerber), isRemind);
-                                setResult(RESULT_OK);
-                                finish();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        finish();
                     }
 
                 });

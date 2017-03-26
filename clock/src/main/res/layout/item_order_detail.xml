@@ -59,7 +59,7 @@
             android:layout_marginRight="@dimen/DIMEN_10DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
             android:scaleType="centerCrop"
-            android:src="@drawable/clock_wait"
+            android:src="@drawable/bg_placeholder_4_3"
             tools:ignore="contentDescription" />
 
         <LinearLayout

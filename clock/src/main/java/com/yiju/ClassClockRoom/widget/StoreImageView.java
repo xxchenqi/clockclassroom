@@ -45,11 +45,11 @@ public class StoreImageView extends FrameLayout {
                 rl_ratio.setRatio((float) 1.43);
                 rl_ratio.postInvalidate();
             }*/
-            Glide.with(UIUtils.getContext()).load(pic_big).placeholder(R.drawable.bg_placeholder).into(imageView);
+            Glide.with(UIUtils.getContext()).load(pic_big).placeholder(R.drawable.bg_placeholder_16_9).into(imageView);
         } else {
            /* rl_ratio.setRatio((float) 1.43);
             rl_ratio.postInvalidate();*/
-            imageView.setImageResource(R.drawable.bg_placeholder);
+            imageView.setImageResource(R.drawable.bg_placeholder_16_9);
         }
     }
 

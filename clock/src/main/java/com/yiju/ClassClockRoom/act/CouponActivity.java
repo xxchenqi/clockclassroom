@@ -26,6 +26,7 @@ import com.yiju.ClassClockRoom.bean.Coupon;
 import com.yiju.ClassClockRoom.bean.Coupon.CouponDataEntity;
 import com.yiju.ClassClockRoom.bean.CouponPrice;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.LogUtil;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -103,11 +104,11 @@ public class CouponActivity extends BaseActivity implements OnClickListener {
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "user_coupon");
         params.addBodyParameter("uid", uid);
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("order2_id", order2_id);
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_COUPON, params,
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
+        params.addBodyParameter("url", UrlUtils.SERVER_MINE_ORDER);
+
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -155,6 +156,9 @@ public class CouponActivity extends BaseActivity implements OnClickListener {
                     adapter.notifyDataSetChanged();
                 }
                 list_coupon.setAdapter(adapter);
+            }else{
+                FailCodeControl.checkCode(data.getCode());
+                UIUtils.showLongToastSafe(data.getMsg());
             }
         }
 
@@ -172,7 +176,7 @@ public class CouponActivity extends BaseActivity implements OnClickListener {
         params.addBodyParameter("coupon_id", info.getId());
         params.addBodyParameter("uid", uid);
         params.addBodyParameter("order2_id", order2_id);
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_COUPON, params,
+        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -237,51 +241,6 @@ public class CouponActivity extends BaseActivity implements OnClickListener {
                 break;
         }
     }
-
-//    private void requesrData(String uid, String coupon) {
-//        // 绑定优惠券
-//        HttpUtils httpUtils = new HttpUtils();
-//
-//        RequestParams params = new RequestParams();
-//        params.addBodyParameter("action", "coupon_bind");
-//        params.addBodyParameter("uid", uid);
-//        params.addBodyParameter("coupon_no", coupon);
-//        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
-//                new RequestCallBack<String>() {
-//
-//                    @Override
-//                    public void onFailure(HttpException arg0, String arg1) {
-//                        // 请求网络失败
-//                        UIUtils.showToastSafe(R.string.fail_network_request);
-//
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(ResponseInfo<String> arg0) {
-//                        // 处理数据
-//                        LogUtil.d(TAG, "优惠券绑定绑定绑定绑定绑定绑定绑定绑定" + arg0.result);
-//                        if (arg0.result.equals("-1")) {
-//                            UIUtils.showToastSafe("请输入正确的优惠券号码");
-//                        } else if (arg0.result.equals("-4")) {
-//                            UIUtils.showToastSafe("该优惠券已被绑定");
-//                        }
-//                        JSONObject jsonObject;
-//                        try {
-//                            jsonObject = new JSONObject(arg0.result);
-//                            if (jsonObject.getInt("code") == 1) {
-//                                adapter.notifyDataSetChanged();
-//                                initData();
-//                            } else {
-//                                UIUtils.showToastSafe("优惠券号码已作废");
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                    }
-//                });
-//
-//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

@@ -5,6 +5,7 @@ import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
 import com.yiju.ClassClockRoom.common.DataManager;
 import com.yiju.ClassClockRoom.common.base.BaseSingleton;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.HttpApiParam;
 import com.yiju.ClassClockRoom.util.net.HttpManage;
@@ -28,12 +29,13 @@ public class HttpPhotoApi extends BaseSingleton {
      * @param url 图片地址
      */
     public void saveUploadPhotoUrl(String uid, String username, String password, String third_source, String url) {
-        HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getApiService()
+        HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getJavaService()
                         .saveUploadPhotoUrl(HttpApiParam.saveUploadPhotoUrl(
                                 uid, username, password, third_source, url)),
                 new ResultCallImpl<MineOrder>() {
                     @Override
                     public void onNext(MineOrder bean) {
+                        FailCodeControl.checkCode(bean.getCode());
                         DataManager.getInstance().saveUploadPhotoUrl(bean);
                     }
 

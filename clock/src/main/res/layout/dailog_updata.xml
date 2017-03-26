@@ -64,6 +64,7 @@
             android:textSize="@dimen/DIMEN_15DP" />
 
         <View
+            android:id="@+id/view_update_line"
             android:layout_width="@dimen/DIMEN_1DP"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/DIMEN_10DP"

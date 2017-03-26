@@ -5,6 +5,7 @@ import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.bean.result.UserInfo;
 import com.yiju.ClassClockRoom.common.DataManager;
 import com.yiju.ClassClockRoom.common.base.BaseSingleton;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.HttpApiParam;
 import com.yiju.ClassClockRoom.util.net.HttpManage;
@@ -80,11 +81,12 @@ public class HttpUserApi extends BaseSingleton {
      */
     public void switchTeacherInfo(String uid, String username,
                                   String password,String third_source,String on_off) {
-        HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getApiService()
-                        .baseUserApi(HttpApiParam.switchTeacherInfo(uid,username,password,third_source, on_off)),
+        HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getJavaService()
+                        .baseProxyApi(HttpApiParam.switchTeacherInfo(uid,username,password,third_source, on_off)),
                 new ResultCallImpl<BaseEntity>() {
                     @Override
                     public void onNext(BaseEntity bean) {
+                        FailCodeControl.checkCode(bean.getCode());
                         DataManager.getInstance().switchTeacherInfo(bean);
                     }
 

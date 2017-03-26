@@ -20,7 +20,7 @@
             android:layout_width="@dimen/DIMEN_100DP"
             android:layout_height="@dimen/DIMEN_75DP"
             android:layout_marginRight="@dimen/DIMEN_10DP"
-            android:background="@drawable/clock_wait"
+            android:background="@drawable/bg_placeholder_4_3"
             android:scaleType="centerCrop"
             tools:ignore="contentDescription" />
 

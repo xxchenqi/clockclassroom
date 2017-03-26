@@ -35,6 +35,7 @@ public class CourseDetailData implements Serializable {
     private ContactTelName contact;
     private List<ClassInfo> class_info;
     private String class_info_low;
+    private String is_online;
 
     //没用
     private String single_price;
@@ -42,6 +43,10 @@ public class CourseDetailData implements Serializable {
     private CourseTeacher teacher;
     private CourseSchool school;
     private CourseSchedule schedule;
+
+    public String getIs_online() {
+        return is_online;
+    }
 
     public String getClass_info_low() {
         return class_info_low;

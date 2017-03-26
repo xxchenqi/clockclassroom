@@ -1,15 +1,24 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+        maven {
+            url 'http://dl.bintray.com/bugtags/maven'
+        }
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.bugtags.library:bugtags-gradle:latest.integration'
     }
 }
 
 allprojects {
     repositories {
+        maven {
+            url 'http://dl.bintray.com/bugtags/maven'
+        }
         jcenter()
+        mavenCentral()
     }
 }

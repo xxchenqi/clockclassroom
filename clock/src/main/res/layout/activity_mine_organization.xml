@@ -34,7 +34,7 @@
                     android:id="@+id/v_mine_organization_head"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_placeholder"
+                    android:background="@drawable/bg_placeholder_16_9"
                     android:visibility="gone" />
             </com.yiju.ClassClockRoom.widget.RatioLayout>
 

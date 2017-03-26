@@ -3,14 +3,11 @@ package com.yiju.ClassClockRoom.common;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.view.Gravity;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -21,11 +18,10 @@ import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.AffirmSignUpActivity;
-import com.yiju.ClassClockRoom.act.CourseMoreActivity;
 import com.yiju.ClassClockRoom.act.ExperienceCourseDetailActivity;
+import com.yiju.ClassClockRoom.act.FormalCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.LoginActivity;
 import com.yiju.ClassClockRoom.act.MainActivity;
-import com.yiju.ClassClockRoom.act.FormalCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.PersonalCenter_ChangeMobileActivity;
 import com.yiju.ClassClockRoom.act.StoreDetailActivity;
 import com.yiju.ClassClockRoom.act.SupplierDetailActivity;
@@ -55,7 +51,16 @@ public class NetWebViewClient extends WebViewClient {
     private WebView webview;
     private NavigationUtils navigationUtils = null;
 
-    IWebViewHandleError iWebViewHandleError;
+    private IWebViewHandleError iWebViewHandleError;
+    private IWebController iWebController;
+
+    public interface IWebController {
+        void notifyController(String id, String title);
+    }
+
+    public void setiWebController(IWebController iWebController) {
+        this.iWebController = iWebController;
+    }
 
     public interface IWebViewHandleError {
         void handleWebViewError();
@@ -71,14 +76,12 @@ public class NetWebViewClient extends WebViewClient {
         return processUrl(view, url) || super.shouldOverrideUrlLoading(view, url);
     }
 
-    @Override
-    public void onReceivedSslError(WebView view, SslErrorHandler handler,
-                                   SslError error) {
-//        handler.proceed();
-        super.onReceivedSslError(view, handler, error);
-        UIUtils.showToastSafe(UIUtils.getString(R.string.toast_show_webview_error));
-//        ProgressDialog.getInstance().dismiss();
-    }
+//    @Override
+//    public void onReceivedSslError(WebView view, SslErrorHandler handler,
+//                                   SslError error) {
+//        super.onReceivedSslError(view, handler, error);
+//        UIUtils.showToastSafe(UIUtils.getString(R.string.toast_show_webview_error));
+//    }
 
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -93,12 +96,6 @@ public class NetWebViewClient extends WebViewClient {
             iWebViewHandleError.handleWebViewError();
         }
     }
-
-    /*@Override
-    public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-        super.onReceivedHttpError(view, request, errorResponse);
-        iWebViewHandleError.handleWebViewError();
-    }*/
 
     private boolean processUrl(WebView view, final String url) {
         if (url.startsWith("tel:")) {
@@ -400,107 +397,53 @@ public class NetWebViewClient extends WebViewClient {
         this.webview = webview;
     }
 
-    @Override
-    public void onPageStarted(WebView view, String url, Bitmap favicon) {
-        super.onPageStarted(view, url, favicon);
-//        ProgressDialog.getInstance().show();
-    }
 
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-//        ProgressDialog.getInstance().dismiss();
-        if (url.contains("#clickbtn=clickbtn")) {
-            String to = Uri.parse(url).getQueryParameter("to");
-            String to_g = Uri.parse(url).getQueryParameter("to_g");
-            String address = Uri.parse(url).getQueryParameter("address");
-            if (StringUtils.isNullString(to) || StringUtils.isNullString(to_g)) {
-                return;
-            }
-            String[] ss_to = to.split(",");
-            String lng = ss_to[0];
-            String lat = ss_to[1];
-            String[] ss_to_g = to_g.split(",");
-            String lng_g = ss_to_g[0];
-            String lat_g = ss_to_g[1];
-            //导航点击
-            if (PermissionsChecker.checkPermission(PermissionsChecker.LOCATION_PERMISSIONS)) {
-                //缺少权限
-                showDialog();
-            } else {
-                boolean isHaveBaidu;
-                boolean isHaveGaode;
-                if (navigationUtils == null) {
-                    navigationUtils = new NavigationUtils(
-                            lat,
-                            lng,
-                            lat_g,
-                            lng_g,
-                            address
-                    );
-                } else {
-                    navigationUtils.setEndLat(lat);
-                    navigationUtils.setEndLng(lng);
-                    navigationUtils.setEndLat_g(lat_g);
-                    navigationUtils.setEndLng_g(lng_g);
-                    navigationUtils.setEndAddress(address);
-                }
-
-                isHaveBaidu = NavigationUtils.isInstallByread("com.baidu.BaiduMap");
-                isHaveGaode = NavigationUtils.isInstallByread("com.autonavi.minimap");
-                if (isHaveBaidu || isHaveGaode) {
-                    //高德跟百度都存在
-                    NavigationWindow navigationWindow = new NavigationWindow(
-                            isHaveBaidu,
-                            isHaveGaode,
-                            new ListItemClickHelp() {
-                                @Override
-                                public void onClickItem(int position) {
-                                    navigationUtils.navigationHandle(position);
-                                }
-                            });
-                    navigationWindow.showAtLocation(webview, Gravity.BOTTOM, 0, 0);
-                } else {
-                    //都不存在
-                    UIUtils.showToastSafe("请先安装百度或高德地图客户端！");
-                }
-            }
-        } else if (url.contains("#subject_t=")) {//老师信息跳转
-            skipTeacherInfo(url, "subject_t");
-        } else if (url.contains("#subject_c=")) {//课程信息跳转
-            skipCourseInfo(url, "subject_c");
+        if (url.contains("#clickbtn=clickbtn")) {//导航点击
+            openNavigation(url);
         } else if (url.contains("#tid=")) {//老师信息跳转
             skipTeacherInfo(url, "tid");
         } else if (url.contains("#cid=")) {//课程信息跳转
             skipCourseInfo(url, "cid");
-        } else if (url.contains("#morecourse_sid=")) {//更多课程跳转
-            skipCourseMore(url, "morecourse_sid");
-        } else if (url.contains("#contentType")) {
-            //由主题首页跳转至其他页面
+        } else if (url.contains("#contentType")) {//由主题首页跳转至其他页面
             skipThemeDetail(url, "contentType", "id", "title");
-        } else if (url.contains("#theme_detail")) {
-            //由往期主题列表跳转到往期主题首页
-            skipPastTheme(url, "id");
-        } else if (url.contains("#themeact_id")) {
+        } else if (url.contains("#theme_detail")) {//由往期主题列表跳转到往期主题首页
+            skipPastTheme(url);
+        } else if (url.contains("#themeact_id")) {//跳转活动报名
             MobclickAgent.onEvent(UIUtils.getContext(), "v3200_011");
-            skipThemeact(url, "themeact_id");
+            skipThemeActSignUp(url, "themeact_id");
         } else if (url.contains("#share_theme")) {//主题详情分享
             MobclickAgent.onEvent(UIUtils.getContext(), "v3200_006");
             skipThemeShare(url, ShareDialog.Type_Share_Theme);
         } else if (url.contains("#share_past_theme")) {//往期主题分享
             skipThemeShare(url, ShareDialog.Type_Share_Past_Theme);
-        } else if (url.contains("#themeact_url")) {
+        } else if (url.contains("#themeact_url")) {//跳转活动页
             skipThemeAct(url, "themeact_url");
+        } else if (url.contains("#current_theme_id")) {//获取本期主题的id和title
+            if (iWebController != null) {
+                iWebController.notifyController(getAnchorId(url, "current_theme_id"),
+                        getAnchorId(url, "current_theme_title"));
+            }
+        } else if(url.contains("#previous_theme_list")){
+                MobclickAgent.onEvent(UIUtils.getContext(), "v3200_005");
+//                //往期主题
+                Intent intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
+                intent.putExtra(UIUtils.getString(R.string.get_page_name),
+                        WebConstant.WEB_value_past_theme_Page);
+                startActivity(intent);
+        } else if(url.contains("#expired")){
+            Intent intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
+            intent.putExtra("status","0");
+            startActivity(intent);
         }
     }
 
     /**
      * 跳转活动页
-     *
-     * @param url
-     * @param value
      */
-    public void skipThemeAct(String url, String value) {
+    private void skipThemeAct(String url, String value) {
         Intent intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
         intent.putExtra(UIUtils.getString(R.string.redirect_open_url), getAnchorId(url, value));
         intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_splash_news_Page);
@@ -509,11 +452,9 @@ public class NetWebViewClient extends WebViewClient {
 
     /**
      * 分享
-     *
-     * @param url
-     * @param type
+     * @param type 分享的类型
      */
-    public void skipThemeShare(String url, int type) {
+    private void skipThemeShare(String url, int type) {
         ShareDialog
                 .getInstance()
                 .setCurrent_Type(type)
@@ -525,7 +466,7 @@ public class NetWebViewClient extends WebViewClient {
     /**
      * 跳转活动报名
      */
-    public void skipThemeact(String url, String value) {
+    private void skipThemeActSignUp(String url, String value) {
         if (StringUtils.isNullString(StringUtils.getUid()) || "-1".equals(StringUtils.getUid())) {
             startActivity(new Intent(UIUtils.getContext(), LoginActivity.class));
         } else {
@@ -546,14 +487,16 @@ public class NetWebViewClient extends WebViewClient {
     /**
      * 跳转往期主题
      */
-    public void skipPastTheme(String url, String value) {
-        String id = getAnchorId(url, value);
+    private void skipPastTheme(String url) {
+        String id = getAnchorId(url, "id");
+        String title = getAnchorId(url, "title");
         if (StringUtils.isNotNullString(id)) {
             Intent intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
             // page
             intent.putExtra(UIUtils.getString(R.string.get_page_name),
                     WebConstant.WEB_value_past_theme_detail_Page);
             intent.putExtra(ExtraControl.EXTRA_ID, id);
+            intent.putExtra(ExtraControl.EXTRA_TITLE, title);
             startActivity(intent);
         }
     }
@@ -561,7 +504,7 @@ public class NetWebViewClient extends WebViewClient {
     /**
      * 跳转主题详情
      */
-    public void skipThemeDetail(String url, String value, String id, String title) {
+    private void skipThemeDetail(String url, String value, String id, String title) {
         String contentType = getAnchorId(url, value);
         String id_value = getAnchorId(url, id);
         String title_value = getAnchorId(url, title);
@@ -572,8 +515,8 @@ public class NetWebViewClient extends WebViewClient {
                 //不跳
                 intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
                 String title_url = getAnchorId(url, "title_url");
-                if(!title_url.startsWith("https://")){
-                    title_url = "https://"+title_url;
+                if (!title_url.startsWith("https://")) {
+                    title_url = "https://" + title_url;
                 }
                 intent.putExtra(UIUtils.getString(R.string.redirect_open_url), title_url);
                 intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_splash_news_Page);
@@ -594,11 +537,6 @@ public class NetWebViewClient extends WebViewClient {
                 intent.putExtra("title", title_value);
                 intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_activity_Page);
                 startActivity(intent);
-            } else if ("4".equals(contentType)) {
-                //TODO 课程
-                intent = new Intent(UIUtils.getContext(), FormalCourseDetailActivity.class);
-                intent.putExtra(ExtraControl.EXTRA_COURSE_ID, id_value);
-                startActivity(intent);
             } else if ("5".equals(contentType)) {
                 //老师供应商
                 intent = new Intent(UIUtils.getContext(), SupplierDetailActivity.class);
@@ -617,7 +555,7 @@ public class NetWebViewClient extends WebViewClient {
     /**
      * 跳转老师详情
      */
-    public void skipTeacherInfo(String url, String value) {
+    private void skipTeacherInfo(String url, String value) {
         String anchorId = getAnchorId(url, value);
         if (anchorId != null) {
             Intent intent = new Intent(UIUtils.getContext(), SupplierDetailActivity.class);
@@ -629,15 +567,15 @@ public class NetWebViewClient extends WebViewClient {
     /**
      * 跳转课程详情
      */
-    public void skipCourseInfo(String url, String value) {
+    private void skipCourseInfo(String url, String value) {
         String anchorId = getAnchorId(url, value);
-        String ctype = getAnchorId(url, "ctype");
+        String cType = getAnchorId(url, "ctype");
         if (anchorId != null) {
             Intent intent = new Intent();
             //1是体验课 0 是正式课
-            if(ctype.equals("1")){
+            if ("1".equals(cType)) {
                 intent.setClass(UIUtils.getContext(), ExperienceCourseDetailActivity.class);
-            }else{
+            } else {
                 intent.setClass(UIUtils.getContext(), FormalCourseDetailActivity.class);
             }
             intent.putExtra(ExtraControl.EXTRA_COURSE_ID, anchorId);
@@ -646,55 +584,104 @@ public class NetWebViewClient extends WebViewClient {
     }
 
     /**
-     * 跳转更多课程
+     * 打开导航
+     * @param url 链接
      */
-    public void skipCourseMore(String url, String value) {
-        String anchorId = getAnchorId(url, value);
-        if (anchorId != null) {
-            Intent intent = new Intent(UIUtils.getContext(), CourseMoreActivity.class);
-            intent.putExtra("SCHOOL_ID", anchorId);
-            startActivity(intent);
+    private void openNavigation(String url) {
+        String to = Uri.parse(url).getQueryParameter("to");
+        String to_g = Uri.parse(url).getQueryParameter("to_g");
+        String address = Uri.parse(url).getQueryParameter("address");
+        if (StringUtils.isNullString(to) || StringUtils.isNullString(to_g)) {
+            return;
+        }
+        String[] ss_to = to.split(",");
+        String lng = ss_to[0];
+        String lat = ss_to[1];
+        String[] ss_to_g = to_g.split(",");
+        String lng_g = ss_to_g[0];
+        String lat_g = ss_to_g[1];
+        //导航点击
+        if (PermissionsChecker.checkPermission(PermissionsChecker.LOCATION_PERMISSIONS)) {
+            //缺少权限
+            showDialog();
+        } else {
+            boolean isHaveBaidu;
+            boolean isHaveGaode;
+            if (navigationUtils == null) {
+                navigationUtils = new NavigationUtils(
+                        lat,
+                        lng,
+                        lat_g,
+                        lng_g,
+                        address
+                );
+            } else {
+                navigationUtils.setEndLat(lat);
+                navigationUtils.setEndLng(lng);
+                navigationUtils.setEndLat_g(lat_g);
+                navigationUtils.setEndLng_g(lng_g);
+                navigationUtils.setEndAddress(address);
+            }
+
+            isHaveBaidu = NavigationUtils.isInstallByread("com.baidu.BaiduMap");
+            isHaveGaode = NavigationUtils.isInstallByread("com.autonavi.minimap");
+            if (isHaveBaidu || isHaveGaode) {
+                //高德跟百度都存在
+                NavigationWindow navigationWindow = new NavigationWindow(
+                        isHaveBaidu,
+                        isHaveGaode,
+                        new ListItemClickHelp() {
+                            @Override
+                            public void onClickItem(int position) {
+                                navigationUtils.navigationHandle(position);
+                            }
+                        });
+                navigationWindow.showAtLocation(webview, Gravity.BOTTOM, 0, 0);
+            } else {
+                //都不存在
+                UIUtils.showToastSafe("请先安装百度或高德地图客户端！");
+            }
         }
     }
 
-
     /**
      * 获取锚点字符串
-     *
      * @param url 链接
+     * @param value 锚点
+     * @return 返回结果
      */
-    public String getAnchorId(String url, String value) {
+    private String getAnchorId(String url, String value) {
         String anchor = Uri.parse(url).getFragment();
         Map<String, String> map = new HashMap<>();
         if (StringUtils.isNotNullString(anchor)) {
             String[] split = anchor.split("&");
             if (split.length != 0) {
-                for (int i = 0; i < split.length; i++) {
-                    String[] split2 = split[i].split("=");
+                for (String aSplit : split) {
+                    String[] split2 = aSplit.split("=");
                     if (split2.length != 0) {
                         if (split2.length == 1) {
                             map.put(split2[0], "");
                         } else if (split2.length == 2) {
                             map.put(split2[0], split2[1]);
-                        }else {
+                        } else {
                             StringBuilder sb = new StringBuilder();
                             for (int j = 0; j < split2.length; j++) {
-                                if(j!=0){
-                                    if(j==split2.length-1){
+                                if (j != 0) {
+                                    if (j == split2.length - 1) {
                                         sb.append(split2[j]);
-                                    }else{
+                                    } else {
                                         sb.append(split2[j]).append("=");
                                     }
                                 }
                             }
-                            map.put(split2[0],sb.toString());
+                            map.put(split2[0], sb.toString());
                         }
                     }
                 }
                 return map.get(value);
             }
         }
-        return null;
+        return "";
     }
 
     private void showDialog() {

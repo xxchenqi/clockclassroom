@@ -1,4 +1,4 @@
-include ':bugtagsAndroidEclipseLib', ':ejupaysdk-release'
+include ':ejupaysdk-release'
 include ':pullToRefresh_library'
 include ':date_library'
 include ':wheel_library'

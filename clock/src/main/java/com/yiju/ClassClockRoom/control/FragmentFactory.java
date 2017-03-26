@@ -4,11 +4,9 @@ import android.util.SparseArray;
 
 import com.yiju.ClassClockRoom.fragment.AccompanyReadFragment;
 import com.yiju.ClassClockRoom.fragment.BaseFragment;
-import com.yiju.ClassClockRoom.fragment.CourseFragment;
 import com.yiju.ClassClockRoom.fragment.ExperienceClassFragment;
 import com.yiju.ClassClockRoom.fragment.IndexFragment;
 import com.yiju.ClassClockRoom.fragment.PersonalCenterFragment;
-import com.yiju.ClassClockRoom.fragment.TeacherFragment;
 import com.yiju.ClassClockRoom.fragment.ThemeTemplateFragment;
 
 /**
@@ -55,10 +53,8 @@ public class FragmentFactory {
                     mBaseFragment = new AccompanyReadFragment();
                     break;
                 case TAB_COURSE://5
-                    mBaseFragment = new CourseFragment();
                     break;
                 case TAB_TEACHER://6
-                    mBaseFragment = new TeacherFragment();
                     break;
             }
             //缓存fragment

@@ -3,6 +3,7 @@ package com.yiju.ClassClockRoom.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.bean.ClassRoomData;
 import com.yiju.ClassClockRoom.bean.IndexResult;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
@@ -144,6 +145,7 @@ public class SharedPreferencesUtils {
         edit.remove("username");
         edit.remove("password");
         edit.remove("third_source");
+        edit.remove(UIUtils.getString(R.string.shared_session_id));
         edit.remove(SharedPreferencesConstant.Shared_Login_Cid);//退出登录的时候清掉当前cid
         edit.remove(SharedPreferencesConstant.Shared_Login_Udid);//退出登录的时候清掉当前udid
         edit.apply();

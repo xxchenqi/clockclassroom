@@ -15,11 +15,15 @@ android {
         applicationId "com.yiju.ClassClockRoom"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 19
-        versionName "3.2.0"
+        versionCode 20
+        versionName "3.3.0"
 
         // dex突破65535的限制
         multiDexEnabled true
+        ndk {
+            // 设置支持的 SO 库构架
+            abiFilters 'armeabi'// 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
     }
 
     lintOptions {
@@ -63,7 +67,7 @@ android {
         }
         //线上测试环境
         debug_online {
-            resValue "string","app_name","时钟教室生产"
+            resValue "string","app_name","时钟教室Staging"
             manifestPlaceholders = [baiduMapKey       : "cwgGQsbGe0miwPE8ou6i747l",
                                     umengAppkey       : "567379cc67e58e077d0029d2",
                                     pushAppid         : "RPzrCtB4ufA7MzWjPEQzJ9",
@@ -105,7 +109,7 @@ android {
                         if (variant.buildType.name.equals('debug')) {
                             fileName = "ClassClockRoom_DEBUG.apk"
                         } else if (variant.buildType.name.equals('debug_online')) {
-                            fileName = "ClassClockRoom_DEBUG_ONLINE.apk"
+                            fileName = "ClassClockRoom_STAGING.apk"
                         } else if (variant.buildType.name.equals('release')) {
                             fileName = "ClassClockRoom_${defaultConfig.versionName}_${variant.productFlavors[0].name}_${releaseTime()}.apk"
                         }
@@ -129,11 +133,25 @@ repositories {
         dirs 'libs'
     }
 }
+
+//应用 Bugtags 插件
+apply plugin: 'com.bugtags.library.plugin'
+
+//Bugtags 插件配置
+bugtags {
+    //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
+    appKey "2c6c06f29111c6df6d0686089dd81189"  //这里是你的 appKey
+    appSecret "ab4399a50da5fc73c58b6789415b7081"    //这里是你的 appSecret，管理员在设置页可以查看
+    mappingUploadEnabled true
+    //网络跟踪功能配置(企业版)
+    trackingNetworkEnabled true
+}
+
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':pullToRefresh_library')
     compile project(':date_library')
-    compile project(':bugtagsAndroidEclipseLib')
+//    compile project(':bugtagsAndroidEclipseLib')
     compile project(':wheel_library')
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
@@ -180,6 +198,7 @@ dependencies {
     compile files('libs/GetuiSDK2.7.0.0.jar')
     //umeng bi
     compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.bugtags.library:bugtags-lib:latest.integration'
 
 }
 android {

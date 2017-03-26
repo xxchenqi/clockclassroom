@@ -1181,29 +1181,6 @@ public class ReservationActivity extends BaseActivity implements
         }
     }
 
-    /*private void deleteWeek(List<Date> dates, String weekDays) {
-        List<Date> weekDates = new ArrayList<>();
-        if (!weekDays.equals("每周")) {
-            String[] weeks = weekDays.substring(2, weekDays.length()).split("、");
-            int counts = weeks.length;
-            if (counts < 7) {
-                for (int j = 0; j < dates.size(); j++) {
-                    ca.setTime(dates.get(j));
-                    int ca_week = ca.get(Calendar.DAY_OF_WEEK);
-                    for (String week : weeks) {
-                        int intWeek = formatWeek(week);
-                        if (ca_week == intWeek) {
-                            weekDates.add(dates.get(j));
-                            break;
-                        }
-                    }
-                }
-                dates.clear();
-                dates.addAll(weekDates);
-            }
-        }
-    }*/
-
     private void deleteWeek(List<Date> dates, String weekDays) {
         List<Date> weekDates = new ArrayList<>();
         if (!weekDays.equals("每周")) {

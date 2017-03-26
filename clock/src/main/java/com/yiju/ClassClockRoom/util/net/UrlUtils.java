@@ -26,15 +26,21 @@ public class UrlUtils {
 
     static {
         switch (BaseApplication.FORMAL_ENVIRONMENT) {
-            case 1:
-                BASE_URL = "http://172.28.70.47";
-                WEB_BASE_URL = "http://172.28.70.47";
+            case 1://测试环境
+                BASE_URL = "http://test.api.51shizhong.com";
+                WEB_BASE_URL = "http://test.api.51shizhong.com";
                 JAVA_URL = "http://172.28.70.47:8102";
-                EJU_PAY_URL = "https://inte.ejupay.cn/gateway-outrpc/acquirer/interact";
+                EJU_PAY_URL = "https://inte2.ejupay.cn/gateway-outrpc/acquirer/interact";
                 BASE_PIC_WRITE = "http://i.upload.file.dc.cric.com/";
                 break;
-            case 2:
-            case 3:
+            case 2://stating环境
+                BASE_URL = "http://staging.api.51shizhong.com";
+                WEB_BASE_URL = "http://staging.api.51shizhong.com";
+                JAVA_URL = "http://172.28.70.47:8890";
+                EJU_PAY_URL = "https://inte2.ejupay.cn/gateway-outrpc/acquirer/interact";
+                BASE_PIC_WRITE = "http://i.upload.file.dc.cric.com/";
+                break;
+            case 3://正式环境
                 BASE_URL = "https://api.51shizhong.com";
                 WEB_BASE_URL = "http://api.51shizhong.com";
                 JAVA_URL = "https://api2.51shizhong.com";
@@ -46,7 +52,7 @@ public class UrlUtils {
     }
 
     public static final String API_VERSION = "api_v9";
-    public static final String H5_VERSION = "h5_v11";
+    public static final String H5_VERSION = "h5_v12";
 
     /**
      * 以下url固定不变
@@ -69,6 +75,9 @@ public class UrlUtils {
     //课室相关
     public static final String SERVER_CALSS_ROOM_API = UrlUtils.API_VERSION + "/classroom_api.php";
 
+    //代理
+    public static final String SERVER_PROXY_API = "dubboServiceConsumer/authproxy/proxy.action";
+
 
     /**
      * 以下url需要通过服务器迁移重新复制
@@ -81,8 +90,6 @@ public class UrlUtils {
     public static String SERVER_INDEX_NEW;
     // 预订页面
     public static String SERVER_RESERVATION;
-    // 购物车提交
-    public static String SERVER_COMMIT_CART;
     // 课程
     public static String SERVER_COURSE;
     // 老师
@@ -99,8 +106,6 @@ public class UrlUtils {
     public static String SERVER_INTERACTION_ACTIVITY;
     // 用户API
     public static String SERVER_USER_API;
-    // 优惠券
-    public static String SERVER_USER_COUPON;
     // 检测版本
     public static String SERVER_API_COMMON;
     //获取工作密钥
@@ -208,6 +213,20 @@ public class UrlUtils {
     public static String JAVA_NEWS_ATTENTION;
     //关注活动
     public static String JAVA_ACTIVITY_CANCEL_ATTENTION;
+    //主题关注
+    public static String JAVA_THEME_ATTENTION;
+    //java登录
+    public static String JAVA_LOGIN;
+    //java第三方登录
+    public static String JAVA_THIRD_LOGIN;
+    //发送验证码
+    public static String JAVA_SEND_VERIFY;
+    //验证码登录
+    public static String JAVA_VERIFY_LOGIN;
+    //重置密码
+    public static String JAVA_FIRST_SET_PASSWORD;
+    //
+    public static String JAVA_PROXY;
 
     public static void setBaseUrl(String base_url, String web_base_url, String eju_pay_url, String java_url, String base_pic_write) {
         BASE_URL = base_url;
@@ -222,21 +241,19 @@ public class UrlUtils {
         PIC_WIRTE = BASE_PIC_WRITE + "FileWriterInner.php";
         TEST_BASE_URL = BASE_URL + "/" + API_VERSION;
         H5_BASE_URL = WEB_BASE_URL + "/" + H5_VERSION;
-        SERVER_INDEX_NEW = JAVA_URL + "/dubboServiceConsumer/v2.6/school/findSchool.action?";
-        SERVER_RESERVATION = TEST_BASE_URL + "/schedule_api.php?";
-        SERVER_COMMIT_CART = TEST_BASE_URL + "/order_api.php";
+        SERVER_INDEX_NEW = JAVA_URL + "/dubboServiceConsumer/v2.6/school/findSchool.action";
+        SERVER_RESERVATION = TEST_BASE_URL + "/schedule_api.php";
         SERVER_COURSE = TEST_BASE_URL + "/course_api.php";
         SERVER_TEACHER_MORE_JAVA = JAVA_URL + "/dubboServiceConsumer/teacher/get_teacher_list.action";
         SERVER_TEACHER_API_JAVA = JAVA_URL + "/dubboServiceConsumer/teacher/get_teacher_detail.action";
-        SERVER_TEACHER = JAVA_URL + "/dubboServiceConsumer/teacher/index.action?";
-        SERVER_EXPERIENCE_CLASS = JAVA_URL + "/dubboServiceConsumer/course/experienceCourse.action?";
-        SERVER_INTERACTION_PRAISE = JAVA_URL + "/dubboServiceConsumer/clickpraise/findall.action?";
-        SERVER_INTERACTION_COMMENT = JAVA_URL + "/dubboServiceConsumer/comment/findMeComment.action?";
-        SERVER_INTERACTION_ACTIVITY = JAVA_URL + "/dubboServiceConsumer/aactivityInteres/findArticleActivityInterest.action?";
-        SERVER_USER_API = TEST_BASE_URL + "/user_api.php?";
-        SERVER_USER_COUPON = TEST_BASE_URL + "/order_api.php?";
-        SERVER_API_COMMON = TEST_BASE_URL + "/common_api.php?";
-        SERVER_API_PAY = TEST_BASE_URL + "/pay_api.php?";
+        SERVER_TEACHER = JAVA_URL + "/dubboServiceConsumer/teacher/index.action";
+        SERVER_EXPERIENCE_CLASS = JAVA_URL + "/dubboServiceConsumer/course/experienceCourse.action";
+        SERVER_INTERACTION_PRAISE = JAVA_URL + "/dubboServiceConsumer/clickpraise/findall.action";
+        SERVER_INTERACTION_COMMENT = JAVA_URL + "/dubboServiceConsumer/comment/findMeComment.action";
+        SERVER_INTERACTION_ACTIVITY = JAVA_URL + "/dubboServiceConsumer/aactivityInteres/findArticleActivityInterest.action";
+        SERVER_USER_API = TEST_BASE_URL + "/user_api.php";
+        SERVER_API_COMMON = TEST_BASE_URL + "/common_api.php";
+        SERVER_API_PAY = TEST_BASE_URL + "/pay_api.php";
         SERVER_WEB_CLASSDETAIL = H5_BASE_URL + "/classroomdetail.html?";
         SERVER_WEB_AROUND = H5_BASE_URL + "/around.html?";
         SERVER_WEB_PICDES = H5_BASE_URL + "/picdes.html?";
@@ -249,8 +266,8 @@ public class UrlUtils {
         SERVER_WEB_SEARCH_RESULT = H5_BASE_URL + "/search.html?newpic=1&";//newpic=1为新版读图新加参数
         SERVER_WEB_TO_CLASSDETAIL = H5_BASE_URL + "/trapmap2.html?";
         H5_ACCOMPANY_TEACHER = H5_BASE_URL + "/recommendteacher.html?recommend=recommend" + "&uid=%s";
-        SERVER_MINE_ORDER = TEST_BASE_URL + "/order_api.php?";
-        SERVER_CLASSROOM_ARRANGE = TEST_BASE_URL + "/schedule_api.php?";
+        SERVER_MINE_ORDER = TEST_BASE_URL + "/order_api.php";
+        SERVER_CLASSROOM_ARRANGE = TEST_BASE_URL + "/schedule_api.php";
         ORDER_LOG = H5_BASE_URL + "/orderrecord.html?";
         TYPE_DESC = H5_BASE_URL + "/picclass.html?";
         SERVER_WEB_STORE_PRICE = H5_BASE_URL + "/orderfees_rooms.html?";
@@ -277,6 +294,13 @@ public class UrlUtils {
         JAVA_NEWS_OR_ACTIVITY_GET_ATTENTION = JAVA_URL + "/dubboServiceConsumer/clickpraise/findClickPraise.action";
         JAVA_NEWS_ATTENTION = JAVA_URL + "/dubboServiceConsumer/articlenews/clickNewsPraise.action";
         JAVA_ACTIVITY_CANCEL_ATTENTION = JAVA_URL + "/dubboServiceConsumer/aactivity/clickActivityPraise.action";
+        JAVA_THEME_ATTENTION = JAVA_URL + "/dubboServiceConsumer/subject/subjectClickPraised.action";
+        JAVA_LOGIN = JAVA_URL + "/dubboServiceConsumer/user/user_login.action";
+        JAVA_THIRD_LOGIN = JAVA_URL + "/dubboServiceConsumer/user/third_login.action";
+        JAVA_SEND_VERIFY = JAVA_URL + "/dubboServiceConsumer/sms/sendCode.action";
+        JAVA_VERIFY_LOGIN = JAVA_URL + "/dubboServiceConsumer/user/mobile_login.action";
+        JAVA_FIRST_SET_PASSWORD = JAVA_URL + "/dubboServiceConsumer/user/rest_password.action";
+        JAVA_PROXY = JAVA_URL + "/dubboServiceConsumer/authproxy/proxy.action";
         //wifi 原网址 : http://api.51shizhong.com/h5/wifi_check.html?tel=
         //特殊处理
         if (WEB_BASE_URL.equals("http://172.28.70.47")) {

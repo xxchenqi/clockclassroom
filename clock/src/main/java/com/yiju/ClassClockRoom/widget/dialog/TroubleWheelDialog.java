@@ -20,6 +20,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.adapter.TroubleWheelAdapter;
 import com.yiju.ClassClockRoom.common.callback.ITroubleRunnable;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.control.TroubleControl;
 import com.yiju.ClassClockRoom.util.CommonUtil;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -220,13 +221,13 @@ public class TroubleWheelDialog {
         if (!"-1".equals(StringUtils.getUid())) {
             params.addBodyParameter("uid", StringUtils.getUid());
         }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("trouble_btime", startTime);
         params.addBodyParameter("trouble_etime", etime);
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
@@ -238,7 +239,8 @@ public class TroubleWheelDialog {
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(arg0.result);
-                            if (jsonObject.getInt("code") == 1) {
+                            int code = jsonObject.getInt("code");
+                            if (code == 1) {
                                 SharedPreferencesUtils.saveString(
                                         activity,
                                         activity.getResources().getString(
@@ -258,6 +260,8 @@ public class TroubleWheelDialog {
                                 UIUtils.showToastSafe(R.string.remind_set_success);
                                 dialog.dismiss();
                                 return;
+                            }else{
+                                FailCodeControl.checkCode(code);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -53,6 +53,7 @@ import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
 import com.yiju.ClassClockRoom.control.ExtraControl;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.CommonUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.LogUtil;
@@ -321,14 +322,10 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "user_amount_remain");
-        if (!"-1".equals(StringUtils.getUid())) {
-            params.addBodyParameter("uid", StringUtils.getUid());
-        }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        params.addBodyParameter("uid", StringUtils.getUid());
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
@@ -346,6 +343,8 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                             String code = json.getString("code");
                             if ("1".equals(code)) {
                                 balance = json.getString("data");
+                            }else{
+                                FailCodeControl.checkCode(code);
                             }
 
                         } catch (JSONException e) {
@@ -387,13 +386,12 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         if (!"-1".equals(StringUtils.getUid())) {
             params.addBodyParameter("uid", StringUtils.getUid());
         }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("order2_id", order2_id);
         params.addBodyParameter("room_adjust_new", "1");
+        params.addBodyParameter("url", UrlUtils.SERVER_RESERVATION);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_RESERVATION, params,
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
@@ -441,7 +439,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             school_phone = dataEntity.getSchool_phone();
             school_type = dataEntity.getSchool_type();
             //课室图片
-            Glide.with(mContext).load(dataEntity.getPic_url()).error(R.drawable.clock_wait)
+            Glide.with(mContext).load(dataEntity.getPic_url()).error(R.drawable.bg_placeholder_4_3)
                     .into(iv_store_pic);
             //门店名字
             tv_item_detail_sname.setText(dataEntity.getSname());
@@ -667,6 +665,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 request++;
             }
         } else {
+            FailCodeControl.checkCode(orderConfirmationBean.getCode());
             UIUtils.showToastSafe(orderConfirmationBean.getMsg());
         }
     }
@@ -873,7 +872,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             params.addBodyParameter("invoice_type", invoice_type + "");
         }
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_COMMIT_CART, params,
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -1235,12 +1234,12 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 MobclickAgent.onEvent(UIUtils.getContext(), "v3200_243");
                 String mobile = tv_order_detail_mobile.getText().toString();
                 if (StringUtils.isNotNullString(mobile)) {
-                    if("1".equals(c_type)){
+                    if ("1".equals(c_type)) {
                         commitCart(et_remark.getText().toString(),
                                 tv_order_detail_name.getText().toString(),
                                 tv_order_detail_mobile.getText().toString(),
                                 coupon_id, order2_id, "0", false);
-                    }else{
+                    } else {
                         if ("1".equals(school_type)) {
                             String currentFee = tv_sum_price.getText().toString().substring(1);
                             mPopupWindow = PayWayUtil.getPopu(OrderConfirmationActivity.this.getWindow(),

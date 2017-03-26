@@ -41,6 +41,14 @@ public interface IApiService {
     Call<BaseEntity> baseCommonApi(@PartMap Map<String, RequestBody> bodyMap);
 
     /**
+     * 通用相关基类接口
+     */
+    @Multipart
+    @POST(UrlUtils.SERVER_PROXY_API)
+    Call<BaseEntity> baseProxyApi(@PartMap Map<String, RequestBody> bodyMap);
+
+
+    /**
      * 课室相关基类接口
      */
     @Multipart
@@ -52,7 +60,7 @@ public interface IApiService {
      * 存储图片的URL
      */
     @Multipart
-    @POST(UrlUtils.SERVER_USER_ABOUT_API)
+    @POST(UrlUtils.SERVER_PROXY_API)
     Call<MineOrder> saveUploadPhotoUrl(@PartMap Map<String, RequestBody> bodyMap);
 
     /**
@@ -94,8 +102,11 @@ public interface IApiService {
     /**
      * 阅读消息
      */
+//    @Multipart
+//    @POST(UrlUtils.SERVER_COMMON_API)
+//    Call<MessageBoxNoReadResult> readMessage(@PartMap Map<String, RequestBody> bodyMap);
     @Multipart
-    @POST(UrlUtils.SERVER_COMMON_API)
+    @POST(UrlUtils.SERVER_PROXY_API)
     Call<MessageBoxNoReadResult> readMessage(@PartMap Map<String, RequestBody> bodyMap);
 
     /**

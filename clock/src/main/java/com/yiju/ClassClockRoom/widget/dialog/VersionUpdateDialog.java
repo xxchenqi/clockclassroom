@@ -70,6 +70,7 @@ public class VersionUpdateDialog implements OnClickListener {
         TextView tv_update_content = (TextView) view.findViewById(R.id.tv_update_content);
         //取消
         TextView tv_update_cancel = (TextView) view.findViewById(R.id.tv_update_cancel);
+        View view_update_line = view.findViewById(R.id.view_update_line);
         //确认
         TextView tv_update_affirm = (TextView) view.findViewById(R.id.tv_update_affirm);
 
@@ -77,10 +78,14 @@ public class VersionUpdateDialog implements OnClickListener {
 
         if (update == 1) {
             //强制升级
+            tv_update_cancel.setVisibility(View.GONE);
+            view_update_line.setVisibility(View.GONE);
             tv_update_affirm.setOnClickListener(this);
             tv_update_cancel.setTextColor(UIUtils.getColor(R.color.color_gay_aa));
         } else if (update == 2) {
             //提示升级
+            tv_update_cancel.setVisibility(View.VISIBLE);
+            view_update_line.setVisibility(View.VISIBLE);
             tv_update_cancel.setOnClickListener(this);
             tv_update_affirm.setOnClickListener(this);
             tv_update_cancel.setTextColor(UIUtils.getColor(R.color.color_black_33));

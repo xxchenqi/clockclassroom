@@ -99,9 +99,9 @@ public class MineOrderAdapter extends CommonBaseAdapter<MineOrderData> {
                 .setText(R.id.tv_store_name, order2.getSname());
 
         if ("".equals(order2.getPic_url())) {
-            iv_item_mineorder_pic.setImageResource(R.drawable.clock_wait);
+            iv_item_mineorder_pic.setImageResource(R.drawable.bg_placeholder_4_3);
         } else {
-            Glide.with(mContext).load(order2.getPic_url()).error(R.drawable.clock_wait)
+            Glide.with(mContext).load(order2.getPic_url()).error(R.drawable.bg_placeholder_4_3)
                     .into(iv_item_mineorder_pic);
         }
 

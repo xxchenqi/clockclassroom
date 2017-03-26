@@ -221,6 +221,16 @@ public class StringUtils extends BaseSingleton {
     }
 
     /**
+     * 获取sessionId
+     *
+     * @return sessionId
+     */
+    public static String getSessionId() {
+        return SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_session_id), "");
+    }
+
+    /**
      * 获取用户id
      *
      * @return uid

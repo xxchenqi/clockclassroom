@@ -105,7 +105,7 @@ public class RoomTypeAdapter extends BaseAdapter {
         if (!("").equals(info.getPic_small())) {
             Glide.with(mContext).load(info.getPic_small()).into(holder.iv_item_roompic);
         } else {
-            holder.iv_item_roompic.setImageResource(R.drawable.clock_wait);
+            holder.iv_item_roompic.setImageResource(R.drawable.bg_placeholder_4_3);
         }
         if (selectPosition == position) {
             holder.iv_item_choose.setImageResource(R.drawable.check_icon);

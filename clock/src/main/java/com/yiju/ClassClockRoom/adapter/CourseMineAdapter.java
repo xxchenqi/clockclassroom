@@ -122,7 +122,7 @@ public class CourseMineAdapter extends BaseAdapter {
         if (null != pic_url && !"".equals(pic_url)) {
             Glide.with(mContext).load(pic_url).into(holder.ivItemPersonCourse);
         }else {
-            holder.ivItemPersonCourse.setImageResource(R.drawable.clock_wait);
+            holder.ivItemPersonCourse.setImageResource(R.drawable.bg_placeholder_4_3);
         }
         holder.tvItemPersonCourseAddress.setText(info.getSchool_name());
         holder.tvItemPersonCourseDateTime.setText(info.getDate_section());

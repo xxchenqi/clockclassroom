@@ -28,7 +28,7 @@
             android:layout_height="@dimen/DIMEN_80DP"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
-            android:background="@drawable/clock_wait"/>
+            android:background="@drawable/bg_placeholder_4_3"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

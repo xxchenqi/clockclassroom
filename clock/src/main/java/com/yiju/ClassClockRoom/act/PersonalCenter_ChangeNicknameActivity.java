@@ -21,6 +21,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.InputValidate;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -107,11 +108,10 @@ public class PersonalCenter_ChangeNicknameActivity extends BaseActivity
         if (!"-1".equals(StringUtils.getUid())) {
             params.addBodyParameter("uid", StringUtils.getUid());
         }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -142,6 +142,7 @@ public class PersonalCenter_ChangeNicknameActivity extends BaseActivity
             this.setResult(1);
             this.finish();
         } else {
+            FailCodeControl.checkCode(mineOrder.getCode());
             UIUtils.showToastSafe(mineOrder.getMsg());
         }
 

@@ -183,6 +183,7 @@ public class IndexDetailActivity extends BaseActivity implements
             head_gradual_back.setImageResource(R.drawable.back_white);
             //设置标题2
             head_gradual_title.setText(sname);
+            head_gradual_title.setTextColor(UIUtils.getColor(R.color.white));
             if ("1".equals(from_order_detail)) {
                 btn_room_detail_reserve.setVisibility(View.GONE);
             } else {

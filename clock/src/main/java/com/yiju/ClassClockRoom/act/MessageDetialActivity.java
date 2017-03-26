@@ -22,6 +22,7 @@ import com.yiju.ClassClockRoom.act.accompany.AccompanyReadStatusActivity;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.MessageAdapter;
 import com.yiju.ClassClockRoom.bean.MessageDetialData;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.control.SchemeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -84,7 +85,7 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
         lv_message.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int type = Integer.valueOf(mLists.get(i-1).getType());
+                int type = Integer.valueOf(mLists.get(i - 1).getType());
                 switch (type) {
                     case 1://待支付订单
                     case 7://退单申请(我的订单)
@@ -97,12 +98,12 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
                     case 21://支付后确认不通过
                     case 22://电子发票开票成功
                         Intent intentOrder;
-                        if("3".equals(mLists.get(i-1).getOrder_type())){
+                        if ("3".equals(mLists.get(i - 1).getOrder_type())) {
                             intentOrder = new Intent(UIUtils.getContext(), CourseOrderDetailActivity.class);
-                        }else{
+                        } else {
                             intentOrder = new Intent(UIUtils.getContext(), OrderDetailActivity.class);
                         }
-                        intentOrder.putExtra("oid", mLists.get(i-1).getDetail_id());
+                        intentOrder.putExtra("oid", mLists.get(i - 1).getDetail_id());
                         UIUtils.startActivity(intentOrder);
                         break;
                     case 2://购物车(已经没有购物车了)
@@ -111,10 +112,9 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
                     case 5://机构修改权限
                     case 6://机构审核
                     case 9://老师退出机构(我的机构)
-                        jumpMessageDetial("jigou", new Intent(UIUtils.getContext(), MineOrganizationActivity.class));
                         break;
                     case 3://陪读
-                        String content = mLists.get(i-1).getContent().split("：")[1].split("，")[0].trim();
+                        String content = mLists.get(i - 1).getContent().split("：")[1].split("，")[0].trim();
                         Intent intent = new Intent();
                         intent.setClass(UIUtils.getContext(), AccompanyReadStatusActivity.class);
                         intent.putExtra(SchemeControl.PASSWORD, content);
@@ -125,23 +125,14 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
                         jumpMessageDetial("person", new Intent(UIUtils.getContext(), PersonalCenterActivity.class));
                         break;
                     case 13://机构审核失败
-                        jumpMessageDetial("fail", new Intent(UIUtils.getContext(), OrganizationCertificationStatusActivity.class));
                         break;
                     case 14://课程审核通过
                     case 15://课程审核不通过
                     case 16://老师取消课程
                     case 17://系统取消课程
-                        Intent intent_personMineCourse = new Intent(UIUtils.getContext(), PersonMineCourseDetailActivity.class);
-                        intent_personMineCourse.putExtra("course_id", mLists.get(i-1).getDetail_id());
-                        UIUtils.startActivity(intent_personMineCourse);
                         break;
                     case 23://审核通过
                     case 24://审核不通过
-                        Intent intent_member_detail = new Intent(UIUtils.getContext(), MemberDetailActivity.class);
-                        intent_member_detail.putExtra(MemberDetailActivity.ACTION_UID, mLists.get(i-1).getDetail_id());
-                        intent_member_detail.putExtra(MemberDetailActivity.ACTION_TITLE,
-                                UIUtils.getString(R.string.teacher_detail));
-                        UIUtils.startActivity(intent_member_detail);
                         break;
 
                 }
@@ -161,8 +152,6 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
             }else if("cart".equals(s)){
                 UIUtils.startActivity(intent);
             }*/ else if ("fail".equals(s)) {
-                intent.putExtra(OrganizationCertificationStatusActivity.STATUS,
-                        OrganizationCertificationStatusActivity.STATUS_FAIL);
             } else if ("course".equals(s)) {
                 intent.putExtra("course", s);
             } else {
@@ -201,17 +190,17 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
      * 获取数据
      */
     private void getData() {
+        int limit_end = 5;
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "message_box");
         params.addBodyParameter("uid", StringUtils.getUid());
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("big_type", String.valueOf(big_type));
-        int limit_end = 5;
         params.addBodyParameter("limit", limit + "," + limit_end);
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
+        params.addBodyParameter("url", UrlUtils.SERVER_API_COMMON);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
@@ -240,8 +229,8 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
                     if (null != infos && infos.size() > 0) {
                         mLists.addAll(infos);
                         footView.setVisibility(View.GONE);
-                    }else{
-                        if(limit != 0){
+                    } else {
+                        if (limit != 0) {
                             footView.setVisibility(View.VISIBLE);
                         }
                         if (!flag_down) {
@@ -249,25 +238,26 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
                             lv_message.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                         }
                     }
-                    if(null != mLists && mLists.size() > 0){
+                    if (null != mLists && mLists.size() > 0) {
                         lv_message.setVisibility(View.VISIBLE);
                         tv_no_message.setVisibility(View.GONE);
                         lv_message.onRefreshComplete();
-                        if(null != messageAdapter){
+                        if (null != messageAdapter) {
                             messageAdapter.notifyDataSetChanged();
-                        }else {
-                            ListView refreshableView =  lv_message.getRefreshableView();
+                        } else {
+                            ListView refreshableView = lv_message.getRefreshableView();
                             FrameLayout footerLayoutHolder = new FrameLayout(UIUtils.getContext());
                             footerLayoutHolder.addView(footView);
                             refreshableView.addFooterView(footerLayoutHolder);
                             messageAdapter = new MessageAdapter(mLists);
                             lv_message.setAdapter(messageAdapter);
                         }
-                    }else {
+                    } else {
                         lv_message.setVisibility(View.GONE);
                         tv_no_message.setVisibility(View.VISIBLE);
                     }
                 } else {
+                    FailCodeControl.checkCode(messageDetialData.getCode());
                     lv_message.setVisibility(View.GONE);
                     tv_no_message.setVisibility(View.VISIBLE);
                 }

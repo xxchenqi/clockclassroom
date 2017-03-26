@@ -33,12 +33,10 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.analytics.MobclickAgent;
-import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.adapter.MineOrderAdapter;
 import com.yiju.ClassClockRoom.bean.CartCommit;
-import com.yiju.ClassClockRoom.bean.CommonMsgResult;
 import com.yiju.ClassClockRoom.bean.CreateOrderResult;
 import com.yiju.ClassClockRoom.bean.MineOrderData;
 import com.yiju.ClassClockRoom.bean.Order2;
@@ -49,7 +47,7 @@ import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
 import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
 import com.yiju.ClassClockRoom.control.ExtraControl;
-import com.yiju.ClassClockRoom.util.DateUtil;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.LogUtil;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
@@ -403,14 +401,10 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "user_amount_remain");
-        if (!"-1".equals(StringUtils.getUid())) {
-            params.addBodyParameter("uid", StringUtils.getUid());
-        }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        params.addBodyParameter("uid", StringUtils.getUid());
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
@@ -428,6 +422,8 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                             String code = json.getString("code");
                             if ("1".equals(code)) {
                                 balance = json.getString("data");
+                            }else{
+                                FailCodeControl.checkCode(code);
                             }
 
                         } catch (JSONException e) {
@@ -447,19 +443,14 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "order_list");
-        if (!"-1".equals(StringUtils.getUid())) {
-            params.addBodyParameter("uid", StringUtils.getUid());
-        }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("uid", StringUtils.getUid());
         params.addBodyParameter("limit", limit + "," + limit_end);
         if (!"all".equals(status)) {
             params.addBodyParameter("status", status);
         }
-        // params.addBodyParameter("invoice_flag", invoice_flag);
-
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
+        params.addBodyParameter("url", UrlUtils.SERVER_MINE_ORDER);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -533,6 +524,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
             }*/
 
         } else {
+            FailCodeControl.checkCode(mineOrder.getCode());
             UIUtils.showToastSafe(mineOrder.getMsg());
         }
 
@@ -624,7 +616,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //取消订单或者删除订单的操作
-        if (resultCode == RESULT_OK || resultCode == ClassroomArrangementActivity.RESULT_CODE_FROM_CLASSROOM_ARRANGEMENT_ACT) {
+        if (resultCode == RESULT_OK) {
             if (NetWorkUtils.getNetworkStatus(this)) {
                 ly_wifi.setVisibility(View.GONE);
                 lv_mineorder.setVisibility(View.VISIBLE);
@@ -1055,27 +1047,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                 } else if (UIUtils.getString(R.string.order_delete).equals(text)) {
                     MobclickAgent.onEvent(UIUtils.getContext(), "v3200_098");
                     deleteOrder(id);
-                } else if (UIUtils.getString(R.string.order_classroom_arrangement).equals(text)) {
-                    //跳转到课室选择列表页
-                    ArrayList<Order2> order2 = data.get(position).getOrder2();
-                    if (order2.size() > 1) {
-                        Intent intentOrder = new Intent(this, OrderDetailListActivity.class);
-                        intentOrder.putExtra("oid", data.get(position).getId() + "");
-                        startActivity(intentOrder);
-                    } else {
-                        // 先判断订单日期是否大于今天
-                        getSystemTimeRequest(order2.get(0));
-                        /*Intent intentOrder = new Intent(this, ClassroomArrangementActivity.class);
-                        intentOrder.putExtra("order2", order2.get(0));
-                        startActivityForResult(intentOrder, 1);*/
-                    }
-
-                }
-//                else if ("开具发票".equals(text)) {
-//                    intent.putExtra("oid", id);
-//                    startActivityForResult(intent, 0);
-//                }
-                else if (UIUtils.getString(R.string.order_close).equals(text)) {
+                } else if (UIUtils.getString(R.string.order_close).equals(text)) {
                     MobclickAgent.onEvent(UIUtils.getContext(), "v3200_099");
                     cancelOrder(id);
                 }
@@ -1168,12 +1140,11 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         params.addBodyParameter("action", "switch_paymethod");
         params.addBodyParameter("order1_id", id);
         params.addBodyParameter("uid", StringUtils.getUid());
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("pay_method", "6");
+        params.addBodyParameter("url", UrlUtils.SERVER_MINE_ORDER);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
         httpUtils.send(HttpRequest.HttpMethod.POST,
-                UrlUtils.SERVER_USER_COUPON, params,
+                UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -1194,6 +1165,8 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                             if ("1".equals(code)) {
                                 data.get(position).setTrade_id(trade_id);
                                 checkCoupon(id, position, true);
+                            }else{
+                                FailCodeControl.checkCode(code);
                             }
 
                         } catch (JSONException e) {
@@ -1251,56 +1224,9 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                 });
     }
 
-
-    /**
-     * 获取服务端当前时间请求
-     *
-     * @param o Order2
-     */
-    public void getSystemTimeRequest(final Order2 o) {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("action", "get_system_time");
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
-                new RequestCallBack<String>() {
-                    @Override
-                    public void onFailure(HttpException arg0, String arg1) {
-                        UIUtils.showToastSafe(UIUtils.getString(R.string.fail_network_request));
-                    }
-
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        // 处理返回的数据
-                        processDataSystemTime(arg0.result, o);
-                    }
-                }
-        );
-    }
-
-    private void processDataSystemTime(String result, Order2 o) {
-        CommonMsgResult commonMsgResult = GsonTools.fromJson(result, CommonMsgResult.class);
-        if ("1".equals(commonMsgResult.getCode())) {
-            String sys_time = commonMsgResult.getData();//2015-10-15 15:21:36
-            int compare_result = DateUtil.compareDate(sys_time, o.getEnd_date());
-            if (compare_result >= 0) {
-                //限定  不可点
-                UIUtils.showToastSafe(UIUtils.getString(R.string.toast_edit_classroom));
-            } else {
-                //可点
-                Intent i = new Intent(UIUtils.getContext(), ClassroomArrangementActivity.class);
-                i.putExtra("order2", o);
-                BaseApplication.getmForegroundActivity().startActivityForResult(i, 1);
-            }
-        }
-    }
-
-
     @Override
     public void onClickItem(int position) {
         lv_mineorder.setMode(PullToRefreshBase.Mode.BOTH);
-//        datas.clear();
-//        adapter.notifyDataSetChanged();
         String dist_id = datas_filtrate.get(position).getId();
         if ("0".equals(dist_id)) {//全部
             MobclickAgent.onEvent(UIUtils.getContext(), "v3200_090");

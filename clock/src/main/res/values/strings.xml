@@ -164,6 +164,7 @@
     <string name="label_login_hasContent">用户名与密码不能为空</string>
     <string name="label_login_bePassword">密码必须是字母或数字组成，且长度为6至18位</string>
     <string name="label_hint_phonelogin">输入手机号</string>
+    <string name="label_password_login">账号密码登录</string>
 
     <!-- 个人信息页面Label -->
     <string name="label_avatar">头像</string>
@@ -228,6 +229,7 @@
     <string name="shared_third_source">third_source</string>
     <string name="shared_isLogin">isLogin</string>
     <string name="shared_id">id</string>
+    <string name="shared_session_id">session_id</string>
     <string name="shared_data">shared_data</string>
     <string name="shared_name">name</string>
     <string name="shared_sex">sex</string>
@@ -265,6 +267,7 @@
     <string name="shared_black_count">black_count</string>
     <string name="shared_is_pay">is_pay</string>
     <string name="shared_accompany_read_pwd">accompany_read_pwd</string>
+    <string name="shared_existpassword">existpassword</string>
     <!--发票类型-->
     <string name="shared_invoice_type">invoice_type_</string>
     <!-- 我的订单 -->
@@ -1112,6 +1115,7 @@
     <string name="txt_invoice_records_tips">纸质发票可在订单支付完成5&#8211;10个工作日后至对应门店前台领取</string>
     <string name="txt_amout">%s元</string>
     <string name="course_over_info">报名已结束，下次请赶早哦</string>
+    <string name="sign_up_over">报名已结束</string>
     <string name="write_comment_info">写评论&#8230;</string>
     <string name="write_comment">写评论</string>
     <string name="none_comment_info">暂时还没有评论，快来抢沙发吧!</string>
@@ -1120,6 +1124,7 @@
     <string name="txt_for_classroom">订课室</string>
     <string name="txt_theme">主题</string>
     <string name="txt_experience">体验课</string>
+    <string name="relation_course">相关课程</string>
 
     <string name="mine_praise">我赞过的</string>
     <string name="mine_comment">我的评论</string>
@@ -1186,4 +1191,9 @@
     <string name="text_all">全部</string>
     <string name="order_content">订单备注</string>
     <string name="no_order_content">暂无备注</string>
+    <string name="create_phone_info">未注册过的手机号验证通过后将自动创建时钟教室账号</string>
+    <string name="message_login">短信快捷登录</string>
+    <string name="no_setting">暂不设置</string>
+
+    <string name="invalid_content">很抱歉，该内容已失效</string>
 </resources>

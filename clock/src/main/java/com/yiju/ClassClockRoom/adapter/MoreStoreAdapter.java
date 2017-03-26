@@ -82,7 +82,7 @@ public class MoreStoreAdapter extends CommonBaseAdapter<MoreStoreEntity> {
         }
         Glide.with(UIUtils.getContext())
                 .load(moreStoreEntity.getPic_small())
-                .error(R.drawable.clock_wait)
+                .error(R.drawable.bg_placeholder_4_3)
                 .into(iv_item_index_store_pic);
     }
 }

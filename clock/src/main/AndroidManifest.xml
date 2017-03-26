@@ -129,6 +129,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".act.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.PersonalCenter_InformationActivity"
@@ -166,16 +167,6 @@
         <activity
             android:name=".act.MineOrderActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.ClassroomArrangementActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".act.ClassRoomTypeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.OrderDetailListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.RegisterActivity"
@@ -218,13 +209,6 @@
             android:name=".act.ClassroomDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".act.PublishCourseSecondActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.CourseMessageEditActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
             android:name=".act.BackOrderActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -256,38 +240,10 @@
             android:name=".act.search.SearchActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".act.OrganizationBlacklistManagementActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.MineOrganizationActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.OrganizationInformationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.MemberDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".act.Messages_Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.MessageDetialActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.OrganizationModifyNameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.OrganizationMienActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.OrganizationMienEditActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.OrganizationAddTeacherActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.ModifyTagActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.ReservationActivity"
@@ -317,12 +273,6 @@
             android:name=".act.ReservationTimeFailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".act.CourseDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.TeacherMoreActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".act.MineOrderCourseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -336,15 +286,6 @@
             android:name=".act.InvoiceRecordsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".act.PersonMineCourseActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.CourseMoreActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.PersonMineCourseDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".act.PersonMineCoursePeopleCountActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -352,19 +293,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".act.TeacherDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".act.SupplierDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.CourseParticularsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.PublishActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.PublishTimeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.ChooseStoreActivity"
@@ -377,17 +306,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".act.OrganizationCertificationStatusActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".act.TeacherInformationFailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.OrganizationTeacherListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".act.CourseTeacherListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".act.AvailableWifiStoreActivity"
@@ -456,6 +375,12 @@
         <activity
             android:name=".act.ExperienceCourseDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".act.PasswordLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".act.SetPasswordActivity"
+            android:screenOrientation="portrait" />
         <!-- 微信 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -510,20 +435,6 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
-        <!-- bugTages相关 -->
-        <activity
-            android:name="com.bugtags.library.BugtagsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-
-        <receiver android:name="com.bugtags.library.BugtagsReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.bugtags.library.BugtagsService" />
 
         <!-- /////////////////个推相关 /////////////////// --><!-- 个推SDK配置开始 --><!-- 配置的第三方参数属性 -->
         <meta-data

@@ -60,10 +60,11 @@ public class HttpApiParam extends BaseApiParam {
         PostParams params = new PostParams();
         params.put("action", "modifyUPic");
         params.put("uid", uid);
-        params.put("username", username);
-        params.put("password", password);
-        params.put("third_source", third_source);
         params.put("purl", url);
+        params.put("url", UrlUtils.SERVER_USER_API);
+        params.put("sessionId", StringUtils.getSessionId());
+
+
         return params.getMap();
     }
 
@@ -79,10 +80,10 @@ public class HttpApiParam extends BaseApiParam {
         params.put("action", "modifyInfo");
         params.put("type", "show_teacher");
         params.put("uid", uid);
-        params.put("username", username);
-        params.put("password", password);
-        params.put("third_source", third_source);
         params.put("value", on_off);
+        params.put("url", UrlUtils.SERVER_USER_API);
+        params.put("sessionId", StringUtils.getSessionId());
+
         return params.getMap();
     }
 
@@ -96,9 +97,6 @@ public class HttpApiParam extends BaseApiParam {
         PostParams params = new PostParams();
         params.put("action", "logout");
         params.put("uid", uid);
-        params.put("username", username);
-        params.put("password", password);
-        params.put("third_source", third_source);
         return params.getMap();
     }
 
@@ -117,6 +115,8 @@ public class HttpApiParam extends BaseApiParam {
         params.put("uid", uid);
         params.put("detail_id", detail_id);
         params.put("type", type);
+        params.put("url", UrlUtils.SERVER_API_COMMON);
+        params.put("sessionId", StringUtils.getSessionId());
         return params.getMap();
     }
 
@@ -133,20 +133,6 @@ public class HttpApiParam extends BaseApiParam {
             uid = "";
         }
         params.put("own_uid", uid);
-        params.put("id", course_id);
-        return params.getMap();
-    }
-
-    /**
-     * 报名课程
-     *
-     * @param uid       用户id
-     * @param course_id 课程id
-     */
-    public static Map<String, RequestBody> applyCourse(String uid, String course_id) {
-        PostParams params = new PostParams();
-        params.put("action", "enroll_course");
-        params.put("uid", uid);
         params.put("id", course_id);
         return params.getMap();
     }
@@ -221,6 +207,8 @@ public class HttpApiParam extends BaseApiParam {
         params.put("action", "message_read");
         params.put("uid", uid);
         params.put("mid", mid + "");
+        params.put("url", UrlUtils.SERVER_API_COMMON);
+        params.put("sessionId", StringUtils.getSessionId());
         return params.getMap();
     }
 

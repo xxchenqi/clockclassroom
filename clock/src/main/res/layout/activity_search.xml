@@ -32,6 +32,7 @@
                 android:drawablePadding="@dimen/DIMEN_12DP"
                 android:imeOptions="actionSearch"
                 android:maxLines="1"
+                android:hint="@string/text_input_hint"
                 android:paddingLeft="@dimen/DIMEN_12DP"
                 android:textColor="@color/color_black_33"
                 android:textCursorDrawable="@null"

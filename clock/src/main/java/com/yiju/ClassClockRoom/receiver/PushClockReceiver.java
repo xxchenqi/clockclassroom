@@ -15,11 +15,7 @@ import com.igexin.sdk.PushConsts;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.CourseOrderDetailActivity;
-import com.yiju.ClassClockRoom.act.MemberDetailActivity;
-import com.yiju.ClassClockRoom.act.MineOrganizationActivity;
 import com.yiju.ClassClockRoom.act.OrderDetailActivity;
-import com.yiju.ClassClockRoom.act.OrganizationCertificationStatusActivity;
-import com.yiju.ClassClockRoom.act.PersonMineCourseDetailActivity;
 import com.yiju.ClassClockRoom.act.PersonalCenterActivity;
 import com.yiju.ClassClockRoom.act.accompany.AccompanyReadStatusActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
@@ -324,13 +320,6 @@ public class PushClockReceiver extends BroadcastReceiver {
             case Action_Int_Auth_Update://机构修改成员权限
             case Action_Int_Exit_Org_Self://老师退出机构
             case Action_Int_Organization_Success://机构认证成功
-                if (!isRuningApp(context)) {
-                    StartApp(context);
-                    return;
-                }
-                Intent intentOrganizationAdd = new Intent(context, MineOrganizationActivity.class);
-//                intentOrganizationAdd.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                BaseApplication.getmForegroundActivity().startActivity(intentOrganizationAdd);
                 break;
             case Action_Int_Exit_Org://机构移除老师
                 if (!isRuningApp(context)) {
@@ -371,45 +360,13 @@ public class PushClockReceiver extends BroadcastReceiver {
                 }
                 break;
             case Action_Int_Organization_Fail://机构认证失败
-                if (!isRuningApp(context)) {
-                    StartApp(context);
-                    return;
-                }
-                Intent intentOrganizationFail = new Intent(UIUtils.getContext(),
-                        OrganizationCertificationStatusActivity.class);
-                intentOrganizationFail.putExtra(OrganizationCertificationStatusActivity.STATUS, OrganizationCertificationStatusActivity.STATUS_FAIL);
-//                intentOrganizationFail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                BaseApplication.getmForegroundActivity().startActivity(intentOrganizationFail);
-                break;
             case ACTION_INT_COURSE_REVIEW_SUCCESS://课程审核通过
             case ACTION_INT_COURSE_REVIEW_FAIL://课程审核不通过
             case ACTION_INT_CANCEL_COURSE_TEACHER://老师取消课程
             case ACTION_INT_CANCEL_COURSE_SYSTEM://系统取消课程
-                if (!isRuningApp(context)) {
-                    StartApp(context);
-                    return;
-                }
-                if (bean_skip != null && StringUtils.isNotNullString(bean_skip.getCourse_id())) {
-                    Intent intent_personMineCourse = new Intent(UIUtils.getContext(), PersonMineCourseDetailActivity.class);
-                    intent_personMineCourse.putExtra("course_id", bean_skip.getCourse_id());
-//                    intent_personMineCourse.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    BaseApplication.getmForegroundActivity().startActivity(intent_personMineCourse);
-                }
                 break;
             case ACTION_INT_TEACHER_REVIEW_SUCCESS:
             case ACTION_INT_TEACHER_REVIEW_FAIL:
-                if (!isRuningApp(context)) {
-                    StartApp(context);
-                    return;
-                }
-                if (bean_skip != null && StringUtils.isNotNullString(bean_skip.getDetail_id())) {
-                    Intent intent_member_detail = new Intent(UIUtils.getContext(), MemberDetailActivity.class);
-                    intent_member_detail.putExtra(MemberDetailActivity.ACTION_UID, bean_skip.getDetail_id());
-                    intent_member_detail.putExtra(MemberDetailActivity.ACTION_TITLE,
-                            UIUtils.getString(R.string.teacher_detail));
-//                    intent_member_detail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    BaseApplication.getmForegroundActivity().startActivity(intent_member_detail);
-                }
                 break;
             default:
                 break;

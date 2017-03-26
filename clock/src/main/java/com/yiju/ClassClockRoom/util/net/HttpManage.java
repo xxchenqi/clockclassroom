@@ -45,6 +45,13 @@ public class HttpManage {
 
     /**
      * 初始化Gson类型的数据传输
+     */
+    public IApiService getJavaService() {
+        return getApiService(UrlUtils.JAVA_URL+"/");
+    }
+
+    /**
+     * 初始化Gson类型的数据传输
      *
      * @param base_url 基类base地址
      */

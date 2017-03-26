@@ -17,6 +17,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.MessageBox;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -104,30 +105,6 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
         sendHttp(uid, "message_box_type");
     }
 
-    /*private void getHttp() {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("action", "message_box_type");
-        params.addBodyParameter("uid", uid);
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
-                new RequestCallBack<String>() {
-
-                    @Override
-                    public void onFailure(HttpException arg0, String arg1) {
-                        UIUtils.showToastSafe(R.string.fail_network_request);
-                    }
-
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        // 处理返回的数据
-                        processData(arg0.result);
-                    }
-                });
-    }*/
-
     /**
      * 请求数据
      *
@@ -140,14 +117,13 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", action[0]);
         params.addBodyParameter("uid", uid);
-        if (length == 1) {
-            params.addBodyParameter("username", StringUtils.getUsername());
-            params.addBodyParameter("password", StringUtils.getPassword());
-            params.addBodyParameter("third_source", StringUtils.getThirdSource());
-        } else if (length == 2) {
+        if (length == 2) {
             params.addBodyParameter("big_type", action[1]);
         }
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
+        params.addBodyParameter("url", UrlUtils.SERVER_API_COMMON);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -172,12 +148,14 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
     private void processData(String result, int length) {
         switch (length) {
             case 1:
-                if(null != result){
+                if (null != result) {
                     messageBox = GsonTools.changeGsonToBean(result, MessageBox.class);
-                    if(messageBox.getCode() == 1){
+                    if (messageBox.getCode() == 1) {
                         showMessage(tv_order_one, tv_order_time, messageBox.getData().get(0), badgeView_order);
                         showMessage(tv_mech_one, tv_mech_time, messageBox.getData().get(1), badgeView_mech);
                         showMessage(tv_peidu_one, tv_peidu_time, messageBox.getData().get(2), badgeView_peidu);
+                    }else{
+                        FailCodeControl.checkCode(messageBox.getCode());
                     }
                 }
                 break;
@@ -190,10 +168,11 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
 
     /**
      * 消息展示
-     *  @param tv                   消息内容
-     * @param time                  时间
-     * @param messageTypeData       消息数据集合
-     * @param badgeView             右上角红色提醒
+     *
+     * @param tv              消息内容
+     * @param time            时间
+     * @param messageTypeData 消息数据集合
+     * @param badgeView       右上角红色提醒
      */
     private void showMessage(TextView tv, TextView time, MessageBox.MessageTypeData messageTypeData,
                              BadgeView badgeView) {
@@ -217,7 +196,7 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
         } else {
             tv.setText(messageTypeData.getRecent_message());
         }
-        if(!"0".equals(messageTypeData.getCreate_time())){
+        if (!"0".equals(messageTypeData.getCreate_time())) {
             Calendar ca = Calendar.getInstance();
             Date today = ca.getTime();
             long O_time = Long.valueOf(messageTypeData.getCreate_time());
@@ -247,6 +226,7 @@ public class Messages_Activity extends BaseActivity implements View.OnClickListe
         }
 
     }
+
     @Override
     public String getPageName() {
         return getString(R.string.title_act_my_message);

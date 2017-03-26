@@ -9,15 +9,6 @@ public class ClassRoomData {
     private ClassRoom school_list;
     private CartStatus cart_status;
     private IndexAds index_ads;
-//    private MessageBoxNoRead message_box_noread;
-
-//    public MessageBoxNoRead getMessage_box_noread() {
-//        return message_box_noread;
-//    }
-//
-//    public void setMessage_box_noread(MessageBoxNoRead message_box_noread) {
-//        this.message_box_noread = message_box_noread;
-//    }
 
     public ClassRoom getSchool_list() {
         return school_list;

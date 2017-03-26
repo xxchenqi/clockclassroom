@@ -22,6 +22,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.bean.UserVerifyInfo;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.control.OtherLoginControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -228,12 +229,13 @@ public class PersonalCenter_BindingThreeWayAccountActivity extends BaseActivity 
         params.addBodyParameter("action", "user_bind_third");
         params.addBodyParameter("old_third_source", StringUtils.getThirdSource());
         params.addBodyParameter("uid", uid);
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", third_source);
         params.addBodyParameter("third_id", third_id);
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
+        params.addBodyParameter("third_source", third_source);
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -256,6 +258,7 @@ public class PersonalCenter_BindingThreeWayAccountActivity extends BaseActivity 
             return;
         }
         if (!"1".equals(userVerifyInfo.getCode())) {
+            FailCodeControl.checkCode(userVerifyInfo.getCode());
             UIUtils.showToastSafe(userVerifyInfo.getMsg());
         } else {
             UIUtils.showToastSafe(userVerifyInfo.getMsg());

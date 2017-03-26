@@ -14,30 +14,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 import com.umeng.analytics.MobclickAgent;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
-import com.yiju.ClassClockRoom.act.ClassroomArrangementActivity;
 import com.yiju.ClassClockRoom.act.ClassroomDetailActivity;
 import com.yiju.ClassClockRoom.act.IndexDetailActivity;
 import com.yiju.ClassClockRoom.act.StoreDetailActivity;
 import com.yiju.ClassClockRoom.bean.AdjustmentData;
-import com.yiju.ClassClockRoom.bean.CommonMsgResult;
 import com.yiju.ClassClockRoom.bean.DeviceEntity;
 import com.yiju.ClassClockRoom.bean.Order2;
 import com.yiju.ClassClockRoom.bean.Order3;
 import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.util.DateUtil;
-import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
-import com.yiju.ClassClockRoom.util.net.UrlUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -210,11 +200,11 @@ public class OrderDetailAdapter extends BaseAdapter {
                         sb.append(newCancel_date.get(i).getDate()).append("、");
                     }
                 }
-                if(newCancel_date.size()>0){
+                if (newCancel_date.size() > 0) {
                     viewHolder.tv_cancel_classroom.setVisibility(View.VISIBLE);
                     viewHolder.tv_cancel_classroom_info.setVisibility(View.VISIBLE);
                     viewHolder.tv_cancel_classroom_info.setText(sb.toString());
-                }else{
+                } else {
                     viewHolder.tv_cancel_classroom.setVisibility(View.GONE);
                     viewHolder.tv_cancel_classroom_info.setVisibility(View.GONE);
                 }
@@ -227,11 +217,11 @@ public class OrderDetailAdapter extends BaseAdapter {
                         sb_add.append(newAdd_date.get(j).getDate()).append("、");
                     }
                 }
-                if(newAdd_date.size() > 0){
+                if (newAdd_date.size() > 0) {
                     viewHolder.tv_add_classroom.setVisibility(View.VISIBLE);
                     viewHolder.tv_add_classroom_info.setVisibility(View.VISIBLE);
                     viewHolder.tv_add_classroom_info.setText(sb_add.toString());
-                }else{
+                } else {
                     viewHolder.tv_add_classroom.setVisibility(View.GONE);
                     viewHolder.tv_add_classroom_info.setVisibility(View.GONE);
                 }
@@ -258,14 +248,14 @@ public class OrderDetailAdapter extends BaseAdapter {
         }
         String pic_url = o.getPic_url();
         if (StringUtils.isNullString(pic_url)) {
-            viewHolder.iv_order_pic.setImageResource(R.drawable.clock_wait);
+            viewHolder.iv_order_pic.setImageResource(R.drawable.bg_placeholder_4_3);
         } else {
             Glide.with(UIUtils.getContext())
                     .load(pic_url)
                     .asBitmap().centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .placeholder(R.drawable.clock_wait)
-                    .error(R.drawable.clock_wait)
+                    .placeholder(R.drawable.bg_placeholder_4_3)
+                    .error(R.drawable.bg_placeholder_4_3)
                     .into(viewHolder.iv_order_pic);
         }
         viewHolder.tv_item_detail_count.setText(
@@ -748,102 +738,5 @@ public class OrderDetailAdapter extends BaseAdapter {
         } else {
             ll_can_select.setVisibility(View.GONE);
         }
-//        else {
-//            LinearLayout layout_no_data = (LinearLayout) LayoutInflater.from(
-//                    UIUtils.getContext()).inflate(
-//                    R.layout.item_device_no_data, null);
-//            TextView tv_msg = (TextView) layout_no_data.findViewById(R.id.tv_msg);
-//            tv_msg.setText("暂无可选设备");
-//            ll_parent.addView(layout_no_data);
-//        }
     }
-
-    /**
-     * 免费设备_课室布置
-     *
-     * @param ll_parent   动态添加布局的父控件
-     * @param device_free 免费设备数据源
-     */
-    private void handleDeviceFree(LinearLayout ll_parent, List<DeviceEntity> device_free) {
-        if (device_free != null && device_free.size() != 0) {
-            for (int i = 0; i < device_free.size(); i++) {
-                LinearLayout layout = (LinearLayout) LayoutInflater.from(
-                        UIUtils.getContext()).inflate(
-                        R.layout.item_device, null);
-                TextView tv_name = (TextView) layout.findViewById(R.id.tv_name);
-                TextView tv_count = (TextView) layout.findViewById(R.id.tv_count);
-                DeviceEntity dev = device_free.get(i);
-                if (dev.getDevice_name() != null) {
-                    tv_name.setText(
-                            String.format(
-                                    UIUtils.getString(R.string.format_count),
-                                    dev.getDevice_name()
-                            ));
-                }
-                tv_count.setText(
-                        String.format(
-                                UIUtils.getString(R.string.multiply),
-                                dev.getNum()
-                        ));
-                ll_parent.addView(layout, i);
-            }
-        } else {
-            LinearLayout layout_no_data = (LinearLayout) LayoutInflater.from(
-                    UIUtils.getContext()).inflate(
-                    R.layout.item_device_no_data, null);
-            TextView tv_msg = (TextView) layout_no_data.findViewById(R.id.tv_msg);
-            tv_msg.setText(UIUtils.getString(R.string.txt_no_classroom_arragment));
-            ll_parent.addView(layout_no_data);
-        }
-    }
-
-    /**
-     * 获取服务端当前时间请求
-     *
-     * @param o Order2
-     */
-    public void getSystemTimeRequest(final Order2 o) {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("action", "get_system_time");
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
-                new RequestCallBack<String>() {
-                    @Override
-                    public void onFailure(HttpException arg0, String arg1) {
-                        UIUtils.showToastSafe(UIUtils.getString(R.string.fail_network_request));
-                    }
-
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        // 处理返回的数据
-                        processData(arg0.result, o);
-                    }
-                }
-        );
-    }
-
-    /**
-     * 获取服务器系统时间返回处理
-     *
-     * @param result 返回值
-     * @param o      Order2
-     */
-    private void processData(String result, Order2 o) {
-        CommonMsgResult commonMsgResult = GsonTools.fromJson(result, CommonMsgResult.class);
-        if ("1".equals(commonMsgResult.getCode())) {
-            String sys_time = commonMsgResult.getData();//2015-10-15 15:21:36
-            int compare_result = DateUtil.compareDate(sys_time, o.getEnd_date());
-            if (compare_result >= 0) {
-                //限定  不可点
-                UIUtils.showToastSafe(UIUtils.getString(R.string.toast_edit_classroom));
-            } else {
-                //可点
-                Intent i = new Intent(context, ClassroomArrangementActivity.class);
-                i.putExtra("order2", o);
-                context.startActivityForResult(i, 1);
-            }
-        }
-    }
-
 }

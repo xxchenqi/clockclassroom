@@ -15,6 +15,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/layout_head"
         android:scaleType="matrix"
-        android:src="@drawable/clock_wait" />
+        android:src="@drawable/bg_placeholder_4_3" />
 
 </RelativeLayout>

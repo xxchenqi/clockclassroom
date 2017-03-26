@@ -1,11 +1,12 @@
 package com.yiju.ClassClockRoom.util.net.api;
 
 import com.yiju.ClassClockRoom.R;
-import com.yiju.ClassClockRoom.common.base.BaseSingleton;
+import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.bean.result.MessageBoxNoReadResult;
 import com.yiju.ClassClockRoom.common.DataManager;
+import com.yiju.ClassClockRoom.common.base.BaseSingleton;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.UIUtils;
-import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 import com.yiju.ClassClockRoom.util.net.HttpApiParam;
 import com.yiju.ClassClockRoom.util.net.HttpManage;
 import com.yiju.ClassClockRoom.util.net.ResultCallImpl;
@@ -44,11 +45,12 @@ public class HttpCommonApi extends BaseSingleton {
      */
     public static void attentionAction(final String action, String uid, String detail_id,
                                        final String type, final ResultCallImpl<BaseEntity> resultCallImp) {
-        HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getApiService()
-                        .baseCommonApi(HttpApiParam.attentionAction(action, uid, detail_id, type)),
+        HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getJavaService()
+                        .baseProxyApi(HttpApiParam.attentionAction(action, uid, detail_id, type)),
                 new ResultCallImpl<BaseEntity>() {
                     @Override
                     public void onNext(BaseEntity bean) {
+                        FailCodeControl.checkCode(bean.getCode());
                         if (resultCallImp != null) {
                             resultCallImp.onNext(bean);
                         } else {
@@ -56,10 +58,10 @@ public class HttpCommonApi extends BaseSingleton {
                                 if ("1".equals(type)) {                       //关注老师
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_TEACHER);
-                                } else if("3".equals(type)){//关注供应商
+                                } else if ("3".equals(type)) {//关注供应商
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_SP);
-                                }else {                                      //关注课程
+                                } else {                                      //关注课程
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_COURSE);
                                 }
@@ -67,10 +69,10 @@ public class HttpCommonApi extends BaseSingleton {
                                 if ("1".equals(type)) {                       //取消老师关注
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_CANCEL_TEACHER);
-                                } else if("3".equals(type)){//取消关注供应商
+                                } else if ("3".equals(type)) {//取消关注供应商
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_CANCEL_SP);
-                                }else {                                      //取消课程关注
+                                } else {                                      //取消课程关注
                                     DataManager.getInstance()
                                             .baseEvent(bean, DataManager.ATTENTION_CANCEL_COURSE);
                                 }
@@ -92,11 +94,12 @@ public class HttpCommonApi extends BaseSingleton {
 
     /**
      * 阅读消息
+     *
      * @param mid 消息编号
      */
     public static void readMessage(final int mid) {
-        HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getApiService()
-                        .readMessage(HttpApiParam.readMessage(mid)),false,
+        HttpManage.getInstance().getBaseEntity(HttpManage.getInstance().getJavaService()
+                        .readMessage(HttpApiParam.readMessage(mid)), false,
                 new ResultCallImpl<MessageBoxNoReadResult>() {
                     @Override
                     public void onNext(MessageBoxNoReadResult bean) {
@@ -107,6 +110,8 @@ public class HttpCommonApi extends BaseSingleton {
                             DataManager.getInstance()
                                     .updateNoReadCount(Integer.parseInt(
                                             bean.getData().getNoread_count()));
+                        } else {
+                            FailCodeControl.checkCode(bean.getCode());
                         }
                         DataManager.getInstance().deletePushById(mid);
                     }

@@ -15,7 +15,7 @@
         android:layout_marginLeft="@dimen/DIMEN_12DP"
         android:layout_marginRight="@dimen/DIMEN_16DP"
         android:layout_marginTop="@dimen/DIMEN_6DP"
-        android:background="@drawable/clock_wait"
+        android:background="@drawable/bg_placeholder_4_3"
         android:scaleType="centerCrop"
         tools:ignore="contentDescription" />
 

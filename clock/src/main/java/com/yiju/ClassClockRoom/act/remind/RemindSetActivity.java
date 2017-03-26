@@ -25,6 +25,7 @@ import com.yiju.ClassClockRoom.common.callback.ITroubleRunnable;
 import com.yiju.ClassClockRoom.common.constant.RequestCodeConstant;
 import com.yiju.ClassClockRoom.control.AccompanyRemindControl;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.control.TroubleControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -150,38 +151,6 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
         head_back_relative.setOnClickListener(this);
         remind_time_layout.setOnClickListener(this);
         quiet_hours_layout.setOnClickListener(this);
-
-        //订单提醒开关
-        remind_order_switch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!buttonView.isPressed()) {
-                    return;
-                }
-                if (isChecked) {
-                    setRemindRequest("is_order_remerber", Type_Remind_True);
-                } else {
-                    setRemindRequest("is_order_remerber", Type_Remind_False);
-                }
-            }
-        });
-        // 系统提醒开关
-        remind_system_switch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                if (!buttonView.isPressed()) {
-                    return;
-                }
-                if (isChecked) {
-                    setRemindRequest("is_sys_remerber", Type_Remind_True);
-                } else {
-                    setRemindRequest("is_sys_remerber", Type_Remind_False);
-                }
-            }
-        });
-
         //陪读提醒开关
         remind_accompany_read_switch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -245,12 +214,12 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
         if (!"-1".equals(StringUtils.getUid())) {
             params.addBodyParameter("uid", StringUtils.getUid());
         }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("is_remerber", is_remerber);
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
@@ -279,6 +248,7 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
                                 refreshAccompany();
                             }
                         }
+                        FailCodeControl.checkCode(resultData.getCode());
                         UIUtils.showToastSafe(resultData.getMsg());
 
                     }

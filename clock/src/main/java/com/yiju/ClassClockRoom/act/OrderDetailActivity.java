@@ -46,6 +46,7 @@ import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
 import com.yiju.ClassClockRoom.control.ExtraControl;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.LogUtil;
@@ -483,7 +484,7 @@ public class OrderDetailActivity extends BaseActivity implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         //支付结果页回来刷新
-         refresh = intent.getBooleanExtra(ExtraControl.EXTRA_REFRESH_FLAG, false);
+        refresh = intent.getBooleanExtra(ExtraControl.EXTRA_REFRESH_FLAG, false);
         if (refresh) {
             if (handler != null) {
                 handler.removeMessages(0);
@@ -547,14 +548,11 @@ public class OrderDetailActivity extends BaseActivity implements
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "user_amount_remain");
-        if (!"-1".equals(StringUtils.getUid())) {
-            params.addBodyParameter("uid", StringUtils.getUid());
-        }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("uid", StringUtils.getUid());
+        params.addBodyParameter("url", UrlUtils.SERVER_USER_API);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
@@ -570,6 +568,8 @@ public class OrderDetailActivity extends BaseActivity implements
                             String code = json.getString("code");
                             if ("1".equals(code)) {
                                 balance = json.getString("data");
+                            }else{
+                                FailCodeControl.checkCode(code);
                             }
 
                         } catch (JSONException e) {
@@ -587,17 +587,14 @@ public class OrderDetailActivity extends BaseActivity implements
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "order_detail");
-        if (!"-1".equals(StringUtils.getUid())) {
-            params.addBodyParameter("uid", StringUtils.getUid());
-        }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("uid", StringUtils.getUid());
         params.addBodyParameter("oid", oid);
         params.addBodyParameter("level", "1");
         params.addBodyParameter("room_adjust_new", "1");
+        params.addBodyParameter("url", UrlUtils.SERVER_MINE_ORDER);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
@@ -1071,6 +1068,7 @@ public class OrderDetailActivity extends BaseActivity implements
                 name = order2.get(0).getSname();
             }
         } else {
+            FailCodeControl.checkCode(mineOrder.getCode());
             UIUtils.showToastSafe(mineOrder.getMsg());
         }
         ProgressDialog.getInstance().dismiss();
@@ -1099,7 +1097,7 @@ public class OrderDetailActivity extends BaseActivity implements
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
-            if(refresh){
+            if (refresh) {
                 setResult(RESULT_OK);
             }
             super.onBackPressed();
@@ -1377,12 +1375,11 @@ public class OrderDetailActivity extends BaseActivity implements
         params.addBodyParameter("action", "switch_paymethod");
         params.addBodyParameter("order1_id", oid);
         params.addBodyParameter("uid", StringUtils.getUid());
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
         params.addBodyParameter("pay_method", "6");
+        params.addBodyParameter("url", UrlUtils.SERVER_MINE_ORDER);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
         httpUtils.send(HttpRequest.HttpMethod.POST,
-                UrlUtils.SERVER_USER_COUPON, params,
+                UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -1402,6 +1399,8 @@ public class OrderDetailActivity extends BaseActivity implements
                             if ("1".equals(code)) {
                                 conmmitInfo.setTrade_id(trade_id);
                                 checkCoupon(true);
+                            }else{
+                                FailCodeControl.checkCode(code);
                             }
 
                         } catch (JSONException e) {
@@ -1933,9 +1932,6 @@ public class OrderDetailActivity extends BaseActivity implements
         if (resultCode == RESULT_OK) {
             getHttpUtilsResult();
         }
-        if (resultCode == ClassroomArrangementActivity.RESULT_CODE_FROM_CLASSROOM_ARRANGEMENT_ACT) {
-            getHttpUtils();
-        }
     }
 
     //修改设备后，重新刷新数据
@@ -1944,16 +1940,13 @@ public class OrderDetailActivity extends BaseActivity implements
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "order_detail");
-        if (!"-1".equals(StringUtils.getUid())) {
-            params.addBodyParameter("uid", StringUtils.getUid());
-        }
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("uid", StringUtils.getUid());
         params.addBodyParameter("oid", oid);
         params.addBodyParameter("level", "1");
+        params.addBodyParameter("url", UrlUtils.SERVER_MINE_ORDER);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -1985,6 +1978,7 @@ public class OrderDetailActivity extends BaseActivity implements
             datas.addAll(mineOrder.getData().get(0).getOrder2());
             orderDetailAdapter.notifyDataSetChanged();
         } else {
+            FailCodeControl.checkCode(mineOrder.getCode());
             UIUtils.showToastSafe(mineOrder.getMsg());
         }
     }

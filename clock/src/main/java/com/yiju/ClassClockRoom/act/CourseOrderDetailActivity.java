@@ -29,6 +29,7 @@ import com.yiju.ClassClockRoom.bean.CreateOrderResult;
 import com.yiju.ClassClockRoom.bean.OrderCourseResult;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.control.ExtraControl;
+import com.yiju.ClassClockRoom.control.FailCodeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.MD5;
 import com.yiju.ClassClockRoom.util.PermissionsChecker;
@@ -225,11 +226,10 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
         params.addBodyParameter("action", "get_order_course_detail");
         params.addBodyParameter("id", oid);
         params.addBodyParameter("uid", uid);
-        params.addBodyParameter("username", StringUtils.getUsername());
-        params.addBodyParameter("password", StringUtils.getPassword());
-        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("url", UrlUtils.SERVER_MINE_ORDER);
+        params.addBodyParameter("sessionId", StringUtils.getSessionId());
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.JAVA_PROXY, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -344,6 +344,7 @@ public class CourseOrderDetailActivity extends BaseActivity implements View.OnCl
                 tv_contact_name.setText(data.getContact_name() + " " + data.getContact_mobile());
             }
         } else {
+            FailCodeControl.checkCode(courseOrderDetailBean.getCode());
             UIUtils.showToastSafe(courseOrderDetailBean.getMsg());
         }
     }

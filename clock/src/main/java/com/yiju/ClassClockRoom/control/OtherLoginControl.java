@@ -21,6 +21,7 @@ import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.PersonalCenter_BindingThreeWayAccountActivity;
 import com.yiju.ClassClockRoom.act.SplashActivity;
+import com.yiju.ClassClockRoom.bean.LoginBean;
 import com.yiju.ClassClockRoom.bean.WorkingPayResult;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
 import com.yiju.ClassClockRoom.receiver.PushClockReceiver;
@@ -30,9 +31,6 @@ import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -174,7 +172,7 @@ public class OtherLoginControl {
 
                         PostOtherLogin(third_source, uid, unionId, timestamp,
                                 name, icon, sign, deviceId,
-                                PushClockReceiver.cid,SplashActivity.youYunUDid);
+                                PushClockReceiver.cid, SplashActivity.youYunUDid);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -190,7 +188,7 @@ public class OtherLoginControl {
 
     private static void PostOtherLogin(final int third_source, final String third_id, String third_id_old,
                                        int timestamp, final String nickname, final String avatar,
-                                       String sign, String device_token, String cid,String udid) {
+                                       String sign, String device_token, String cid, String udid) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "third_login");
@@ -211,7 +209,7 @@ public class OtherLoginControl {
             params.addBodyParameter("udid", udid);//游云推送码
         }
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+        httpUtils.send(HttpMethod.POST, UrlUtils.JAVA_THIRD_LOGIN, params,
                 new RequestCallBack<String>() {
 
                     @Override
@@ -221,77 +219,55 @@ public class OtherLoginControl {
 
                     @Override
                     public void onSuccess(ResponseInfo<String> arg0) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(arg0.result);
-                            int code = jsonObject.getInt("code");
-                            if (code == 1) {
-                                String id = jsonObject.getString("id");
-                                if (StringUtils.isNotNullString(id)) {
-                                    String provider = "";
-                                    if (third_source == 1){
-                                        provider = "QQ";
-                                    }else if (third_source == 2){
-                                        provider = "WX";
-                                    }else if (third_source == 3){
-                                        provider = "Sina";
-                                    }
-                                    //um 第三方登录账号统计
-                                    MobclickAgent.onProfileSignIn(provider,id);
-//                                    boolean isRuning = SharedPreferencesUtils.getBoolean(
-//                                            UIUtils.getContext(),
-//                                            SharedPreferencesConstant.Shared_Count_IsRunningForeground,
-//                                            true);
-//                                    if (isRuning) {
-                                        CountControl.getInstance().loginSuccess(id);
-//                                    }
-                                    Context context = BaseApplication
-                                            .getmForegroundActivity();
-                                    SharedPreferencesUtils.saveBoolean(
-                                            context,
-                                            context.getResources().getString(
-                                                    R.string.shared_isLogin),
-                                            true);
-                                    SharedPreferencesUtils.saveString(
-                                            context,
-                                            context.getResources().getString(
-                                                    R.string.shared_id), id);
-                                    SharedPreferencesUtils.saveString(
-                                            context,
-                                            context.getResources().getString(R.string.shared_username),
-                                            third_id
-                                    );
-                                    SharedPreferencesUtils.saveString(
-                                            context,
-                                            context.getResources().getString(R.string.shared_third_source),
-                                            third_source + ""
-                                    );
-                                    SharedPreferencesUtils.saveString(context,
-                                            context.getString(R.string.shared_nickname),
-                                            nickname);
-                                    //名字和头像都不要,都去getInfo里的信息
-//                                    SharedPreferencesUtils.saveString(
-//                                            context,
-//                                            context.getString(R.string.shared_nickname),
-//                                            nickname);
-//                                    SharedPreferencesUtils.saveString(
-//                                            context,
-//                                            context.getResources().getString(
-//                                                    R.string.shared_avatar),
-//                                            avatar);
-                                    //获取支付所需的工作密钥
-                                    getWorkingKey(id);
+                        LoginBean loginBean = GsonTools.changeGsonToBean(arg0.result, LoginBean.class);
+                        if (loginBean == null) {
+                            return;
+                        }
+                        if ("0".equals(loginBean.getCode())) {
+                            String uid = loginBean.getObj().getUserId();
+                            if (StringUtils.isNotNullString(uid)) {
+                                String provider = "";
+                                if (third_source == 1) {
+                                    provider = "QQ";
+                                } else if (third_source == 2) {
+                                    provider = "WX";
+                                } else if (third_source == 3) {
+                                    provider = "Sina";
                                 }
+                                //um 第三方登录账号统计
+                                MobclickAgent.onProfileSignIn(provider, uid);
+                                CountControl.getInstance().loginSuccess(uid);
+                                Context context = BaseApplication
+                                        .getmForegroundActivity();
+                                SharedPreferencesUtils.saveBoolean(
+                                        context,
+                                        context.getResources().getString(
+                                                R.string.shared_isLogin),
+                                        true);
+                                SharedPreferencesUtils.saveString(
+                                        context,
+                                        context.getResources().getString(
+                                                R.string.shared_id), uid);
+                                SharedPreferencesUtils.saveString(
+                                        context,
+                                        context.getResources().getString(
+                                                R.string.shared_session_id),
+                                        loginBean.getObj().getSessionId());
+                                if (StringUtils.isNotNullString(loginBean.getObj().getMobile())) {
+                                    SharedPreferencesUtils.saveString(context,
+                                            UIUtils.getString(R.string.shared_mobile),
+                                            loginBean.getObj().getMobile());
+                                }
+                                //获取支付所需的工作密钥
+                                getWorkingKey(uid);
                                 BaseApplication.getmForegroundActivity().setResult(Activity.RESULT_OK);
                                 BaseApplication.getmForegroundActivity()
                                         .finish();
-                            } else {
-                                UIUtils.showToastSafe(jsonObject.getString("msg"));
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {
+                            UIUtils.showLongToastSafe(loginBean.getMsg());
                         }
                     }
-
                 });
     }
 
