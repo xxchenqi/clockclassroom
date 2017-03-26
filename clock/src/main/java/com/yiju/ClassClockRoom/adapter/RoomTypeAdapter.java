@@ -108,10 +108,8 @@ public class RoomTypeAdapter extends BaseAdapter {
             holder.iv_item_roompic.setImageResource(R.drawable.clock_wait);
         }
         if (selectPosition == position) {
-            holder.iv_item_choose.setImageResource(R.drawable.order_choose_btn);
+            holder.iv_item_choose.setImageResource(R.drawable.check_icon);
 //			UIUtils.startActivity(mIntent);
-        } else {
-            holder.iv_item_choose.setImageResource(R.drawable.order_nonechoose_btn);
         }
         return convertView;
     }

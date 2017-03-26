@@ -364,15 +364,22 @@ public class PasswordActivity extends BaseActivity implements OnClickListener,
             e.printStackTrace();
         }
         SharedPreferencesUtils.saveString(getApplicationContext(),
-                getResources().getString(R.string.shared_third_source), userInfo.getThird_source());
+                getResources().getString(R.string.shared_third_source), "0");
+        SharedPreferencesUtils.saveString(getApplicationContext(),
+                getResources().getString(R.string.shared_org_auth),
+                userInfo.getOrg_auth());
+        SharedPreferencesUtils.saveString(getApplicationContext(),
+                getResources().getString(R.string.shared_nickname),
+                userInfo.getNickname());
+        SharedPreferencesUtils.saveString(this,
+                getResources().getString(R.string.shared_mobile), userInfo.getMobile());
 
 
         circular_immediately_login.setProgress(0);
         circular_immediately_login.setClickable(true);
 
         // 登录成功后关闭页面
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(this, PersonalCenterActivity.class);
         startActivity(intent);
     }
 

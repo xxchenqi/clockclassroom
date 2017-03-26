@@ -21,6 +21,12 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:windowNoTitle">true</item>
+        <item name="colorAccent">@color/app_theme_color</item>
+        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
+    </style>
+    <style name="Theme.AppCompat.Light.Dialog.Alert.Self"
+        parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/app_theme_color</item>
     </style>
 
     <style name="tab_style">
@@ -30,8 +36,9 @@
         <item name="android:layout_weight">1</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:button">@null</item>
-        <item name="android:drawablePadding">-20dip</item>
+        <item name="android:drawablePadding">@dimen/DIMEN_5DP</item>
         <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/DIMEN_10DP</item>
     </style>
 
     <!--<style name="AnimationPreview">
@@ -99,6 +106,12 @@
     <style name="order_tab_textAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/DIMEN_14DP</item>
     </style>
+
+    <style name="contextMenuAnim" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_popu_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_popu_exit</item>
+    </style>
+
     <declare-styleable name="CircularProgressButton">
         <attr name="cpb_selectorIdle" format="reference"/>
         <attr name="cpb_selectorComplete" format="reference"/>

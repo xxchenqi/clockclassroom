@@ -21,6 +21,7 @@ public class MineOrderData implements Serializable {
     private String contact_name;
     private String contact_mobile;
     private String batch_name;
+    private String school_phone;
     private String fee;
     private String real_fee;
     private String expire_time;
@@ -28,6 +29,7 @@ public class MineOrderData implements Serializable {
     private String create_time;
     private String trade_id;
     private ArrayList<Order2> order2;
+
     private String coupon_id;
     private String refund_fee_total;
     private String confirm_type;
@@ -46,7 +48,7 @@ public class MineOrderData implements Serializable {
         return pay_method;
     }
 
-    private String pay_method;
+    private String pay_method;//1：支付宝 6：在线支付 5:余额   其他(其他支付方式)
     private int time;
     private boolean isChoose = false;
     private boolean cbChoose = false;
@@ -90,6 +92,14 @@ public class MineOrderData implements Serializable {
 
     public void setBatch_name(String batch_name) {
         this.batch_name = batch_name;
+    }
+
+    public String getSchool_phone() {
+        return school_phone;
+    }
+
+    public void setSchool_phone(String school_phone) {
+        this.school_phone = school_phone;
     }
 
     public boolean isCbChoose() {

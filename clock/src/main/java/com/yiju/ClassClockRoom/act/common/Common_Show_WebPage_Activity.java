@@ -118,7 +118,7 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
 
     @Override
     public void initView() {
-        head_right_image.setBackgroundResource(R.drawable.share_btn_icon);
+        head_right_image.setBackgroundResource(R.drawable.new_share);
         //默认隐藏分享按钮
         head_right_relative.setVisibility(View.INVISIBLE);
 
@@ -189,6 +189,11 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
                 title_content = UIUtils.getString(R.string.course_zhuan);
                 head_right_relative.setVisibility(View.VISIBLE);
                 break;
+            case WebConstant.WEB_value_charge_back_Page:
+                //充返活动协议
+                title_content = UIUtils.getString(R.string.title_active_protocol);
+                url = UrlUtils.SERVER_WEB_CHARGE_BACK;
+                break;
             default:
                 break;
         }
@@ -199,7 +204,7 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
         setting = webview.getSettings();
         setting.setJavaScriptEnabled(true);
         setting.setDefaultTextEncodingName("GBK");
-        if (page_num == WebConstant.WEB_value_special_teacher_Page||
+        if (page_num == WebConstant.WEB_value_special_teacher_Page ||
                 page_num == WebConstant.WEB_value_special_course_Page) {
             setting.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//只有专题页做缓存
         } else {
@@ -209,6 +214,12 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
         NetWebViewClient netWebViewClient = new NetWebViewClient();
         netWebViewClient.setHead_title(head_title, title_content);
         netWebViewClient.setData(webview);
+        netWebViewClient.setiWebViewHandleError(new NetWebViewClient.IWebViewHandleError() {
+            @Override
+            public void handleWebViewError() {
+                ly_broken_fail.setVisibility(View.VISIBLE);
+            }
+        });
         webview.setWebViewClient(netWebViewClient);
         webview.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -227,6 +238,7 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
     public void initData() {
         if (NetWorkUtils.getNetworkStatus(this)) {
             ly_wifi.setVisibility(View.GONE);
+            ly_broken_fail.setVisibility(View.GONE);
             webview.setVisibility(View.VISIBLE);
             if (page_num != WebConstant.WiFi_Page) {
                 //不是认证WIFI才加载,认证WIFI页面要去请求完结果在下载
@@ -235,6 +247,7 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
         } else {
             ly_wifi.setVisibility(View.VISIBLE);
             webview.setVisibility(View.GONE);
+            ly_broken_fail.setVisibility(View.GONE);
         }
     }
 
@@ -298,10 +311,12 @@ public class Common_Show_WebPage_Activity extends BaseActivity implements
             case R.id.btn_broken_refresh:
                 if (NetWorkUtils.getNetworkStatus(this)) {
                     ly_wifi.setVisibility(View.GONE);
+                    ly_broken_fail.setVisibility(View.GONE);
                     webview.setVisibility(View.VISIBLE);
                     webview.loadUrl(url);
                 } else {
                     ly_wifi.setVisibility(View.VISIBLE);
+                    ly_broken_fail.setVisibility(View.GONE);
                     webview.setVisibility(View.GONE);
                 }
                 break;

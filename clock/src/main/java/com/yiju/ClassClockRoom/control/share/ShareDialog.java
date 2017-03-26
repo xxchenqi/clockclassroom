@@ -34,7 +34,10 @@ public class ShareDialog implements OnClickListener {
     public static final int Type_Share_ClassRoom_Info = 1;
     public static final int Type_Share_Accompany_Video = 2;
     public static final int Type_Share_Accompany_Key = 3;
-    public static final int Type_Share_Teacher_Detail = 4;
+    public static final int Type_Share_Teacher_Detail = 4;//老师
+    public static final int Type_Share_Supplier_Detail = 8;//供应商分享
+    public static final int Type_Share_Theme_News = 9;//资讯分享
+    public static final int Type_Share_Theme_Activity = 10;//活动分享
     public static final int Type_Share_Course_Detail = 5;
     public static final int Type_Share_Store_Detail = 6;
     public static final int Type_Share_Special = -1;
@@ -89,6 +92,12 @@ public class ShareDialog implements OnClickListener {
     private String special_id;
     private StoreShareBean storeShareBean;
     private ShareBean shareBean;
+    private String sp_id;
+    private String sp_name;
+    private String news_id;
+    private String news_title;
+    private String activity_id;
+    private String activity_title;
 
     private ShareDialog() {
         mActivity = BaseApplication.getmForegroundActivity();
@@ -107,7 +116,7 @@ public class ShareDialog implements OnClickListener {
      */
     private void creatView() {
         String shareData = SharedPreferencesUtils.getString(UIUtils.getContext(), UIUtils.getString(R.string.shared_data), null);
-        if(StringUtils.isNotNullString(shareData)){
+        if (StringUtils.isNotNullString(shareData)) {
             storeShareBean = GsonTools.changeGsonToBean(shareData, StoreShareBean.class);
         }
         View view = LayoutInflater.from(mActivity).inflate(
@@ -115,7 +124,7 @@ public class ShareDialog implements OnClickListener {
         dialog = new AlertDialog.Builder(mActivity, R.style.dateDialogTheme)
                 .create();
         Window window = dialog.getWindow();
-        if (window != null){
+        if (window != null) {
             window.setGravity(Gravity.BOTTOM); // 设置dialog显示的位置
             window.setWindowAnimations(R.style.share_dialog_mystyle);
             dialog.setCanceledOnTouchOutside(true);
@@ -176,41 +185,41 @@ public class ShareDialog implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.share_wechat:
-                if(current_Type == Type_Share_Store_Detail){
+                if (current_Type == Type_Share_Store_Detail) {
                     goShare(SHARE_MEDIA.WEIXIN);
-                }else {
+                } else {
                     ShareGetDate(SHARE_MEDIA.WEIXIN);
                 }
                 dialog.dismiss();
                 break;
             case R.id.share_wechat_circle:
-                if(current_Type == Type_Share_Store_Detail){
+                if (current_Type == Type_Share_Store_Detail) {
                     goShare(SHARE_MEDIA.WEIXIN_CIRCLE);
-                }else {
+                } else {
                     ShareGetDate(SHARE_MEDIA.WEIXIN_CIRCLE);
                 }
                 dialog.dismiss();
                 break;
             case R.id.share_qq:
-                if(current_Type == Type_Share_Store_Detail){
+                if (current_Type == Type_Share_Store_Detail) {
                     goShare(SHARE_MEDIA.QQ);
-                }else {
+                } else {
                     ShareGetDate(SHARE_MEDIA.QQ);
                 }
                 dialog.dismiss();
                 break;
             case R.id.share_sina:
-                if(current_Type == Type_Share_Store_Detail){
+                if (current_Type == Type_Share_Store_Detail) {
                     goShare(SHARE_MEDIA.SINA);
-                }else {
+                } else {
                     ShareGetDate(SHARE_MEDIA.SINA);
                 }
                 dialog.dismiss();
                 break;
             case R.id.share_sms:
-                if(current_Type == Type_Share_Store_Detail){
+                if (current_Type == Type_Share_Store_Detail) {
                     goShare(SHARE_MEDIA.SMS);
-                }else {
+                } else {
                     ShareGetDate(SHARE_MEDIA.SMS);
                 }
                 dialog.dismiss();
@@ -240,7 +249,7 @@ public class ShareDialog implements OnClickListener {
         } else if (share_MEDIA == SHARE_MEDIA.SMS) {
             shareBean = storeShareBean.getSms();
         }
-        if(null != shareBean){
+        if (null != shareBean) {
             ShareControl.StartShare(mActivity, share_MEDIA, shareBean);
         }
     }
@@ -280,11 +289,20 @@ public class ShareDialog implements OnClickListener {
                     teacher_name);
         } else if (current_Type == Type_Share_Course_Detail) {
             //课程详情分享
-            shareGetData = new ShareGetData(Type_Share_Course_Detail,current_Way,school_name,
-                    course_id,course_name,teacher_name);
-        }else if(current_Type == Type_Share_Special){
+            shareGetData = new ShareGetData(Type_Share_Course_Detail, current_Way, school_name,
+                    course_id, course_name, teacher_name);
+        } else if (current_Type == Type_Share_Special) {
             //专题分享
-            shareGetData = new ShareGetData(Type_Share_Special,current_Way,special_id);
+            shareGetData = new ShareGetData(Type_Share_Special, current_Way, special_id);
+        } else if (current_Type == Type_Share_Supplier_Detail) {
+            //供应商详情分享
+            shareGetData = new ShareGetData(Type_Share_Supplier_Detail, current_Way, sp_id, sp_name);
+        } else if (current_Type == Type_Share_Theme_News) {
+            //资讯详情分享
+            shareGetData = new ShareGetData(Type_Share_Theme_News, current_Way, news_id, news_title);
+        } else if (current_Type == Type_Share_Theme_Activity) {
+            //活动详情分享
+            shareGetData = new ShareGetData(Type_Share_Theme_Activity, current_Way, activity_id, activity_title);
         }
 
         if (shareGetData == null) {
@@ -395,4 +413,35 @@ public class ShareDialog implements OnClickListener {
         this.special_id = special_id;
         return instance;
     }
+
+    public ShareDialog setSp_id(String sp_id) {
+        this.sp_id = sp_id;
+        return instance;
+    }
+
+    public ShareDialog setSp_name(String sp_name) {
+        this.sp_name = sp_name;
+        return instance;
+    }
+
+    public ShareDialog setNews_id(String news_id) {
+        this.news_id = news_id;
+        return instance;
+    }
+
+    public ShareDialog setNews_title(String news_title) {
+        this.news_title = news_title;
+        return instance;
+    }
+
+    public ShareDialog setActivity_id(String activity_id) {
+        this.activity_id = activity_id;
+        return instance;
+    }
+
+    public ShareDialog setActivity_title(String activity_title) {
+        this.activity_title = activity_title;
+        return instance;
+    }
+
 }

@@ -58,7 +58,7 @@ public class CouponActivity extends BaseActivity implements OnClickListener {
     @ViewInject(R.id.coupon_back)
     private LinearLayout coupon_back;
     @ViewInject(R.id.iv_coupon)
-    private ImageView iv_coupon;
+    private TextView iv_coupon;
     @ViewInject(R.id.tv_coupon_content)
     private TextView tv_coupon_content;
     private String uid;

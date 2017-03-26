@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.adapter.CommonBaseAdapter;
@@ -34,7 +35,8 @@ public class RemindAccompanyAdapter extends CommonBaseAdapter<RemindAccompanyBea
     public void convert(final ViewHolder holder, final RemindAccompanyBean t) {
         holder.setText(R.id.item_accompany_time, t.getName());
         ImageView check = holder.getView(R.id.item_accompany_icon);
-        check.setOnClickListener(new OnClickListener() {
+        LinearLayout ll_item_accompany_icon = holder.getView(R.id.ll_item_accompany_icon);
+        ll_item_accompany_icon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 setCheckMode(t);
@@ -77,9 +79,7 @@ public class RemindAccompanyAdapter extends CommonBaseAdapter<RemindAccompanyBea
 
     private void changeImage(ImageView checkView, boolean isCheck) {
         if (isCheck) {
-            checkView.setImageResource(R.drawable.order_choose_btn);
-        } else {
-            checkView.setImageResource(R.drawable.order_nonechoose_btn);
+            checkView.setImageResource(R.drawable.check_icon);
         }
     }
 

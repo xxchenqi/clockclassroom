@@ -48,21 +48,26 @@ public class EmptyActivity extends Activity {
                         Intent intent_start = new Intent();
                         if (path.equals(UIUtils.getString(R.string.scheme_home_path))) {//首页
                             intent_start.setClass(this, MainActivity.class);
-                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_INDEX);
+                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_THEME);
                         } else if (path.equals(UIUtils.getString(R.string.scheme_course_home_path))) {//课程首页
                             intent_start.setClass(this, MainActivity.class);
-                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_COURSE);
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_teacher_home_path))) {//老师首页
+                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_EXPERIENCE);
+                        } else if (path.equals(UIUtils.getString(R.string.scheme_classroom_home_path))) {//订课室首页
                             intent_start.setClass(this, MainActivity.class);
-                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_TEACHER);
-                        } else if (path.equals(UIUtils.getString(R.string.scheme_personal_home_path))) {//个人中心
-                            intent_start.setClass(this, MainActivity.class);
-                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_INDEX);
+                        }
+//                        else if (path.equals(UIUtils.getString(R.string.scheme_teacher_home_path))) {//老师首页
+//                            intent_start.setClass(this, MainActivity.class);
+//                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_EXPERIENCE);
+//                        }
+                        else if (path.equals(UIUtils.getString(R.string.scheme_personal_home_path))) {//个人中心
+                            intent_start.setClass(this, PersonalCenterActivity.class);
+//                            intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
                         } else if (path.equals(UIUtils.getString(R.string.scheme_course_list_path))) {//课程列表
                             intent_start.setClass(this, CourseMoreActivity.class);
                         } else if (path.equals(UIUtils.getString(R.string.scheme_course_detail_path))) {//课程详情
-                            intent_start.setClass(this, CourseDetailActivity.class);
-                            intent_start.putExtra("COURSE_ID", uri.getQueryParameter(SchemeControl.COURSE_ID));
+                            intent_start.setClass(this, NewCourseDetailActivity.class);
+                            intent_start.putExtra(ExtraControl.EXTRA_COURSE_ID, uri.getQueryParameter(SchemeControl.COURSE_ID));
                         } else if (path.equals(UIUtils.getString(R.string.scheme_store_list_path))) {//门店列表
                             intent_start.setClass(this, MoreStoreActivity.class);
                         } else if (path.equals(UIUtils.getString(R.string.scheme_store_detail_path))) {//门店详情
@@ -325,11 +330,22 @@ public class EmptyActivity extends Activity {
                             }
                         } else if (path.equals(UIUtils.getString(R.string.scheme_more_path))) {//更多
                             intent_start.setClass(this, PersonalCenter_MoreActivity.class);
+                        } else if (path.equals(UIUtils.getString(R.string.scheme_web_message_detail_path))) {//资讯详情
+                            intent_start.setClass(this, ThemeWebAboutActivity.class);
+                            intent_start.putExtra(ExtraControl.EXTRA_THEME_CONTENT_TYPE, "2");
+                            intent_start.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_news_Page);
+                            intent.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.ID));
+                            intent.putExtra(ExtraControl.EXTRA_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
+                        } else if (path.equals(UIUtils.getString(R.string.scheme_web_activity_detail_path))) {//活动详情
+                            intent_start.setClass(this, ThemeWebAboutActivity.class);
+                            intent_start.putExtra(ExtraControl.EXTRA_THEME_CONTENT_TYPE, "3");
+                            intent_start.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_activity_Page);
+                            intent.putExtra(ExtraControl.EXTRA_ID, uri.getQueryParameter(SchemeControl.ID));
+                            intent.putExtra(ExtraControl.EXTRA_TITLE, uri.getQueryParameter(SchemeControl.TITLE));
                         } else {//默认跳转首页
                             intent_start.setClass(this, MainActivity.class);
                             intent_start.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_INDEX);
                         }
-
 
                         intent_start.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_start);

@@ -1,11 +1,12 @@
 package com.yiju.ClassClockRoom.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Sandy on 2016/6/16/0016.
  */
-public class CourseSchedule {
+public class CourseSchedule  implements Serializable {
     private String all_course_hour;
     private String active_course_hour;
     private String date_section;

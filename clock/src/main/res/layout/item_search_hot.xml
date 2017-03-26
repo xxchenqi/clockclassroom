@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tv_search_note"
-    style="@style/textstyle_12p_1e"
     android:layout_width="match_parent"
     android:layout_height="@dimen/DIMEN_30DP"
-    android:background="@drawable/bg_white_bottom_green_1eb482_frame"
+    android:background="@drawable/background_gray_ee_stroke"
     android:ellipsize="end"
     android:gravity="center"
     android:maxEms="6"
+    android:maxLines="1"
     android:paddingLeft="@dimen/DIMEN_18DP"
     android:paddingRight="@dimen/DIMEN_18DP"
-    android:maxLines="1" />
+    android:textColor="@color/color_black_33"
+    android:textSize="@dimen/DIMEN_14DP" />

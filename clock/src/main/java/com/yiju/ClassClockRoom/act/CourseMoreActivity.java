@@ -35,6 +35,7 @@ import com.yiju.ClassClockRoom.bean.SchoolInfo;
 import com.yiju.ClassClockRoom.bean.SchoolLeft;
 import com.yiju.ClassClockRoom.bean.SchoolRight;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
+import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.map.LocationSingle;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -245,7 +246,7 @@ public class CourseMoreActivity extends BaseActivity implements View.OnClickList
                 case "area_school_list":
                     SchoolAll schoolAll = GsonTools.changeGsonToBean(result, SchoolAll.class);
                     if (null != schoolAll) {
-                        if (schoolAll.getCode() == 1) {
+                        if ("1".equals(schoolAll.getCode())) {
                             mListLefts = schoolAll.getData();
                         }
                     }
@@ -253,7 +254,7 @@ public class CourseMoreActivity extends BaseActivity implements View.OnClickList
                 case "get_course_list":
                     CourseMoreData coursemoredata = GsonTools.changeGsonToBean(result, CourseMoreData.class);
                     if (null != coursemoredata) {
-                        if (coursemoredata.getCode() == 1) {
+                        if ("1".equals(coursemoredata.getCode())) {
                             CourseMoreData.Course_School data = coursemoredata.getData();
                             List<CourseInfo> courses = data.getCourse();
                             if (null != courses && courses.size() > 0) {
@@ -324,8 +325,8 @@ public class CourseMoreActivity extends BaseActivity implements View.OnClickList
         Object o = mCourseLists.get(position - 1);
         if (o instanceof CourseInfo) {
             CourseInfo courseInfo = (CourseInfo) o;
-            Intent intent = new Intent(UIUtils.getContext(), CourseDetailActivity.class);
-            intent.putExtra("COURSE_ID", courseInfo.getId());
+            Intent intent = new Intent(UIUtils.getContext(), NewCourseDetailActivity.class);
+            intent.putExtra(ExtraControl.EXTRA_COURSE_ID, courseInfo.getId());
             UIUtils.startActivity(intent);
         }
     }
@@ -481,7 +482,7 @@ public class CourseMoreActivity extends BaseActivity implements View.OnClickList
                 }
             }
         });
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.back_white));
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_back_white));
         popupWindow.showAsDropDown(view);
         //==================================================================================
     }

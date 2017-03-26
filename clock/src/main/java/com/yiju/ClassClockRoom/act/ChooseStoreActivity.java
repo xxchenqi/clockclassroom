@@ -99,11 +99,13 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
     private boolean is_down_refresh = true;
     //pop
     private MoreStorePopUpWindow popUpWindow;
+    private boolean from_prepaid;
 
     @Override
     public void initIntent() {
         super.initIntent();
         sid = getIntent().getStringExtra(ACTION_SID);
+        from_prepaid = getIntent().getBooleanExtra("from_prepaid", false);
     }
 
     @Override
@@ -115,7 +117,13 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initData() {
 
-        head_title.setText(UIUtils.getString(R.string.choose_store));
+        if (from_prepaid) {
+            head_title.setText(UIUtils.getString(R.string.txt_consumption_stores));
+            head_right_relative.setVisibility(View.INVISIBLE);
+        } else {
+            head_title.setText(UIUtils.getString(R.string.choose_store));
+            head_right_relative.setVisibility(View.VISIBLE);
+        }
         data = new ArrayList<>();
         datas_filtrate = new ArrayList<>();
         adapter = new ChooseStoreAdapter(this, data, R.layout.item_choose_store);
@@ -179,6 +187,9 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
         }
 //        params.addBodyParameter("is_test", "1");//是否出现测试门店
         params.addBodyParameter("limit", start + "," + limit);
+        if (from_prepaid) {
+            params.addBodyParameter("school_type", "1");//门店类型 1=直营 2=合作
+        }
 
         httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_COURSE, params,
                 new RequestCallBack<String>() {
@@ -274,7 +285,7 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
         if (schoolAll == null) {
             return;
         }
-        if (schoolAll.getCode() == 1) {
+        if ("1".equals(schoolAll.getCode())) {
             datas_filtrate.addAll(schoolAll.getData());
             datas_filtrate.get(0).setFlag(true);
             popUpWindow = new MoreStorePopUpWindow(this, datas_filtrate, this, head_right_image);
@@ -300,7 +311,7 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.head_right_relative:
                 if (popUpWindow != null) {
-                    head_right_image.setImageResource(R.drawable.up_pull);
+                    head_right_image.setImageResource(R.drawable.arrow_up);
                     popUpWindow.showAsDropDown(ll_title);
                 }
                 break;
@@ -317,10 +328,11 @@ public class ChooseStoreActivity extends BaseActivity implements View.OnClickLis
                 break;
         }
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent();
-        intent.putExtra(ACTION_SID, data.get(position-1));
+        intent.putExtra(ACTION_SID, data.get(position - 1));
         setResult(4, intent);
         finish();
     }

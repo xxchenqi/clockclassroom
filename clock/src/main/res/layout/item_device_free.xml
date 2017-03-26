@@ -49,12 +49,20 @@
         android:layout_marginRight="@dimen/DIMEN_12DP"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_reduce"
+        <RelativeLayout
+            android:id="@+id/rl_reduce"
             android:layout_width="@dimen/DIMEN_28DP"
             android:layout_height="@dimen/DIMEN_28DP"
-            android:src="@drawable/order_reduce_btn_click"
-            tools:ignore="ContentDescription" />
+            android:background="@drawable/background_device_left_white">
+
+            <ImageView
+                android:id="@+id/iv_reduce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/order_reduce_btn_click"
+                tools:ignore="ContentDescription" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="@dimen/DIMEN_40DP"
@@ -63,7 +71,7 @@
             <View
                 android:layout_width="@dimen/DIMEN_40DP"
                 android:layout_height="@dimen/DIMEN_1DP"
-                android:background="@color/color_gay_8f" />
+                android:background="@color/color_gay_ee" />
 
             <EditText
                 android:id="@+id/et_count"
@@ -74,7 +82,6 @@
                 android:gravity="center"
                 android:inputType="number"
                 android:text="1"
-
                 android:textColor="@color/app_theme_color"
                 android:textSize="@dimen/DIMEN_14DP" />
 
@@ -82,14 +89,22 @@
                 android:layout_width="@dimen/DIMEN_40DP"
                 android:layout_height="@dimen/DIMEN_1DP"
                 android:layout_alignParentBottom="true"
-                android:background="@color/color_gay_8f" />
+                android:background="@color/color_gay_ee" />
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/iv_add"
+        <RelativeLayout
+            android:id="@+id/rl_add"
             android:layout_width="@dimen/DIMEN_28DP"
             android:layout_height="@dimen/DIMEN_28DP"
-            android:src="@drawable/order_add_btn_noclick"
-            tools:ignore="ContentDescription" />
+            android:background="@drawable/background_device_right_white">
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/order_add_btn_noclick"
+                tools:ignore="ContentDescription" />
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

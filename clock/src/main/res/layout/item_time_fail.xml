@@ -23,5 +23,5 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/DIMEN_12DP"
-        android:src="@drawable/order_choose_btn"/>
+        android:src="@drawable/check_icon"/>
 </RelativeLayout>

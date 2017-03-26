@@ -11,7 +11,7 @@
 
 
     <com.yiju.ClassClockRoom.widget.ObservableScrollView
-        android:id="@+id/sv_mine_organization"
+        android:id="@+id/sv_supplier"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -66,7 +66,7 @@
 
 
             <com.yiju.ClassClockRoom.widget.CircleImageView
-                android:id="@+id/civ_mine_organization"
+                android:id="@+id/civ_supplier_avatar"
                 android:layout_width="@dimen/DIMEN_100DP"
                 android:layout_height="@dimen/DIMEN_100DP"
                 android:layout_below="@id/rl_mine_organization_head"
@@ -77,13 +77,13 @@
                 app:border_width="@dimen/DIMEN_5DP" />
 
             <TextView
-                android:id="@+id/tv_mine_organization_name"
+                android:id="@+id/tv_supplier_org_or_tch_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rl_mine_organization_head"
                 android:layout_marginLeft="@dimen/DIMEN_18DP"
                 android:layout_marginTop="@dimen/DIMEN_12DP"
-                android:layout_toRightOf="@id/civ_mine_organization"
+                android:layout_toRightOf="@id/civ_supplier_avatar"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:maxWidth="@dimen/DIMEN_155DP"
@@ -92,13 +92,13 @@
 
 
             <com.yiju.ClassClockRoom.widget.NewFlowLayout
-                android:id="@+id/fl_mine_organization"
+                android:id="@+id/fl_supplier_org_or_tch_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/tv_mine_organization_name"
-                android:layout_below="@id/tv_mine_organization_name"
+                android:layout_alignLeft="@id/tv_supplier_org_or_tch_name"
+                android:layout_below="@id/tv_supplier_org_or_tch_name"
                 android:layout_marginTop="@dimen/DIMEN_5DP"
-                android:layout_toRightOf="@id/civ_mine_organization" />
+                android:layout_toRightOf="@id/civ_supplier_avatar" />
 
             <!-- <LinearLayout
                  android:visibility="gone"
@@ -182,7 +182,7 @@
                 android:id="@+id/ll_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/civ_mine_organization"
+                android:layout_below="@id/civ_supplier_avatar"
                 android:layout_marginTop="@dimen/DIMEN_22DP"
                 android:orientation="vertical">
 
@@ -242,7 +242,7 @@
                     android:background="@color/gray" />
 
                 <TextView
-                    android:id="@+id/tv_mine_organization_brief"
+                    android:id="@+id/tv_supplier_org_or_tch_brief"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/DIMEN_12DP"

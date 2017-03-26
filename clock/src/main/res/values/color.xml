@@ -39,6 +39,7 @@
     <color name="list">#00000000</color>
     <!-- 灰色ececec -->
     <color name="color_gay_ec">#ececec</color>
+    <color name="color_gay_bb">#BBBBBB</color>
     <!-- 灰色c5c5c5 -->
     <color name="color_gay_c5">#c5c5c5</color>
     <!-- 灰色f5f5f5 -->
@@ -110,12 +111,12 @@
     <!--剩余进度条的空白部分-->
     <color name="cpb_grey">#ffdedede</color>
     <!--转圈的进度条-->
-    <color name="cpb_blue">#1eb482</color>
-    <color name="cpb_blue_dark">#1eb482</color>
+    <color name="cpb_blue">#41C256</color>
+    <color name="cpb_blue_dark">#41C256</color>
     <!--按钮的背景颜色-->
-    <color name="cpb_red">#1eb482</color>
+    <color name="cpb_red">#41C256</color>
     <!--瞬间收缩消失的颜色?-->
-    <color name="cpb_red_dark">#1eb482</color>
+    <color name="cpb_red_dark">#41C256</color>
     <color name="cpb_green">#ff99cc00</color>
     <color name="cpb_green_dark">#ff6d9b00</color>
     <color name="cpb_white">@android:color/white</color>
@@ -123,6 +124,8 @@
     <color name="color_orange_fa">#FA6000</color>
     <!--红色-->
     <color name="color_red_ff">#FF4747</color>
+    <color name="color_red_f1">#F14A4A</color>
 
     <color name="yellow_fff6df">#fff6df</color>
+    <color name="yellow_fff6e0">#fff6e0</color>
 </resources>

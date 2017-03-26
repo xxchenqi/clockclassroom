@@ -336,7 +336,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/DIMEN_24DP"
-                        android:background="@drawable/order_choose_btn"
+                        android:background="@drawable/check_icon"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
 
@@ -365,7 +365,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/DIMEN_24DP"
-                        android:background="@drawable/order_nonechoose_btn"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
 
@@ -415,7 +414,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/DIMEN_12DP"
-                    android:background="@drawable/order_nonechoose_btn"
                     tools:ignore="ContentDescription" />
 
                 <TextView

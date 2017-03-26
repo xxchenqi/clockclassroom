@@ -42,6 +42,15 @@ public class CommonResultBean extends BaseEntity {
         private String javaUrl;
         private String basePicUrl;
         private String ejuPayUrl;
+        private String h5BaseUrl;
+
+        public String getH5BaseUrl() {
+            return h5BaseUrl;
+        }
+
+        public void setH5BaseUrl(String h5BaseUrl) {
+            this.h5BaseUrl = h5BaseUrl;
+        }
 
         public String getBaseUrl() {
             return baseUrl;

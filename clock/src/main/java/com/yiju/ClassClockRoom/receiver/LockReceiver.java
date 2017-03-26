@@ -30,7 +30,8 @@ public class LockReceiver extends BroadcastReceiver {
                 SharedPreferencesUtils.saveBoolean(UIUtils.getContext(),
                         SharedPreferencesConstant.Shared_Count_IsRunningForeground,
                         false);
-                CountControl.getInstance().loginOut(true);
+                //注释掉是因为新的bi数据统计不需要切换到后台的时候做处理
+//                CountControl.getInstance().loginOut(true);
             }
         }
 //        else if (Intent.ACTION_USER_PRESENT.equals(action)) { // 解锁

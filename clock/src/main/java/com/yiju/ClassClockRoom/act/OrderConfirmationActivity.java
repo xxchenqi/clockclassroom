@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.ejupay.sdk.EjuPayManager;
 import com.ejupay.sdk.service.EjuPayResultCode;
+import com.ejupay.sdk.service.IEjuPayResult;
 import com.ejupay.sdk.service.IPayResult;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -46,11 +48,15 @@ import com.yiju.ClassClockRoom.bean.Order2;
 import com.yiju.ClassClockRoom.bean.ShopCart;
 import com.yiju.ClassClockRoom.bean.TimeGroup;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
+import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
 import com.yiju.ClassClockRoom.util.CommonUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
+import com.yiju.ClassClockRoom.util.LogUtil;
+import com.yiju.ClassClockRoom.util.PayWayUtil;
 import com.yiju.ClassClockRoom.util.PermissionsChecker;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
+import com.yiju.ClassClockRoom.util.StringFormatUtil;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
@@ -70,9 +76,9 @@ import java.util.Set;
 /**
  * ----------------------------------------
  * 注释: 订单确认页
- * <p/>
+ * <p>
  * 作者: cq
- * <p/>
+ * <p>
  * 时间: on 2016/5/9 15:27
  * ----------------------------------------
  */
@@ -213,14 +219,9 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     //发票箭头
     @ViewInject(R.id.tv_invoice)
     private TextView tv_invoice;
-
-    //咨询电话布局
-    @ViewInject(R.id.ll_lr_order_detail_remind_phone)
-    private LinearLayout ll_lr_order_detail_remind_phone;
-    //咨询电话
-    @ViewInject(R.id.tv_store_phone)
-    private TextView tv_store_phone;
-
+    //余额支付提示
+    @ViewInject(R.id.tv_order_conf_tips)
+    private TextView tv_order_conf_tips;
     //总价
     @ViewInject(R.id.tv_sum_price)
     private TextView tv_sum_price;
@@ -268,6 +269,10 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
     private String uid;
     //电话
     private String school_phone;
+    private PopupWindow mPopupWindow;
+    private String balance;
+    private String school_type;
+    private String store_tel;
 
     @Override
     public void initIntent() {
@@ -290,6 +295,49 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         head_title.setText(UIUtils.getString(R.string.order_affirm));
         head_right_image.setImageResource(R.drawable.service);
         getHttpUtils();
+        getBalanceHttpUtils();
+    }
+
+    /**
+     * 获取余额
+     */
+    private void getBalanceHttpUtils() {
+        ProgressDialog.getInstance().show();
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "user_amount_remain");
+        if (!"-1".equals(StringUtils.getUid())) {
+            params.addBodyParameter("uid", StringUtils.getUid());
+        }
+        params.addBodyParameter("username", StringUtils.getUsername());
+        params.addBodyParameter("password", StringUtils.getPassword());
+        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+                new RequestCallBack<String>() {
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                        ProgressDialog.getInstance().dismiss();
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        // 处理返回的数据
+                        ProgressDialog.getInstance().dismiss();
+                        JSONObject json;
+                        try {
+                            json = new JSONObject(arg0.result);
+                            String code = json.getString("code");
+                            if ("1".equals(code)) {
+                                balance = json.getString("data");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     @Override
@@ -301,10 +349,10 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         lr_order_detail_remind.setOnClickListener(this);
         btn_affirm_pay.setOnClickListener(this);
         rl_invoice.setOnClickListener(this);
-        tv_store_phone.setOnClickListener(this);
         head_right_relative.setOnClickListener(this);
         rl_class_fee.setOnClickListener(this);
         rl_charge.setOnClickListener(this);
+        tv_order_conf_tips.setOnClickListener(this);
     }
 
     /**
@@ -370,6 +418,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 }
             }
             school_phone = dataEntity.getSchool_phone();
+            school_type = dataEntity.getSchool_type();
             //课室图片
             Glide.with(mContext).load(dataEntity.getPic_url()).error(R.drawable.clock_wait)
                     .into(iv_store_pic);
@@ -395,13 +444,31 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 //是旗舰店
                 iv_self_support.setVisibility(View.VISIBLE);//显示旗舰店
                 lr_order_detail_remind.setVisibility(View.VISIBLE);//显示温馨提示
-                ll_lr_order_detail_remind_phone.setVisibility(View.GONE);//隐藏咨询电话
+                tv_order_conf_tips.setText(UIUtils.getString(R.string.txt_school_invoice));
+                tv_order_conf_tips.setEnabled(false);
+                rl_invoice.setVisibility(View.VISIBLE);
+                ll_invoice_info.setVisibility(View.VISIBLE);
             } else {
                 //非旗舰店
                 iv_self_support.setVisibility(View.GONE);//隐藏旗舰店
                 lr_order_detail_remind.setVisibility(View.GONE);//隐藏温馨提示
-                ll_lr_order_detail_remind_phone.setVisibility(View.VISIBLE);//显示咨询电话
-                tv_store_phone.setText(dataEntity.getSchool_phone());//设置咨询电话
+                if (StringUtils.isNullString(dataEntity.getSchool_phone())) {
+                    store_tel = UIUtils.getString(R.string.txt_phone_number);
+                } else {
+                    store_tel = dataEntity.getSchool_phone();
+                }
+                String wholeStr = String.format(UIUtils.getString(R.string.format_order_phone_tip), store_tel);
+                StringFormatUtil spanStr = new StringFormatUtil(this, wholeStr,
+                        store_tel, R.color.blue, new StringFormatUtil.IOnClickListener() {
+                    @Override
+                    public void click() {
+                    }
+                }).fillColor();
+                tv_order_conf_tips.setHighlightColor(UIUtils.getColor(android.R.color.transparent));
+                tv_order_conf_tips.setText(spanStr.getResult());
+                tv_order_conf_tips.setEnabled(true);
+                rl_invoice.setVisibility(View.GONE);
+                ll_invoice_info.setVisibility(View.GONE);
             }
 
             //周末
@@ -732,10 +799,12 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
      * @param coupon_id2     优惠券id
      * @param order2_id      二级订单id
      * @param index          角标默认为0(第一个)
+     * @param flag           false为余额支付
      */
     private void commitCart(String remark, String contact_name,
                             String contact_mobile, String coupon_id2, String order2_id,
-                            String index) {
+                            String index, final boolean flag) {
+        ProgressDialog.getInstance().show();
         // 提交数据
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
@@ -749,7 +818,12 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         params.addBodyParameter("coupon_id", coupon_id2);
         params.addBodyParameter("order2_ids", order2_id);
         params.addBodyParameter("index", index);
-        params.addBodyParameter("pay_method", "6");// 6=易居支付 默认1=支付宝支付
+        if (flag) {
+            params.addBodyParameter("pay_method", "6");// 6=易居支付 默认1=支付宝支付
+        } else {
+            params.addBodyParameter("pay_method", "5");
+        }
+
 
         if (StringUtils.isNotNullString(invoice_contact_id)) {
             params.addBodyParameter("invoice_contact_id", invoice_contact_id);
@@ -763,6 +837,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                     public void onFailure(HttpException arg0, String arg1) {
                         // 请求网络失败
                         UIUtils.showToastSafe(R.string.fail_network_request);
+                        ProgressDialog.getInstance().dismiss();
 
                     }
 
@@ -774,7 +849,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                         try {
                             person = (JSONObject) jsonParser.nextValue();
                             int code = person.getInt("code");
-                            parseData(code, arg0.result);
+                            parseData(code, arg0.result, flag);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -787,8 +862,9 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
      *
      * @param code   返回状态码
      * @param result 输出结果
+     * @param flag
      */
-    private void parseData(int code, String result) {
+    private void parseData(int code, String result, boolean flag) {
         // 根据code码处理不同的数据
         conmmitInfo = GsonTools.changeGsonToBean(result, CartCommit.class);
         switch (code) {
@@ -796,22 +872,29 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 if (null != conmmitInfo) {
                     if (conmmitInfo.getMsg().equals("ok")) {
                         //"confirm_type": "2" 确认类型 0=无需确认 1=支付前确认 2=支付后确认 0,2跳转收银台 1跳转待确认
+                        ProgressDialog.getInstance().dismiss();
                         confirm_type = conmmitInfo.getConfirm_type();
                         if ("0".equals(confirm_type) || "2".equals(confirm_type)) {
-                            //判断之前是否初始化
-                            EjuPaySDKUtil.initEjuPaySDK(new EjuPaySDKUtil.IEjuPayInit() {
-                                @Override
-                                public void onSuccess() {
-                                    // 调取易支付创建订单报文签名接口
-                                    getRequestCreateOrder(conmmitInfo.getTrade_id());
-                                }
-                            });
+                            if (flag) {
+                                //判断之前是否初始化
+                                EjuPaySDKUtil.initEjuPaySDK(new EjuPaySDKUtil.IEjuPayInit() {
+                                    @Override
+                                    public void onSuccess() {
+                                        // 调取易支付创建订单报文签名接口
+                                        getRequestCreateOrder(conmmitInfo.getTrade_id());
+                                    }
+                                });
+                            } else {
+                                checkPassword();
+                            }
+
                         } else {
                             //提交成功结果页
                             jumpNewResult(1);
                         }
                         //支付宝支付相关处理
 //                        getAliPaySign();
+
                     }
                 }
                 break;
@@ -829,7 +912,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                             finish();
                         } else {
                             Intent intentIndex = new Intent(OrderConfirmationActivity.this, MainActivity.class);
-                            intentIndex.putExtra("backhome", "3");
+                            intentIndex.putExtra(MainActivity.Param_Start_Fragment, 0);
                             startActivity(intentIndex);
                         }
                     }
@@ -850,7 +933,7 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                             finish();
                         } else {
                             Intent intentIndex = new Intent(OrderConfirmationActivity.this, MainActivity.class);
-                            intentIndex.putExtra("backhome", "3");
+                            intentIndex.putExtra(MainActivity.Param_Start_Fragment, 0);
                             startActivity(intentIndex);
                         }
                     }
@@ -876,6 +959,14 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
         params.addBodyParameter("action", "create_order");
         params.addBodyParameter("trade_id", trade_id);
         params.addBodyParameter("terminalType", "SDK");
+        if (StringUtils.isNotNullString(school_type)) {
+            if (school_type.equals("1")) {
+                params.addBodyParameter("businessId", "23");
+            } else if (school_type.equals("2")) {
+                params.addBodyParameter("businessId", "22");
+            }
+            params.addBodyParameter("cid", "0");
+        }
 //        params.addBodyParameter("is_admin", "0");// 是否后台支付 默认0 ,可不传
         httpUtils.send(HttpRequest.HttpMethod.POST,
                 UrlUtils.SERVER_API_PAY, params,
@@ -1050,32 +1141,15 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
             case R.id.head_back_relative://返回
                 onBackPressed();
                 break;
+            case R.id.tv_order_conf_tips:
+                callPhone(store_tel);
+                break;
             case R.id.head_right_relative://添加购物车
                 // 弹出电话呼叫窗口
-                if (StringUtils.isNotNullString(school_phone)) {
-                    CustomDialog customDialog = new CustomDialog(
-                            this,
-                            UIUtils.getString(R.string.confirm),
-                            UIUtils.getString(R.string.label_cancel), school_phone);
-                    customDialog.setOnClickListener(new IOnClickListener() {
-                        @Override
-                        public void oncClick(boolean isOk) {
-                            if (isOk) {
-                                if (!PermissionsChecker.checkPermission(PermissionsChecker.CALL_PHONE_PERMISSIONS)) {
-                                    // 跳转系统电话
-                                    Intent intent = new Intent(Intent.ACTION_CALL, Uri
-                                            .parse("tel:" + school_phone));
-                                    startActivity(intent);
-                                } else {
-                                    PermissionsChecker.requestPermissions(
-                                            OrderConfirmationActivity.this,
-                                            PermissionsChecker.CALL_PHONE_PERMISSIONS
-                                    );
-                                }
-                            }
-                        }
-                    });
+                if (StringUtils.isNullString(school_phone)) {
+                    school_phone = UIUtils.getString(R.string.txt_phone_number);
                 }
+                callPhone(school_phone);
                 break;
             case R.id.rl_name_tel://联系人
                 Intent intent = new Intent(this, ContactShopCartActivity.class);
@@ -1095,11 +1169,37 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.btn_affirm_pay://确认付款
                 String mobile = tv_order_detail_mobile.getText().toString();
-                if (!"".equals(mobile)) {
-                    commitCart(et_remark.getText().toString(),
-                            tv_order_detail_name.getText().toString(),
-                            tv_order_detail_mobile.getText().toString(),
-                            coupon_id, order2_id, "0");
+                if (StringUtils.isNotNullString(mobile)) {
+                    if ("1".equals(school_type)) {
+                        String currentFee = tv_sum_price.getText().toString().substring(1);
+                        mPopupWindow = PayWayUtil.getPopu(OrderConfirmationActivity.this.getWindow(),
+                                OrderConfirmationActivity.this,
+                                R.layout.activity_order_confirmation,
+                                balance, currentFee, new PayWayOnClickListener() {
+                                    @Override
+                                    public void onBalanceClick() {
+                                        commitCart(et_remark.getText().toString(),
+                                                tv_order_detail_name.getText().toString(),
+                                                tv_order_detail_mobile.getText().toString(),
+                                                coupon_id, order2_id, "0", false);
+                                    }
+
+                                    @Override
+                                    public void onOtherClick() {
+                                        mPopupWindow.dismiss();
+                                        commitCart(et_remark.getText().toString(),
+                                                tv_order_detail_name.getText().toString(),
+                                                tv_order_detail_mobile.getText().toString(),
+                                                coupon_id, order2_id, "0", true);
+                                    }
+                                });
+                    } else {
+                        commitCart(et_remark.getText().toString(),
+                                tv_order_detail_name.getText().toString(),
+                                tv_order_detail_mobile.getText().toString(),
+                                coupon_id, order2_id, "0", true);
+                    }
+
                 } else {
                     showSmileToast(getString(R.string.toast_select_contact));
                 }
@@ -1122,32 +1222,6 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 intent_invoice.putExtra(WriteInvoiceInformationActivity.EXTRA_INVOICE_ID, invoice_contact_id);//未开过发票的话是要传进去的
                 intent_invoice.putExtra(WriteInvoiceInformationActivity.EXTRA_INVOICE_LAST_TYPE, last_invoice_type);
                 startActivityForResult(intent_invoice, 0);
-                break;
-            case R.id.tv_store_phone://门店电话
-                CustomDialog customDialog_phone = new CustomDialog(
-                        this,
-                        UIUtils.getString(R.string.confirm),
-                        UIUtils.getString(R.string.label_cancel),
-                        tv_store_phone.getText().toString()
-                );
-                customDialog_phone.setOnClickListener(new IOnClickListener() {
-                    @Override
-                    public void oncClick(boolean isOk) {
-                        if (isOk) {
-                            if (!PermissionsChecker.checkPermission(PermissionsChecker.CALL_PHONE_PERMISSIONS)) {
-                                // 跳转系统电话
-                                Intent intent = new Intent(Intent.ACTION_CALL, Uri
-                                        .parse("tel:" + tv_store_phone.getText().toString()));
-                                startActivity(intent);
-                            } else {
-                                PermissionsChecker.requestPermissions(
-                                        OrderConfirmationActivity.this,
-                                        PermissionsChecker.CALL_PHONE_PERMISSIONS
-                                );
-                            }
-                        }
-                    }
-                });
                 break;
 //            case tv_order_detail_money://课程费用
 //                Intent intent_rooms = new Intent(this, Common_Show_WebPage_Activity.class);
@@ -1194,6 +1268,76 @@ public class OrderConfirmationActivity extends BaseActivity implements View.OnCl
                 break;
         }
     }
+
+    private void callPhone(final String store_tel) {
+        CustomDialog customDialog_phone = new CustomDialog(
+                OrderConfirmationActivity.this,
+                UIUtils.getString(R.string.confirm),
+                UIUtils.getString(R.string.label_cancel),
+                store_tel
+        );
+        customDialog_phone.setOnClickListener(new IOnClickListener() {
+            @Override
+            public void oncClick(boolean isOk) {
+                if (isOk) {
+                    if (!PermissionsChecker.checkPermission(PermissionsChecker.CALL_PHONE_PERMISSIONS)) {
+                        // 跳转系统电话
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri
+                                .parse("tel:" + store_tel));
+                        startActivity(intent);
+                    } else {
+                        PermissionsChecker.requestPermissions(
+                                OrderConfirmationActivity.this,
+                                PermissionsChecker.CALL_PHONE_PERMISSIONS
+                        );
+                    }
+                }
+            }
+        });
+    }
+
+    private void checkPassword() {
+        EjuPaySDKUtil.initEjuPaySDK(new EjuPaySDKUtil.IEjuPayInit() {
+            @Override
+            public void onSuccess() {
+                // 调取易支付创建订单报文签名接口
+                if (EjuPayManager.getInstance().isUserSetPwd()) {
+                    //跳转输入密码页面
+                    ProgressDialog.getInstance().dismiss();
+                    mPopupWindow.dismiss();
+                    jumpPayPage();
+
+                } else {
+                    //跳转设置支付密码页面
+//                    EjuPayManager.getInstance().startChangePassWord(UIUtils.getContext());
+                    ProgressDialog.getInstance().dismiss();
+                    EjuPayManager.getInstance().setEjuPayResult(new IEjuPayResult() {
+                        @Override
+                        public void callResult(int code, String msg, String dataJson) {
+                            if (code == EjuPayResultCode.SetPassWord_SUCCESS_CODE.getCode()) {
+                                LogUtil.d("test", "支付密码设置成功");
+                                jumpPayPage();
+                            } else if (code == EjuPayResultCode.SetPassWord_FAIL_CODE.getCode()) {
+                                LogUtil.d("test", "支付密码设置失败");
+                            }
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+    private void jumpPayPage() {
+        Intent intent = new Intent(OrderConfirmationActivity.this, PayPasswordActivity.class);
+        intent.putExtra("conmmitInfo", conmmitInfo);
+        intent.putExtra("sid", sid);
+        intent.putExtra("name", name);
+        intent.putExtra("order2", order2s);
+        startActivity(intent);
+    }
+
 
     /**
      * 打印带图的吐司

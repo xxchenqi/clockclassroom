@@ -14,7 +14,8 @@
         android:layout_height="@dimen/DIMEN_44DP"
         android:gravity="center"
         android:text="@string/accompany_read_online"
-        android:textColor="@color/black66" />
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_19DP"/>
 
     <View style="@style/linestyle_gray_f5" />
 </LinearLayout>

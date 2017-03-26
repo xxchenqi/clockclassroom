@@ -126,7 +126,7 @@ public class AliPay_PayFailActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        ActivityControlManager.getInstance().finishAllAndOpenHome(this, 3);
+        ActivityControlManager.getInstance().finishAllAndOpenHome(this, 0);
     }
 
     private void jumpIndex() {

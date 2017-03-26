@@ -102,7 +102,7 @@ public class PersonalCenter_CouponListActivity extends BaseActivity implements
             ly_wifi.setVisibility(View.GONE);
             webview.setVisibility(View.VISIBLE);
             String uid = "-1".equals(StringUtils.getUid()) ? "" : StringUtils.getUid();
-            webview.loadUrl(UrlUtils.SERVER_WEB_COUPONLIST + "uid=" + uid);
+            webview.loadUrl(UrlUtils.SERVER_WEB_COUPONLIST + "uid=" + uid +"&username="+StringUtils.getUsername()+"&password="+StringUtils.getPassword()+"&third_source="+StringUtils.getThirdSource());
 
         } else {
             ly_wifi.setVisibility(View.VISIBLE);

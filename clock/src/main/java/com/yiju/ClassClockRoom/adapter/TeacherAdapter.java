@@ -93,7 +93,7 @@ public class TeacherAdapter extends BaseAdapter {
                     convertView = inflater.inflate(R.layout.item_teacher_recommend, parent, false);
                     holder3 = new ViewHolderThree();
                     holder3.iv_item_teacher_pic = (ImageView) convertView.findViewById(R.id.iv_item_teacher_pic);
-                    holder3.iv_teacher_sex = (ImageView) convertView.findViewById(R.id.iv_teacher_sex);
+                    holder3.iv_teacher_sex = (ImageView) convertView.findViewById(R.id.iv_supplier_teacher_sex);
                     holder3.tv_teacher_name = (TextView) convertView.findViewById(R.id.tv_teacher_name);
                     holder3.tv_tags = (TextView) convertView.findViewById(R.id.tv_tags);
                     holder3.tv_org_name = (TextView) convertView.findViewById(R.id.tv_org_name);

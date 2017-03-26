@@ -2,13 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_map"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:ignore="ContentDescription">
 
@@ -25,21 +21,8 @@
                 android:layout_width="@dimen/DIMEN_46DP"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/room_back" />
+                android:src="@drawable/back" />
         </RelativeLayout>
-
-        <!--   <TextView
-               android:id="@+id/tv_register"
-               android:layout_width="wrap_content"
-               android:layout_height="@dimen/DIMEN_20DP"
-               android:layout_alignParentRight="true"
-               android:layout_margin="@dimen/DIMEN_12DP"
-               android:background="@drawable/bg_tv_register_corners"
-               android:gravity="center"
-               android:text="@string/label_register"
-               android:textColor="@color/white"
-               android:textSize="@dimen/DIMEN_14DP" />-->
-
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,11 +36,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_44DP"
-        android:layout_marginLeft="@dimen/DIMEN_24DP"
-        android:layout_marginRight="@dimen/DIMEN_24DP"
-        android:layout_marginTop="@dimen/DIMEN_36DP"
-        android:background="@drawable/bg_et_login"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
+        android:layout_marginTop="@dimen/DIMEN_30DP"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -66,18 +48,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/DIMEN_12DP"
             android:layout_marginLeft="@dimen/DIMEN_10DP"
-            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
             android:text="@string/add_eight_six"
-            android:textColor="@color/black"
-            android:textSize="@dimen/DIMEN_12DP" />
+            android:textColor="@color/order_black"
+            android:textSize="@dimen/DIMEN_16DP" />
 
         <View
             android:layout_width="@dimen/DIMEN_1DP"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/DIMEN_26DP"
             android:layout_marginBottom="@dimen/DIMEN_12DP"
-            android:layout_marginLeft="@dimen/DIMEN_10DP"
-            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
             android:background="@color/gray" />
 
@@ -91,7 +72,9 @@
             android:inputType="number"
             android:maxLength="13"
             android:maxLines="1"
-            android:textSize="@dimen/DIMEN_14DP"
+            android:textColor="@color/color_black_33"
+            android:textColorHint="@color/color_gay_bb"
+            android:textSize="@dimen/DIMEN_16DP"
             tools:ignore="HardcodedText" />
 
         <ImageView
@@ -104,13 +87,18 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
+        android:background="@color/gray_dd" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_44DP"
-        android:layout_marginLeft="@dimen/DIMEN_24DP"
-        android:layout_marginRight="@dimen/DIMEN_24DP"
-        android:layout_marginTop="@dimen/DIMEN_16DP"
-        android:background="@drawable/bg_et_login"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -122,6 +110,7 @@
             android:layout_marginRight="@dimen/DIMEN_8DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
             android:background="@drawable/lock"
+            android:visibility="gone"
             tools:ignore="ContentDescription" />
 
         <View
@@ -131,7 +120,8 @@
             android:layout_marginLeft="@dimen/DIMEN_10DP"
             android:layout_marginRight="@dimen/DIMEN_6DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/gray" />
+            android:background="@color/gray"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/et_password"
@@ -142,7 +132,9 @@
             android:hint="@string/label_hint_password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:textSize="@dimen/DIMEN_14DP"
+            android:paddingLeft="@dimen/DIMEN_10DP"
+            android:textColorHint="@color/color_gay_bb"
+            android:textSize="@dimen/DIMEN_16DP"
             tools:ignore="HardcodedText" />
 
         <CheckBox
@@ -151,17 +143,24 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/DIMEN_10DP"
             android:background="@drawable/cb_password_bg"
-            android:button="@null" />
+            android:button="@null"
+            android:visibility="gone" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
+        android:background="@color/gray_dd" />
 
 
     <com.yiju.ClassClockRoom.widget.circular.CircularProgressButton
         android:id="@+id/circular_button_login"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/DIMEN_306DP"
         android:layout_height="@dimen/DIMEN_44DP"
-        android:layout_marginLeft="@dimen/DIMEN_24DP"
-        android:layout_marginRight="@dimen/DIMEN_24DP"
-        android:layout_marginTop="@dimen/DIMEN_16DP"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/DIMEN_30DP"
         android:textColor="@color/color_lucency_white"
         android:textSize="@dimen/DIMEN_15DP"
         app:cpb_cornerRadius="@dimen/DIMEN_30DP"
@@ -171,7 +170,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/DIMEN_16DP"
+        android:layout_marginTop="@dimen/DIMEN_26DP"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -182,8 +181,8 @@
             android:clickable="true"
             android:gravity="center"
             android:text="@string/label_immediately_register"
-            android:textColor="@color/white"
-            android:textSize="@dimen/DIMEN_14DP"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_15DP"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -192,7 +191,7 @@
             android:layout_marginLeft="@dimen/DIMEN_12DP"
             android:layout_marginRight="@dimen/DIMEN_12DP"
             android:text="@string/vertical_symbol_2"
-            android:textColor="@color/white"
+            android:textColor="@color/gray_dd"
             android:textSize="@dimen/DIMEN_14DP" />
 
         <TextView
@@ -202,8 +201,8 @@
             android:clickable="true"
             android:gravity="center"
             android:text="@string/label_forget_password"
-            android:textColor="@color/white"
-            android:textSize="@dimen/DIMEN_14DP"
+            android:textColor="@color/black66"
+            android:textSize="@dimen/DIMEN_15DP"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
@@ -212,14 +211,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/textview_other_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_65DP"
+            android:gravity="center_horizontal"
+            android:text="@string/label_social_account"
+            android:textColor="@color/color_gay_99"
+            android:textSize="@dimen/DIMEN_12DP" />
+
         <LinearLayout
             android:id="@+id/ll_third_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_below="@id/textview_other_login"
+            android:layout_marginTop="@dimen/DIMEN_24DP"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/DIMEN_20DP">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/login_qq_img"
@@ -251,17 +261,6 @@
                 android:contentDescription="@string/desc"
                 android:src="@drawable/sina" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/textview_other_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ll_third_login"
-            android:layout_marginBottom="@dimen/DIMEN_30DP"
-            android:gravity="center_horizontal"
-            android:text="@string/label_social_account"
-            android:textColor="@color/white"
-            android:textSize="@dimen/DIMEN_14DP" />
 
 
     </RelativeLayout>

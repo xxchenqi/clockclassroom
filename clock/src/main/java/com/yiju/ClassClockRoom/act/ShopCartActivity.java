@@ -414,12 +414,8 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                                     }
                                 }
                                 bb.setCount(co);
-                                if (yesOrders.size() == 0) {
-                                    iv_cart_all
-                                            .setBackgroundResource(R.drawable.order_nonechoose_btn);
-                                } else {
-                                    iv_cart_all
-                                            .setBackgroundResource(R.drawable.order_choose_btn);
+                                if (yesOrders.size() != 0) {
+                                    iv_cart_all.setBackgroundResource(R.drawable.check_icon);
                                 }
                                 bb.setPrice(allPrice);
                                 tv_class_price.setText(String.format(UIUtils.getString(R.string.rmb_float_zero), allPrice));
@@ -445,7 +441,7 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                                     bb.setCount(1);
                                     if (yesOrders.size() == 1) {
                                         iv_cart_all
-                                                .setBackgroundResource(R.drawable.order_choose_btn);
+                                                .setBackgroundResource(R.drawable.check_icon);
                                     } else {
                                         bb.setCheck(false);
                                     }
@@ -539,15 +535,9 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                     tv_cart_price.setText(String.format(UIUtils.getString(R.string.rmb_float_zero),
                             price));
                     bb.setCount(c);
-                    if (c == 0) {
+                    if (c == mList.size()) {
                         iv_cart_all
-                                .setBackgroundResource(R.drawable.order_nonechoose_btn);
-                    } else if (c == mList.size()) {
-                        iv_cart_all
-                                .setBackgroundResource(R.drawable.order_choose_btn);
-                    } else {
-                        iv_cart_all
-                                .setBackgroundResource(R.drawable.order_nonechoose_btn);
+                                .setBackgroundResource(R.drawable.check_icon);
                     }
                     head_right_text.setText(UIUtils.getString(R.string.label_finish));
                     tv_cart.setText(UIUtils.getString(R.string.delete));
@@ -571,15 +561,9 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                             price));
                     tv_cart_price.setText(String.format(UIUtils.getString(R.string.rmb_float_zero),
                             price));
-                    if (c == 0) {
+                    if (c == yesOrders.size()) {
                         iv_cart_all
-                                .setBackgroundResource(R.drawable.order_nonechoose_btn);
-                    } else if (c == yesOrders.size()) {
-                        iv_cart_all
-                                .setBackgroundResource(R.drawable.order_choose_btn);
-                    } else {
-                        iv_cart_all
-                                .setBackgroundResource(R.drawable.order_nonechoose_btn);
+                                .setBackgroundResource(R.drawable.check_icon);
                     }
                     head_right_text.setText(UIUtils.getString(R.string.delete));
                     tv_cart.setText(UIUtils.getString(R.string.txt_commit));
@@ -603,8 +587,6 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                         }
                         if (cCount == mList.size()) {
                             bb.setCount(0);
-                            iv_cart_all
-                                    .setBackgroundResource(R.drawable.order_nonechoose_btn);
                             for (int i = 0; i < mList.size(); i++) {
                                 mList.get(i).setCheck(false);
                                 bb.getmOrder().put(
@@ -621,7 +603,7 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                         } else {
                             bb.setCount(mList.size());
                             iv_cart_all
-                                    .setBackgroundResource(R.drawable.order_choose_btn);
+                                    .setBackgroundResource(R.drawable.check_icon);
                             for (int i = 0; i < mList.size(); i++) {
                                 mList.get(i).setCheck(true);
                                 bb.getmOrder().put(
@@ -665,8 +647,6 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                         }
                         if (cCount == yesOrders.size()) {
                             bb.setCount(0);
-                            iv_cart_all
-                                    .setBackgroundResource(R.drawable.order_nonechoose_btn);
                             for (int i = 0; i < yesOrders.size(); i++) {
                                 mList.get(index.get(i)).setCheck(false);
                                 bb.getmOrder().put(
@@ -685,7 +665,7 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                         } else {
                             bb.setCount(yesOrders.size());
                             iv_cart_all
-                                    .setBackgroundResource(R.drawable.order_choose_btn);
+                                    .setBackgroundResource(R.drawable.check_icon);
                             for (int i = 0; i < yesOrders.size(); i++) {
                                 mList.get(index.get(i)).setCheck(true);
                                 bb.getmOrder().put(
@@ -907,11 +887,9 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
             case R.id.rl_pay_way:
                 if (zfCheck) {
                     zfCheck = false;
-                    iv_pay_way
-                            .setBackgroundResource(R.drawable.order_nonechoose_btn);
                 } else {
                     zfCheck = true;
-                    iv_pay_way.setBackgroundResource(R.drawable.order_choose_btn);
+                    iv_pay_way.setBackgroundResource(R.drawable.check_icon);
 
                 }
                 break;
@@ -971,14 +949,10 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                 break;
             case R.id.bt_empty_go_buy:
                 Intent intentIndex = new Intent(this, MainActivity.class);
-                SharedPreferencesUtils.saveInt(this, "cartCount", 0);
-                intentIndex.putExtra("backhome", "3");
                 startActivity(intentIndex);
                 break;
             case R.id.bt_empty_go_on:
                 Intent intentNopayIndex = new Intent(this, MainActivity.class);
-                SharedPreferencesUtils.saveInt(this, "cartCount", 1);
-                intentNopayIndex.putExtra("backhome", "3");
                 startActivity(intentNopayIndex);
                 break;
             case R.id.deposit:
@@ -1010,7 +984,7 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
             finish();
         } else {
             Intent intentPerson = new Intent(this, MainActivity.class);
-            intentPerson.putExtra("backhome", "3");
+            intentPerson.putExtra(MainActivity.Param_Start_Fragment, 0);
             startActivity(intentPerson);
         }
     }
@@ -1153,10 +1127,6 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                         tv_class_price.setText(String.format(UIUtils.getString(R.string.rmb_float_zero), fee));
                         tv_should_price.setText(String.format(UIUtils.getString(R.string.rmb_float_zero), fee));
                         tv_cart_price.setText(String.format(UIUtils.getString(R.string.rmb_float_zero), fee));
-                        if (yesOrders.size() == 0) {
-                            iv_cart_all
-                                    .setBackgroundResource(R.drawable.order_nonechoose_btn);
-                        }
                         if (!tv_coupon_price.getText().toString().equals("-￥0.00")) {
                             useCoupon(order);
                         } else {
@@ -1220,10 +1190,7 @@ public class ShopCartActivity extends BaseActivity implements OnClickListener {
                                 }
                                 if (cc == yesOrders.size()) {
                                     iv_cart_all.setBackgroundResource
-                                            (R.drawable.order_choose_btn);
-                                } else {
-                                    iv_cart_all.setBackgroundResource
-                                            (R.drawable.order_nonechoose_btn);
+                                            (R.drawable.check_icon);
                                 }
                                 bb.setCount(cc);
                                 bb.setPrice(price1);

@@ -13,6 +13,8 @@ import android.support.multidex.MultiDexApplication;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.bugtags.library.Bugtags;
+import com.eju.cysdk.collection.CYConfig;
+import com.eju.cysdk.collection.CYIO;
 import com.umeng.socialize.PlatformConfig;
 import com.yiju.ClassClockRoom.bean.ReservationTwo.DataEntity;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
@@ -27,14 +29,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import matrix.sdk.count.UniqueID;
-import matrix.sdk.count.WeimiCount;
-import matrix.sdk.count.WeimiCountConfiguration;
-
 
 public class BaseApplication extends MultiDexApplication {
     //环境 1:线下环境 2:线上测试 3:正式环境
-    public static final int FORMAL_ENVIRONMENT = 1;
+    public static final int FORMAL_ENVIRONMENT = 3;
     public static boolean BugTagsFlag;
     public static boolean LogFlag;
 
@@ -60,14 +58,14 @@ public class BaseApplication extends MultiDexApplication {
     private static Looper mMainThreadLooper;
 
     private List<DataEntity> mLists = new ArrayList<>();
-    //    public List<RoomEntity> mRooms = new ArrayList<RoomEntity>();
-    private Map<String, Integer> pro = new HashMap<>();
     private int count;// 记录订单的数量
     private boolean check;// 记录订单是否被选中
     private float price = 0;// 记录订单的价格
     private Map<String, Integer> mOrder = new HashMap<>();// 存放选中的订单id
     private String position;
     private String couponID;
+    //由于做了分包，所以数据统计要求加此判断（如有分包，则只初始化一次）
+    private boolean isInitCYSDK = false;
 
     public String getCouponID() {
         return couponID;
@@ -87,10 +85,6 @@ public class BaseApplication extends MultiDexApplication {
 
     public Map<String, Integer> getmOrder() {
         return mOrder;
-    }
-
-    public void setmOrder(Map<String, Integer> mOrder) {
-        this.mOrder = mOrder;
     }
 
     public float getPrice() {
@@ -117,22 +111,6 @@ public class BaseApplication extends MultiDexApplication {
         this.count = count;
     }
 
-    public Map<String, Integer> getPro() {
-        return pro;
-    }
-
-    public void setPro(Map<String, Integer> pro) {
-        this.pro = pro;
-    }
-
-//    public List<RoomEntity> getmRooms() {
-//        return mRooms;
-//    }
-//
-//    public void setmRooms(List<RoomEntity> mRooms) {
-//        this.mRooms = mRooms;
-//    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -140,12 +118,12 @@ public class BaseApplication extends MultiDexApplication {
             case 1:
                 //线下
                 LogFlag = true;
-                BugTagsFlag = false;
+                BugTagsFlag = true;
                 break;
             case 2:
                 //线上测试
                 LogFlag = true;
-                BugTagsFlag = false;
+                BugTagsFlag = true;
                 break;
             case 3:
                 //正式
@@ -171,6 +149,7 @@ public class BaseApplication extends MultiDexApplication {
         // 统计初始化
         initCount();
         EjuPaySDKUtil.initEjuPaySDK(null);
+
     }
 
     private void initUmeng() {
@@ -185,7 +164,7 @@ public class BaseApplication extends MultiDexApplication {
      * 初始化统计
      */
     private void initCount() {
-        String channelId = getMetaDataValue("CHANNEL_NAME");//渠道号
+        /*String channelId = getMetaDataValue("CHANNEL_NAME");//渠道号
         if (StringUtils.isNullString(channelId)) {
             channelId = "2010031003";                       //默认web渠道
         }
@@ -194,7 +173,26 @@ public class BaseApplication extends MultiDexApplication {
         builder.setAppId(CountAppId);
         builder.setDeviceId(UniqueID.getNDeviceID(getApplicationContext()));
         builder.setChannelId(channelId);
-        WeimiCount.getInstance().init(builder.build());
+        WeimiCount.getInstance().init(builder.build());*/
+        if (!isInitCYSDK) {
+            //新的BI数据统计初始化
+            CYIO.startTracing(getApplicationContext(), "1066663095");
+            if (!"-1".equals(StringUtils.getUid())) {
+                CYIO.getInstance().setUid(StringUtils.getUid());
+            }else{
+                CYIO.getInstance().setUid("");
+            }
+            switch (FORMAL_ENVIRONMENT) {
+                case 1:
+                case 2:
+                    CYConfig.isTest = true;//true 为发送到测试地址，false为发送到证书地址
+                    break;
+                case 3:
+                    CYConfig.isTest = false;//true 为发送到测试地址，false为发送到证书地址
+                    break;
+            }
+            isInitCYSDK = true;
+        }
         SharedPreferencesUtils.saveBoolean(UIUtils.getContext(),
                 SharedPreferencesConstant.Shared_Count_IsRunningForeground,
                 true);
@@ -307,11 +305,4 @@ public class BaseApplication extends MultiDexApplication {
         crashHandler.init(this);
     }
 
-    public void setMaxCount(int maxCount) {
-        this.maxCount = maxCount;
-    }
-
-    public int getMaxCount() {
-        return maxCount;
-    }
 }

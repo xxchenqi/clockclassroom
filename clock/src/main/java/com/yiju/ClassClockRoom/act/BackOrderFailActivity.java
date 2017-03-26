@@ -151,7 +151,7 @@ public class BackOrderFailActivity extends BaseActivity implements
                 break;
             case R.id.bt_backindex://返回首页
                 Intent intent2 = new Intent(this, MainActivity.class);
-                intent2.putExtra("backhome", "backhome");
+                intent2.putExtra(MainActivity.Param_Start_Fragment, 0);
                 startActivity(intent2);
 
                 break;

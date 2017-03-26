@@ -174,7 +174,7 @@ public class DeviceTypeAdapter extends BaseAdapter {
         for (ReservationDevice info :mList) {
             price += (info.getCount()*Double.valueOf(info.getFee()));
         }
-        mTv_price.setText("￥"+price);
+        mTv_price.setText("¥"+price);
     }
 
     /**

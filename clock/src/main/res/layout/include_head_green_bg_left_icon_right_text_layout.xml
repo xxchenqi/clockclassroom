@@ -44,8 +44,8 @@
                 android:id="@+id/head_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black66"
-                android:textSize="@dimen/DIMEN_17DP" />
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_19DP" />
         </RelativeLayout>
 
         <RelativeLayout

@@ -14,12 +14,12 @@ import android.os.Bundle;
 import com.igexin.sdk.PushConsts;
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
-import com.yiju.ClassClockRoom.act.MainActivity;
 import com.yiju.ClassClockRoom.act.MemberDetailActivity;
 import com.yiju.ClassClockRoom.act.MineOrganizationActivity;
 import com.yiju.ClassClockRoom.act.OrderDetailActivity;
 import com.yiju.ClassClockRoom.act.OrganizationCertificationStatusActivity;
 import com.yiju.ClassClockRoom.act.PersonMineCourseDetailActivity;
+import com.yiju.ClassClockRoom.act.PersonalCenterActivity;
 import com.yiju.ClassClockRoom.act.ShopCartActivity;
 import com.yiju.ClassClockRoom.act.accompany.AccompanyReadStatusActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
@@ -27,7 +27,6 @@ import com.yiju.ClassClockRoom.bean.PushBean;
 import com.yiju.ClassClockRoom.common.DataManager;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
-import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.control.SchemeControl;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -341,9 +340,9 @@ public class PushClockReceiver extends BroadcastReceiver {
                 }
                 Intent intentExitOrg = new Intent(
                         BaseApplication.getmForegroundActivity(),
-                        MainActivity.class);
-                intentExitOrg.putExtra(MainActivity.Param_Start_Fragment,
-                        FragmentFactory.TAB_MY);
+                        PersonalCenterActivity.class);
+//                intentExitOrg.putExtra(MainActivity.Param_Start_Fragment,
+//                        FragmentFactory.TAB_MY);
                 intentExitOrg.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 BaseApplication.getmForegroundActivity().startActivity(
                         intentExitOrg);

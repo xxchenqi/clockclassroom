@@ -14,6 +14,7 @@
     <string name="scheme_atlas_list_path">/atlas_list</string>
     <string name="scheme_reserve_path">/reserve</string>
     <string name="scheme_course_home_path">/course_home</string>
+    <string name="scheme_classroom_home_path">/classroom_home</string>
     <string name="scheme_course_subject_path">/course_subject</string>
     <string name="scheme_course_list_path">/course_list</string>
     <string name="scheme_course_detail_path">/course_detail</string>
@@ -47,6 +48,8 @@
     <string name="scheme_mine_attention_path">/mine_attention</string>
     <string name="scheme_remind_set_path">/remind_set</string>
     <string name="scheme_more_path">/more</string>
+    <string name="scheme_web_message_detail_path">/web_message_detail</string>
+    <string name="scheme_web_activity_detail_path">/web_activity_detail</string>
     <!--uri内部跳转定义-->
     <string name="scheme_home_uri">hourclassroom://51shizhong.com/home</string>
     <string name="scheme_course_home_uri">hourclassroom://51shizhong.com/course_home</string>
@@ -59,11 +62,8 @@
 
     <string name="desc">~</string>
     <string name="app_name">时钟教室</string>
-    <string name="action_settings">Settings</string>
     <string name="lable_teacher">老师</string>
     <string name="course">课程</string>
-    <string name="course_fee">课室费用</string>
-    <string name="charge_device_fee">收费设备费用</string>
     <string name="course_zhuan">专题</string>
     <string name="affirm">确定</string>
     <string name="fail_network_request">请求网络失败!</string>
@@ -95,6 +95,17 @@
     <string name="go_setting">去设置</string>
     <string name="ordinary_days">平日</string>
     <string name="weekend">周末</string>
+    <string name="splendid_atlas">精彩图集</string>
+    <string name="immediately_sign_up">立即报名</string>
+    <string name="comment">评论</string>
+    <string name="course_commit">课程提交</string>
+    <string name="sign_up_result">报名结果</string>
+    <string name="sign_up_success">报名成功</string>
+    <string name="sign_up_fail">报名失败</string>
+    <string name="invoice_price">发票金额</string>
+
+    <!--动画传值-->
+    <string name="image_transition">image_transition</string>
 
 
     <!-- 通用Wev View加载的页面来源 -->
@@ -117,7 +128,6 @@
     <!-- 个人中心Label -->
     <string name="label_immediately_login">立即登录</string>
     <string name="label_chooseLogin">账号登录</string>
-    <string name="label_myOrder">我的订单</string>
     <string name="label_myBalance">我的余额</string>
     <string name="label_myBankcard">我的银行卡</string>
     <string name="label_myDiscount">我的优惠券</string>
@@ -125,29 +135,27 @@
     <string name="label_myWallet">我的钱包</string>
     <string name="label_wifi">认证Wi-Fi</string>
     <string name="label_setting">设置</string>
-    <string name="label_selectable">可选</string>
     <string name="label_finish">完成</string>
-    <string name="label_checkAllOrder">查看全部订单</string>
+    <string name="label_checkAllOrder">全部</string>
     <string name="label_wait_pay">待支付</string>
-    <string name="label_use">进行中</string>
-    <string name="label_alreadyFinish">已完成</string>
     <string name="label_mineInvoice">我的发票</string>
-    <string name="label_service">联系客服、用户协议等</string>
+    <string name="label_service">机构认证帮助、服务协议、联系客服等</string>
     <string name="label_more">更多</string>
     <string name="label_check_more">查看更多</string>
     <string name="label_check_more_class_hour">查看更多课室</string>
     <string name="label_chooseLogin_or_registered">登录/注册</string>
+    <string name="label_reserve_person">预订人</string>
 
     <!-- 登录页面Label -->
     <string name="label_immediately_register">立即注册</string>
     <string name="label_login">登录</string>
-    <string name="label_hint_password">请输入密码</string>
+    <string name="label_hint_password">输入密码</string>
     <string name="label_forget_password">忘记密码</string>
-    <string name="label_social_account">其他登录方式</string>
+    <string name="label_social_account">使用其他账号登录</string>
     <string name="label_login_beUse">用户名必须为手机号或者邮箱</string>
     <string name="label_login_hasContent">用户名与密码不能为空</string>
     <string name="label_login_bePassword">密码必须是字母或数字组成，且长度为6至18位</string>
-    <string name="label_hint_phonelogin">手机号登录</string>
+    <string name="label_hint_phonelogin">输入手机号</string>
 
     <!-- 个人信息页面Label -->
     <string name="label_avatar">头像</string>
@@ -164,7 +172,6 @@
     <string name="label_quit">退出当前账号</string>
     <string name="label_modify_mail">绑定/修改邮箱</string>
     <string name="label_save">保存</string>
-    <string name="label_clear">清空</string>
     <string name="label_help_find_password">绑定邮箱后可以帮助您找回密码</string>
     <string name="label_password_format">由字母、数字、汉字或下划线组成,限4&#8211;16个字符(1个汉字为2个字符),不能以下划线开头或结尾</string>
     <string name="label_affirm_commit">确认提交</string>
@@ -226,7 +233,6 @@
     <string name="shared_create_time">create_time</string>
     <string name="shared_login_time">login_time</string>
     <string name="shared_is_teacher">is_teacher</string>
-    <string name="shared_third_id">third_id</string>
     <string name="shared_remerber">remerber</string>
     <string name="shared_is_remerber">is_remerber</string>
     <string name="shared_is_reserve_remerber">is_reserve_remerber</string>
@@ -274,10 +280,6 @@
     <string name="status_finish">已完成</string>
     <string name="status_overtime">订单超时</string>
 
-    <string name="all_order">全部订单</string>
-    <string name="finish_order">已完成订单</string>
-    <string name="pay_order">进行中订单</string>
-    <string name="wait_pay_order">待支付订单</string>
 
     <string name="order_close">关闭订单</string>
     <string name="order_delete">删除订单</string>
@@ -291,12 +293,12 @@
 
 
     <!-- 账号注册 -->
-    <string name="verify">验证码</string>
+    <string name="verify">输入短信验证码</string>
     <string name="get_verify">获取验证码</string>
     <string name="register_agree">注册即同意</string>
     <string name="register_protocol">《时钟教室用户协议》</string>
     <!--<string name="register_input_phone">请输入注册手机号</string>-->
-    <string name="register_input_verification_code">请输入验证码</string>
+    <string name="register_input_verification_code">请输入短信验证码</string>
 
     <!-- 联系人 -->
     <string name="contact_list">联系人列表</string>
@@ -313,39 +315,31 @@
     <!-- 搜索 -->
     <string name="reserve">预订</string>
     <string name="reserve_space">预&#160;&#160;&#160;&#160;订</string>
-    <string name="input_search_key">请输入搜索关键词</string>
 
     <!-- 订单详情 -->
     <string name="order_detail">订单详情</string>
     <string name="order_total">订单总计</string>
     <string name="order_invoice">发票信息</string>
     <string name="save_invoice">保存电子发票至本地</string>
+    <string name="save_invoice_electron">保存电子发票</string>
     <string name="order_money">课室费用</string>
+    <string name="order_course_money">课程费用</string>
     <string name="order_privilege">优惠</string>
     <string name="order_device">收费设备费用</string>
     <string name="order_ought_pay">实付</string>
     <string name="order_wait_pay">待付</string>
     <string name="order_pay_way">支付方式</string>
-    <string name="wait_pay">待付</string>
     <string name="order_alipay">支付宝</string>
     <string name="order_online">在线支付</string>
-    <string name="order_wx">微信</string>
-    <string name="order_time">下单时间</string>
     <string name="order_total_price">合计：</string>
-    <string name="order_reimburse_price">退款金额</string>
     <string name="txt_fees_refunds">退款明细</string>
     <string name="order_immediate_pay">立即支付</string>
-    <string name="order_choose_pay_way">选择支付方式</string>
     <string name="order_log">订单日志</string>
     <string name="classroom_price">课室费用</string>
     <string name="order_none">您没有相关的订单哦</string>
     <string name="orderback_none">您没有可以退单的课室哦</string>
     <string name="order_see">看看别的吧</string>
     <string name="order_stroll">随便逛逛</string>
-    <string name="order_status_content_one">若需要退单，请在课程开始24小时前，联系客服400 608 2626进行退单</string>
-    <string name="order_status_content_two">订单支付超时，请联系客服 400 608 2626 进行处理</string>
-    <string name="order_status_content_three">学费将在10个工作日内原路退回，若有疑问请咨询客服 400 608 2626 </string>
-    <string name="order_status_content_four">因老师取消课程,学费将在10个工作日内原路退回，若有疑问请咨询客服 400 608 2626 </string>
     <string name="order_times">共%s次课时</string>
     <!--<string name="order_no_relevance">课室未关联课程</string>-->
     <!--<string name="order_relevance">课室已关联课程</string>-->
@@ -362,7 +356,6 @@
 
     <!-- 退单 -->
     <string name="backorder_content1">可以取消1天后使用的尚未绑定课程的课室;</string>
-    <string name="backorder_content2">取消课室将收取取消金额的1%手续费;</string>
     <string name="backorder_content3">退款将在3&#8211;5个工作日原路退回。</string>
     <string name="all_choose">全选</string>
     <string name="total">合计：</string>
@@ -423,7 +416,7 @@
     <string name="person_modify_mobile">更换手机号</string>
 
     <!-- 提醒设置 -->
-    <string name="remind_setting">提醒设置</string>
+    <string name="remind_setting">消息设置</string>
     <string name="remind_accompany">陪读提醒</string>
     <string name="remind_nodisturbing_time">免打扰时间</string>
     <string name="remind_closed">提醒已关闭</string>
@@ -564,13 +557,12 @@
     <string name="title_act_commit_result_Page">支付前确认-提交结果页</string>
     <string name="title_act_pay_result_Page">支付后确认-支付结果页</string>
     <string name="title_act_dedicated_invoice_Page">专用发票资质信息页</string>
+    <string name="title_act_interaction_Page">我的互动页面</string>
     <!-- 订单编辑详情 -->
     <string name="reserve_detail">预订详情</string>
 
     <!-- 预订 详情页2 -->
     <string name="free">免费</string>
-    <string name="unit_price">%1$s元/%2$s</string>
-    <string name="toast_max">最多可订购%1$s%2$s</string>
 
     <!-- 分享相关 -->
     <string name="share_success">分享成功</string>
@@ -578,7 +570,6 @@
     <string name="share_cancel">取消分享</string>
 
     <!-- 费用清单 -->
-    <string name="pic">图集</string>
 
     <!--押金相关-->
     <string name="pledge_detail">押金详情</string>
@@ -594,7 +585,8 @@
     <string name="about_clock_classroom">关于时钟教室</string>
     <string name="use_coupon">使用优惠券</string>
     <string name="tips">小贴士</string>
-    <string name="change_mobile_content">更换手机后，下次登录需使用新手机号登录</string>
+    <string name="change_mobile_content">更换手机后，下次登录可以使用新手机号登录</string>
+    <string name="bind_mobile_content">绑定手机后，下次登录可以使用新手机号登录</string>
     <string name="account_register">账号注册</string>
     <string name="forget_password">忘记密码</string>
     <string name="network_anomaly">网络异常</string>
@@ -639,7 +631,6 @@
     <string name="minute_second">%1$s分%2$s秒</string>
     <string name="minute_second_need">%1$s分%2$s秒 内须完成支付</string>
     <string name="minute_second_need_hour">%1$s小时%2$s分%3$s秒 内须完成支付</string>
-    <string name="order_id">订单编号：%1$s</string>
     <string name="total_money">合计：¥%1$s</string>
     <string name="max_member_text">(最多容纳%1$s人)</string>
     <string name="total_hour_text">共%1$s小时课室使用时长</string>
@@ -647,7 +638,8 @@
     <string name="wait_pay_sum">待支付(%s)</string>
 
     <string name="to_symbol">%1$s ~ %2$s</string>
-    <string name="to_symbol_more">%1$s ~ %2$s 等</string>
+    <string name="date_to_symbol">使用日期: %1$s ~ %2$s</string>
+    <string name="date_to_symbol_single">使用日期: %1$s</string>
     <string name="tan_hao">%1$s、%2$s</string>
     <string name="second">%s秒</string>
     <string name="clock_id">时钟教室%s</string>
@@ -667,10 +659,10 @@
 
     <string name="negative_rmb_how_much">-¥%s</string>
     <string name="rmb_how_much">¥%s</string>
-    <string name="course_how_much">%s次课</string>
     <string name="course_how_much_total">共%s次课</string>
 
     <string name="multiply">x%s</string>
+    <string name="multiply_jian">x%s间</string>
     <string name="format_count">%s数量</string>
     <string name="format_count_more">上课需要%s的数量</string>
     <string name="charging_equipment">收费设备：%s</string>
@@ -679,7 +671,6 @@
     <!--机构-->
     <string name="organization_blacklist">机构黑名单管理</string>
     <string name="i_need_authentication">机构认证</string>
-    <string name="teacher_info">个人老师资料</string>
     <string name="mine_organization">我的机构</string>
     <string name="exit_organization">退出机构</string>
     <string name="add_menber">添加成员</string>
@@ -692,6 +683,7 @@
     <string name="jiujiujia">99+</string>
     <string name="yestoday">昨天</string>
     <string name="check_detail">查看详情</string>
+    <string name="check">查看</string>
     <string name="teacher">老师</string>
     <string name="brief">简介</string>
     <string name="transfer_of_power">转让管理权</string>
@@ -740,7 +732,6 @@
     <!-- 预订 -->
     <string name="reservation_date_title">选择上课起止日期</string>
     <string name="toast_reservation_date_title">请选择上课起止日期</string>
-    <string name="reservation_date_content">选择课室的使用日期范围</string>
     <string name="reservation_week_title">选择每周课程编排</string>
     <string name="toast_reservation_week_title">请选择每周课程编排</string>
     <string name="reservation_week_content">每周几上课，可多选</string>
@@ -749,10 +740,7 @@
     <string name="reservation_date_little">个别日期调整</string>
     <string name="reservation_date_little_choose">(可选)</string>
     <string name="reservation_time_content">几点到几点上课</string>
-    <string name="reservation_room_count_title">课室数量</string>
-    <string name="reservation_room_count_content">上课需要课室的数量</string>
     <string name="reservation_device_title">收费项目</string>
-    <string name="reservation_device_content">可选设备(每间)</string>
     <string name="reservation_store">选择课室类型</string>
     <string name="reservation_store_tip">根据课室容纳人数和用途选择</string>
     <string name="reservation_date">使用日期</string>
@@ -764,7 +752,7 @@
     <string name="reservation_date_little_title">个别日期调整</string>
     <string name="reservation_device">收费项目</string>
     <string name="reservation_store_title">课室类型</string>
-    <string name="reservation_device_price_0">￥0</string>
+    <string name="reservation_device_price_0">¥0</string>
     <string name="reservation_choose_single_date">请选择日期</string>
     <string name="reservation_choose_more_date">请选择日期范围</string>
     <string name="reservation_choose_time">请选使用时段</string>
@@ -782,10 +770,8 @@
     <string name="reservation_sat">周六</string>
     <string name="reservation_sun">周日</string>
     <string name="reservation_use_date">已选择日期</string>
-    <string name="reservation_change_date">已调整的日期</string>
     <string name="reservation_has_date">被占用日期</string>
     <string name="reservation_add_room">增加课室</string>
-    <string name="reservation_tip">请尽快下单…</string>
     <string name="reservation_date_tip">灰色不可选…</string>
     <string name="reservation_device_tip">均为移动设备…</string>
     <string name="reservation_device_choose">可多选</string>
@@ -796,7 +782,6 @@
     <string name="remind_system">系统提醒</string>
     <string name="back_order_content">已开具发票用户需退还发票后才可退款</string>
     <!-- 已开具发票用户时钟工作人员会联系您退还发票后退款-->
-    <string name="reserve_success_content1">发布课程,招收更多学生</string>
     <string name="arrangement_classroom">布置课室</string>
     <string name="order_affirm">提交订单</string>
     <string name="coupon_content">温馨提示：优惠券仅适用于课室费用</string>
@@ -829,14 +814,13 @@
     <string name="more_teacher_orangan">更多机构老师</string>
     <string name="more_teacher_person">更多个人老师</string>
     <string name="member_content">机构老师资料只能由所属机构的管理员进行完善，若需修改或完善请联系所属机构的管理员</string>
-    <string name="txt_photos">图集</string>
     <string name="txt_recommend_course">推荐课程</string>
     <string name="txt_recommend_teacher">推荐老师</string>
     <string name="txt_shrink">收起</string>
-    <string name="txt_unfold">更多课程展开</string>
 
     <!--个人中心—我的课程-->
     <string name="person_mine_course_page">个人中心-我的课程列表页</string>
+    <string name="person_mine_interaction">我的互动</string>
     <string name="person_mine_course">我的课程</string>
     <string name="person_course_status_wait_check">待审核</string>
     <string name="person_course_status_fail_check">审核未通过</string>
@@ -867,6 +851,7 @@
     <string name="person_mine_course_people_apply_count_item_more_time">更多时间</string>
     <string name="txt_open_course">课程：%s</string>
     <string name="txt_subsidiary_organ">机构：%s</string>
+    <string name="txt_organ">机构</string>
     <string name="txt_personal_teacher">个人老师</string>
     <string name="txt_format_price">¥%s/</string>
 
@@ -906,7 +891,6 @@
     <string name="toast_input_course_name">请填写课程名称</string>
     <string name="toast_input_course_price">请填写课程单价</string>
     <string name="toast_input_course_people_num">请填写招生剩余人数及总人数</string>
-    <string name="toast_input_course_teacher">请填写授课老师</string>
     <string name="string_format_money_hour">¥%s/小时</string>
     <string name="txt_course_mine">课程风采</string>
     <string name="hint_course_people_num_max">不超过999人</string>
@@ -932,16 +916,14 @@
     <string name="all_address">全部门店</string>
     <string name="text_all_store">全部门店</string>
     <string name="text_input_hint">输入您要搜索的关键词</string>
-    <string name="text_message">消息</string>
     <string name="all_area">全部区域</string>
     <string name="toast_permission_call_phone">请点击系统设置-权限-打开电话权限。</string>
     <string name="toast_permission_read_phone_state">请点击系统设置-权限-打开手机信息权限。</string>
     <string name="toast_permission_read_write_sdcard">请点击系统设置-权限-打开存储权限</string>
     <string name="toast_permission_read_contacts">请点击系统设置-权限-打开通讯录权限</string>
     <string name="coming_reserve_space">即将开放预订</string>
-    <string name="reserve_reminder">预订提示</string>
 
-    <string name="peidu_title">时钟教室\"旗舰店\"门店可用</string>
+    <string name="peidu_title">部分时钟教室\"旗舰店\"可用</string>
 
     <string name="dialog_show_close_order">你确定要关闭订单吗？</string>
     <string name="dialog_show_delete_order">你确定要删除订单吗？</string>
@@ -950,11 +932,7 @@
     <string name="dialog_show_means">去意已决</string>
     <string name="dialog_show_think_again">我再想想</string>
     <string name="dialog_show_give_up_order">确定放弃该订单？</string>
-    <string name="dialog_show_goon_reservation">继续预订</string>
-    <string name="dialog_show_reservation_complete">您已成功加入购物车,由于库存有限请尽快完成支付？</string>
-    <string name="dialog_show_complete_pay">完成支付</string>
     <string name="dialog_show_delete_course">是否确定删除课程？删除后将不可恢复!</string>
-    <string name="title_single_store">场地详情</string>
     <string name="count_about_people">%s人</string>
     <string name="course_total_count">班课总%s人</string>
     <string name="course_single_price">%s元/小时</string>
@@ -1001,7 +979,6 @@
     <string name="txt_resubmit">请重新提交</string>
     <string name="format_multiply_rooms">x%s间</string>
     <string name="toast_select_contact">客官，要选择您的联系方式哦</string>
-    <string name="txt_select_contact">请选择联系人</string>
     <!--<string name="format_please_complete_the_payment">请在%d分%d秒内完成支付，超时订单自动关闭</string>-->
     <!--<string name="format_one_complete_the_payment">1.请在%d分%d秒内完成支付，超时订单自动关闭</string>-->
     <!--<string name="format_complete_the_payment_in_hour">请在%d时%d分%d秒内完成支付，超时订单自动关闭</string>-->
@@ -1042,7 +1019,6 @@
     <string name="txt_device_no_free">收费设备：</string>
     <string name="toast_user_name_phone_not_empty">用户名和手机不能为空</string>
     <string name="toast_no_black_list">暂无黑名单列表！</string>
-    <string name="toast_delete_success">删除成功</string>
     <string name="toast_content_can_not_empty">内容不能为空</string>
     <string name="toast_new_tag_success">新增标签成功</string>
     <string name="toast_the_currently_selected_for_administrators">当前选中成员已为管理员！</string>
@@ -1066,9 +1042,7 @@
     <string name="toast_select_one_classroom_at_least">请至少选择一间课室</string>
     <string name="txt_lack_of_room_inventory">房间库存不足</string>
     <string name="toast_select_one_day_at_least">请至少选择一天</string>
-    <string name="toast_network_is_a_little_slow">网络有点慢,请稍后再试</string>
     <string name="toast_course_use_start_time">课程开始使用时间必须晚于预订时间30分钟以上</string>
-    <string name="toast_course_start_time">课程开始时间必须晚于当前时间30分钟</string>
     <string name="toast_select_delete_order">请选择要删除的订单</string>
     <string name="toast_selecta_contact">请选择联系方式</string>
     <string name="toast_special_invoice">公司主体为一般纳税人方可开具增值税专用发票</string>
@@ -1097,4 +1071,85 @@
     <string name="toast_show_select_date">请选择使用日期</string>
     <string name="toast_show_select_time">请选择使用时段</string>
     <string name="toast_show_select_week">请选择循环方式</string>
+    <string name="txt_past_topics">往期主题</string>
+    <string name="txt_experience_class">体验课</string>
+    <string name="txt_my_classroom_order">我的课室订单</string>
+    <string name="txt_my_course_order">我的课程订单</string>
+    <string name="txt_my_interactive">我的互动</string>
+    <string name="txt_authentication">机构认证帮助</string>
+    <string name="txt_personal_center">个人中心</string>
+    <string name="txt_teacher_info">我的老师资料</string>
+    <string name="txt_invoice_records">发票记录</string>
+    <string name="txt_discount">优惠券</string>
+    <string name="txt_check_the_details">查看明细</string>
+    <string name="txt_balance">余额</string>
+    <string name="txt_to_prepaid">去充值</string>
+    <string name="txt_prepaid">充值</string>
+    <string name="txt_check_rules">查看活动规则</string>
+    <string name="txt_consumption_stores">主要消费门店</string>
+    <string name="txt_invoice_tips">若申请纸质发票，发票也在此门店领取</string>
+    <string name="txt_pay_tips">点击“去支付”表示您已同意时钟教室</string>
+    <string name="txt_active_protocol">《充值协议》</string>
+    <string name="title_active_protocol">充值协议</string>
+    <string name="txt_go_pay">去支付</string>
+    <string name="txt_fulfill">充&#160;</string>
+    <string name="txt_yuan">&#160;元</string>
+    <string name="txt_other_amount">其他金额</string>
+    <string name="txt_default_amout">2000</string>
+    <string name="txt_invoice_records_tips">纸质发票可在订单支付完成5&#8211;10个工作日后至对应门店前台领取</string>
+    <string name="txt_amout">%s元</string>
+    <string name="course_over_info">课程已结束，下次请赶早哦</string>
+    <string name="write_comment_info">写评论&#8230;</string>
+    <string name="write_comment">写评论</string>
+    <string name="none_comment_info">暂时还没有评论，快来抢沙发吧!</string>
+    <string name="quickly_sofa">快来抢沙发吧</string>
+    <string name="all_text">全文</string>
+    <string name="txt_for_classroom">订课室</string>
+    <string name="txt_theme">主题</string>
+    <string name="txt_experience">体验课</string>
+
+    <string name="mine_praise">我赞过的</string>
+    <string name="mine_comment">我的评论</string>
+    <string name="mine_activitly">我参与的活动</string>
+
+    <string name="person_mine_parise_page">我赞过的页面</string>
+    <string name="person_mine_comment_page">我的评论页面</string>
+    <string name="person_mine_activitly_page">我参与的活动页面</string>
+    <string name="person_pay_password_page">确认支付密码页面</string>
+    <string name="person_course_order_detial_page">课程订单页面</string>
+
+    <string name="article">文章</string>
+    <string name="reservation_pay_balance">余额支付</string>
+    <string name="reservation_pay_other">更多支付方式</string>
+    <string name="reservation_pay_other_title">支付宝/银行卡支付</string>
+    <string name="pay_password_page">确认支付密码</string>
+    <string name="pay_password_page_tip">确认6位数字支付密码</string>
+
+    <string name="need_invoice_info">若需要开具发票,请咨询授课老师,发票税点由培训机构或个人培训老师确定</string>
+    <string name="txt_balance_detail">余额明细</string>
+    <string name="format_no_payment_count">%s笔待支付</string>
+
+    <string name="empty_activitly">没有参与的活动哦</string>
+    <string name="empty_comment">没有评论过哦</string>
+    <string name="empty_praise">没有点过赞哦</string>
+    <string name="empty_store_info">找不到您要的门店</string>
+    <string name="txt_sign_up_status">您可在个人中心查看报名的活动</string>
+    <string name="txt_back_theme">返回主题</string>
+    <string name="txt_teacher_detail">老师详情</string>
+
+    <string name="txt_school_invoice">若使用余额支付，将不可申请课室订单发票</string>
+    <string name="txt_sure_sign_up">确认报名</string>
+    <string name="txt_trial_class">(体验课)</string>
+    <string name="txt_formal_lessons">(正式课)</string>
+    <string name="txt_default_balance">¥0.00</string>
+    <string name="txt_tip_order_delete">订单已删除哦</string>
+    <string name="txt_me">我</string>
+    <string name="txt_empty_no_balance_detail">没有余额明细哦</string>
+    <string name="no_invoice_records_info">没有发票记录哦</string>
+    <string name="txt_empty_no_coupon">没有优惠券哦</string>
+    <string name="format_order_phone_tip">发票信息请咨询门店前台，电话：%s</string>
+    <string name="format_course_people_num">招生人数：%s</string>
+    <string name="format_course_has_people_num">已报名人数：%s</string>
+    <string name="txt_no_new_message">没有新消息哦</string>
+    <string name="format_amount_add">+%s</string>
 </resources>

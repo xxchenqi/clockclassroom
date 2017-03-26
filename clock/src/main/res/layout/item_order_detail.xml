@@ -32,28 +32,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textColor="@color/color_blue_1e"
+            android:textColor="@color/color_black_33"
+            android:drawableRight="@drawable/arrow"
+            android:drawablePadding="@dimen/DIMEN_4DP"
             android:textSize="@dimen/DIMEN_16DP"
             tools:ignore="HardcodedText"
             tools:text="闵行中心店" />
-        <!--<TextView
-            android:id="@+id/tv_item_detail_use_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="跆拳道教学"
-            android:textColor="@color/color_blue_1e"
-            android:textSize="@dimen/DIMEN_16DP"/>
-
-        <TextView
-            android:id="@+id/tv_item_detail_room_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="共18小时"
-            android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_16DP"
-            tools:ignore="HardcodedText" />-->
     </LinearLayout>
 
     <View style="@style/linestyle_h_unfocused" />
@@ -68,8 +52,8 @@
 
         <ImageView
             android:id="@+id/iv_order_pic"
-            android:layout_width="@dimen/DIMEN_92DP"
-            android:layout_height="@dimen/DIMEN_92DP"
+            android:layout_width="@dimen/DIMEN_90DP"
+            android:layout_height="@dimen/DIMEN_90DP"
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/DIMEN_12DP"
             android:layout_marginRight="@dimen/DIMEN_10DP"
@@ -89,7 +73,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_28DP">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_item_detail_room_type"
@@ -119,40 +103,81 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_16DP"
-                    tools:text="X1" />
+                    tools:text="X1间" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_item_detail_date"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:gravity="center_vertical"
-                android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_12DP"
-                tools:ignore="HardcodedText"
-                tools:text="2015-9-13 ~ 2015/9/13" />
-
-            <TextView
-                android:id="@+id/tv_item_detail_repeat"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:gravity="center_vertical"
-                android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_12DP"
-                tools:ignore="HardcodedText"
-                tools:text="周一" />
-
-            <TextView
-                android:id="@+id/tv_item_detail_time"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
+                android:layout_marginTop="@dimen/DIMEN_14DP">
+                <TextView
+                    android:layout_width="@dimen/DIMEN_26DP"
+                    android:layout_height="@dimen/DIMEN_16DP"
+                    android:background="@drawable/background_gray_stroke"
+                    android:gravity="center"
+                    android:text="平日"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_10DP" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="@dimen/DIMEN_54DP"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_day_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/DIMEN_4DP"
+                        android:maxLines="1"
+                        tools:text="¥135/"
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="@dimen/DIMEN_13DP" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="时"
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="@dimen/DIMEN_9DP" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
                 android:gravity="center_vertical"
-                android:maxLines="3"
-                android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_12DP"
-                tools:ignore="HardcodedText"
-                tools:text="13:00 ~ 19:00" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/DIMEN_26DP"
+                    android:layout_height="@dimen/DIMEN_16DP"
+                    android:background="@drawable/background_gray_stroke"
+                    android:gravity="center"
+                    android:text="周末"
+                    android:textColor="@color/color_gay_99"
+                    android:textSize="@dimen/DIMEN_10DP" />
+
+                <TextView
+                    android:id="@+id/tv_week_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_4DP"
+                    android:maxLines="1"
+                    tools:text="¥145/"
+                    android:textColor="@color/app_theme_color"
+                    android:textSize="@dimen/DIMEN_13DP" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="时"
+                    android:textColor="@color/app_theme_color"
+                    android:textSize="@dimen/DIMEN_9DP" />
+
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
@@ -214,52 +239,68 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:drawablePadding="@dimen/DIMEN_12DP"
-                android:drawableRight="@drawable/dark_more_btn"
+                android:drawableRight="@drawable/arrow"
                 android:gravity="center_vertical"
                 android:text="明细"
                 android:textColor="@color/color_black_33"
                 android:textSize="@dimen/DIMEN_12DP" />
         </RelativeLayout>
     </LinearLayout>
-    <!--<LinearLayout
+
+    <LinearLayout
+        android:id="@+id/ll_order_mess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/DIMEN_12DP"
+        android:paddingRight="@dimen/DIMEN_12DP">
 
-
-        <LinearLayout
-            android:id="@+id/ll_check_classroom_detail"
+        <TextView
+            android:id="@+id/tv_sigle_more"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_35DP"
-            android:gravity="center_vertical">
+            android:layout_height="@dimen/DIMEN_40DP"
+            android:gravity="center_vertical"
+            android:text="订单信息(单天)"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP" />
 
+        <View style="@style/linestyle_h_unfocused" />
+        <TextView
+            android:id="@+id/tv_item_detail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_16DP"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText"
+            tools:text="使用日期: 2015-9-13 ~ 2015/9/13" />
 
+        <TextView
+            android:id="@+id/tv_item_detail_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_8DP"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText"
+            tools:text="使用天数: 周一" />
 
-          &lt;!&ndash;  <TextView
-                android:id="@+id/tv_check_classroom_relevance"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="课室已关联课程"
-                android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_14DP"
-                tools:ignore="HardcodedText" />&ndash;&gt;
+        <TextView
+            android:id="@+id/tv_item_detail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_8DP"
+            android:layout_marginBottom="@dimen/DIMEN_16DP"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP"
+            tools:ignore="HardcodedText"
+            tools:text="使用时段: 13:00 ~ 19:00" />
 
-            &lt;!&ndash; 点击进入可退单的页面&ndash;&gt;
-            <TextView
-                android:id="@+id/tv_check_classroom_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/DIMEN_12DP"
-                android:drawableRight="@drawable/dark_more_btn"
-                android:gravity="center_vertical"
-                android:text="明细"
-                android:textColor="@color/color_black_33"
-                android:textSize="@dimen/DIMEN_16DP" />
-        </LinearLayout>
-
-    </LinearLayout>-->
-    <!--</LinearLayout>-->
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_all_up_down"
         android:layout_width="match_parent"
@@ -290,7 +331,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/desc"
-                android:src="@drawable/more_btn_up" />
+                android:src="@drawable/more_btn_up"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -403,7 +445,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/DIMEN_12DP"
-                android:drawableRight="@drawable/dark_more_btn"
+                android:drawableRight="@drawable/arrow"
                 android:gravity="center_vertical"
                 android:text="修改"
                 android:textColor="@color/color_black_33"
@@ -435,34 +477,5 @@
     </LinearLayout>
 
     <View style="@style/linestyle_h_unfocused" />
-
-    <!--<RelativeLayout
-        android:id="@+id/rl_item_detail_subtotal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_40DP"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tv_item_detail_fee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/DIMEN_12DP"
-            android:drawableRight="@drawable/dark_more_btn"
-            android:gravity="center_vertical"
-            android:text="¥3245.34"
-            android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_16DP"
-            tools:ignore="HardcodedText" />
-
-        &lt;!&ndash; 点击进入费用明细&ndash;&gt;
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="订单小计"
-            android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_16DP"
-            tools:ignore="HardcodedText" />
-    </RelativeLayout>-->
 
 </LinearLayout>

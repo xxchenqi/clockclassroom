@@ -89,7 +89,7 @@ public class MoreStorePopUpWindow extends PopupWindow {
         setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
-                head_right_image.setImageResource(R.drawable.down_pull);
+                head_right_image.setImageResource(R.drawable.arrow_down);
             }
         });
     }

@@ -27,6 +27,8 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
 
     @ViewInject(R.id.ll_all)
     private LinearLayout ll_all;
+    @ViewInject(R.id.tv_no_message)
+    private TextView tv_no_message;
 
     @ViewInject(R.id.recyclerview)
     private RecyclerView recyclerView;
@@ -59,7 +61,7 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
             /**
              * 对消息进行归类（依据后台定义的类型）
              */
-            ll_all.setBackgroundColor(UIUtils.getColor(R.color.white));
+//            ll_all.setBackgroundColor(UIUtils.getColor(R.color.white));
             List<MessageBox.MessageData> datas = messageBox.getData();
             ArrayList<MessageBox.MessageData> mOrders = new ArrayList<>();
             ArrayList<MessageBox.MessageData> mMechs = new ArrayList<>();
@@ -114,7 +116,8 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
                 }
             } else {
                 recyclerView.setVisibility(View.GONE);
-                ll_all.setBackgroundResource(R.drawable.empty);
+                tv_no_message.setVisibility(View.VISIBLE);
+//                ll_all.setBackgroundResource(R.drawable.empty);
                 switch (big_type) {
                     case TYPE_ORDER:
                         // 订单
@@ -132,7 +135,8 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
             }
         } else {
             recyclerView.setVisibility(View.GONE);
-            ll_all.setBackgroundResource(R.drawable.empty);
+            tv_no_message.setVisibility(View.VISIBLE);
+//            ll_all.setBackgroundResource(R.drawable.empty);
         }
     }
 
@@ -156,7 +160,8 @@ public class MessageDetialActivity extends BaseActivity implements View.OnClickL
             recyclerView.setAdapter(adapter);
         } else {
             recyclerView.setVisibility(View.GONE);
-            ll_all.setBackgroundResource(R.drawable.empty);
+//            ll_all.setBackgroundResource(R.drawable.empty);
+            tv_no_message.setVisibility(View.VISIBLE);
         }
 
     }

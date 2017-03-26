@@ -35,7 +35,7 @@
             android:layout_marginRight="@dimen/DIMEN_12DP"
             android:layout_weight="1"
             android:drawablePadding="@dimen/DIMEN_5DP"
-            android:drawableRight="@drawable/extend"
+            android:drawableRight="@drawable/arrow"
             android:gravity="end|center_vertical"
             android:text="更多"
             android:textColor="@color/color_gay_99"

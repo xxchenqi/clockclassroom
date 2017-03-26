@@ -27,7 +27,6 @@ import com.yiju.ClassClockRoom.adapter.MineOrganizationAdapter;
 import com.yiju.ClassClockRoom.adapter.MineOrganizationPagerAdapter;
 import com.yiju.ClassClockRoom.bean.MemberBean;
 import com.yiju.ClassClockRoom.bean.MineOrganizationBean;
-import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -77,12 +76,12 @@ public class MineOrganizationActivity extends BaseActivity implements
     /**
      * 图片
      */
-    @ViewInject(R.id.civ_mine_organization)
+    @ViewInject(R.id.civ_supplier_avatar)
     private CircleImageView civ_mine_organization;
     /**
      * 热门标签
      */
-    @ViewInject(R.id.fl_mine_organization)
+    @ViewInject(R.id.fl_supplier_org_or_tch_tag)
     private NewFlowLayout fl_mine_organization;
     /**
      * 风采图
@@ -95,7 +94,7 @@ public class MineOrganizationActivity extends BaseActivity implements
     @ViewInject(R.id.lv_mine_organization)
     private ListViewForScrollView lv_mine_organization;
     //监听滑动scrollview
-    @ViewInject(R.id.sv_mine_organization)
+    @ViewInject(R.id.sv_supplier)
     private ObservableScrollView sv_mine_organization;
     /**
      * 风采图数量
@@ -115,12 +114,12 @@ public class MineOrganizationActivity extends BaseActivity implements
     /**
      * 名称
      */
-    @ViewInject(R.id.tv_mine_organization_name)
+    @ViewInject(R.id.tv_supplier_org_or_tch_name)
     private TextView tv_mine_organization_name;
     /**
      * 简介
      */
-    @ViewInject(R.id.tv_mine_organization_brief)
+    @ViewInject(R.id.tv_supplier_org_or_tch_brief)
     private TextView tv_mine_organization_brief;
     /**
      * 退出机构布局
@@ -266,7 +265,7 @@ public class MineOrganizationActivity extends BaseActivity implements
         }
         //退出机构显示
         ll_exit_organization.setVisibility(View.VISIBLE);
-        if(destroyFlag){
+        if (destroyFlag) {
             return;
         }
         if ("1".equals(bean.getCode())) {
@@ -472,7 +471,7 @@ public class MineOrganizationActivity extends BaseActivity implements
                 editIntent.putExtra("bean", bean);
                 startActivityForResult(editIntent, 1);
                 break;
-            case R.id.civ_mine_organization://认证信息详情页
+            case R.id.civ_supplier_avatar://认证信息详情页
                 if ("2".equals(org_auth)) {
                     Intent intent = new Intent(this, OrganizationInformationActivity.class);
                     intent.putExtra("bean", bean);
@@ -616,8 +615,8 @@ public class MineOrganizationActivity extends BaseActivity implements
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+            Intent intent = new Intent(this, PersonalCenterActivity.class);
+//            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {

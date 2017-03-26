@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="HardcodedText">
-
-
+    <!--无wifi布局-->
     <include
         android:id="@+id/ly_wifi"
         layout="@layout/wifi_fail"
@@ -16,6 +15,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
+
+        <View
+            android:id="@+id/v_store_divider"
+            style="@style/linestyle_gray_f5" />
+
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/lv_order"
             android:layout_width="match_parent"
@@ -24,69 +29,9 @@
             android:divider="@color/color_gay_f5"
             android:dividerHeight="@dimen/DIMEN_12DP" />
 
-        <RelativeLayout
-            android:id="@+id/rl_merge_pay"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_58DP"
-            android:background="@color/blackde5"
-            android:visibility="gone">
-
-            <CheckBox
-                android:id="@+id/cb_check_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/cb_pay_choose_bg"
-                android:button="@null" />
-
-            <TextView
-                android:id="@+id/tv_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_toRightOf="@id/cb_check_all"
-                android:text="@string/all_choose"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_14DP" />
-
-            <TextView
-                android:id="@+id/tv_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_34DP"
-                android:layout_toRightOf="@id/tv_all"
-                android:text="@string/total"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_14DP" />
-
-            <TextView
-                android:id="@+id/tv_total_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/tv_total"
-                android:text="￥0.00"
-                android:textColor="@color/app_theme_color"
-                android:textSize="@dimen/DIMEN_14DP"
-                tools:ignore="HardcodedText" />
-
-            <Button
-                android:id="@+id/btn_merge_pay"
-                android:layout_width="@dimen/DIMEN_130DP"
-                android:layout_height="@dimen/DIMEN_34DP"
-                android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/DIMEN_12DP"
-                android:background="@drawable/bg_exit_or"
-                android:text="合并支付"
-                android:textColor="@color/white"
-                android:textSize="@dimen/DIMEN_17DP" />
-        </RelativeLayout>
     </LinearLayout>
 
-
+    <!--无订单布局-->
     <RelativeLayout
         android:id="@+id/rl_no_order"
         android:layout_width="match_parent"
@@ -95,10 +40,10 @@
 
         <ImageView
             android:id="@+id/iv_mineorder_none"
-            android:layout_width="@dimen/DIMEN_140DP"
-            android:layout_height="@dimen/DIMEN_140DP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/DIMEN_116DP"
+            android:layout_marginTop="@dimen/DIMEN_155DP"
             android:src="@drawable/none_order"
             tools:ignore="ContentDescription" />
 
@@ -138,4 +83,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/DIMEN_17DP" />
     </RelativeLayout>
+
+
 </FrameLayout>

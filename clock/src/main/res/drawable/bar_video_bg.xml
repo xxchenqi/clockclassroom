@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 选中 -->
-    <item android:drawable="@drawable/class_green" android:state_checked="true"/>
+    <item android:drawable="@drawable/home_theme_g" android:state_checked="true"/>
     <!-- 按下 -->
-    <item android:drawable="@drawable/class_green" android:state_pressed="true"/>
+    <item android:drawable="@drawable/home_theme_g" android:state_pressed="true"/>
     <!-- 抬起 -->
-    <item android:drawable="@drawable/class_no"/>
+    <item android:drawable="@drawable/home_theme"/>
 
 </selector>

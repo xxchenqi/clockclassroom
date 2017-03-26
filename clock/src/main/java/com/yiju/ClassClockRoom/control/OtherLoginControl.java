@@ -215,13 +215,13 @@ public class OtherLoginControl {
                             if (code == 1) {
                                 String id = jsonObject.getString("id");
                                 if (StringUtils.isNotNullString(id)) {
-                                    boolean isRuning = SharedPreferencesUtils.getBoolean(
-                                            UIUtils.getContext(),
-                                            SharedPreferencesConstant.Shared_Count_IsRunningForeground,
-                                            true);
-                                    if (isRuning) {
+//                                    boolean isRuning = SharedPreferencesUtils.getBoolean(
+//                                            UIUtils.getContext(),
+//                                            SharedPreferencesConstant.Shared_Count_IsRunningForeground,
+//                                            true);
+//                                    if (isRuning) {
                                         CountControl.getInstance().loginSuccess(id);
-                                    }
+//                                    }
                                     Context context = BaseApplication
                                             .getmForegroundActivity();
                                     SharedPreferencesUtils.saveBoolean(
@@ -243,6 +243,9 @@ public class OtherLoginControl {
                                             context.getResources().getString(R.string.shared_third_source),
                                             third_source + ""
                                     );
+                                    SharedPreferencesUtils.saveString(context,
+                                            context.getString(R.string.shared_nickname),
+                                            nickname);
                                     //名字和头像都不要,都去getInfo里的信息
 //                                    SharedPreferencesUtils.saveString(
 //                                            context,

@@ -16,15 +16,6 @@
         android:paddingRight="@dimen/DIMEN_12DP"
         android:paddingTop="@dimen/DIMEN_16DP">
 
-        <CheckBox
-            android:id="@+id/cb_order_choose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@drawable/cb_pay_choose_bg"
-            android:button="@null"
-            android:visibility="gone" />
-
         <ImageView
             android:id="@+id/iv_self_support"
             android:layout_width="wrap_content"
@@ -52,7 +43,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="待支付"
-            android:textColor="@color/color_blue_1e"
+            android:textColor="@color/color_black_login"
             android:textSize="@dimen/DIMEN_15DP"
             tools:ignore="HardcodedText" />
     </RelativeLayout>
@@ -64,8 +55,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/DIMEN_12DP"
-        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_marginRight="@dimen/DIMEN_10DP"
         android:layout_marginTop="@dimen/DIMEN_10DP"
         android:orientation="horizontal">
 
@@ -74,7 +65,7 @@
             android:id="@+id/iv_item_mineorder_pic"
             android:layout_width="@dimen/DIMEN_80DP"
             android:layout_height="@dimen/DIMEN_80DP"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:layout_marginRight="@dimen/DIMEN_16DP"
             android:background="@drawable/clock_wait"
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
@@ -169,7 +160,7 @@
             android:layout_centerVertical="true"
             android:text="合计:¥3245.33"
             android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_17DP"
+            android:textSize="@dimen/DIMEN_12DP"
             tools:ignore="HardcodedText" />
     </RelativeLayout>
 

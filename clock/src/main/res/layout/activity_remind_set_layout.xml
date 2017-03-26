@@ -17,7 +17,7 @@
         android:id="@+id/remind_order_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_56DP"
-        android:layout_marginTop="@dimen/DIMEN_30DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white">
 
         <TextView
@@ -148,7 +148,7 @@
         android:id="@+id/quiet_hours_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_56DP"
-        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white">
 
         <TextView

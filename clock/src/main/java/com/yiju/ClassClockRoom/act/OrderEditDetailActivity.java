@@ -337,8 +337,9 @@ public class OrderEditDetailActivity extends BaseActivity implements
                     public void oncClick(boolean isOk) {
                         if (isOk) {// 携带数据跳转页面
                             Intent intent = new Intent(mContext, MainActivity.class);
-                            intent.putExtra("backhome", "backhome");
-                            intent.putExtra("info", order2);
+                            intent.putExtra(MainActivity.Param_Start_Fragment, 0);
+//                            intent.putExtra("backhome", "backhome");
+//                            intent.putExtra("info", order2);
                             UIUtils.startActivity(intent);
                             cancelOrder();
                         }

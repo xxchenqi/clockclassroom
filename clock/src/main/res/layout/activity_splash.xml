@@ -8,9 +8,11 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/iv_splash_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/desc"
         android:background="@drawable/splash"
-        android:contentDescription="@string/desc" />
+        android:scaleType="centerCrop" />
 
 </LinearLayout>

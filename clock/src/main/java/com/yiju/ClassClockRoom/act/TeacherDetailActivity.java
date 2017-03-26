@@ -63,7 +63,7 @@ public class TeacherDetailActivity extends BaseActivity implements MineOrganizat
     @ViewInject(R.id.rl_mine_organization_back)
     private RelativeLayout rl_mine_organization_back;
     //sv
-    @ViewInject(R.id.sv_mine_organization)
+    @ViewInject(R.id.sv_supplier)
     private ObservableScrollView sv_mine_organization;
     //vp
     @ViewInject(R.id.vp_mine_organization_head)
@@ -72,16 +72,16 @@ public class TeacherDetailActivity extends BaseActivity implements MineOrganizat
     @ViewInject(R.id.tv_pager_num)
     private TextView tv_pager_num;
     //头像
-    @ViewInject(R.id.civ_mine_organization)
+    @ViewInject(R.id.civ_supplier_avatar)
     private CircleImageView civ_mine_organization;
     //名字
-    @ViewInject(R.id.tv_mine_organization_name)
+    @ViewInject(R.id.tv_supplier_org_or_tch_name)
     private TextView tv_mine_organization_name;
     //标记
-    @ViewInject(R.id.fl_mine_organization)
+    @ViewInject(R.id.fl_supplier_org_or_tch_tag)
     private NewFlowLayout fl_mine_organization;
     //简介
-    @ViewInject(R.id.tv_mine_organization_brief)
+    @ViewInject(R.id.tv_supplier_org_or_tch_brief)
     private TextView tv_mine_organization_brief;
     //默认的头部图片
     @ViewInject(R.id.v_mine_organization_head)
@@ -93,7 +93,7 @@ public class TeacherDetailActivity extends BaseActivity implements MineOrganizat
     @ViewInject(R.id.iv_teacher_auth)
     private ImageView iv_teacher_auth;
     //老师性别
-    @ViewInject(R.id.iv_teacher_sex)
+    @ViewInject(R.id.iv_supplier_teacher_sex)
     private ImageView iv_teacher_sex;
     //分享
     @ViewInject(R.id.iv_share)
@@ -429,9 +429,9 @@ public class TeacherDetailActivity extends BaseActivity implements MineOrganizat
             return;
         }
         if ("1".equals(data.getIs_interest())) {     //已关注
-            iv_teacher_attention.setBackgroundResource(R.drawable.attention_circle_solid);
+            iv_teacher_attention.setBackgroundResource(R.drawable.like_choose);
         } else {              //未关注
-            iv_teacher_attention.setBackgroundResource(R.drawable.attention_circle);
+            iv_teacher_attention.setBackgroundResource(R.drawable.like_white);
         }
     }
 

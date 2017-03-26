@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/desc"
-                        android:src="@drawable/arrow_right" />
+                        android:src="@drawable/arrow" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -384,7 +384,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/DIMEN_12DP"
                         android:drawablePadding="@dimen/DIMEN_12DP"
-                        android:drawableRight="@drawable/arrow_right"
+                        android:drawableRight="@drawable/arrow"
                         android:gravity="center"
                         android:textColor="@color/app_theme_color"
                         android:textSize="@dimen/DIMEN_14DP"
@@ -417,10 +417,10 @@
                     android:background="@color/white" />
 
                 <LinearLayout
-                    android:background="@color/white"
                     android:id="@+id/ll_no_free_device_add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical" />
 
                 <View
@@ -451,7 +451,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/DIMEN_12DP"
                         android:drawablePadding="@dimen/DIMEN_12DP"
-                        android:drawableRight="@drawable/arrow_right"
+                        android:drawableRight="@drawable/arrow"
                         android:gravity="center"
                         android:textColor="@color/app_theme_color"
                         android:textSize="@dimen/DIMEN_14DP"
@@ -488,6 +488,9 @@
                     android:gravity="right|center"
                     android:hint="@string/label_order_remark_hint"
                     android:maxLength="15"
+                    android:imeActionLabel="@string/sure"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
                     android:textColor="@color/color_gay_8f"
                     android:textSize="@dimen/DIMEN_14DP" />
             </LinearLayout>
@@ -516,7 +519,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/DIMEN_12DP"
                     android:drawablePadding="@dimen/DIMEN_12DP"
-                    android:drawableRight="@drawable/arrow_right"
+                    android:drawableRight="@drawable/arrow"
                     android:gravity="center"
                     android:text="@string/go_setting"
                     android:textColor="@color/color_gay_8f"
@@ -620,36 +623,6 @@
                     android:background="@drawable/video_question_icon"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
-            <!--咨询电话-->
-            <LinearLayout
-                android:id="@+id/ll_lr_order_detail_remind_phone"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/DIMEN_42DP"
-                android:layout_marginTop="@dimen/DIMEN_10DP"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/DIMEN_12DP"
-                    android:text="发票信息请咨询门店前台，电话:"
-                    android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_16DP"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/tv_store_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/DIMEN_12DP"
-                    android:textColor="@color/color_blue_00A0E9"
-                    android:textSize="@dimen/DIMEN_16DP"
-                    tools:ignore="HardcodedText"
-                    tools:text="110" />
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 
@@ -657,41 +630,61 @@
     <RelativeLayout
         android:id="@+id/rl_order_confirmation_affirm_pay"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_height="wrap_content"
         android:background="@color/blackde5"
         android:visibility="gone">
-
         <TextView
-            android:id="@+id/tv_sum_room"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/DIMEN_10DP"
-            android:text="共X间,合计:"
-            android:textColor="@color/color_gay_99"
-            android:textSize="@dimen/DIMEN_14DP" />
+            android:id="@+id/tv_order_conf_tips"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_32DP"
+            android:background="@color/yellow_fff6df"
+            android:paddingLeft="@dimen/DIMEN_10DP"
+            android:drawablePadding="@dimen/DIMEN_8DP"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/prompt"
+            android:text="@string/txt_school_invoice"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_12DP"/>
 
-        <TextView
-            android:id="@+id/tv_sum_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/DIMEN_10DP"
-            android:layout_toRightOf="@id/tv_sum_room"
-            android:text="¥378"
-            android:textColor="@color/app_theme_color"
-            android:textSize="@dimen/DIMEN_16DP" />
+        <RelativeLayout
+            android:id="@+id/rl_order_conf_bottom"
+            android:layout_width="match_parent"
+            android:layout_below="@id/tv_order_conf_tips"
+            android:layout_height="@dimen/DIMEN_50DP"
+            android:background="@color/white"
+            android:visibility="visible">
 
-        <Button
-            android:id="@+id/btn_affirm_pay"
-            android:layout_width="@dimen/DIMEN_135DP"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:background="@color/app_theme_color"
-            android:text="@string/order_immediate_pay"
-            android:textColor="@color/white"
-            android:textSize="@dimen/DIMEN_18DP" />
+            <TextView
+                android:id="@+id/tv_sum_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:text="共X间,合计:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_14DP" />
 
+            <TextView
+                android:id="@+id/tv_sum_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/tv_sum_room"
+                android:text="¥378"
+                android:textColor="@color/app_theme_color"
+                android:textSize="@dimen/DIMEN_16DP" />
+
+            <Button
+                android:id="@+id/btn_affirm_pay"
+                android:layout_width="@dimen/DIMEN_135DP"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:background="@color/app_theme_color"
+                android:text="@string/order_immediate_pay"
+                android:textColor="@color/white"
+                android:textSize="@dimen/DIMEN_18DP" />
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

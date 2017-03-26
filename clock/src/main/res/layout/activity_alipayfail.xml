@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/DIMEN_70DP"
-        android:drawableLeft="@drawable/order_error_icon"
+        android:drawableTop="@drawable/fail_icon"
         android:drawablePadding="@dimen/DIMEN_10DP"
         android:gravity="center"
         android:text="@string/reserve_fail"

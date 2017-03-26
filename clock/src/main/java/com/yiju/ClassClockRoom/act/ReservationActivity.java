@@ -64,13 +64,13 @@ import java.util.Set;
 
 /**
  * ============================================================
- * <p/>
+ * <p>
  * 作      者  : Sandy
- * <p/>
+ * <p>
  * 日      期  : 2016/5/3/0005 09:55
- * <p/>
+ * <p>
  * 描      述  :
- * <p/>
+ * <p>
  * ============================================================
  */
 public class ReservationActivity extends BaseActivity implements
@@ -198,6 +198,16 @@ public class ReservationActivity extends BaseActivity implements
     @ViewInject(R.id.tv_reservation)
     private TextView tv_reservation;
 
+    // 预订提示
+    @ViewInject(R.id.ll_reservation)
+    private LinearLayout ll_reservation;
+    //描述信息
+    @ViewInject(R.id.tv_reservation_describe_all)
+    private TextView tv_reservation_describe_all;
+    //显示全部
+    @ViewInject(R.id.tv_reservation_describe)
+    private TextView tv_reservation_describe;
+
 
     // 房间数量上限
     private int maxRoomCount;
@@ -227,6 +237,11 @@ public class ReservationActivity extends BaseActivity implements
     private List<StoreDetailClassRoom> classRooms;
     private String tel;
     private List<ReservationDevice> devices;
+    private int lineCount;
+    private String instruction;
+    private String confirm_type;
+    private String school_type;
+    private Boolean littleFlag = false;
 
     @Override
     public int setContentViewId() {
@@ -250,20 +265,9 @@ public class ReservationActivity extends BaseActivity implements
         rl_room_add.setOnClickListener(this);
         rl_room_reduce.setEnabled(true);
         rl_room_add.setEnabled(true);
-
-
         rl_sigle.setOnClickListener(this);
         rl_more.setOnClickListener(this);
         rl_store.setOnClickListener(this);
-
-
-
-
-
-        /*String wholeStr = "8:00-10:00等共 5 小时";
-        StringFormatUtil spanStr = new StringFormatUtil(this, wholeStr,
-                "5", R.color.app_theme_color).fillColor();
-        tv_time.setText(spanStr.getResult());*/
 
     }
 
@@ -281,6 +285,36 @@ public class ReservationActivity extends BaseActivity implements
         room_start_time = intent.getStringExtra("room_start_time");
         room_end_time = intent.getStringExtra("room_end_time");
         tel = intent.getStringExtra(ExtraControl.EXTRA_TEL);
+        instruction = intent.getStringExtra("instruction");
+        confirm_type = intent.getStringExtra("confirm_type");
+        school_type = intent.getStringExtra(ExtraControl.EXTRA_SCHOOL_TYPE);
+        if (StringUtils.isNotNullString(instruction)) {
+            String str;
+            if (!"0".equals(confirm_type)) {
+                str = "课室预订订单将在订单确认通过后生效\r\n" + instruction;
+            } else {
+                str = instruction;
+            }
+            tv_reservation_describe.setText(str);
+            tv_reservation_describe.post(new Runnable() {
+                @Override
+                public void run() {
+                    lineCount = tv_reservation_describe.getLineCount();
+                    if (lineCount > 3) {
+                        tv_reservation_describe.setMaxLines(3);
+                    } else {
+                        tv_reservation_describe_all.setVisibility(View.GONE);
+                    }
+                }
+            });
+        } else {
+            if (!"0".equals(confirm_type)) {
+                tv_reservation_describe.setText(R.string.txt_reservation_describe);
+                tv_reservation_describe_all.setVisibility(View.GONE);
+            } else {
+                ll_reservation.setVisibility(View.GONE);
+            }
+        }
         if (StringUtils.isNotNullString(sname)) {
             tv_reservation_school.setText(sname);
             tv_reservation_school.setTextColor(UIUtils.getColor(R.color.white));
@@ -437,9 +471,6 @@ public class ReservationActivity extends BaseActivity implements
                     }
                 }
                 devices = reservationBean.getDevice();
-                /*if (null != devices && devices.size() > 0) {
-                    tv_reservation_device.setText(devices.get(0).getName() + "等 " + devices.size() + " 项");
-                }*/
             }
         } else {
             UIUtils.showToastSafe(R.string.fail_data_request);
@@ -505,9 +536,34 @@ public class ReservationActivity extends BaseActivity implements
                     UIUtils.showToastSafe(getString(R.string.toast_show_select_week));
                     return;
                 }
+                boolean isLogin = SharedPreferencesUtils.getBoolean(UIUtils.getContext(),
+                        getResources().getString(R.string.shared_isLogin), false);
+                if (!isLogin) {
+                    Intent intent = new Intent(UIUtils.getContext(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+                String mobile = SharedPreferencesUtils.getString(this, UIUtils.getString(R.string.shared_mobile), null);
+                if (StringUtils.isNullString(mobile)) {
+                    // 弹出电话呼叫窗口
+                    CustomDialog customDialog = new CustomDialog(
+                            ReservationActivity.this,
+                            UIUtils.getString(R.string.confirm),
+                            UIUtils.getString(R.string.label_cancel),
+                            "绑定手机号码的帐号方可进行预订或充值，前去绑定");
+                    customDialog.setOnClickListener(new IOnClickListener() {
+                        @Override
+                        public void oncClick(boolean isOk) {
+                            if (isOk) {
+                                startActivity(new Intent(ReservationActivity.this, PersonalCenter_ChangeMobileActivity.class));
+                            }
+                        }
+                    });
 
-                ProgressDialog.getInstance().show();
-                payRightNow();
+                } else {
+                    ProgressDialog.getInstance().show();
+                    payRightNow();
+                }
                 break;
             case R.id.iv_reservation_call:
                 if (StringUtils.isNullString(tel)) {
@@ -688,7 +744,7 @@ public class ReservationActivity extends BaseActivity implements
                         && copyMoreDates.size() > 0) {
                     intent.putExtra("reservationHaveDate", (Serializable) copyMoreDates);
                 }
-                if (null != reservationWeekList && reservationWeekList.size() >0) {
+                if (null != reservationWeekList && reservationWeekList.size() > 0) {
                     intent.putIntegerArrayListExtra("reservationHaveWeek", reservationWeekList);
                 }
                 break;
@@ -747,7 +803,7 @@ public class ReservationActivity extends BaseActivity implements
                     break;
                 case DATE:
                     selectedDates = (ArrayList<Date>) data.getSerializableExtra("reservationDate");
-                    if(null != selectedDates && selectedDates.size()>0){
+                    if (null != selectedDates && selectedDates.size() > 0) {
                         if (reservation_flag) {
                             copySingleDates.clear();
                             copySingleDates.addAll(selectedDates);
@@ -769,7 +825,7 @@ public class ReservationActivity extends BaseActivity implements
                     timeLists = (ArrayList<String>) data.getSerializableExtra("reservationList");
                     if (null != timeLists && timeLists.size() > 0) {
 //                        tv_time_one.setText(timeLists.get(0).split("!")[1]);
-                        tv_time_one.setText(timeLists.get(0));
+                        tv_time_one.setText(timeLists.get(0) + "等");
                         int count = 0;
                         for (String s : timeLists) {
 //                            String[] times = s.split("!");
@@ -792,6 +848,7 @@ public class ReservationActivity extends BaseActivity implements
                 case DATE_LITTLE:
                     haveDates = (ArrayList<Date>) data.getSerializableExtra("haveDates");
                     if (null != haveDates && haveDates.size() > 0) {
+                        littleFlag = true;
                         int count = 0;
                         for (Date d : haveDates) {
                             if (!copyMoreDates.contains(d)) {
@@ -804,6 +861,8 @@ public class ReservationActivity extends BaseActivity implements
                             }
                         }
                         tv_reservation_little.setText("已调整 " + count + " 天");
+                    }else{
+                        littleFlag = false;
                     }
 
                 default:
@@ -851,7 +910,7 @@ public class ReservationActivity extends BaseActivity implements
             }
         }
         tv_week.setText(sb_week.toString());
-        if(null != reservationWeekList && reservationWeekList.size() >0){
+        if (null != reservationWeekList && reservationWeekList.size() > 0) {
             reservationWeekList.clear();
         }
         clearLittleData();
@@ -971,7 +1030,7 @@ public class ReservationActivity extends BaseActivity implements
             }
             String room_id = sb.toString();
             String repeat = getRepeatString();
-            if(repeat.equals("null")){
+            if (repeat.equals("null")) {
                 repeat = "";
             }
             Gson gson = new Gson();
@@ -1005,10 +1064,10 @@ public class ReservationActivity extends BaseActivity implements
             List<RoomInfo> roomInfos = new ArrayList<>();
             String roomInfoJsonStr;
             List<Date> mDates = new ArrayList<>();
-            if(reservation_flag){
+            if (reservation_flag) {
                 mDates.clear();
                 mDates.addAll(copySingleDates);
-            }else {
+            } else {
                 mDates.clear();
                 mDates.addAll(copyMoreDates);
                 if (null != haveDates && haveDates.size() > 0) {
@@ -1016,7 +1075,27 @@ public class ReservationActivity extends BaseActivity implements
                     mDates.addAll(haveDates);
                 }
             }
-
+            List<Date> weekDates = new ArrayList<>();
+            String weekDays = tv_week.getText().toString();
+            if(!littleFlag){
+                if (!weekDays.equals("每周")) {
+                    String[] weeks = weekDays.substring(2,weekDays.length()).split("、");
+                    int counts = weeks.length;
+                    if (counts < 7) {
+                        for (String week : weeks) {
+                            int intWeek = formatWeek(week);
+                            for (int j = 0; j < mDates.size(); j++) {
+                                ca.setTime(mDates.get(j));
+                                if (ca.get(Calendar.DAY_OF_WEEK) == intWeek) {
+                                    weekDates.add(mDates.get(j));
+                                }
+                            }
+                        }
+                        mDates.clear();
+                        mDates.addAll(weekDates);
+                    }
+                }
+            }
             for (Date d : mDates) {
                 ca.setTime(d);
                 RoomInfo roomInfo = new RoomInfo();
@@ -1043,7 +1122,7 @@ public class ReservationActivity extends BaseActivity implements
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if (!checkDate(date, StringUtils.changeTime(getMinTime()), tv_week.getText().toString())) {
+            if (!checkDate(date, StringUtils.changeTime(getMinTime()), tv_week.getText().toString().substring(2))) {
                 return;
             }
             httpUtils.send(HttpMethod.POST,
@@ -1066,6 +1145,40 @@ public class ReservationActivity extends BaseActivity implements
                         }
                     });
         }
+    }
+
+    /**
+     * 将星期字符串转换成数字
+     *
+     * @param week 星期字符串
+     * @return 星期数字
+     */
+    private int formatWeek(String week) {
+        int szWeek = 0;
+        switch (week) {
+            case "一":
+                szWeek = Calendar.MONDAY;
+                break;
+            case "二":
+                szWeek = Calendar.TUESDAY;
+                break;
+            case "三":
+                szWeek = Calendar.WEDNESDAY;
+                break;
+            case "四":
+                szWeek = Calendar.THURSDAY;
+                break;
+            case "五":
+                szWeek = Calendar.FRIDAY;
+                break;
+            case "六":
+                szWeek = Calendar.SATURDAY;
+                break;
+            case "日":
+                szWeek = Calendar.SUNDAY;
+                break;
+        }
+        return szWeek;
     }
 
     /**
@@ -1126,9 +1239,8 @@ public class ReservationActivity extends BaseActivity implements
                             ReservationActivity.this,
                             OrderConfirmationActivity.class);
                     intent.putExtra("order2_id", json.getString("order2_id"));
+                    intent.putExtra(ExtraControl.EXTRA_SCHOOL_TYPE, school_type);
                     startActivity(intent);
-//                    clearDateLittle();
-//                    tv_reservation.setEnabled(true);
                     break;
                 case 40003:
                     // 参数不全
@@ -1153,9 +1265,9 @@ public class ReservationActivity extends BaseActivity implements
                         }
                         String s = count + " 间课室库存不足可进行个别日期调整或重新预订";
                         Set<Date> noFullDates = getNoFullRoomDate(arrEntities);
-                        if(!reservation_flag){
+                        if (!reservation_flag) {
                             showRoomDialog(s, noFullDates);
-                        }else {
+                        } else {
                             UIUtils.showToastSafe("课室库存不足，请选择其他时间");
                             noFullDates.clear();
                         }
@@ -1169,14 +1281,6 @@ public class ReservationActivity extends BaseActivity implements
                     if (deviceTypeFull == null) {
                         return;
                     }
-                    //================================
-                    /*List<StockArrEntity> stock_arr = deviceTypeFull.getStock_arr();
-                    HashSet<String> arrs = new HashSet<>();
-                    for (int i = 0; i < stock_arr.size(); i++) {
-                        arrs.add(stock_arr.get(i).getDate());
-                    }
-                    String s = arrs.size() + " 间课室的设备库存不足可进行个别日期调整或重新预订";*/
-                    //================================
                     List<StockArrEntity> failDeviceData = deviceTypeFull.getStock_arr();
                     int deviceUseCount = 0;
                     int deviceFailCount = 0;
@@ -1188,9 +1292,9 @@ public class ReservationActivity extends BaseActivity implements
                     }
                     String s = (deviceFailCount - deviceUseCount) + " 间课室的设备库存不足可进行个别日期调整或重新预订";
                     Set<Date> noFullDates = getNoFullDeviceDate(failDeviceData);
-                    if(!reservation_flag){
+                    if (!reservation_flag) {
                         showRoomDialog(s, noFullDates);
-                    }else {
+                    } else {
                         UIUtils.showToastSafe("设备库存不足");
                         noFullDates.clear();
                     }

@@ -8,16 +8,9 @@ import java.util.List;
  */
 public class OrderCourseResult {
 
-
-    /**
-     * code : 1
-     * msg : ok
-     * data : [{"course_name":"数学1","school_name":"测试徐汇虹梅商务大厦旗舰店","start_date":"2016-06-17","end_date":"2016-06-18","course_num":2,"status":"0","expire_time":"1565810848","real_fee":"100.00"},{"course_name":"语文1","school_name":"测试徐汇虹梅商务大厦旗舰店","start_date":"2016-06-17","end_date":"2016-06-18","course_num":2,"status":"3","expire_time":"1565811198","real_fee":"100.00"},{"course_name":"语文1","school_name":"测试徐汇虹梅商务大厦旗舰店","start_date":"2016-06-17","end_date":"2016-06-17","course_num":1,"status":"1","expire_time":"1565807407","real_fee":"100.00"}]
-     */
-
     private String code;
     private String msg;
-    private int servertime;
+    private int server_time;
     private List<OrderCourseData> data;
 
     public void setCode(String code) {
@@ -45,10 +38,10 @@ public class OrderCourseResult {
     }
 
     public int getServertime() {
-        return servertime;
+        return server_time;
     }
 
-    public void setServertime(int servertime) {
-        this.servertime = servertime;
+    public void setServertime(int server_time) {
+        this.server_time = server_time;
     }
 }

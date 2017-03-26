@@ -32,6 +32,12 @@ public class KeyBoardManager {
 		}
 	}
 
+	//打开软键盘
+	public static void openKeyBoard(Activity activity){
+		InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+	}
+
 	/**
 	 * 打开输入法
 	 */

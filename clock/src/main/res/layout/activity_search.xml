@@ -24,18 +24,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/DIMEN_28DP"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_9DP"
-                android:layout_marginRight="@dimen/DIMEN_6DP"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_marginRight="@dimen/DIMEN_10DP"
                 android:layout_toLeftOf="@+id/tv_canlce"
-                android:background="@drawable/pop_search_bg"
+                android:background="@drawable/pop_search_bg_grey"
                 android:drawableLeft="@drawable/seach_btn_icon"
                 android:drawablePadding="@dimen/DIMEN_12DP"
                 android:imeOptions="actionSearch"
                 android:maxLines="1"
                 android:paddingLeft="@dimen/DIMEN_12DP"
-                android:textColor="@color/gray_8f"
+                android:textColor="@color/color_black_33"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/DIMEN_12DP" />
+                android:textSize="@dimen/DIMEN_14DP" />
 
             <TextView
                 android:id="@+id/tv_canlce"
@@ -44,7 +44,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/DIMEN_9DP"
                 android:text="@string/label_cancel"
-                android:textColor="@color/black" />
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_16DP" />
 
             <ImageView
                 android:id="@+id/iv_search_delete"
@@ -52,8 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/et_search"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/DIMEN_8DP"
-                android:background="@drawable/search_delete"
+                android:layout_marginRight="@dimen/DIMEN_10DP"
+                android:background="@drawable/delete"
                 android:visibility="invisible"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
@@ -65,9 +66,11 @@
         <TextView
             android:id="@+id/tv_hot"
             style="@style/textstyle_14p_8f"
-            android:layout_marginLeft="@dimen/DIMEN_9DP"
-            android:layout_marginTop="@dimen/DIMEN_15DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_20DP"
             android:text="@string/search_hot"
+            android:textColor="@color/color_gay_99"
+            android:textSize="@dimen/DIMEN_14DP"
             android:visibility="gone" />
 
         <com.yiju.ClassClockRoom.widget.GridViewForScrollView
@@ -75,21 +78,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/DIMEN_15DP"
-            android:layout_marginLeft="@dimen/DIMEN_9DP"
-            android:layout_marginRight="@dimen/DIMEN_9DP"
-            android:layout_marginTop="@dimen/DIMEN_7DP"
-            android:horizontalSpacing="@dimen/DIMEN_9DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:horizontalSpacing="@dimen/DIMEN_15DP"
             android:numColumns="3"
             android:scrollbars="none"
-            android:verticalSpacing="@dimen/DIMEN_4DP"
+            android:verticalSpacing="@dimen/DIMEN_10DP"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_notes"
             style="@style/textstyle_14p_8f"
-            android:layout_marginLeft="@dimen/DIMEN_9DP"
-            android:layout_marginTop="@dimen/DIMEN_20DP"
+            android:layout_marginBottom="@dimen/DIMEN_15DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_15DP"
             android:text="@string/search_notes" />
+
+
+        <com.yiju.ClassClockRoom.widget.ListViewForScrollView
+            android:id="@+id/lv_notes_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:divider="@color/color_gay_ee"
+            android:dividerHeight="1dp"
+            android:scrollbars="none" />
 
         <View
             android:id="@+id/v_notes_search"
@@ -98,24 +113,16 @@
             android:layout_marginRight="@dimen/DIMEN_9DP"
             android:layout_marginTop="@dimen/DIMEN_4DP" />
 
-        <com.yiju.ClassClockRoom.widget.ListViewForScrollView
-            android:id="@+id/lv_notes_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_9DP"
-            android:layout_marginRight="@dimen/DIMEN_9DP"
-            android:divider="@color/white"
-            android:dividerHeight="0dp"
-            android:scrollbars="none" />
-
         <TextView
             android:id="@+id/tv_clean"
-            style="@style/textstyle_14p_green_21"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/DIMEN_40DP"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/DIMEN_14DP"
-            android:layout_marginTop="@dimen/DIMEN_14DP"
-            android:drawableLeft="@drawable/delete_history"
-            android:drawablePadding="@dimen/DIMEN_8DP"
-            android:text="@string/search_clean_notes" />
+            android:drawableLeft="@drawable/time_delete"
+            android:drawablePadding="@dimen/DIMEN_10DP"
+            android:gravity="center_vertical"
+            android:text="@string/search_clean_notes"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_14DP" />
     </LinearLayout>
 </ScrollView>

@@ -2,9 +2,10 @@ package com.yiju.ClassClockRoom.bean.result;
 
 import com.yiju.ClassClockRoom.bean.base.BaseEntity;
 
-public class UserInfo extends BaseEntity{
+public class UserInfo extends BaseEntity {
     private Data data;
     private Alert_order alert_order;
+    private Alert_order_course alert_order_course;
     private String org_black_count;
 
     public String getOrg_black_count() {
@@ -17,6 +18,14 @@ public class UserInfo extends BaseEntity{
 
     public Alert_order getAlert_order() {
         return alert_order;
+    }
+
+    public Alert_order_course getAlert_order_course() {
+        return alert_order_course;
+    }
+
+    public void setAlert_order_course(Alert_order_course alert_order_course) {
+        this.alert_order_course = alert_order_course;
     }
 
     public class Data {
@@ -384,4 +393,40 @@ public class UserInfo extends BaseEntity{
 
     }
 
+    public class Alert_order_course {
+
+        /**
+         * count : 0
+         * expire_time :
+         * nowtime : 1481269452
+         */
+
+        private String count;
+        private String expire_time;
+        private int nowtime;
+
+        public String getCount() {
+            return count;
+        }
+
+        public void setCount(String count) {
+            this.count = count;
+        }
+
+        public String getExpire_time() {
+            return expire_time;
+        }
+
+        public void setExpire_time(String expire_time) {
+            this.expire_time = expire_time;
+        }
+
+        public int getNowtime() {
+            return nowtime;
+        }
+
+        public void setNowtime(int nowtime) {
+            this.nowtime = nowtime;
+        }
+    }
 }

@@ -22,58 +22,38 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
             android:background="@drawable/back"
             tools:ignore="ContentDescription" />
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="@dimen/DIMEN_6DP"
-            android:layout_marginRight="@dimen/DIMEN_6DP"
-            android:layout_marginTop="@dimen/DIMEN_6DP"
+        <EditText
+            android:id="@+id/et_input_keywords"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_28DP"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
             android:layout_toLeftOf="@+id/tv_search_cancel"
             android:layout_toRightOf="@id/iv_search_back"
-            android:background="@drawable/pop_search_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@drawable/pop_search_bg_grey"
+            android:drawableLeft="@drawable/seach_btn_icon"
+            android:drawablePadding="@dimen/DIMEN_12DP"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/DIMEN_12DP"
+            android:textColor="@color/color_black_33"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/DIMEN_14DP" />
 
-            <ImageView
-                android:id="@+id/iv_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:layout_marginRight="@dimen/DIMEN_2DP"
-                android:background="@drawable/seach_btn_icon"
-                tools:ignore="ContentDescription" />
-
-            <EditText
-                android:id="@+id/et_input_keywords"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/DIMEN_2DP"
-                android:layout_toRightOf="@id/iv_search"
-                android:background="@null"
-                android:hint="@string/input_search_key"
-                android:imeOptions="actionSearch"
-                android:maxLines="1"
-                android:textColor="@color/gray_8f"
-                android:textColorHint="@color/gray_8f"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/DIMEN_12DP"
-                tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:id="@+id/iv_search_delete"
-                android:layout_width="@dimen/DIMEN_20DP"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/DIMEN_12DP"
-                android:background="@drawable/search_delete"
-                tools:ignore="ContentDescription" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_search_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/et_input_keywords"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:background="@drawable/delete"
+            android:visibility="invisible"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_search_cancel"

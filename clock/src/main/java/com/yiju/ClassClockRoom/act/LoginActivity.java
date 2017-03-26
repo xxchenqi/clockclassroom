@@ -64,7 +64,6 @@ import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.circular.CircularProgressButton;
 
-//import com.yiju.ClassClockRoom.receiver.PushClockReceiver;
 
 /**
  * ----------------------------------------
@@ -315,14 +314,26 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
                 }
                 break;
             case R.id.tv_register://注册
-                Intent register = new Intent(this, RegisterActivity.class);
-                register.putExtra("title", getString(R.string.account_register));//标题
-                startActivity(register);
+                if (!PermissionsChecker.checkPermission(PermissionsChecker.READ_PHONE_STATE_PERMISSIONS)) {
+                    Intent register = new Intent(this, RegisterActivity.class);
+                    register.putExtra("title", getString(R.string.account_register));//标题
+                    startActivity(register);
+                }else {
+                    PermissionsChecker.requestPermissions(
+                            this,
+                            PermissionsChecker.READ_PHONE_STATE_PERMISSIONS);
+                }
                 break;
             case R.id.tv_forgotpassword://忘记密码
-                Intent forgotpassword = new Intent(this, RegisterActivity.class);
-                forgotpassword.putExtra("title", getString(R.string.forget_password));
-                startActivity(forgotpassword);
+                if (!PermissionsChecker.checkPermission(PermissionsChecker.READ_PHONE_STATE_PERMISSIONS)) {
+                    Intent forgotpassword = new Intent(this, RegisterActivity.class);
+                    forgotpassword.putExtra("title", getString(R.string.forget_password));
+                    startActivity(forgotpassword);
+                }else {
+                    PermissionsChecker.requestPermissions(
+                            this,
+                            PermissionsChecker.READ_PHONE_STATE_PERMISSIONS);
+                }
                 break;
             case R.id.iv_login_delete://删除
                 et_username.setText("");
@@ -523,10 +534,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Comp
             e.printStackTrace();
         }
         SharedPreferencesUtils.saveString(getApplicationContext(),
-                getResources().getString(R.string.shared_third_source), userInfo.getThird_source());
+                getResources().getString(R.string.shared_third_source), "0");
         SharedPreferencesUtils.saveString(getApplicationContext(),
                 getResources().getString(R.string.shared_org_auth),
                 userInfo.getOrg_auth());
+        SharedPreferencesUtils.saveString(getApplicationContext(),
+                getResources().getString(R.string.shared_nickname),
+                userInfo.getNickname());
+        SharedPreferencesUtils.saveString(this,
+                getResources().getString(R.string.shared_mobile), userInfo.getMobile());
         //获取支付所需的工作密钥
 
         getWorkingKey(userInfo.getId());

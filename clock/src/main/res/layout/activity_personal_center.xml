@@ -12,22 +12,24 @@
         android:background="@color/color_gay_ee"
         android:orientation="vertical">
 
+
         <!-- 个人中心顶部 -->
 
         <RelativeLayout
+            android:id="@+id/rl_avatar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_162DP"
-            android:background="@drawable/personal_center_img_bg"
+            android:layout_height="@dimen/DIMEN_125DP"
+            android:background="@color/white"
             android:clickable="true">
 
             <com.yiju.ClassClockRoom.widget.CircleImageView
                 android:id="@+id/iv_avatar"
-                android:layout_width="@dimen/DIMEN_80DP"
-                android:layout_height="@dimen/DIMEN_80DP"
+                android:layout_width="@dimen/DIMEN_85DP"
+                android:layout_height="@dimen/DIMEN_85DP"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:layout_marginLeft="@dimen/DIMEN_16DP"
+                android:background="@drawable/personal_center_logo"
                 android:contentDescription="@string/app_name"
-                android:background="@drawable/user_unload"
                 app:border_color="@color/color_lucency_white"
                 app:border_overlay="false"
                 app:border_width="@dimen/DIMEN_2DP" />
@@ -45,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_chooseLogin_or_registered"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_black_33"
                     android:textSize="@dimen/DIMEN_16DP" />
 
                 <TextView
@@ -54,34 +56,503 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/DIMEN_12DP"
                     android:layout_marginTop="@dimen/DIMEN_6DP"
+                    android:drawableLeft="@drawable/phone_icon"
+                    android:drawablePadding="@dimen/DIMEN_10DP"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/DIMEN_12DP"
+                    android:textColor="@color/black66"
+                    android:textSize="@dimen/DIMEN_13DP"
                     android:visibility="gone" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_authentication"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="@dimen/DIMEN_12DP"
-                android:background="@drawable/personal_center_certification_icon"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_message_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_message"
+                android:layout_width="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:background="@drawable/message_icon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/iv_message"
+                android:text="@string/my_message"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_15DP"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_arrow_message"
+                android:background="@drawable/bg_red_point"
                 android:gravity="center"
-                android:text="@string/i_need_authentication"
                 android:textColor="@color/white"
-                android:textSize="@dimen/DIMEN_12DP" />
+                android:textSize="@dimen/DIMEN_12DP"
+                android:visibility="gone"
+                tools:ignore="HardcodedText"
+                tools:text="99+" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_my_interactive_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/DIMEN_1DP">
+
+            <ImageView
+                android:id="@+id/iv_my_interactive"
+                android:layout_width="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:background="@drawable/interaction_icon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/iv_my_interactive"
+                android:text="@string/txt_my_interactive"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_15DP"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_my_interactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_my_interactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_arrow_my_interactive"
+                android:text="评论、活动、赞"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_13DP"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_course_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_mine_course"
+                android:layout_width="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:background="@drawable/mycourse_info_icon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/iv_mine_course"
+                android:text="@string/label_course"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_15DP"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_teacher_mech"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_arrow_course"
+                android:text="@string/label_person_mine_course"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_13DP"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_show_course"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_show_course"
+                android:layout_width="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:background="@drawable/mycourse_release_icon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/iv_show_course"
+                android:text="@string/label_show_course"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_15DP"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <!--我的订单-->
+        <RelativeLayout
+            android:id="@+id/rl_mine_order"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@color/white">
+
+
+            <ImageView
+                android:id="@+id/iv_order"
+                android:layout_width="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:background="@drawable/classroonm_order_icon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/iv_order"
+                android:text="@string/txt_my_classroom_order"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_15DP"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_classroom_order_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_arrow_icon"
+                android:textSize="@dimen/DIMEN_13DP"
+                tools:ignore="HardcodedText"
+                tools:text="@string/label_checkAllOrder" />
+        </RelativeLayout>
+
+        <!--我的订单-->
+        <RelativeLayout
+            android:id="@+id/rl_mine_course_order"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_1DP"
+            android:background="@color/white">
+
+
+            <ImageView
+                android:id="@+id/iv_course_order"
+                android:layout_width="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:background="@drawable/course_order_icon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/iv_course_order"
+                android:text="@string/txt_my_course_order"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_15DP"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/iv_course_arrow_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_course_order_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_course_arrow_icon"
+                android:textSize="@dimen/DIMEN_13DP"
+                tools:ignore="HardcodedText"
+                tools:text="@string/label_checkAllOrder" />
+        </RelativeLayout>
+
+        <!-- <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/white"
+             android:baselineAligned="false"
+             android:gravity="center_vertical"
+             android:orientation="horizontal">
+
+             <LinearLayout
+                 android:id="@+id/ll_will_pay_order"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:orientation="vertical"
+                 android:paddingBottom="@dimen/DIMEN_12DP"
+                 android:paddingTop="@dimen/DIMEN_12DP">
+
+
+                 <ImageView
+                     android:id="@+id/iv_will_pay_order"
+                     android:layout_width="@dimen/DIMEN_30DP"
+                     android:layout_height="@dimen/DIMEN_30DP"
+                     android:background="@drawable/payment"
+                     android:gravity="center"
+                     tools:ignore="ContentDescription" />
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/label_wait_pay"
+                     android:textColor="@color/color_gay_99"
+                     android:textSize="@dimen/DIMEN_12DP"
+                     tools:ignore="HardcodedText" />
+             </LinearLayout>
+
+             <LinearLayout
+                 android:id="@+id/ll_using_order"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:orientation="vertical"
+                 android:paddingBottom="@dimen/DIMEN_12DP"
+                 android:paddingTop="@dimen/DIMEN_12DP">
+
+
+                 <ImageView
+                     android:layout_width="@dimen/DIMEN_30DP"
+                     android:layout_height="@dimen/DIMEN_30DP"
+                     android:background="@drawable/use"
+                     tools:ignore="ContentDescription" />
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/label_use"
+                     android:textColor="@color/color_gay_99"
+                     android:textSize="@dimen/DIMEN_12DP"
+                     tools:ignore="HardcodedText" />
+             </LinearLayout>
+
+             <LinearLayout
+                 android:id="@+id/ll_achived_order"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:orientation="vertical"
+                 android:paddingBottom="@dimen/DIMEN_12DP"
+                 android:paddingTop="@dimen/DIMEN_12DP">
+
+                 <ImageView
+                     android:layout_width="@dimen/DIMEN_30DP"
+                     android:layout_height="@dimen/DIMEN_30DP"
+                     android:background="@drawable/has_been_completed"
+                     tools:ignore="ContentDescription" />
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/label_alreadyFinish"
+                     android:textColor="@color/color_gay_99"
+                     android:textSize="@dimen/DIMEN_12DP"
+                     tools:ignore="HardcodedText" />
+             </LinearLayout>
+         </LinearLayout>-->
+
+        <RelativeLayout
+            android:id="@+id/rl_myinvoice_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_set_icon"
+                android:layout_width="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:background="@drawable/personalcenter_myreceipt"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/iv_set_icon"
+                android:text="@string/label_mineInvoice"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_15DP"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_property_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/tv_property"
+                android:textColor="@color/color_gay_99"
+                android:textSize="@dimen/DIMEN_13DP"
+                tools:ignore="HardcodedText" />
         </RelativeLayout>
 
 
+        <RelativeLayout
+            android:id="@+id/rl_mywallet_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_mine_wallet"
+                android:layout_width="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_20DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_12DP"
+                android:background="@drawable/wallet_icon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@id/iv_mine_wallet"
+                android:text="@string/label_myWallet"
+                android:textColor="@color/black"
+                android:textSize="@dimen/DIMEN_15DP"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
+                android:layout_marginRight="@dimen/DIMEN_12DP"
+                android:background="@drawable/arrow"
+                tools:ignore="ContentDescription" />
+        </RelativeLayout>
         <!--我的老师信息-->
         <RelativeLayout
             android:id="@+id/rl_mine_teacher_info"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_56DP"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
             android:background="@color/white"
             android:visibility="gone">
 
@@ -101,7 +572,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/DIMEN_10DP"
                 android:layout_toRightOf="@id/iv_teacher_info"
-                android:text="@string/teacher_info"
+                android:text="@string/txt_teacher_info"
                 android:textColor="@color/black"
                 android:textSize="@dimen/DIMEN_15DP"
                 tools:ignore="HardcodedText" />
@@ -112,7 +583,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -123,20 +594,20 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_arrow_teacher_info"
+                android:alpha="0.9"
                 android:text="@string/txt_data_for_completion"
-                android:textColor="@color/color_orange_fa"
+                android:textColor="@color/color_red_f1"
                 android:textSize="@dimen/DIMEN_13DP"
                 android:visibility="gone" />
 
         </RelativeLayout>
 
-        <View style="@style/linestyle_order_divider_view_blackde5" />
 
         <!--我的机构-->
         <RelativeLayout
             android:id="@+id/rl_mine_organization"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_56DP"
+            android:layout_height="@dimen/DIMEN_55DP"
             android:background="@color/white"
             android:visibility="gone">
 
@@ -167,7 +638,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -179,352 +650,18 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_arrow_organization"
                 android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
+                android:textSize="@dimen/DIMEN_13DP"
                 tools:ignore="HardcodedText" />
 
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_course_arrow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_mine_course"
-                android:layout_width="@dimen/DIMEN_20DP"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/mycourse_info_icon"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_toRightOf="@id/iv_mine_course"
-                android:text="@string/label_course"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_15DP"
-                tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:id="@+id/iv_arrow_course"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
-                android:layout_marginRight="@dimen/DIMEN_12DP"
-                android:background="@drawable/arrow"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/tv_teacher_mech"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_arrow_course"
-                android:text="@string/label_person_mine_course"
-                android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
-                tools:ignore="HardcodedText" />
-        </RelativeLayout>
-
-        <View style="@style/linestyle_order_divider_view_blackde5" />
-
-        <RelativeLayout
-            android:id="@+id/rl_show_course"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_show_course"
-                android:layout_width="@dimen/DIMEN_20DP"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/mycourse_release_icon"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_toRightOf="@id/iv_show_course"
-                android:text="@string/label_show_course"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_15DP"
-                tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
-                android:layout_marginRight="@dimen/DIMEN_12DP"
-                android:background="@drawable/arrow"
-                tools:ignore="ContentDescription" />
-
-        </RelativeLayout>
-
-        <!--我的订单-->
-        <RelativeLayout
-            android:id="@+id/rl_mine_order"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_56DP"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/white">
-
-
-            <ImageView
-                android:id="@+id/iv_order"
-                android:layout_width="@dimen/DIMEN_20DP"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/personal_center_my_order"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_toRightOf="@id/iv_order"
-                android:text="@string/label_myOrder"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_15DP"
-                tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:id="@+id/iv_arrow_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
-                android:layout_marginRight="@dimen/DIMEN_12DP"
-                android:background="@drawable/arrow"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_arrow_icon"
-                android:text="@string/label_checkAllOrder"
-                android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
-                tools:ignore="HardcodedText" />
-        </RelativeLayout>
-
-        <View style="@style/linestyle_order_divider_view_blackde5" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/ll_will_pay_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/DIMEN_12DP"
-                android:paddingTop="@dimen/DIMEN_12DP">
-
-
-                <ImageView
-                    android:id="@+id/iv_will_pay_order"
-                    android:layout_width="@dimen/DIMEN_30DP"
-                    android:layout_height="@dimen/DIMEN_30DP"
-                    android:background="@drawable/payment"
-                    android:gravity="center"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_wait_pay"
-                    android:textColor="@color/color_gay_99"
-                    android:textSize="@dimen/DIMEN_12DP"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_using_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/DIMEN_12DP"
-                android:paddingTop="@dimen/DIMEN_12DP">
-
-
-                <ImageView
-                    android:layout_width="@dimen/DIMEN_30DP"
-                    android:layout_height="@dimen/DIMEN_30DP"
-                    android:background="@drawable/use"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_use"
-                    android:textColor="@color/color_gay_99"
-                    android:textSize="@dimen/DIMEN_12DP"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_achived_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/DIMEN_12DP"
-                android:paddingTop="@dimen/DIMEN_12DP">
-
-                <ImageView
-                    android:layout_width="@dimen/DIMEN_30DP"
-                    android:layout_height="@dimen/DIMEN_30DP"
-                    android:background="@drawable/has_been_completed"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_alreadyFinish"
-                    android:textColor="@color/color_gay_99"
-                    android:textSize="@dimen/DIMEN_12DP"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_myinvoice_arrow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_set_icon"
-                android:layout_width="@dimen/DIMEN_20DP"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/personalcenter_myreceipt"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
-                android:layout_marginRight="@dimen/DIMEN_12DP"
-                android:background="@drawable/arrow"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/tv_property"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_toRightOf="@id/iv_set_icon"
-                android:text="@string/label_mineInvoice"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_15DP"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/tv_property_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/tv_property"
-                android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
-                tools:ignore="HardcodedText" />
-        </RelativeLayout>
-
-        <View style="@style/linestyle_order_divider_view_blackde5" />
-
-        <RelativeLayout
-            android:id="@+id/rl_mywallet_arrow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_mine_wallet"
-                android:layout_width="@dimen/DIMEN_20DP"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/personal_center_wallet_icon"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_toRightOf="@id/iv_mine_wallet"
-                android:text="@string/label_myWallet"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_15DP"
-                tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
-                android:layout_marginRight="@dimen/DIMEN_12DP"
-                android:background="@drawable/arrow"
-                tools:ignore="ContentDescription" />
-        </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/rl_balance_arrow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
             android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_balance"
@@ -552,7 +689,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -564,19 +701,17 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_arrow_balance"
                 android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
+                android:textSize="@dimen/DIMEN_13DP"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
 
-        <View style="@style/linestyle_order_divider_view_blackde5" />
 
         <RelativeLayout
             android:id="@+id/rl_bankcard_arrow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/DIMEN_55DP"
             android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_bankcard"
@@ -604,7 +739,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -616,19 +751,16 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_arrow_bankcard"
                 android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
+                android:textSize="@dimen/DIMEN_13DP"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
-
-        <View style="@style/linestyle_order_divider_view_blackde5" />
 
         <RelativeLayout
             android:id="@+id/rl_mycoupons_arrow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/DIMEN_55DP"
             android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_coupon"
@@ -656,7 +788,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -668,20 +800,16 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_arrow_coupon"
                 android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
+                android:textSize="@dimen/DIMEN_13DP"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
-
-        <View style="@style/linestyle_order_divider_view_blackde5" />
 
         <RelativeLayout
             android:id="@+id/rl_myfocuson_arrow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/DIMEN_55DP"
             android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
 
@@ -710,7 +838,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -719,11 +847,9 @@
         <RelativeLayout
             android:id="@+id/rl_mywifi_arrow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP">
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/iv_wifi"
@@ -731,7 +857,7 @@
                 android:layout_height="@dimen/DIMEN_20DP"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/personal_center_certification_of_wifi"
+                android:background="@drawable/wifii_icon"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -752,7 +878,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -764,30 +890,25 @@
                 android:layout_toLeftOf="@id/iv_arrow_wifi"
                 android:text="@string/peidu_title"
                 android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
+                android:textSize="@dimen/DIMEN_13DP"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_check_stores"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/DIMEN_22DP"
+            android:layout_height="@dimen/DIMEN_42DP"
+            android:gravity="center_vertical"
             android:paddingLeft="@dimen/DIMEN_12DP"
-            android:paddingTop="@dimen/DIMEN_12DP"
             android:text="@string/txt_check_stores"
             android:textColor="@color/color_blue_1a"
-            android:textSize="@dimen/DIMEN_12DP" />
-
-        <View style="@style/linestyle_order_divider_view_blackde5" />
+            android:textSize="@dimen/DIMEN_13DP" />
 
         <RelativeLayout
             android:id="@+id/rl_video_arrow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/DIMEN_55DP"
             android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP"
             android:visibility="gone">
 
             <ImageView
@@ -817,7 +938,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -829,70 +950,15 @@
                 android:layout_toLeftOf="@id/iv_arrow_video"
                 android:text="@string/peidu_title"
                 android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
-                tools:ignore="HardcodedText" />
-        </RelativeLayout>
-
-        <View style="@style/linestyle_order_divider_view_blackde5" />
-
-        <RelativeLayout
-            android:id="@+id/rl_remind_setting_arrow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP">
-
-            <ImageView
-                android:id="@+id/iv_remind"
-                android:layout_width="@dimen/DIMEN_20DP"
-                android:layout_height="@dimen/DIMEN_20DP"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/personal_center_remind"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_toRightOf="@id/iv_remind"
-                android:text="@string/remind_setting"
-                android:textColor="@color/black"
-                android:textSize="@dimen/DIMEN_15DP"
-                tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:id="@+id/iv_arrow_remerber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
-                android:layout_marginRight="@dimen/DIMEN_12DP"
-                android:background="@drawable/arrow"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/tv_remerber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_arrow_remerber"
-                android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
+                android:textSize="@dimen/DIMEN_13DP"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_more_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/DIMEN_20DP"
-            android:paddingTop="@dimen/DIMEN_20DP">
+            android:layout_height="@dimen/DIMEN_55DP"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/iv_more"
@@ -900,7 +966,7 @@
                 android:layout_height="@dimen/DIMEN_20DP"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/DIMEN_12DP"
-                android:background="@drawable/personal_center_setting_up"
+                android:background="@drawable/more_icon"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -920,7 +986,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/DIMEN_14DP"
+                android:layout_marginLeft="@dimen/DIMEN_6DP"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:background="@drawable/arrow"
                 tools:ignore="ContentDescription" />
@@ -932,7 +998,7 @@
                 android:layout_toLeftOf="@id/iv_arrow_more"
                 android:text="@string/label_service"
                 android:textColor="@color/color_gay_99"
-                android:textSize="@dimen/DIMEN_14DP"
+                android:textSize="@dimen/DIMEN_13DP"
                 tools:ignore="HardcodedText" />
 
         </RelativeLayout>

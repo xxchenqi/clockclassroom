@@ -80,17 +80,14 @@ public class MineOrganizationEditAdapter extends CommonBaseAdapter<MemberBean.Da
         }
         if ("2".equals(dataEntity.getOrg_auth())) {
             ll_public.setVisibility(View.VISIBLE);
-            iv_select_teacher.setBackgroundResource(R.drawable.check);
+            iv_select_teacher.setBackgroundResource(R.drawable.check_icon);
         } else {
             ll_public.setVisibility(View.GONE);
-            iv_select_teacher.setBackgroundResource(R.drawable.uncheck);
         }
 
         rl_select_teacher.setVisibility(View.VISIBLE);
         if (dataEntity.isCheck()) {
-            iv_select_teacher.setBackgroundResource(R.drawable.check);
-        } else {
-            iv_select_teacher.setBackgroundResource(R.drawable.uncheck);
+            iv_select_teacher.setBackgroundResource(R.drawable.check_icon);
         }
         rl_select_teacher.setOnClickListener(new View.OnClickListener() {
             @Override

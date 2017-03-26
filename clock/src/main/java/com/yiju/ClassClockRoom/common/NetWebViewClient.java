@@ -6,22 +6,28 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.view.Gravity;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
-import com.yiju.ClassClockRoom.act.CourseDetailActivity;
+import com.yiju.ClassClockRoom.act.AffirmSignUpActivity;
 import com.yiju.ClassClockRoom.act.CourseMoreActivity;
 import com.yiju.ClassClockRoom.act.LoginActivity;
 import com.yiju.ClassClockRoom.act.MainActivity;
+import com.yiju.ClassClockRoom.act.NewCourseDetailActivity;
+import com.yiju.ClassClockRoom.act.PersonalCenter_ChangeMobileActivity;
 import com.yiju.ClassClockRoom.act.StoreDetailActivity;
-import com.yiju.ClassClockRoom.act.TeacherDetailActivity;
+import com.yiju.ClassClockRoom.act.SupplierDetailActivity;
+import com.yiju.ClassClockRoom.act.ThemeWebAboutActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
@@ -39,13 +45,26 @@ import com.yiju.ClassClockRoom.widget.windows.NavigationWindow;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.yiju.ClassClockRoom.util.UIUtils.startActivity;
+
 public class NetWebViewClient extends WebViewClient {
     private TextView head_title;
     private String defaultTitle;
     private WebView webview;
     private NavigationUtils navigationUtils = null;
 
+    IWebViewHandleError iWebViewHandleError;
+
+    public interface IWebViewHandleError {
+        void handleWebViewError();
+    }
+
+    public void setiWebViewHandleError(IWebViewHandleError iWebViewHandleError) {
+        this.iWebViewHandleError = iWebViewHandleError;
+    }
+
     @Override
+
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         return processUrl(view, url) || super.shouldOverrideUrlLoading(view, url);
     }
@@ -56,7 +75,21 @@ public class NetWebViewClient extends WebViewClient {
 //        handler.proceed();
         super.onReceivedSslError(view, handler, error);
         UIUtils.showToastSafe(UIUtils.getString(R.string.toast_show_webview_error));
-        ProgressDialog.getInstance().dismiss();
+//        ProgressDialog.getInstance().dismiss();
+    }
+
+    @Override
+    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        super.onReceivedError(view, errorCode, description, failingUrl);
+        iWebViewHandleError.handleWebViewError();
+    }
+
+    @Override
+    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+        super.onReceivedError(view, request, error);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            iWebViewHandleError.handleWebViewError();
+        }
     }
 
     private boolean processUrl(WebView view, final String url) {
@@ -157,7 +190,7 @@ public class NetWebViewClient extends WebViewClient {
 
             intent.setClass(UIUtils.getContext(),
                     Common_Show_WebPage_Activity.class);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
 
         } else if (url.contains(WebConstant.trapmap)) {
             //地图页面
@@ -174,7 +207,7 @@ public class NetWebViewClient extends WebViewClient {
                     WebConstant.WEB_Int_Map_Page);
             intent.setClass(UIUtils.getContext(),
                     Common_Show_WebPage_Activity.class);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
 
         } else if (url.contains(WebConstant.classroomdetail)) {
             if (url.contains("singlestore=singlestore")) {//跳转到门店课室类型列表
@@ -187,7 +220,7 @@ public class NetWebViewClient extends WebViewClient {
                 intent.putExtra(ExtraControl.EXTRA_STORE_ID, sid);
 //                intent.putExtra("school_type", school_type);
 //                intent.putExtra("store_name", store_name);
-                UIUtils.startActivity(intent);
+                startActivity(intent);
                 return false;
             }
             // 课室详情
@@ -213,7 +246,7 @@ public class NetWebViewClient extends WebViewClient {
             intent.putExtra("sid", sid);
             intent.setClass(UIUtils.getContext(),
                     Common_Show_WebPage_Activity.class);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
 
         } else if (url.contains("hotteacher=hotteacher")) {
             //??
@@ -235,7 +268,7 @@ public class NetWebViewClient extends WebViewClient {
                         WebConstant.Comment_Page);
                 intent.setClass(UIUtils.getContext(),
                         Common_Show_WebPage_Activity.class);
-                UIUtils.startActivity(intent);
+                startActivity(intent);
             }
 
         } else if (url.contains("picclass")) {
@@ -258,7 +291,7 @@ public class NetWebViewClient extends WebViewClient {
             intent.putExtra("type", type);
             intent.setClass(UIUtils.getContext(),
                     Common_Show_WebPage_Activity.class);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
         } else if (url.contains(WebConstant.teacherlist)) {
             // 没有任何关注后点击返回到良师页面
             Intent intent = new Intent(
@@ -290,7 +323,7 @@ public class NetWebViewClient extends WebViewClient {
 
             intent.setClass(UIUtils.getContext(),
                     Common_Show_WebPage_Activity.class);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
 
         } else if (url.contains(WebConstant.around)) {
             // 周边环境
@@ -306,7 +339,7 @@ public class NetWebViewClient extends WebViewClient {
                     WebConstant.Around_Page);
             intent.setClass(UIUtils.getContext(),
                     Common_Show_WebPage_Activity.class);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
         } else if (url.contains(WebConstant.varinvoice)) {
             view.stopLoading();
             Intent intent = new Intent();
@@ -315,7 +348,7 @@ public class NetWebViewClient extends WebViewClient {
                     WebConstant.Added_value_tax_Page);
             intent.setClass(UIUtils.getContext(),
                     Common_Show_WebPage_Activity.class);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
         } else if (url.contains(WebConstant.room_price)) {
             view.stopLoading();
             Intent intent = new Intent();
@@ -324,7 +357,7 @@ public class NetWebViewClient extends WebViewClient {
                     WebConstant.Classroom_value_tax_Page);
             intent.setClass(UIUtils.getContext(),
                     Common_Show_WebPage_Activity.class);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
         }
         // 防止要改回调用系统的浏览器
         // else if (url.contains("out=out&hotteacher=hotteacher")) {
@@ -362,13 +395,13 @@ public class NetWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        ProgressDialog.getInstance().show();
+//        ProgressDialog.getInstance().show();
     }
 
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        ProgressDialog.getInstance().dismiss();
+//        ProgressDialog.getInstance().dismiss();
         if (url.contains("#clickbtn=clickbtn")) {
             String to = Uri.parse(url).getQueryParameter("to");
             String to_g = Uri.parse(url).getQueryParameter("to_g");
@@ -434,6 +467,98 @@ public class NetWebViewClient extends WebViewClient {
             skipCourseInfo(url, "cid");
         } else if (url.contains("#morecourse_sid=")) {//更多课程跳转
             skipCourseMore(url, "morecourse_sid");
+        } else if (url.contains("#contentType")) {
+            //由主题首页跳转至其他页面
+            skipThemeDetail(url, "contentType", "id", "title");
+        } else if (url.contains("#id")) {
+            //由往期主题列表跳转到往期主题首页
+            skipPastTheme(url, "id");
+        } else if (url.contains("#themeact")) {
+            skipThemeact(url, "themeact");
+        }
+    }
+
+    /**
+     * 跳转活动报名
+     */
+    public void skipThemeact(String url, String value) {
+        if (StringUtils.isNullString(StringUtils.getUid()) || "-1".equals(StringUtils.getUid())) {
+            startActivity(new Intent(UIUtils.getContext(), LoginActivity.class));
+        } else {
+            if (StringUtils.isNotNullString(StringUtils.getMobile())) {
+                String anchorId = getAnchorId(url, value);
+                if (anchorId != null) {
+                    Intent intent = new Intent(UIUtils.getContext(), AffirmSignUpActivity.class);
+                    intent.putExtra(ExtraControl.EXTRA_ARTICLE_ID, anchorId);
+                    startActivity(intent);
+                }
+            } else {
+                startActivity(new Intent(UIUtils.getContext(), PersonalCenter_ChangeMobileActivity.class));
+            }
+        }
+    }
+
+
+    /**
+     * 跳转往期主题
+     */
+    public void skipPastTheme(String url, String value) {
+        String id = getAnchorId(url, value);
+        if (StringUtils.isNotNullString(id)) {
+            Intent intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
+            // page
+            intent.putExtra(UIUtils.getString(R.string.get_page_name),
+                    WebConstant.WEB_value_past_theme_detail_Page);
+            intent.putExtra(ExtraControl.EXTRA_ID, id);
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * 跳转主题详情
+     */
+    public void skipThemeDetail(String url, String value, String id, String title) {
+        String contentType = getAnchorId(url, value);
+        String id_value = getAnchorId(url, id);
+        String title_value = getAnchorId(url, title);
+        //contentType  1-标题 2-资讯 3-活动 4-课程 5-老师供应商 6-门店
+        if (StringUtils.isNotNullString(contentType)) {
+            Intent intent;
+            if ("1".equals(contentType)) {
+                //不跳
+            } else if ("2".equals(contentType)) {
+                //资讯
+                intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
+                intent.putExtra(ExtraControl.EXTRA_THEME_CONTENT_TYPE, contentType);
+                intent.putExtra(ExtraControl.EXTRA_ID, id_value);
+                intent.putExtra("title", title_value);
+                intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_news_Page);
+                startActivity(intent);
+            } else if ("3".equals(contentType)) {
+                //活动
+                intent = new Intent(UIUtils.getContext(), ThemeWebAboutActivity.class);
+                intent.putExtra(ExtraControl.EXTRA_THEME_CONTENT_TYPE, contentType);
+                intent.putExtra(ExtraControl.EXTRA_ID, id_value);
+                intent.putExtra("title", title_value);
+                intent.putExtra(UIUtils.getString(R.string.get_page_name), WebConstant.WEB_value_theme_activity_Page);
+                startActivity(intent);
+            } else if ("4".equals(contentType)) {
+                //课程
+                intent = new Intent(UIUtils.getContext(), NewCourseDetailActivity.class);
+                intent.putExtra(ExtraControl.EXTRA_COURSE_ID, id_value);
+                startActivity(intent);
+            } else if ("5".equals(contentType)) {
+                //老师供应商
+                intent = new Intent(UIUtils.getContext(), SupplierDetailActivity.class);
+                intent.putExtra(ExtraControl.EXTRA_ID, id_value);
+                startActivity(intent);
+            } else if ("6".equals(contentType)) {
+                //门店
+                intent = new Intent(UIUtils.getContext(), StoreDetailActivity.class);
+                intent.putExtra(ExtraControl.EXTRA_STORE_ID, id_value);
+                startActivity(intent);
+            }
+
         }
     }
 
@@ -443,9 +568,9 @@ public class NetWebViewClient extends WebViewClient {
     public void skipTeacherInfo(String url, String value) {
         String anchorId = getAnchorId(url, value);
         if (anchorId != null) {
-            Intent intent = new Intent(UIUtils.getContext(), TeacherDetailActivity.class);
+            Intent intent = new Intent(UIUtils.getContext(), SupplierDetailActivity.class);
             intent.putExtra("id", anchorId);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
         }
     }
 
@@ -455,9 +580,9 @@ public class NetWebViewClient extends WebViewClient {
     public void skipCourseInfo(String url, String value) {
         String anchorId = getAnchorId(url, value);
         if (anchorId != null) {
-            Intent intent = new Intent(UIUtils.getContext(), CourseDetailActivity.class);
-            intent.putExtra("COURSE_ID", anchorId);
-            UIUtils.startActivity(intent);
+            Intent intent = new Intent(UIUtils.getContext(), NewCourseDetailActivity.class);
+            intent.putExtra(ExtraControl.EXTRA_COURSE_ID, anchorId);
+            startActivity(intent);
         }
     }
 
@@ -469,7 +594,7 @@ public class NetWebViewClient extends WebViewClient {
         if (anchorId != null) {
             Intent intent = new Intent(UIUtils.getContext(), CourseMoreActivity.class);
             intent.putExtra("SCHOOL_ID", anchorId);
-            UIUtils.startActivity(intent);
+            startActivity(intent);
         }
     }
 
@@ -482,13 +607,17 @@ public class NetWebViewClient extends WebViewClient {
     public String getAnchorId(String url, String value) {
         String anchor = Uri.parse(url).getFragment();
         Map<String, String> map = new HashMap<>();
-        if (anchor != null) {
+        if (StringUtils.isNotNullString(anchor)) {
             String[] split = anchor.split("&");
             if (split.length != 0) {
                 for (int i = 0; i < split.length; i++) {
                     String[] split2 = split[i].split("=");
                     if (split2.length != 0) {
-                        map.put(split2[0], split2[1]);
+                        if (split2.length == 1) {
+                            map.put(split2[0], "");
+                        } else if (split2.length == 2) {
+                            map.put(split2[0], split2[1]);
+                        }
                     }
                 }
                 return map.get(value);

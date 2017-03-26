@@ -123,7 +123,7 @@
     <style name="linestyle_h_color_c1">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/DIMEN_1DP</item>
-        <item name="android:background">@color/color_gay_c1</item>
+        <item name="android:background">@color/color_gay_ee</item>
     </style>
 
     <style name="linestyle_v_unfocused">
@@ -164,11 +164,11 @@
         <item name="android:background">@color/color_gay_ee</item>
     </style>
     <!-- 分割线6 -->
-   <!-- <style name="btup">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
-        <item name="android:background">@color/app_theme_color_no</item>
-    </style>-->
+    <!-- <style name="btup">
+         <item name="android:layout_width">match_parent</item>
+         <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+         <item name="android:background">@color/app_theme_color_no</item>
+     </style>-->
     <!-- 分割线7 -->
     <style name="linestyle_6">
         <item name="android:layout_width">match_parent</item>
@@ -192,7 +192,13 @@
     <style name="linestyle_gray_f5">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/DIMEN_1DP</item>
-        <item name="android:background">@color/color_gay_f5</item>
+        <item name="android:background">@color/color_gay_ee</item>
+    </style>
+    <!-- 分割线gray_5 -->
+    <style name="linestyle_gray_ee">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIMEN_1DP</item>
+        <item name="android:background">@color/color_gay_ee</item>
     </style>
     <!-- 分割线gray_dd -->
     <style name="linestyle_gray_dd">
@@ -284,13 +290,13 @@
         <item name="android:textColor">@color/unfocused</item>
     </style>-->
     <!-- ButtonNext -->
-   <!-- <style name="button_next">
-        <item name="android:layout_width">@dimen/DIMEN_120DP</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/background_green_1eb482_radius_5</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/DIMEN_17DP</item>
-    </style>-->
+    <!-- <style name="button_next">
+         <item name="android:layout_width">@dimen/DIMEN_120DP</item>
+         <item name="android:layout_height">wrap_content</item>
+         <item name="android:background">@drawable/background_green_1eb482_radius_5</item>
+         <item name="android:textColor">@color/white</item>
+         <item name="android:textSize">@dimen/DIMEN_17DP</item>
+     </style>-->
     <!-- loadingdialog -->
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
@@ -394,7 +400,7 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_marginRight">@dimen/DIMEN_12DP</item>
-        <item name="android:src">@drawable/order_choose_btn</item>
+        <item name="android:src">@drawable/check_icon</item>
         <item name="android:visibility">gone</item>
     </style>
     <!--Relativelayout-->

@@ -70,9 +70,7 @@ public class CourseTeacherListActivity extends BaseActivity
     protected void initView() {
         head_title.setText(R.string.title_the_instructor);
         if (no_choose_teacher) {
-            iv_no_teacher.setBackgroundResource(R.drawable.check);
-        } else {
-            iv_no_teacher.setBackgroundResource(R.drawable.uncheck);
+            iv_no_teacher.setBackgroundResource(R.drawable.check_icon);
         }
     }
 

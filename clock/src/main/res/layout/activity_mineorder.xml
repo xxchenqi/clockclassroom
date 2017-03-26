@@ -18,6 +18,9 @@
             android:id="@+id/ly_wifi"
             layout="@layout/wifi_fail"
             android:visibility="gone" />
+        <View
+            android:id="@+id/v_store_divider"
+            style="@style/linestyle_gray_f5" />
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/lv_mineorder"
@@ -36,10 +39,10 @@
 
             <ImageView
                 android:id="@+id/iv_mineorder_none"
-                android:layout_width="@dimen/DIMEN_140DP"
-                android:layout_height="@dimen/DIMEN_140DP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/DIMEN_116DP"
+                android:layout_marginTop="@dimen/DIMEN_155DP"
                 android:src="@drawable/none_order"
                 tools:ignore="ContentDescription" />
 

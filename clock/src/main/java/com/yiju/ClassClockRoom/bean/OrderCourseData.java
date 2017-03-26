@@ -15,7 +15,7 @@ public class OrderCourseData {
      * expire_time : 1565810848
      * real_fee : 100.00
      */
-    private int order_course_id;
+    private String id;
     private String course_id;
     private String course_name;
     private String school_name;
@@ -26,10 +26,37 @@ public class OrderCourseData {
     private String expire_time;
     private String real_fee;
     private String pic;
+    private String course_str;
+    private String sname;
+    private String school_type;
+    private String trade_id;
+    private String ctype;
 
     private int time;
-    private boolean isChoose = false;
-    private boolean cbChoose = false;
+
+    public String getCtype() {
+        return ctype;
+    }
+
+    public String getTrade_id() {
+        return trade_id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getSchool_type() {
+        return school_type;
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public String getCourse_str() {
+        return course_str;
+    }
 
     public String getPic() {
         return pic;
@@ -39,21 +66,6 @@ public class OrderCourseData {
         this.pic = pic;
     }
 
-    public boolean isCbChoose() {
-        return cbChoose;
-    }
-
-    public void setCbChoose(boolean cbChoose) {
-        this.cbChoose = cbChoose;
-    }
-
-    public boolean isChoose() {
-        return isChoose;
-    }
-
-    public void setIsChoose(boolean isChoose) {
-        this.isChoose = isChoose;
-    }
 
     public String getCourse_id() {
         return course_id;
@@ -134,13 +146,5 @@ public class OrderCourseData {
 
     public String getReal_fee() {
         return real_fee;
-    }
-
-    public int getOrder_course_id() {
-        return order_course_id;
-    }
-
-    public void setOrder_course_id(int order_course_id) {
-        this.order_course_id = order_course_id;
     }
 }

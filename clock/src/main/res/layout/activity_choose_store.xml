@@ -62,7 +62,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:contentDescription="@string/desc"
-                android:src="@drawable/down_pull" />
+                android:src="@drawable/arrow_down" />
 
             <TextView
                 android:id="@+id/head_right_text"

@@ -73,6 +73,8 @@
 -dontwarn android.support.graphics.drawable.**
 -keep class android.support.graphics.drawable.** { *; }
 
+-dontwarn com.yiju.ClassClockRoom.widget.circular.**
+-keep class com.yiju.ClassClockRoom.widget.circular.** { *; }
 
 -dontwarn assets.**
 -dontwarn com.baidu.**
@@ -283,6 +285,14 @@ public static final android.os.Parcelable$Creator *;
 }
 
 -keep class **JNI* {*;}
+
+#-新的BI数据统计所需代码混淆配置
+-keep class com.yiju.android.sdk.** {
+    public *;
+}
+-dontwarn com.yiju.android.sdk.**
+-keepnames class * extends android.app.Fragment
+-keepnames class * extends android.support.v4.app.Fragment
 
 #-printmapping out.map
 #-renamesourcefileattribute SourceFile

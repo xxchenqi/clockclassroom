@@ -26,7 +26,6 @@ import com.yiju.ClassClockRoom.bean.Course_Person_Detail;
 import com.yiju.ClassClockRoom.bean.Course_Person_Detail_Data;
 import com.yiju.ClassClockRoom.bean.Course_Person_Detail_RoomInfo;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
-import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -42,7 +41,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -669,8 +667,8 @@ public class PersonMineCourseDetailActivity extends BaseActivity implements View
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+            Intent intent = new Intent(this, PersonalCenterActivity.class);
+//            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {

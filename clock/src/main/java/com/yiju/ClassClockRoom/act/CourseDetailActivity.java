@@ -480,7 +480,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                     lineFlag = false;
                     tvCourseDetailMoreIntro.setText(UIUtils.getString(R.string.course_detial_more_intro));
                     tvCourseDetailIntroContent.setMaxLines(maxLine);
-                    Drawable nav_up = getResources().getDrawable(R.drawable.down);
+                    Drawable nav_up = getResources().getDrawable(R.drawable.arrow_down);
                     if (nav_up != null) {
                         nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
                         tvCourseDetailMoreIntro.setCompoundDrawables(null, null, nav_up, null);
@@ -489,7 +489,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                     lineFlag = true;
                     tvCourseDetailMoreIntro.setText(UIUtils.getString(R.string.course_detial_more_intro_pull));
                     tvCourseDetailIntroContent.setMaxLines(Integer.MAX_VALUE);
-                    Drawable nav_up = getResources().getDrawable(R.drawable.up);
+                    Drawable nav_up = getResources().getDrawable(R.drawable.arrow_up);
                     if (nav_up != null) {
                         nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
                         tvCourseDetailMoreIntro.setCompoundDrawables(null, null, nav_up, null);
@@ -500,14 +500,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.tv_course_detail_more:
                 if (flag) {
                     tv_course_detail_more.setText(UIUtils.getString(R.string.course_detial_more_intro));
-                    Drawable nav_up = getResources().getDrawable(R.drawable.down);
+                    Drawable nav_up = getResources().getDrawable(R.drawable.arrow_down);
                     if (nav_up != null) {
                         nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
                         tv_course_detail_more.setCompoundDrawables(null, null, nav_up, null);
                     }
                 } else {
                     tv_course_detail_more.setText(UIUtils.getString(R.string.course_detial_more_intro_pull));
-                    Drawable nav_up = getResources().getDrawable(R.drawable.up);
+                    Drawable nav_up = getResources().getDrawable(R.drawable.arrow_up);
                     if (nav_up != null) {
                         nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
                         tv_course_detail_more.setCompoundDrawables(null, null, nav_up, null);
@@ -583,9 +583,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         if ("1".equals(courseDetailData.getIs_interest())) {     //已关注
-            ivCourseDetailAttention.setBackgroundResource(R.drawable.attention_circle_solid);
+            ivCourseDetailAttention.setBackgroundResource(R.drawable.like_choose);
         } else {              //未关注
-            ivCourseDetailAttention.setBackgroundResource(R.drawable.attention_circle);
+            ivCourseDetailAttention.setBackgroundResource(R.drawable.like_white);
         }
     }
 
@@ -625,9 +625,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
      * @param courseApplyResult 预订成功结果
      */
     private void jumpCourseOrderPage(CourseApplyResult courseApplyResult) {
-        Intent OrderCourseIntent = new Intent(this, OrderCourseActivity.class);
-        OrderCourseIntent.putExtra("ORDERCOURSE", courseApplyResult);
-        startActivity(OrderCourseIntent);
     }
 
     /**

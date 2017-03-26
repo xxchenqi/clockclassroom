@@ -11,9 +11,89 @@
     <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
 
     <RelativeLayout
+        android:id="@+id/rl_remind_setting_arrow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:text="@string/remind_setting"
+            android:textColor="@color/black"
+            android:textSize="@dimen/DIMEN_15DP"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/iv_arrow_remerber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_14DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:background="@drawable/arrow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_remerber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_arrow_remerber"
+            android:textColor="@color/color_gay_99"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_authentication"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:text="@string/txt_authentication"
+            android:textColor="@color/black"
+            android:textSize="@dimen/DIMEN_15DP"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/iv_arrow_authentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_14DP"
+            android:layout_marginRight="@dimen/DIMEN_12DP"
+            android:background="@drawable/arrow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_authentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_arrow_authentication"
+            android:textColor="@color/color_gay_99"
+            android:textSize="@dimen/DIMEN_14DP"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/rl_call_telephone"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_79DP"
+        android:layout_height="@dimen/DIMEN_75DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -47,7 +127,7 @@
             android:layout_marginLeft="@dimen/DIMEN_12DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
             android:text="@string/txt_phone_number"
-            android:textColor="@color/color_gay_8f"
+            android:textColor="@color/color_gay_99"
             android:textSize="@dimen/DIMEN_12DP"
             tools:ignore="HardcodedText" />
 
@@ -66,8 +146,8 @@
     <RelativeLayout
         android:id="@+id/rl_call_email"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_79DP"
-        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:layout_height="@dimen/DIMEN_75DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -107,8 +187,8 @@
     <RelativeLayout
         android:id="@+id/rl_about_app"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_56DP"
-        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -136,8 +216,8 @@
     <RelativeLayout
         android:id="@+id/rl_tax_policy"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_56DP"
-        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -165,8 +245,8 @@
     <RelativeLayout
         android:id="@+id/rl_user_contract"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_56DP"
-        android:layout_marginTop="@dimen/DIMEN_12DP"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:background="@color/white"
         android:orientation="horizontal">
 

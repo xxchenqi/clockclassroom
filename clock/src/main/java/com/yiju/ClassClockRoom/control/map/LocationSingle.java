@@ -94,9 +94,9 @@ public class LocationSingle {
                 curr_location = location;
                 if (isStartApp) {
                     CountControl.getInstance().startApp();
-                    if (!"-1".equals(StringUtils.getUid())) {
-                        CountControl.getInstance().loginSuccess(StringUtils.getUid());
-                    }
+//                    if (!"-1".equals(StringUtils.getUid())) {
+//                        CountControl.getInstance().loginSuccess(StringUtils.getUid());
+//                    }
                 }
                 if (iLocationRunnable != null) {
                     iLocationRunnable.locationResult(curr_location);

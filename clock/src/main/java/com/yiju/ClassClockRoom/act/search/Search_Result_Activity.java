@@ -158,6 +158,7 @@ public class Search_Result_Activity extends BaseActivity implements
                 KeyBoardManager.closeInput(this, et_input_keywords);
                 et_input_keywords.clearFocus();
                 Intent intent = new Intent(Search_Result_Activity.this, MainActivity.class);
+                intent.putExtra(MainActivity.Param_Start_Fragment,0);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();

@@ -71,6 +71,8 @@ public class SchemeControl {
     public static final String MOBILE = "mobile";
     //课程标志
     public static final String COURSE_FLAG = "course_flag";
+    //ID
+    public static final String ID = "id";
     //============================内部传参===========================================
     //路径
     public static final String PATH = "path";

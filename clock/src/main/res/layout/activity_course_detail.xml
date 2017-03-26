@@ -236,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_30DP"
                     android:layout_gravity="center_horizontal"
-                    android:drawableRight="@drawable/down"
+                    android:drawableRight="@drawable/arrow_down"
                     android:gravity="center"
                     android:text="@string/course_detial_more_intro"
                     android:textColor="@color/color_gay_99"
@@ -321,7 +321,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_30DP"
                     android:layout_gravity="center_horizontal"
-                    android:drawableRight="@drawable/down"
+                    android:drawableRight="@drawable/arrow_down"
                     android:gravity="center"
                     android:text="@string/course_detial_more_intro"
                     android:textColor="@color/color_gay_99"
@@ -460,7 +460,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:background="@drawable/back_circle" />
+            android:background="@drawable/back_white" />
 
         <ImageView
             android:id="@+id/iv_course_detail_share"
@@ -469,7 +469,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/DIMEN_12DP"
-            android:background="@drawable/share_circle" />
+            android:background="@drawable/new_share" />
 
         <ImageView
             android:id="@+id/iv_course_detail_attention"
@@ -478,7 +478,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/DIMEN_10DP"
             android:layout_toLeftOf="@+id/iv_course_detail_share"
-            android:background="@drawable/attention_circle" />
+            android:background="@drawable/like_white" />
 
         <TextView
             android:id="@+id/tv_course_detail_title"

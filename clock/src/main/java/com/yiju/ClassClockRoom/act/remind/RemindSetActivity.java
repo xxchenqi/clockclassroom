@@ -169,6 +169,9 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
         remind_order_switch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
                 if (isChecked) {
                     setRemindRequest("is_order_remerber", Type_Remind_True);
                 } else {
@@ -183,6 +186,9 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
                 if (isChecked) {
                     setRemindRequest("is_sys_remerber", Type_Remind_True);
                 } else {
@@ -196,6 +202,9 @@ public class RemindSetActivity extends BaseActivity implements OnClickListener {
         remind_accompany_read_switch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
                 if (isChecked) {
                     remind_time_layout.setVisibility(View.VISIBLE);
                     setRemindRequest("is_remerber", Type_Remind_True);

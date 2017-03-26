@@ -15,20 +15,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/DIMEN_70DP"
-        android:drawableLeft="@drawable/order_sucess_icon"
         android:drawablePadding="@dimen/DIMEN_10DP"
+        android:drawableTop="@drawable/success_icon"
         android:text="@string/reserve_ok"
         android:textColor="@color/order_black"
         android:textSize="@dimen/DIMEN_16DP" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/DIMEN_50DP"
-        android:text="@string/reserve_success_content1"
-        android:textColor="@color/color_black_33"
-        android:textSize="@dimen/DIMEN_14DP" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +36,8 @@
             android:background="@drawable/background_green_1eb482_radius_2"
             android:text="@string/label_show_course"
             android:textColor="@color/white"
-            android:textSize="@dimen/DIMEN_18DP" />
+            android:textSize="@dimen/DIMEN_18DP"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_arrangement_classroom"

@@ -7,7 +7,9 @@ android {
         minSdkVersion 4
         targetSdkVersion 4
     }
-
+    lintOptions {
+        abortOnError false
+    }
     buildTypes {
         release {
             minifyEnabled false

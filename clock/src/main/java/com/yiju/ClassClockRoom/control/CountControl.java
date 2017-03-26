@@ -8,21 +8,20 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.baidu.location.BDLocation;
+import com.eju.cysdk.collection.CYIO;
+import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.R;
 import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.base.BaseFragmentActivity;
-import com.yiju.ClassClockRoom.BaseApplication;
 import com.yiju.ClassClockRoom.common.constant.SharedPreferencesConstant;
-import com.yiju.ClassClockRoom.fragment.BaseFragment;
 import com.yiju.ClassClockRoom.control.map.LocationSingle;
+import com.yiju.ClassClockRoom.fragment.BaseFragment;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.api.HttpRemovalApi;
 
 import java.util.List;
-
-import matrix.sdk.count.WeimiCount;
 
 /**
  * 统计逻辑
@@ -57,8 +56,8 @@ public class CountControl {
         BDLocation curr_location = LocationSingle.getInstance().getCurrentLocation();
         if (curr_location != null && isfirstLocation) {
             isfirstLocation = false;
-            WeimiCount.getInstance().recordClientStart(
-                    curr_location.getLongitude(), curr_location.getLatitude());
+            /*WeimiCount.getInstance().recordClientStart(
+                    curr_location.getLongitude(), curr_location.getLatitude());*/
             SharedPreferencesUtils.saveBoolean(UIUtils.getContext(),
                     SharedPreferencesConstant.Shared_Count_IsRunningForeground,
                     true);
@@ -69,8 +68,11 @@ public class CountControl {
     public void registerSuccess(String uid, String type) {
         BDLocation location = LocationSingle.getInstance().getCurrentLocation();
         if (location != null) {
-            WeimiCount.getInstance().recordRegister(null != uid ? uid : "", type,
-                    location.getLongitude(), location.getLatitude());
+            /*WeimiCount.getInstance().recordRegister(null != uid ? uid : "", type,
+                    location.getLongitude(), location.getLatitude());*/
+            if (!"-1".equals(uid) && StringUtils.isNotNullString(uid)) {
+                CYIO.getInstance().setUid(uid);
+            }
         }
     }
 
@@ -78,7 +80,10 @@ public class CountControl {
     public void loginSuccess(String uid) {
 //        if (StringUtils.isNotNullString(uid)) {
         Log.d("=====", "loginSuccess");
-        WeimiCount.getInstance().recordLogin(null != uid ? uid : "");
+//        WeimiCount.getInstance().recordLogin(null != uid ? uid : "");
+        if (!"-1".equals(uid) && StringUtils.isNotNullString(uid)) {
+            CYIO.getInstance().setUid(uid);
+        }
 //        }
     }
 
@@ -88,9 +93,10 @@ public class CountControl {
      * @param isBackstage true：后台：false：退出
      */
     public void loginOut(boolean isBackstage) {
-        String uid = SharedPreferencesUtils.getString(UIUtils.getContext(),
-                UIUtils.getString(R.string.shared_id), "-1");
-        WeimiCount.getInstance().recordLogout(null != uid ? uid : "", isBackstage);
+//        String uid = SharedPreferencesUtils.getString(UIUtils.getContext(),
+//                UIUtils.getString(R.string.shared_id), "-1");
+//        WeimiCount.getInstance().recordLogout(null != uid ? uid : "", isBackstage);
+        CYIO.getInstance().setUid("");
     }
 
     // 页面启动BaseActivity
@@ -98,8 +104,8 @@ public class CountControl {
         String uid = SharedPreferencesUtils.getString(UIUtils.getContext(),
                 UIUtils.getString(R.string.shared_id), "-1");
         if (activity != null && StringUtils.isNotNullString(activity.getPageName())) {
-            WeimiCount.getInstance()
-                    .recordPagepath(uid, activity.getPageName());
+            /*WeimiCount.getInstance()
+                    .recordPagepath(uid, activity.getPageName());*/
         }
     }
 
@@ -109,8 +115,8 @@ public class CountControl {
                 UIUtils.getString(R.string.shared_id), "-1");
         if (fragment != null) {
             if (StringUtils.isNotNullString(fragment.getPageName())) {
-                WeimiCount.getInstance()
-                        .recordPagepath(uid, fragment.getPageName());
+                /*WeimiCount.getInstance()
+                        .recordPagepath(uid, fragment.getPageName());*/
             }
         }
     }
@@ -121,8 +127,8 @@ public class CountControl {
                 UIUtils.getString(R.string.shared_id), "-1");
         if (activity != null) {
             if (StringUtils.isNotNullString(activity.getPageName())) {
-                WeimiCount.getInstance()
-                        .recordPagepath(uid, activity.getPageName());
+                /*WeimiCount.getInstance()
+                        .recordPagepath(uid, activity.getPageName());*/
             }
         }
     }
@@ -138,7 +144,10 @@ public class CountControl {
                 SharedPreferencesConstant.Shared_Count_IsRunningForeground,
                 true);
         if (!isRuning) {
-            CountControl.getInstance().loginSuccess(null != uid ? uid : "");
+            if ("-1".equals(uid)) {
+                uid = "";
+            }
+//            CountControl.getInstance().loginSuccess(uid);
             SharedPreferencesUtils.saveBoolean(UIUtils.getContext(),
                     SharedPreferencesConstant.Shared_Count_IsRunningForeground,
                     true);
@@ -146,7 +155,7 @@ public class CountControl {
             long c = (skipRunningTime - unRunningTime) / 1000 / 60 / 60;
             //判断后台切换到前台时间间隔是否超过了半天,超过半天则重新请求
             if (c > 12) {
-                HttpRemovalApi.getInstance().getHttpRequestForServer(false);
+                HttpRemovalApi.getInstance().getHttpRequestForServer(false, null);
             }
         }
         if (t instanceof BaseFragment) {
@@ -169,15 +178,17 @@ public class CountControl {
                     false);
             //记录切换到后台时的时间
             unRunningTime = System.currentTimeMillis();
-            loginOut(true);
+            //注释掉是因为新的bi数据统计不需要切换到后台的时候做处理
+//            loginOut(true);
         }
     }
 
     /**
      * 判断某一个类是否存在任务栈里面
+     *
      * @return flag
      */
-    public static boolean isExsitMianActivity(Class<?> cls){
+    public static boolean isExsitMianActivity(Class<?> cls) {
         Intent intent = new Intent(UIUtils.getContext(), cls);
         ComponentName cmpName = intent.resolveActivity(UIUtils.getContext().getPackageManager());
         boolean flag = false;

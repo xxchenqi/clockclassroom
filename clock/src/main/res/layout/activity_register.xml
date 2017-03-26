@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/desc"
-                android:src="@drawable/room_back" />
+                android:src="@drawable/back" />
         </RelativeLayout>
 
 
@@ -39,11 +39,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_44DP"
-        android:layout_marginLeft="@dimen/DIMEN_24DP"
-        android:layout_marginRight="@dimen/DIMEN_24DP"
+        android:layout_height="@dimen/DIMEN_55DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
         android:layout_marginTop="@dimen/DIMEN_36DP"
-        android:background="@drawable/bg_et_login"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -52,20 +51,19 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/DIMEN_12DP"
             android:layout_marginLeft="@dimen/DIMEN_10DP"
-            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
             android:text="@string/add_eight_six"
-            android:textColor="@color/black"
-            android:textSize="@dimen/DIMEN_12DP" />
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_16DP" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/DIMEN_12DP"
-            android:layout_marginLeft="@dimen/DIMEN_10DP"
-            android:layout_marginRight="@dimen/DIMEN_6DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
             android:layout_marginTop="@dimen/DIMEN_12DP"
-            android:background="@color/gray" />
+            android:background="@color/gray_dd" />
 
         <EditText
             android:id="@+id/et_register_username"
@@ -73,11 +71,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="@string/label_mobile"
+            android:hint="@string/label_hint_phonelogin"
             android:inputType="phone"
             android:maxLength="13"
             android:maxLines="1"
-            android:textSize="@dimen/DIMEN_14DP"
+            android:textColor="@color/color_black_33"
+            android:textColorHint="@color/color_gay_bb"
+            android:textSize="@dimen/DIMEN_16DP"
             tools:ignore="HardcodedText" />
 
         <ImageView
@@ -90,18 +90,24 @@
             tools:ignore="ContentDescription" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
+        android:background="@color/gray_dd" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/DIMEN_24DP"
-        android:layout_marginRight="@dimen/DIMEN_24DP"
-        android:layout_marginTop="@dimen/DIMEN_16DP"
+        android:layout_height="@dimen/DIMEN_60DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="@dimen/DIMEN_200DP"
             android:layout_height="@dimen/DIMEN_44DP"
-            android:background="@drawable/bg_et_login"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -112,17 +118,9 @@
                 android:layout_marginLeft="@dimen/DIMEN_10DP"
                 android:layout_marginRight="@dimen/DIMEN_8DP"
                 android:background="@drawable/keyboard"
+                android:visibility="gone"
                 tools:ignore="ContentDescription" />
 
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/DIMEN_12DP"
-                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                android:layout_marginRight="@dimen/DIMEN_6DP"
-                android:layout_marginTop="@dimen/DIMEN_12DP"
-                android:background="@color/gray" />
 
             <EditText
                 android:id="@+id/et_register_verify"
@@ -133,44 +131,42 @@
                 android:hint="@string/verify"
                 android:inputType="phone"
                 android:maxLines="1"
-                android:textSize="@dimen/DIMEN_14DP"
+                android:paddingLeft="@dimen/DIMEN_10DP"
+                android:textColor="@color/color_black_33"
+                android:textColorHint="@color/color_gay_bb"
+                android:textSize="@dimen/DIMEN_16DP"
                 tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/DIMEN_12DP"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_marginRight="@dimen/DIMEN_10DP"
+                android:layout_marginTop="@dimen/DIMEN_12DP"
+                android:background="@color/gray_dd" />
         </LinearLayout>
 
         <Button
             android:id="@+id/btn_get_verify"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_43DP"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:background="@drawable/bg_green_corners"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@null"
             android:text="@string/get_verify"
-            android:textColor="@color/white"
-            android:textSize="@dimen/DIMEN_14DP" />
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_16DP" />
 
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:layout_marginLeft="@dimen/DIMEN_35DP"
+        android:layout_marginRight="@dimen/DIMEN_35DP"
+        android:background="@color/gray_dd" />
 
-    <!--    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_50DP"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
-            android:layout_marginTop="@dimen/DIMEN_16DP"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn_register_login"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/regist_noclick_btn"
-                android:text="@string/get_verify"
-                android:textColor="@color/white"
-                android:textSize="@dimen/DIMEN_18DP"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>-->
 
     <com.yiju.ClassClockRoom.widget.circular.CircularProgressButton
         android:id="@+id/circular_button_next"
@@ -187,8 +183,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_50DP"
-        android:layout_marginTop="@dimen/DIMEN_16DP"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/DIMEN_26DP"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -197,14 +193,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_agree"
-            android:textColor="@color/white" />
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_14DP" />
 
         <TextView
             android:id="@+id/tv_protocol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_protocol"
-            android:textColor="@color/app_theme_color" />
+            android:textColor="@color/app_theme_color"
+            android:textSize="@dimen/DIMEN_14DP" />
     </LinearLayout>
 
 </LinearLayout>

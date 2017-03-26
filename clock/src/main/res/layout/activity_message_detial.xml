@@ -3,15 +3,35 @@
     android:id="@+id/ll_all"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <include layout="@layout/include_head_green_bg_left_icon_right_text_layout" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_gay_f5" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_gay_f5" />
+
+        <TextView
+            android:id="@+id/tv_no_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_155DP"
+            android:layout_gravity="center_horizontal"
+            android:drawablePadding="@dimen/DIMEN_12DP"
+            android:drawableTop="@drawable/no_message"
+            android:text="@string/txt_no_new_message"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
 </LinearLayout>

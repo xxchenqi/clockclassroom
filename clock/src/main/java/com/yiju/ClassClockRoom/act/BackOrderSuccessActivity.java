@@ -126,7 +126,7 @@ public class BackOrderSuccessActivity extends BaseActivity implements
                 break;
             case R.id.btn_sucess_backhome://返回首页
                 Intent intent2 = new Intent(this, MainActivity.class);
-                intent2.putExtra("backhome", "backhome");
+                intent2.putExtra(MainActivity.Param_Start_Fragment, 0);
                 startActivity(intent2);
                 break;
             case R.id.btn_sucess_checkorder://查看订单

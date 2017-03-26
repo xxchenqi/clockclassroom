@@ -36,7 +36,7 @@ public class ClassroomInnerAdapter extends CommonBaseAdapter<Order3> {
                 holder.setText(R.id.tv_item_classroom_password,
                         "密码:" + o3.getVideo_pas());
             }
-            iv.setImageResource(R.drawable.share_btn_icon);
+            iv.setImageResource(R.drawable.new_share);
             iv.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -57,7 +57,7 @@ public class ClassroomInnerAdapter extends CommonBaseAdapter<Order3> {
             });
         } else {
             holder.setText(R.id.tv_item_classroom_password, "密码:****");
-            iv.setImageResource(R.drawable.share_grey_icon);
+            iv.setImageResource(R.drawable.share_gray);
         }
 
         if (o3.isCourse_flag()) {

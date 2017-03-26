@@ -92,6 +92,9 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
      */
     @ViewInject(R.id.cb_change_mobile_password_isshow)
     private CheckBox cb_change_mobile_password_isshow;
+    //分割线
+    @ViewInject(R.id.v_divider)
+    private View v_divider;
     //文案信息
     @ViewInject(R.id.tv_mobile)
     private TextView tv_mobile;
@@ -121,6 +124,20 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
      */
     private String password;
 
+    /**
+     * 三方qq信息
+     */
+    private String shared_third_qq;
+    /**
+     * 三方微信信息
+     */
+    private String shared_third_wechat;
+    /**
+     * 三方微博信息
+     */
+    private String shared_third_weibo;
+
+
     @Override
     public int setContentViewId() {
         return R.layout.activity_personalcenter_change_mobile;
@@ -129,13 +146,43 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
     @Override
     public void initView() {
 
-        type = getIntent().getIntExtra("type", 0);
-        originalPhoneNumber = getIntent().getStringExtra("mobile");
+//                手机用户-->有手机-->发送验证码-->验证验证码-->修改手机成功modify_phone type1
+//                三方用户-->无手机-->跳third_bind_mobile,显示密码 type2
+//                三方用户-->有手机-->跳third_bind_mobile,隐藏密码 type3
+
+        originalPhoneNumber = SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_mobile), "");
+        shared_third_qq = SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_third_qq), "");
+
+        shared_third_wechat = SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_third_wechat), "");
+
+        shared_third_weibo = SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_third_weibo), "");
+
+        if (originalPhoneNumber != null && !"".equals(originalPhoneNumber)) {
+            //有手机号
+            //判断是否是第三方绑定,
+            if ("".equals(shared_third_qq) && "".equals(shared_third_wechat) && "".equals(shared_third_weibo)) {
+                //无绑定过三方账号
+                type = 1;
+            } else {
+                //有绑定过三方账号
+                type = 3;
+            }
+        } else {
+            //无手机号,
+            type = 2;
+        }
+//        type = getIntent().getIntExtra("type", 0);
+//        originalPhoneNumber = getIntent().getStringExtra("mobile");
         if (originalPhoneNumber != null && !"".equals(originalPhoneNumber)) {
             head_title.setText(getResources().getString(R.string.person_modify_mobile));
+            tv_mobile.setText(UIUtils.getString(R.string.change_mobile_content));
         } else {
             head_title.setText(R.string.title_binding_mobile_phone_number);
-            tv_mobile.setVisibility(View.GONE);
+            tv_mobile.setText(UIUtils.getString(R.string.bind_mobile_content));
         }
 
         timeCount = new TimeCount(60000, 1000);
@@ -152,6 +199,7 @@ public class PersonalCenter_ChangeMobileActivity extends BaseActivity implements
         //隐藏密码布局
         if (type != 2) {
             ly_change_mobile_password.setVisibility(View.GONE);
+            v_divider.setVisibility(View.GONE);
         }
 
     }

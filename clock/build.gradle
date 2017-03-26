@@ -8,12 +8,15 @@ android {
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
 
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
     defaultConfig {
         applicationId "com.yiju.ClassClockRoom"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 16
-        versionName "2.6.0"
+        versionCode 17
+        versionName "3.0.0"
 
         // dex突破65535的限制
         multiDexEnabled true
@@ -45,7 +48,7 @@ android {
                                     pushAppid         : "Dt0TQvO5gs79GKMlGOgm53",
                                     pushAppkey        : "BCM77p64jt8haiBtm2wwb4",
                                     pushAppsecret     : "k0HKKqJNkj62oBDIOqTAtA",
-                                    pushReceiverAction: "com.igexin.sdk.action.Dt0TQvO5gs79GKMlGOgm53"
+                                    pushReceiverAction: "com.igexin.sdk.action.Dt0TQvO5gs79GKMlGOgm53",
             ]
 
 //            versionNameSuffix "-debug"
@@ -62,7 +65,7 @@ android {
                                     pushAppid         : "RPzrCtB4ufA7MzWjPEQzJ9",
                                     pushAppkey        : "3URdr0gtaY8TicSAMbhqo7",
                                     pushAppsecret     : "VIeKEKxhOE6rt3MSyyBmd",
-                                    pushReceiverAction: "com.igexin.sdk.action.RPzrCtB4ufA7MzWjPEQzJ9"
+                                    pushReceiverAction: "com.igexin.sdk.action.RPzrCtB4ufA7MzWjPEQzJ9",
             ]
 
             minifyEnabled true
@@ -139,6 +142,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile project(':ejupaysdk-release')
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile files('libs/CYSDK.jar')
 }
 android {
     useLibrary 'org.apache.http.legacy'

@@ -7,53 +7,51 @@
     <FrameLayout
         android:id="@+id/fl_container"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    </FrameLayout>
-    <!-- <RelativeLayout
-         android:id="@+id/fl_container"
-         android:layout_width="match_parent"
-         android:layout_height="0dip"
-         android:layout_weight="1" >
-
-         <ImageView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentBottom="true"
-             android:layout_marginBottom="62dp"
-             android:layout_marginLeft="12dp"
-             android:src="@drawable/index_cart_btn" />
-     </RelativeLayout> -->
-
-    <View style="@style/linestyle_order_divider_view_orange" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:background="@color/color_gay_c8" />
 
     <RadioGroup
-        android:background="@color/white"
         android:id="@+id/rbs_fragment"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/DIMEN_5DP"
+        android:paddingTop="@dimen/DIMEN_5DP">
 
         <RadioButton
             android:id="@+id/rb_index"
             style="@style/tab_style"
-            android:drawableTop="@drawable/bar_index_bg" />
+            android:drawableTop="@drawable/bar_index_bg"
+            android:text="@string/txt_for_classroom"
+            android:textColor="@drawable/color_radio_button" />
 
         <RadioButton
             android:id="@+id/rb_course"
             style="@style/tab_style"
-            android:drawableTop="@drawable/bar_video_bg" />
+            android:drawableTop="@drawable/bar_video_bg"
+            android:text="@string/txt_theme"
+            android:textColor="@drawable/color_radio_button" />
 
         <RadioButton
             android:id="@+id/rb_find"
             style="@style/tab_style"
-            android:drawableTop="@drawable/bar_find_bg" />
+            android:drawableTop="@drawable/bar_find_bg"
+            android:text="@string/txt_experience"
+            android:textColor="@drawable/color_radio_button" />
 
-        <RadioButton
+        <!--<RadioButton
             android:id="@+id/rb_my"
             style="@style/tab_style"
-            android:drawableTop="@drawable/bar_my_bg" />
+            android:drawablePadding="@dimen/DIMEN_5DP"
+            android:drawableTop="@drawable/bar_my_bg"
+            android:textColor="@drawable/color_radio_button"
+            android:visibility="gone" />-->
     </RadioGroup>
 
 </LinearLayout>

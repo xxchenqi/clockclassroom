@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_44DP"
-        android:background="@color/app_theme_color">
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/iv_back_coupon"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:background="@drawable/white_back"
+            android:background="@drawable/back"
             android:contentDescription="@string/desc" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:text="@string/user_discount_coupon"
-            android:textColor="@color/white"
+            android:textColor="@color/color_black_33"
             android:textSize="@dimen/DIMEN_17DP" />
 
         <ImageView
@@ -84,13 +84,17 @@
         </LinearLayout>
 
 
-        <ImageView
+        <TextView
             android:id="@+id/iv_coupon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/desc"
-            android:src="@drawable/none_coupon"
+            android:drawablePadding="@dimen/DIMEN_12DP"
+            android:drawableTop="@drawable/none_coupon"
+            android:text="@string/txt_empty_no_coupon"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP"
             android:visibility="gone" />
     </FrameLayout>
 

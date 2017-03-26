@@ -228,8 +228,39 @@ public class StringUtils extends BaseSingleton {
      */
     public static String getThirdSource() {
         return SharedPreferencesUtils.getString(UIUtils.getContext(),
-                UIUtils.getString(R.string.shared_third_source), "");
+                UIUtils.getString(R.string.shared_third_source), "0");
     }
+
+    /**
+     * 获取电话
+     *
+     * @return mobile
+     */
+    public static String getMobile() {
+        return SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_mobile), "");
+    }
+
+
+
+    /**
+     * 获取昵称
+     */
+    public static String getNickName() {
+        return SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_nickname), "");
+    }
+
+
+    /**
+     * 获取昵称
+     */
+    public static String getAvatar() {
+        return SharedPreferencesUtils.getString(UIUtils.getContext(),
+                UIUtils.getString(R.string.shared_avatar), "");
+    }
+
+
 
     /**
      * 根据经纬度获取距离
@@ -359,4 +390,24 @@ public class StringUtils extends BaseSingleton {
 
     }
 
+    /**
+     * 生成随机数，由数字或大小写字母组成
+     * @param len
+     * @return
+     */
+    public static String randomStr(int len) {
+        if (len == 0) {
+            return "";
+        }
+        int a = (int) (Math.random() * 3);
+        if (a == 0) {
+            return ((int) (Math.random() * 10)) + randomStr(len - 1);
+        } else if (a == 1) {
+            return ((char) ((int) (Math.random() * 26) + 65))
+                    + randomStr(len - 1);
+        } else {
+            return ((char) ((int) (Math.random() * 26) + 97))
+                    + randomStr(len - 1);
+        }
+    }
 }

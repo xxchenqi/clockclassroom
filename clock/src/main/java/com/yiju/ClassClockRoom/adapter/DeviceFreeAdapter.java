@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yiju.ClassClockRoom.R;
@@ -55,6 +56,8 @@ public class DeviceFreeAdapter extends BaseAdapter {
             convertView = View.inflate(UIUtils.getContext(), R.layout.item_device_free, null);
             holder.tv_device = (TextView) convertView.findViewById(R.id.tv_device);
             holder.tv_device_desc = (TextView) convertView.findViewById(R.id.tv_device_desc);
+            holder.rl_reduce = (RelativeLayout) convertView.findViewById(R.id.rl_reduce);
+            holder.rl_add = (RelativeLayout) convertView.findViewById(R.id.rl_add);
             holder.iv_reduce = (ImageView) convertView.findViewById(R.id.iv_reduce);//减号
             holder.iv_add = (ImageView) convertView.findViewById(R.id.iv_add);//加号
             holder.et_count = (EditText) convertView.findViewById(R.id.et_count);//数量编辑
@@ -76,7 +79,7 @@ public class DeviceFreeAdapter extends BaseAdapter {
         holder.et_count.setText(String.valueOf(dataEntity.getCurrentCount()));
         final int max = dataEntity.getLocalMax();
 
-        holder.iv_reduce.setOnClickListener(new OnClickListener() {
+        holder.rl_reduce.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 flag = false;
@@ -89,20 +92,20 @@ public class DeviceFreeAdapter extends BaseAdapter {
 
                 // 设置减少能否点击
                 if (dataEntity.getCurrentCount() > 0) {
-                    holder.iv_reduce.setClickable(true);
+                    holder.rl_reduce.setClickable(true);
                     holder.iv_reduce.setImageResource(R.drawable.order_reduce_btn_click);
 
                 } else {
-                    holder.iv_reduce.setClickable(false);
+                    holder.rl_reduce.setClickable(false);
                     holder.iv_reduce.setImageResource(R.drawable.order_reduce_btn_noclick);
                 }
 
                 // 设置增加能否点击
                 if (dataEntity.getCurrentCount() >= max) {
-                    holder.iv_add.setClickable(false);
+                    holder.rl_add.setClickable(false);
                     holder.iv_add.setImageResource(R.drawable.order_reduce_btn_noclick);
                 } else {
-                    holder.iv_add.setClickable(true);
+                    holder.rl_add.setClickable(true);
                     holder.iv_add.setImageResource(R.drawable.order_add_btn_click);
                 }
                 flag = true;
@@ -110,7 +113,7 @@ public class DeviceFreeAdapter extends BaseAdapter {
             }
         });
 
-        holder.iv_add.setOnClickListener(new OnClickListener() {
+        holder.rl_add.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 flag = false;
@@ -123,18 +126,18 @@ public class DeviceFreeAdapter extends BaseAdapter {
 
                 // 设置减少能否点击
                 if (dataEntity.getCurrentCount() > 0) {
-                    holder.iv_reduce.setClickable(true);
+                    holder.rl_reduce.setClickable(true);
                     holder.iv_reduce.setImageResource(R.drawable.order_reduce_btn_click);
                 } else {
-                    holder.iv_reduce.setClickable(false);
+                    holder.rl_reduce.setClickable(false);
                     holder.iv_reduce.setImageResource(R.drawable.order_reduce_btn_noclick);
                 }
                 // 设置增加能否点击
                 if (dataEntity.getCurrentCount() >= max) {
-                    holder.iv_add.setClickable(false);
+                    holder.rl_add.setClickable(false);
                     holder.iv_add.setImageResource(R.drawable.order_add_btn_noclick);
                 } else {
-                    holder.iv_add.setClickable(true);
+                    holder.rl_add.setClickable(true);
                     holder.iv_add.setImageResource(R.drawable.order_add_btn_click);
                 }
                 flag = true;
@@ -143,7 +146,7 @@ public class DeviceFreeAdapter extends BaseAdapter {
         });
         // 如果当前值>=max 增加不可点击
         if (dataEntity.getCurrentCount() >= max) {
-            holder.iv_add.setClickable(false);
+            holder.rl_add.setClickable(false);
             holder.iv_add.setImageResource(R.drawable.order_add_btn_noclick);
             // 如果max=0，et设置0
             if (max == 0) {
@@ -151,16 +154,16 @@ public class DeviceFreeAdapter extends BaseAdapter {
                 holder.et_count.setText("0");
             }
         } else {
-            holder.iv_add.setClickable(true);
+            holder.rl_add.setClickable(true);
             holder.iv_add.setImageResource(R.drawable.order_add_btn_click);
         }
 
         // 设置减少能否点击
         if (dataEntity.getCurrentCount() > 0) {
-            holder.iv_reduce.setClickable(true);
+            holder.rl_reduce.setClickable(true);
             holder.iv_reduce.setImageResource(R.drawable.order_reduce_btn_click);
         } else {
-            holder.iv_reduce.setClickable(false);
+            holder.rl_reduce.setClickable(false);
             holder.iv_reduce.setImageResource(R.drawable.order_reduce_btn_noclick);
         }
 
@@ -193,18 +196,18 @@ public class DeviceFreeAdapter extends BaseAdapter {
                 // =============================================================
                 // 设置减少能否点击
                 if (dataEntity.getCurrentCount() > 0) {
-                    holder.iv_reduce.setClickable(true);
+                    holder.rl_reduce.setClickable(true);
                     holder.iv_reduce.setImageResource(R.drawable.order_reduce_btn_click);
                 } else {
-                    holder.iv_reduce.setClickable(false);
+                    holder.rl_reduce.setClickable(false);
                     holder.iv_reduce.setImageResource(R.drawable.order_reduce_btn_noclick);
                 }
                 // 设置增加能否点击
                 if (dataEntity.getCurrentCount() >= max) {
-                    holder.iv_add.setClickable(false);
+                    holder.rl_add.setClickable(false);
                     holder.iv_add.setImageResource(R.drawable.order_add_btn_noclick);
                 } else {
-                    holder.iv_add.setClickable(true);
+                    holder.rl_add.setClickable(true);
                     holder.iv_add.setImageResource(R.drawable.order_add_btn_click);
                 }
 
@@ -233,6 +236,8 @@ public class DeviceFreeAdapter extends BaseAdapter {
         private ImageView iv_reduce;
         private ImageView iv_add;
         private EditText et_count;
+        public RelativeLayout rl_reduce;
+        public RelativeLayout rl_add;
     }
 
 }

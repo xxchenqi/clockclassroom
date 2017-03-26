@@ -10,14 +10,21 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/DIMEN_12DP" />
 
-    <ImageView
-        android:id="@+id/item_accompany_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_item_accompany_icon"
+        android:layout_width="@dimen/DIMEN_56DP"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/DIMEN_12DP"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/order_nonechoose_btn" />
+        android:gravity="center">
+
+
+        <ImageView
+            android:id="@+id/item_accompany_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/desc" />
+    </LinearLayout>
 
 </RelativeLayout>

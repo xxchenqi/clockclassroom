@@ -1,14 +1,11 @@
 package com.yiju.ClassClockRoom.act;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,12 +13,14 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ejupay.sdk.EjuPayManager;
 import com.ejupay.sdk.service.EjuPayResultCode;
+import com.ejupay.sdk.service.IEjuPayResult;
 import com.ejupay.sdk.service.IPayResult;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -42,14 +41,17 @@ import com.yiju.ClassClockRoom.bean.MineOrderData;
 import com.yiju.ClassClockRoom.bean.Order2;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
+import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
-import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
+import com.yiju.ClassClockRoom.util.LogUtil;
 import com.yiju.ClassClockRoom.util.MD5;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
+import com.yiju.ClassClockRoom.util.PayWayUtil;
 import com.yiju.ClassClockRoom.util.PermissionsChecker;
+import com.yiju.ClassClockRoom.util.StringFormatUtil;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
@@ -285,35 +287,10 @@ public class OrderDetailActivity extends BaseActivity implements
     @ViewInject(R.id.iv_order_alipay)
     private ImageView iv_order_alipay;
     /**
-     * 选择支付方式布局(支付宝or微信)
-     */
-    @ViewInject(R.id.lr_detail_pay2)
-    private LinearLayout lr_detail_pay2;
-    /**
-     * 支付宝支付布局
-     */
-    @ViewInject(R.id.rl_detail_choose_aliPay)
-    private RelativeLayout rl_detail_choose_aliPay;
-    /**
-     * 支付宝cb
-     */
-    @ViewInject(R.id.cb_detail_aliPay)
-    private CheckBox cb_detail_aliPay;
-    /**
-     * 微信支付
-     */
-    @ViewInject(R.id.rl_detail_choose_wx)
-    private RelativeLayout rl_detail_choose_wx;
-    /**
-     * 微信cb
-     */
-    @ViewInject(R.id.cb_detail_wx)
-    private CheckBox cb_detail_wx;
-    /**
      * 空页面
      */
     @ViewInject(R.id.iv_order_delete)
-    private ImageView iv_order_delete;
+    private TextView iv_order_delete;
     /**
      * 整体页面
      */
@@ -389,6 +366,9 @@ public class OrderDetailActivity extends BaseActivity implements
      */
     @ViewInject(R.id.rl_device)
     private RelativeLayout rl_device;
+    //提示信息
+    @ViewInject(R.id.tv_order_detail_conf_tips)
+    private TextView tv_order_detail_conf_tips;
     /**
      * lv适配器
      */
@@ -453,6 +433,7 @@ public class OrderDetailActivity extends BaseActivity implements
                         tv_pay_order.setVisibility(View.GONE);
                         tv_close_order.setVisibility(View.GONE);
                         tv_change_order.setVisibility(View.VISIBLE);
+                        tv_order_detail_conf_tips.setVisibility(View.GONE);
                         tv_order_detail_status.setText(UIUtils
                                 .getString(R.string.status_close));
                         tv_order_detail_status.setTextColor(getResources().getColor(R.color.color_blue_1e));
@@ -468,6 +449,7 @@ public class OrderDetailActivity extends BaseActivity implements
                         tv_pay_order.setVisibility(View.GONE);
                         tv_close_order.setVisibility(View.GONE);
                         tv_change_order.setVisibility(View.VISIBLE);
+                        tv_order_detail_conf_tips.setVisibility(View.GONE);
                         tv_order_detail_status.setText(UIUtils
                                 .getString(R.string.status_close));
                         tv_order_detail_status.setTextColor(getResources().getColor(R.color.color_blue_1e));
@@ -481,6 +463,13 @@ public class OrderDetailActivity extends BaseActivity implements
     private HttpHandler<File> download;
     private int coupon_id;
     private String url;
+    private String balance;
+    private String fee;
+    private PopupWindow mPopupWindow;
+    private String school_type;
+    private ArrayList<Order2> order2;
+    private String pay_method;
+    private String store_tel;
 
     @Override
     public int setContentViewId() {
@@ -500,12 +489,11 @@ public class OrderDetailActivity extends BaseActivity implements
         tv_pay_order.setOnClickListener(this);
         tv_close_order.setOnClickListener(this);
         tv_change_order.setOnClickListener(this);
-        rl_detail_choose_aliPay.setOnClickListener(this);
-        rl_detail_choose_wx.setOnClickListener(this);
         lr_order_detail_remind.setOnClickListener(this);
         tv_phone_number.setOnClickListener(this);
         btn_no_wifi_refresh.setOnClickListener(this);
         rl_electronic_invoice.setOnClickListener(this);
+        tv_order_detail_conf_tips.setOnClickListener(this);
 
         Intent intent = getIntent();
         oid = intent.getStringExtra("oid");
@@ -518,10 +506,6 @@ public class OrderDetailActivity extends BaseActivity implements
         datas = new ArrayList<>();
         cbs = new ArrayList<>();
 
-        //初始化checkbox的list内容(支付和微信)
-        cbs.add(cb_detail_aliPay);
-        cbs.add(cb_detail_wx);
-
     }
 
     @Override
@@ -533,10 +517,53 @@ public class OrderDetailActivity extends BaseActivity implements
 
         if (NetWorkUtils.getNetworkStatus(this)) {
             wifi.setVisibility(View.GONE);
+            getBalanceHttpUtils();
             getHttpUtils();
         } else {
             wifi.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * 获取余额
+     */
+    private void getBalanceHttpUtils() {
+        ProgressDialog.getInstance().show();
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "user_amount_remain");
+        if (!"-1".equals(StringUtils.getUid())) {
+            params.addBodyParameter("uid", StringUtils.getUid());
+        }
+        params.addBodyParameter("username", StringUtils.getUsername());
+        params.addBodyParameter("password", StringUtils.getPassword());
+        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+                new RequestCallBack<String>() {
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                        ProgressDialog.getInstance().dismiss();
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        // 处理返回的数据
+                        ProgressDialog.getInstance().dismiss();
+                        JSONObject json;
+                        try {
+                            json = new JSONObject(arg0.result);
+                            String code = json.getString("code");
+                            if ("1".equals(code)) {
+                                balance = json.getString("data");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     /**
@@ -594,12 +621,13 @@ public class OrderDetailActivity extends BaseActivity implements
             }
             data = mineOrder.getData().get(0);
             confirm_type = data.getConfirm_type();
-            ArrayList<Order2> order2 = data.getOrder2();
+            order2 = data.getOrder2();
             if (order2 == null || order2.size() == 0) {
                 ProgressDialog.getInstance().dismiss();
                 return;
             }
             order2Info = order2.get(0);
+            school_type = order2Info.getSchool_type();
             if (StringUtils.isNotNullString(data.getRefund_fee_total())
                     && !"0".equals(data.getRefund_fee_total())) {
                 rl_reimburse.setVisibility(View.VISIBLE);
@@ -608,7 +636,7 @@ public class OrderDetailActivity extends BaseActivity implements
                                 UIUtils.getString(R.string.how_much_money),
                                 StringUtils.getDecimal(data.getRefund_fee_total())
                         ));
-            }else{
+            } else {
                 rl_reimburse.setVisibility(View.GONE);
             }
             coupon_id = Integer.valueOf(data.getCoupon_id());
@@ -618,14 +646,35 @@ public class OrderDetailActivity extends BaseActivity implements
             //设置订单编号
             tv_order_detail_id.setText(String.format(UIUtils.getString(R.string.order_num), data.getId()));
             tv_coupon.setText(data.getBatch_name());
-            String pay_method = data.getPay_method();
+            if (StringUtils.isNullString(data.getSchool_phone())) {
+                store_tel = UIUtils.getString(R.string.txt_phone_number);
+            } else {
+                store_tel = data.getSchool_phone();
+            }
+            String wholeStr = String.format(UIUtils.getString(R.string.format_order_phone_tip), store_tel);
+            StringFormatUtil spanStr = new StringFormatUtil(this, wholeStr,
+                    store_tel, R.color.blue, new StringFormatUtil.IOnClickListener() {
+                @Override
+                public void click() {
+                }
+            }).fillColor();
+            tv_order_detail_conf_tips.setHighlightColor(UIUtils.getColor(android.R.color.transparent));
+            tv_order_detail_conf_tips.setText(spanStr.getResult());
+            pay_method = data.getPay_method();
             if (!StringUtils.isNullString(pay_method)) {
                 if (pay_method.equals("1")) {
                     tv_order_alipay.setText(UIUtils.getString(R.string.order_alipay));
                     iv_order_alipay.setVisibility(View.VISIBLE);
+                    tv_order_alipay.setVisibility(View.GONE);
+                } else if (pay_method.equals("5")) {
+                    tv_order_alipay.setText(UIUtils.getString(R.string.reservation_pay_balance));
+                    tv_order_alipay.setVisibility(View.VISIBLE);
                 } else if (pay_method.equals("6")) {
                     tv_order_alipay.setText(UIUtils.getString(R.string.order_online));
                     iv_order_alipay.setVisibility(View.GONE);
+                    tv_order_alipay.setVisibility(View.VISIBLE);
+                } else {
+                    tv_order_alipay.setText(UIUtils.getString(R.string.reservation_pay_other));
                 }
             }
             //获取当前状态
@@ -666,10 +715,10 @@ public class OrderDetailActivity extends BaseActivity implements
                     tv_pay_order.setVisibility(View.VISIBLE);
                     tv_change_order.setVisibility(View.GONE);
                     ll_detail_pay.setVisibility(View.GONE);
-                    lr_detail_pay2.setVisibility(View.GONE);
                     ll_order_overtime.setVisibility(View.GONE);
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_order_detail_coupon.setVisibility(View.VISIBLE);
+                    checkSchool();
                     break;
                 case 9://支付后待确认（支付前）   待支付
 //                    head_right_text.setText(UIUtils.getString(R.string.order_close));
@@ -682,10 +731,10 @@ public class OrderDetailActivity extends BaseActivity implements
                     tv_pay_order.setVisibility(View.VISIBLE);
                     tv_change_order.setVisibility(View.GONE);
                     ll_detail_pay.setVisibility(View.GONE);
-                    lr_detail_pay2.setVisibility(View.GONE);
                     ll_order_overtime.setVisibility(View.GONE);
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_order_detail_coupon.setVisibility(View.VISIBLE);
+                    checkSchool();
                     break;
                 case 1://进行中
                     ll_title_green.setVisibility(View.GONE);
@@ -694,10 +743,12 @@ public class OrderDetailActivity extends BaseActivity implements
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_detail_pay.setVisibility(View.VISIBLE);
                     ll_order_detail_coupon.setVisibility(View.GONE);
+                    checkSchool();
                     break;
                 case 2://已关闭
                 case 4://已关闭
                 case 8://支付前确认不通过         已关闭
+                    tv_order_detail_conf_tips.setVisibility(View.GONE);
                     ll_title_green.setVisibility(View.GONE);
                     rl_order_detail_pay.setVisibility(View.VISIBLE);
                     tv_close_order.setVisibility(View.GONE);
@@ -716,6 +767,7 @@ public class OrderDetailActivity extends BaseActivity implements
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_detail_pay.setVisibility(View.VISIBLE);
                     ll_order_detail_coupon.setVisibility(View.GONE);
+                    checkSchool();
                     break;
                 case 101://已完成
                     ll_title_green.setVisibility(View.GONE);
@@ -724,6 +776,7 @@ public class OrderDetailActivity extends BaseActivity implements
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_detail_pay.setVisibility(View.VISIBLE);
                     ll_order_detail_coupon.setVisibility(View.GONE);
+                    checkSchool();
                     break;
                 case 11://已取消
                 case 12://已取消
@@ -734,6 +787,7 @@ public class OrderDetailActivity extends BaseActivity implements
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_detail_pay.setVisibility(View.VISIBLE);
                     ll_order_detail_coupon.setVisibility(View.GONE);
+                    tv_order_detail_conf_tips.setVisibility(View.GONE);
                     break;
                 case 7://支付前待确认             待确认
                     ll_order_overtime.setVisibility(View.GONE);
@@ -747,10 +801,10 @@ public class OrderDetailActivity extends BaseActivity implements
                     tv_change_order.setVisibility(View.VISIBLE);
                     tv_change_order.setText(UIUtils.getString(R.string.order_close));
                     ll_detail_pay.setVisibility(View.GONE);
-                    lr_detail_pay2.setVisibility(View.GONE);
                     ll_order_overtime.setVisibility(View.GONE);
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_order_detail_coupon.setVisibility(View.VISIBLE);
+                    checkSchool();
                     break;
                 case 10://支付后待确认             待确认
                     ll_order_overtime.setVisibility(View.GONE);
@@ -764,19 +818,19 @@ public class OrderDetailActivity extends BaseActivity implements
                     tv_change_order.setVisibility(View.VISIBLE);
                     tv_change_order.setText(UIUtils.getString(R.string.order_cancel));
                     ll_detail_pay.setVisibility(View.VISIBLE);
-                    lr_detail_pay2.setVisibility(View.GONE);
                     ll_order_overtime.setVisibility(View.GONE);
                     ll_order_total.setVisibility(View.VISIBLE);
                     ll_order_detail_coupon.setVisibility(View.GONE);
+                    checkSchool();
                     break;
                 case 3://已删除
                     ll_show.setVisibility(View.GONE);
                     iv_order_delete.setVisibility(View.VISIBLE);
+                    checkSchool();
                     break;
                 default:
                     break;
             }
-
             //设置当前状态的文案
             switch (currentStatus) {
                 case 0://待支付
@@ -904,6 +958,11 @@ public class OrderDetailActivity extends BaseActivity implements
                 default:
                     break;
             }
+            if ("1".equals(school_type)) {
+                ll_order_invoice.setVisibility(View.VISIBLE);
+            } else {
+                ll_order_invoice.setVisibility(View.GONE);
+            }
             if (StringUtils.isNullString(data.getRemark())) {
                 ll_order_detail_remark.setVisibility(View.GONE);
             } else {
@@ -926,26 +985,26 @@ public class OrderDetailActivity extends BaseActivity implements
                         StringUtils.getDecimal(order2.get(0).getDevice_fee())));
             }
             // 计算出优惠金额
-            double fee = Double.valueOf(data.getFee())
+            double couponfee = Double.valueOf(data.getFee())
                     - Double.valueOf(data.getReal_fee());
-            if (fee > 0) {
+            if (couponfee > 0) {
                 tv_privilege_price.setText(
                         String.format(UIUtils.getString(R.string.negative_how_much_money),
-                                StringUtils.getDecimal(fee + "")));
-            } else if (fee == 0) {
+                                StringUtils.getDecimal(couponfee + "")));
+            } else if (couponfee == 0) {
                 rl_privilege_price.setVisibility(View.GONE);
                 ll_order_detail_coupon.setVisibility(View.GONE);
             } else {
                 tv_privilege_price.setText(
                         String.format(UIUtils.getString(R.string.negative_how_much_money),
-                                StringUtils.getDecimal(Math.abs(fee) + "")));
+                                StringUtils.getDecimal(Math.abs(couponfee) + "")));
             }
             //设置应付金额
+            fee = data.getReal_fee();
             tv_ought_pay.setText(
                     String.format(
                             UIUtils.getString(R.string.how_much_money),
-                            StringUtils.getDecimal(data.getReal_fee())
-                    )
+                            StringUtils.getDecimal(fee))
             );
             tv_order_time.setText(
                     String.format(
@@ -998,6 +1057,14 @@ public class OrderDetailActivity extends BaseActivity implements
         ProgressDialog.getInstance().dismiss();
     }
 
+    private void checkSchool() {
+        if ("1".equals(school_type)) {
+            tv_order_detail_conf_tips.setVisibility(View.GONE);
+        } else {
+            tv_order_detail_conf_tips.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void setInvoiceData(String string) {
         ll_order_invoice.setVisibility(View.VISIBLE);
         tv_invoice_type.setText(string);
@@ -1008,8 +1075,8 @@ public class OrderDetailActivity extends BaseActivity implements
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+            Intent intent = new Intent(this, PersonalCenterActivity.class);
+//            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
@@ -1071,53 +1138,40 @@ public class OrderDetailActivity extends BaseActivity implements
                 break;
             case R.id.tv_pay_order:
 
-                ProgressDialog.getInstance().show();
-                /*if (coupon_id > 0 && coupon_id < 999999999) {
-                    checkCoupon();
+                if ("1".equals(school_type)) {
+                    mPopupWindow = PayWayUtil.getPopu(OrderDetailActivity.this.getWindow(),
+                            OrderDetailActivity.this,
+                            R.layout.activity_order_detail,
+                            balance, fee, new PayWayOnClickListener() {
+                                @Override
+                                public void onBalanceClick() {
+                                    mPopupWindow.dismiss();
+                                    checkCoupon(false);
+                                }
+
+                                @Override
+                                public void onOtherClick() {
+                                    mPopupWindow.dismiss();
+                                    if (StringUtils.isNullString(pay_method)) {
+                                        changePayWay();
+                                    } else if ("5".equals(pay_method)) {
+                                        changePayWay();
+                                    } else {
+                                        checkCoupon(true);
+                                    }
+                                }
+                            });
                 } else {
-                    commitOrder();
-                }*/
-                checkCoupon();
+                    checkCoupon(true);
+                }
+
                 break;
-            case R.id.rl_detail_choose_aliPay://选择支付宝
-                currentNum = 0;
-                check(currentNum);
-                break;
-            case R.id.rl_detail_choose_wx://选择微信支付
-                currentNum = 1;
-                check(currentNum);
+            case R.id.tv_order_detail_conf_tips:
+                callPhone(store_tel);
                 break;
             case R.id.tv_phone_number://客服电话
                 // 弹出电话呼叫窗口
-                CustomDialog customDialog = new CustomDialog(
-                        OrderDetailActivity.this,
-                        UIUtils.getString(R.string.confirm),
-                        UIUtils.getString(R.string.label_cancel),
-                        UIUtils.getString(R.string.txt_phone_number));
-                customDialog.setOnClickListener(new IOnClickListener() {
-                    @Override
-                    public void oncClick(boolean isOk) {
-                        if (isOk) {
-                            if (!PermissionsChecker.checkPermission(PermissionsChecker.CALL_PHONE_PERMISSIONS)) {
-                                // 跳转系统电话
-                                Intent intent = new Intent(Intent.ACTION_CALL, Uri
-                                        .parse("tel:" + UIUtils.getString(R.string.txt_phone_number_)));//400-608-2626
-                                if (ActivityCompat.checkSelfPermission(
-                                        UIUtils.getContext(),
-                                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
-                                        ) {
-                                    return;
-                                }
-                                startActivity(intent);
-                            } else {
-                                PermissionsChecker.requestPermissions(
-                                        OrderDetailActivity.this,
-                                        PermissionsChecker.CALL_PHONE_PERMISSIONS
-                                );
-                            }
-                        }
-                    }
-                });
+                callPhone(UIUtils.getString(R.string.txt_phone_number));
                 break;
             /*case R.id.rl_price_detail:
                 Intent intent_price = new Intent(
@@ -1174,6 +1228,33 @@ public class OrderDetailActivity extends BaseActivity implements
         }
     }
 
+    public void callPhone(final String tel) {
+        CustomDialog customDialog_phone = new CustomDialog(
+                OrderDetailActivity.this,
+                UIUtils.getString(R.string.confirm),
+                UIUtils.getString(R.string.label_cancel),
+                tel
+        );
+        customDialog_phone.setOnClickListener(new IOnClickListener() {
+            @Override
+            public void oncClick(boolean isOk) {
+                if (isOk) {
+                    if (!PermissionsChecker.checkPermission(PermissionsChecker.CALL_PHONE_PERMISSIONS)) {
+                        // 跳转系统电话
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri
+                                .parse("tel:" + tel));
+                        startActivity(intent);
+                    } else {
+                        PermissionsChecker.requestPermissions(
+                                OrderDetailActivity.this,
+                                PermissionsChecker.CALL_PHONE_PERMISSIONS
+                        );
+                    }
+                }
+            }
+        });
+    }
+
     private void commitOrder() {
         //提交订单
         switch (currentNum) {
@@ -1188,7 +1269,8 @@ public class OrderDetailActivity extends BaseActivity implements
         }
     }
 
-    private void checkCoupon() {
+    private void checkCoupon(final boolean flag) {
+        ProgressDialog.getInstance().show();
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "verify_order_coupon");
@@ -1242,13 +1324,62 @@ public class OrderDetailActivity extends BaseActivity implements
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            if (!StringUtils.isNullString(trade_id)) {
-                                conmmitInfo.setTrade_id(trade_id);
+                            if (flag) {
+                                if (!StringUtils.isNullString(trade_id)) {
+                                    conmmitInfo.setTrade_id(trade_id);
+                                }
+                                commitOrder();
+                            } else {
+                                checkPassword();
                             }
-                            commitOrder();
                         }
                     }
                 });
+    }
+
+    /**
+     * 切换支付方式
+     */
+    private void changePayWay() {
+        ProgressDialog.getInstance().show();
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "switch_paymethod");
+        params.addBodyParameter("order1_id", oid);
+        params.addBodyParameter("uid", StringUtils.getUid());
+        params.addBodyParameter("username", StringUtils.getUsername());
+        params.addBodyParameter("password", StringUtils.getPassword());
+        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("pay_method", "6");
+        httpUtils.send(HttpRequest.HttpMethod.POST,
+                UrlUtils.SERVER_USER_COUPON, params,
+                new RequestCallBack<String>() {
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        // 请求网络失败
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                        ProgressDialog.getInstance().dismiss();
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        JSONObject json;
+                        try {
+                            json = new JSONObject(arg0.result);
+                            String code = json.getString("code");
+                            String trade_id = json.getString("trade_id");
+                            if ("1".equals(code)) {
+                                conmmitInfo.setTrade_id(trade_id);
+                                checkCoupon(true);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
     }
 
     private void cancelCoupon() {
@@ -1359,7 +1490,7 @@ public class OrderDetailActivity extends BaseActivity implements
             @Override
             public void onSuccess() {
                 //调取易支付创建订单报文签名接口
-                getRequestCreateOrder(conmmitInfo.getTrade_id());
+                getRequestCreateOrder();
             }
         });
         //支付宝支付相关处理
@@ -1369,12 +1500,20 @@ public class OrderDetailActivity extends BaseActivity implements
     /**
      * 请求 获取创建订单报文签名 接口
      */
-    private void getRequestCreateOrder(String trade_id) {
+    private void getRequestCreateOrder() {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "create_order");
-        params.addBodyParameter("trade_id", trade_id);
+        params.addBodyParameter("trade_id", conmmitInfo.getTrade_id());
         params.addBodyParameter("terminalType", "SDK");
+        if (StringUtils.isNotNullString(school_type)) {
+            if (school_type.equals("1")) {
+                params.addBodyParameter("businessId", "23");
+            } else if (school_type.equals("2")) {
+                params.addBodyParameter("businessId", "22");
+            }
+            params.addBodyParameter("cid", "0");
+        }
 //        params.addBodyParameter("is_admin", "0");// 是否后台支付 默认0 ,可不传
         httpUtils.send(HttpRequest.HttpMethod.POST,
                 UrlUtils.SERVER_API_PAY, params,
@@ -1458,6 +1597,48 @@ public class OrderDetailActivity extends BaseActivity implements
         }
     }
 
+    private void checkPassword() {
+        EjuPaySDKUtil.initEjuPaySDK(new EjuPaySDKUtil.IEjuPayInit() {
+            @Override
+            public void onSuccess() {
+                // 调取易支付创建订单报文签名接口
+                if (EjuPayManager.getInstance().isUserSetPwd()) {
+                    //跳转输入密码页面
+                    ProgressDialog.getInstance().dismiss();
+                    mPopupWindow.dismiss();
+                    jumpPayPage();
+
+                } else {
+                    //跳转设置支付密码页面
+//                    EjuPayManager.getInstance().startChangePassWord(UIUtils.getContext());
+                    ProgressDialog.getInstance().dismiss();
+                    EjuPayManager.getInstance().setEjuPayResult(new IEjuPayResult() {
+                        @Override
+                        public void callResult(int code, String msg, String dataJson) {
+                            if (code == EjuPayResultCode.SetPassWord_SUCCESS_CODE.getCode()) {
+                                LogUtil.d("test", "支付密码设置成功");
+                                jumpPayPage();
+                            } else if (code == EjuPayResultCode.SetPassWord_FAIL_CODE.getCode()) {
+                                LogUtil.d("test", "支付密码设置失败");
+                            }
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+    private void jumpPayPage() {
+        Intent intent = new Intent(OrderDetailActivity.this, PayPasswordActivity.class);
+        intent.putExtra("conmmitInfo", conmmitInfo);
+        intent.putExtra("sid", sid);
+        intent.putExtra("name", name);
+        intent.putExtra("order2", order2);
+        startActivity(intent);
+    }
+
     @SuppressLint("SimpleDateFormat")
     private String second2Date(String time) {
         Date today = new Date(Long.valueOf(time + "000"));
@@ -1471,8 +1652,8 @@ public class OrderDetailActivity extends BaseActivity implements
             handler.removeMessages(0);
         }
         if (isTaskRoot()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+            Intent intent = new Intent(this, PersonalCenterActivity.class);
+//            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }

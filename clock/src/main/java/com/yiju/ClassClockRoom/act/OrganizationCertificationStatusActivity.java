@@ -19,7 +19,6 @@ import com.yiju.ClassClockRoom.act.base.BaseActivity;
 import com.yiju.ClassClockRoom.act.common.Common_Show_WebPage_Activity;
 import com.yiju.ClassClockRoom.bean.MineOrganizationBean;
 import com.yiju.ClassClockRoom.common.constant.WebConstant;
-import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
@@ -192,8 +191,8 @@ public class OrganizationCertificationStatusActivity extends BaseActivity
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+            Intent intent = new Intent(this, PersonalCenterActivity.class);
+//            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {

@@ -131,7 +131,7 @@ public class CoursePayResultActivity extends BaseActivity implements
 
     private void jumpIndex() {
         Intent intentIndex = new Intent(this, MainActivity.class);
-        intentIndex.putExtra("backhome", "0");
+        intentIndex.putExtra(MainActivity.Param_Start_Fragment, 0);
         startActivity(intentIndex);
     }
 
@@ -152,7 +152,6 @@ public class CoursePayResultActivity extends BaseActivity implements
 
     private void backPress() {
         Intent intentPerson = new Intent(this, MainActivity.class);
-        intentPerson.putExtra("read", "1");
         startActivity(intentPerson);
     }
 }

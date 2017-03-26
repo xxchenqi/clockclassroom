@@ -15,6 +15,7 @@ class ShareGetData {
     private static final String Visible_PWD = "1";
     private static final String INVisible_PWD = "0";
 
+
     private int current_Type;
     private int current_Way;
 
@@ -69,6 +70,7 @@ class ShareGetData {
         getShareContent();
     }
 
+    //老师详情/资讯/活动
     public ShareGetData(int current_Type, int current_Way, String teacher_id, String teacher_name) {
         this.current_Type = current_Type;
         this.current_Way = current_Way;
@@ -145,8 +147,24 @@ class ShareGetData {
             params.addBodyParameter("teacher_name", teacher_name);
         }
 
-        if(current_Type == ShareDialog.Type_Share_Special){
+        if (current_Type == ShareDialog.Type_Share_Special) {
             params.addBodyParameter("special_id", special_id);
+        }
+
+        if (current_Type == ShareDialog.Type_Share_Supplier_Detail) {
+            //供应商详情
+            params.addBodyParameter("sp_id", teacher_id);
+            params.addBodyParameter("sp_name", teacher_name);
+        }
+        if (current_Type == ShareDialog.Type_Share_Theme_News) {
+            //资讯分享
+            params.addBodyParameter("news_id", teacher_id);
+            params.addBodyParameter("news_title", teacher_name);
+        }
+        if (current_Type == ShareDialog.Type_Share_Theme_Activity) {
+            //活动分享
+            params.addBodyParameter("activity_id", teacher_id);
+            params.addBodyParameter("activity_title", teacher_name);
         }
         httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_API_COMMON, params,
                 new RequestCallBack<String>() {

@@ -3,6 +3,8 @@ package com.yiju.ClassClockRoom.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -297,6 +299,20 @@ public class UIUtils {
             iv_no_wifi.setImageResource(R.drawable.none_wifi);
             tv_no_wifi_content1.setText(UIUtils.getString(R.string.nowifi_content1));
             tv_no_wifi_content2.setText(UIUtils.getString(R.string.nowifi_content2));
+        }
+    }
+
+    /**
+     * 获取版本号
+     */
+    public static String getVersion() {
+        try {
+            PackageManager manager = getContext().getPackageManager();
+            PackageInfo info = manager.getPackageInfo(getContext().getPackageName(), 0);
+            return info.versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
         }
     }
 

@@ -83,9 +83,7 @@ public class CourseTeacherAdapter extends CommonBaseAdapter<SchoolTeacherListRes
                 iv_item_mine_organization_eye.setBackgroundResource(R.drawable.hide);
             }
             if (dataEntity.isCheck()) {
-                iv_select_teacher.setBackgroundResource(R.drawable.check);
-            } else {
-                iv_select_teacher.setBackgroundResource(R.drawable.uncheck);
+                iv_select_teacher.setBackgroundResource(R.drawable.check_icon);
             }
         }
         //-1新建 1=待(未)审核 2=审核通过 0=审核未通过

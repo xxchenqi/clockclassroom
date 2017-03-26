@@ -2,91 +2,94 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/DIMEN_50DP"
+    android:layout_height="@dimen/DIMEN_60DP"
     android:background="@color/white"
     android:gravity="center_vertical"
     tools:ignore="HardcodedText">
 
 
-        <TextView
-            android:id="@+id/tv_item_device_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/DIMEN_12DP"
-            android:layout_centerVertical="true"
-            android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_15DP" />
-        <TextView
-            android:id="@+id/tv_item_device_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/DIMEN_80DP"
-            android:textColor="@color/color_gay_99"
-            android:textSize="@dimen/DIMEN_15DP" />
+    <TextView
+        android:id="@+id/tv_item_device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_13DP"
+        android:text="sagasgasd"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_15DP" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_50DP"
-            android:gravity="right|center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginRight="@dimen/DIMEN_12DP"
-            tools:ignore="ContentDescription">
+    <TextView
+        android:id="@+id/tv_item_device_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_item_device_name"
+        android:layout_marginLeft="@dimen/DIMEN_12DP"
+        android:layout_marginTop="@dimen/DIMEN_4DP"
+        android:text="sagasgasd"
+        android:textColor="@color/color_gay_99"
+        android:textSize="@dimen/DIMEN_12DP" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_60DP"
+        android:layout_marginRight="@dimen/DIMEN_12DP"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="ContentDescription">
+
+        <RelativeLayout
+            android:layout_width="@dimen/DIMEN_95DP"
+            android:layout_height="@dimen/DIMEN_29DP"
+            android:background="@drawable/desc_chang_gray_white_qian">
 
             <RelativeLayout
-                android:layout_width="@dimen/DIMEN_95DP"
+                android:id="@+id/rl_item_reduce"
+                android:layout_width="@dimen/DIMEN_29DP"
                 android:layout_height="@dimen/DIMEN_29DP"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/desc_chang_gray_white_qian">
+                android:background="@drawable/desc_chang_gray_qian">
 
-                <RelativeLayout
-                    android:id="@+id/rl_item_reduce"
-                    android:layout_width="@dimen/DIMEN_29DP"
-                    android:layout_height="@dimen/DIMEN_29DP"
-                    android:background="@drawable/desc_chang_gray_qian">
-
-                    <ImageView
-                        android:id="@+id/iv_item_reduce"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/order_reduce_btn_noclick"
-                        tools:ignore="ContentDescription" />
-                </RelativeLayout>
-
-                <EditText
-                    android:id="@+id/et_item_device"
-                    android:layout_width="@dimen/DIMEN_37DP"
-                    android:layout_height="@dimen/DIMEN_37DP"
+                <ImageView
+                    android:id="@+id/iv_item_reduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:textColor="@color/color_black_33"
-                    android:textSize="@dimen/DIMEN_14DP" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_item_add"
-                    android:layout_width="@dimen/DIMEN_29DP"
-                    android:layout_height="@dimen/DIMEN_29DP"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/desc_chang_gray_qian">
-
-                    <ImageView
-                        android:id="@+id/iv_item_add"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/order_add_btn_click"
-                        tools:ignore="ContentDescription" />
-                </RelativeLayout>
-
+                    android:src="@drawable/order_reduce_btn_noclick"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
 
-        </LinearLayout>
+            <EditText
+                android:id="@+id/et_item_device"
+                android:layout_width="@dimen/DIMEN_37DP"
+                android:layout_height="@dimen/DIMEN_37DP"
+                android:layout_centerInParent="true"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="number"
+                android:textColor="@color/color_black_33"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <RelativeLayout
+                android:id="@+id/rl_item_add"
+                android:layout_width="@dimen/DIMEN_29DP"
+                android:layout_height="@dimen/DIMEN_29DP"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/desc_chang_gray_qian">
+
+                <ImageView
+                    android:id="@+id/iv_item_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/order_add_btn_click"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
     <View
         style="@style/linestyle_gray"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

@@ -12,15 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:src="@drawable/history_icon"
+        android:visibility="gone"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tv_search_note"
-        style="@style/textstyle_12p_8f"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/DIMEN_4DP"
         android:layout_toRightOf="@+id/iv_search_note_icon"
-        android:text="钢琴" />
+        android:text="钢琴"
+        android:textColor="@color/color_black_33"
+        android:textSize="@dimen/DIMEN_14DP" />
 
     <ImageView
         android:layout_width="wrap_content"

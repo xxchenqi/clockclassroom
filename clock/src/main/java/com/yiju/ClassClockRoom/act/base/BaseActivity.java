@@ -94,7 +94,7 @@ public abstract class BaseActivity extends Activity implements InitView {
     @Override
     protected void onStart() {
         super.onStart();
-        CountControl.getInstance().skipRuning(this);
+//        CountControl.getInstance().skipRuning(this);
     }
 
     @Override
@@ -132,7 +132,7 @@ public abstract class BaseActivity extends Activity implements InitView {
     @Override
     protected void onStop() {
         super.onStop();
-        CountControl.getInstance().skipUnRuning(this);
+//        CountControl.getInstance().skipUnRuning(this);
     }
 
     @Override

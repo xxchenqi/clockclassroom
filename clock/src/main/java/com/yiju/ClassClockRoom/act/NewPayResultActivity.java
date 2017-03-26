@@ -141,7 +141,7 @@ public class NewPayResultActivity extends BaseActivity implements View.OnClickLi
 
     private void jumpHome() {
         Intent intentIndex = new Intent(this, MainActivity.class);
-        intentIndex.putExtra("backhome", "3");
+        intentIndex.putExtra(MainActivity.Param_Start_Fragment, 0);
         startActivity(intentIndex);
     }
 

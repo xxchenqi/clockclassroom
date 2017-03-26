@@ -113,7 +113,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/DIMEN_12DP"
                     android:contentDescription="@string/desc"
-                    android:src="@drawable/white_back" />
+                    android:src="@drawable/back_white" />
 
                 <TextView
                     style="@style/textstyle_17p_white"

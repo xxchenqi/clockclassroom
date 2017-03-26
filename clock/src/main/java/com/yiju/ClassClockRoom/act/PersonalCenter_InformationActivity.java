@@ -286,7 +286,10 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
                 getResources().getString(R.string.shared_avatar), "");
         // 根据头像地址加载图像
         if (headUrl != null && !"".equals(headUrl)) {
-            Glide.with(this).load(headUrl).into(iv_avatar_info);
+            Glide.with(this).load(headUrl)
+                    .placeholder(R.drawable.user_unload)
+                    .error(R.drawable.user_unload)
+                    .into(iv_avatar_info);
         }
 
         // 设置昵称
@@ -457,21 +460,21 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
 //                三方用户-->有手机-->跳third_bind_mobile,隐藏密码 type3
 
                 Intent changeMobileIntent = new Intent(this, PersonalCenter_ChangeMobileActivity.class);
-                changeMobileIntent.putExtra("mobile", mobile);
-                if (mobile != null && !"".equals(mobile)) {
-                    //有手机号
-                    //判断是否是第三方绑定,
-                    if ("".equals(shared_third_qq) && "".equals(shared_third_wechat) && "".equals(shared_third_weibo)) {
-                        //无绑定过三方账号
-                        changeMobileIntent.putExtra("type", 1);
-                    } else {
-                        //有绑定过三方账号
-                        changeMobileIntent.putExtra("type", 3);
-                    }
-                } else {
-                    //无手机号,
-                    changeMobileIntent.putExtra("type", 2);
-                }
+//                changeMobileIntent.putExtra("mobile", mobile);
+//                if (mobile != null && !"".equals(mobile)) {
+//                    //有手机号
+//                    //判断是否是第三方绑定,
+//                    if ("".equals(shared_third_qq) && "".equals(shared_third_wechat) && "".equals(shared_third_weibo)) {
+//                        //无绑定过三方账号
+//                        changeMobileIntent.putExtra("type", 1);
+//                    } else {
+//                        //有绑定过三方账号
+//                        changeMobileIntent.putExtra("type", 3);
+//                    }
+//                } else {
+//                    //无手机号,
+//                    changeMobileIntent.putExtra("type", 2);
+//                }
                 startActivityForResult(changeMobileIntent, 0);
                 break;
 
@@ -663,7 +666,10 @@ public class PersonalCenter_InformationActivity extends BaseActivity implements
             if (headUrl != null && !"".equals(headUrl)) {                               //根据头像地址加载图像
                 if (!destroyFlag) {
                     Glide.with(BaseApplication.getmForegroundActivity())
-                            .load(CommonUtil.jointHeadUrl(headUrl)).into(iv_avatar_info);
+                            .load(CommonUtil.jointHeadUrl(headUrl))
+                            .placeholder(R.drawable.user_unload)
+                            .error(R.drawable.user_unload)
+                            .into(iv_avatar_info);
                     SharedPreferencesUtils.saveString(getApplicationContext(),
                             getResources().getString(R.string.shared_avatar), CommonUtil.jointHeadUrl(headUrl));         //更新图片，更改数据库的头像url
                 }

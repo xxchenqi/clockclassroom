@@ -68,8 +68,8 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
     @ViewInject(R.id.v_store_divider)
     private View v_store_divider;
     //空图片
-    @ViewInject(R.id.iv_empty_stores)
-    private ImageView iv_empty_stores;
+    @ViewInject(R.id.tv_empty_stores)
+    private TextView tv_empty_stores;
     //无WIFI显示界面
     @ViewInject(R.id.ly_wifi)
     private RelativeLayout ly_wifi;
@@ -218,12 +218,12 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
                 lv_more_store.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
             lv_more_store.setVisibility(View.VISIBLE);
-            iv_empty_stores.setVisibility(View.GONE);
+            tv_empty_stores.setVisibility(View.GONE);
         } else {
             //没有查到
             if (is_down_refresh) {
                 lv_more_store.setVisibility(View.GONE);
-                iv_empty_stores.setVisibility(View.VISIBLE);
+                tv_empty_stores.setVisibility(View.VISIBLE);
             } else {
                 lv_more_store.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                 UIUtils.showLongToastSafe(moreStoreBean.getMsg());
@@ -261,7 +261,7 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
         if (schoolAll == null) {
             return;
         }
-        if (schoolAll.getCode() == 1) {
+        if ("1".equals(schoolAll.getCode())) {
             datas_filtrate.addAll(schoolAll.getData());
             datas_filtrate.get(0).setFlag(true);
             popUpWindow = new MoreStorePopUpWindow(this, datas_filtrate, this, head_right_image);
@@ -277,7 +277,7 @@ public class MoreStoreActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.head_right_relative:
                 if (popUpWindow != null) {
-                    head_right_image.setImageResource(R.drawable.up_pull);
+                    head_right_image.setImageResource(R.drawable.arrow_up);
                     popUpWindow.showAsDropDown(v_store_divider);
                 }
                 break;

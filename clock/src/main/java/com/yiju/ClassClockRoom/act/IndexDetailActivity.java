@@ -24,7 +24,6 @@ import com.yiju.ClassClockRoom.common.NetWebViewClient;
 import com.yiju.ClassClockRoom.control.ExtraControl;
 import com.yiju.ClassClockRoom.control.map.NavigationUtils;
 import com.yiju.ClassClockRoom.control.share.ShareDialog;
-import com.yiju.ClassClockRoom.fragment.NewIndexFragment;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
 import com.yiju.ClassClockRoom.util.StringUtils;
@@ -127,7 +126,8 @@ public class IndexDetailActivity extends BaseActivity implements
     //课室原数据
     private List<StoreDetailClassRoom> data_class_room;
     //************课室参数*************
-
+    private String instruction;
+    private String confirm_type;
 
     @Override
     public int setContentViewId() {
@@ -136,7 +136,7 @@ public class IndexDetailActivity extends BaseActivity implements
 
     @Override
     public void initView() {
-        head_right_image.setImageResource(R.drawable.share_btn_icon);
+        head_right_image.setImageResource(R.drawable.new_share);
         head_back_relative.setOnClickListener(this);
         head_right_relative.setOnClickListener(this);
         iv_root_detail_cart.setOnClickListener(this);
@@ -172,7 +172,8 @@ public class IndexDetailActivity extends BaseActivity implements
             typeid = intent.getStringExtra(ExtraControl.EXTRA_TYPE_ID);
             sname = intent.getStringExtra(ExtraControl.EXTRA_SNAME);
             can_schedule = intent.getStringExtra(ExtraControl.EXTRA_CAN_SCHEDULE);//标记是否可预订
-
+            instruction = intent.getStringExtra(ExtraControl.EXTRA_INSTRUCTION);
+            confirm_type = intent.getStringExtra(ExtraControl.EXTRA_CONFIRM_TYPE);
 
             url = UrlUtils.TYPE_DESC + "typeid=" + typeid
                     + "&pictype=pictype&type=2&sid=" + sid + "&title=" + type_desc;
@@ -181,7 +182,7 @@ public class IndexDetailActivity extends BaseActivity implements
             ll_room_detail_title_1.setVisibility(View.GONE);
             //显示标题2布局
             ll_room_detail_title_2.setVisibility(View.VISIBLE);
-            head_gradual_back.setImageResource(R.drawable.back_circle);
+            head_gradual_back.setImageResource(R.drawable.back_white);
             //设置标题2
             head_gradual_title.setText(sname);
             if ("1".equals(from_order_detail)) {
@@ -244,6 +245,12 @@ public class IndexDetailActivity extends BaseActivity implements
             }
         });
         netWebViewClient.setData(wv_room_detail);
+        netWebViewClient.setiWebViewHandleError(new NetWebViewClient.IWebViewHandleError() {
+            @Override
+            public void handleWebViewError() {
+                ly_broken_fail.setVisibility(View.VISIBLE);
+            }
+        });
 //        wv_room_detail.loadUrl(url);
 
         String flag = intent.getStringExtra("flag");
@@ -253,11 +260,13 @@ public class IndexDetailActivity extends BaseActivity implements
 
         if (NetWorkUtils.getNetworkStatus(this)) {
             ly_wifi.setVisibility(View.GONE);
+            ly_broken_fail.setVisibility(View.GONE);
             wv_room_detail.setVisibility(View.VISIBLE);
             wv_room_detail.loadUrl(url);
         } else {
             ly_wifi.setVisibility(View.VISIBLE);
             wv_room_detail.setVisibility(View.GONE);
+            ly_broken_fail.setVisibility(View.GONE);
         }
 
     }
@@ -292,6 +301,9 @@ public class IndexDetailActivity extends BaseActivity implements
                 intent.putExtra(ExtraControl.EXTRA_ROOM_END_TIME, room_end_time);
                 intent.putExtra(ExtraControl.EXTRA_SNAME, sname);
                 intent.putExtra(ExtraControl.EXTRA_TEL, tel);
+                intent.putExtra(ExtraControl.EXTRA_INSTRUCTION, instruction);
+                intent.putExtra(ExtraControl.EXTRA_CONFIRM_TYPE, confirm_type);
+
                 startActivity(intent);
 
                 break;
@@ -324,27 +336,17 @@ public class IndexDetailActivity extends BaseActivity implements
             case R.id.btn_broken_refresh:
                 if (NetWorkUtils.getNetworkStatus(this)) {
                     ly_wifi.setVisibility(View.GONE);
+                    ly_broken_fail.setVisibility(View.GONE);
                     wv_room_detail.setVisibility(View.VISIBLE);
                     wv_room_detail.loadUrl(url);
                 } else {
                     ly_wifi.setVisibility(View.VISIBLE);
                     wv_room_detail.setVisibility(View.GONE);
+                    ly_broken_fail.setVisibility(View.GONE);
                 }
                 break;
             default:
                 break;
-        }
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // 购物车是否显示
-        if (NewIndexFragment.SHOP_CART_FLAG) {
-            iv_root_detail_cart.setVisibility(View.VISIBLE);
-        } else {
-            iv_root_detail_cart.setVisibility(View.GONE);
         }
 
     }

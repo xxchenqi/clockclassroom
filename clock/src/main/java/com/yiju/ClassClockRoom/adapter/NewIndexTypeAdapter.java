@@ -201,9 +201,9 @@ public class NewIndexTypeAdapter extends BaseAdapter {
                     }
                 });
                 if (UIUtils.getString(R.string.txt_shrink).equals(o.toString())) {
-                    holder1.iv_up_down.setBackgroundResource(R.drawable.up);
+                    holder1.iv_up_down.setBackgroundResource(R.drawable.arrow_up);
                 } else {
-                    holder1.iv_up_down.setBackgroundResource(R.drawable.down);
+                    holder1.iv_up_down.setBackgroundResource(R.drawable.arrow_down);
                 }
             } else if (type == TYPE_1_1) {
                 holder1_1.tv_type.setText(o.toString());

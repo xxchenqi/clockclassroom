@@ -57,6 +57,12 @@ public interface IApiService {
     Call<CommonResultBean> getRemovalForServer();
 
     /**
+     * 获得服务器迁移信息接口_测试
+     */
+    @GET(HttpUrl.REMOVAL_API_TEST)
+    Call<CommonResultBean> getRemovalForServerTest();
+
+    /**
      * 图片上传
      */
     @Multipart

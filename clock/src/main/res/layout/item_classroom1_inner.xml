@@ -33,7 +33,7 @@
         android:layout_height="@dimen/DIMEN_20DP"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/share_btn_icon"
+        android:src="@drawable/new_share"
         tools:ignore="ContentDescription" />
 
     <View

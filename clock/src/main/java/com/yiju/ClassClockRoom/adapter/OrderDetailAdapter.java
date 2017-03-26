@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -41,6 +42,7 @@ import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -147,8 +149,8 @@ public class OrderDetailAdapter extends BaseAdapter {
                     convertView.findViewById(R.id.rl_course_nearly);
             viewHolder.tv_course_nearly = (TextView)
                     convertView.findViewById(R.id.tv_course_nearly);
-            viewHolder.tv_check_classroom_detail = (TextView)
-                    convertView.findViewById(R.id.tv_check_classroom_detail);
+//            viewHolder.tv_check_classroom_detail = (TextView)
+//                    convertView.findViewById(R.id.tv_check_classroom_detail);
             viewHolder.ll_can_select = (LinearLayout)
                     convertView.findViewById(R.id.ll_can_select);
             viewHolder.ll_no_free_device_add = (LinearLayout)
@@ -167,6 +169,13 @@ public class OrderDetailAdapter extends BaseAdapter {
 //                    convertView.findViewById(R.id.tv_check_classroom_relevance);
             viewHolder.iv_item_detail_type = (ImageView)
                     convertView.findViewById(R.id.iv_item_detail_type);
+            viewHolder.tv_day_price = (TextView)
+                    convertView.findViewById(R.id.tv_day_price);
+            viewHolder.tv_week_price = (TextView)
+                    convertView.findViewById(R.id.tv_week_price);
+            viewHolder.tv_sigle_more = (TextView)
+                    convertView.findViewById(R.id.tv_sigle_more);
+
 
             if ("1".equals(o.getSchool_type())) {
                 //school_type 1代表自营
@@ -220,16 +229,41 @@ public class OrderDetailAdapter extends BaseAdapter {
         if (StringUtils.isNullString(pic_url)) {
             viewHolder.iv_order_pic.setImageResource(R.drawable.clock_wait);
         } else {
-            Glide.with(UIUtils.getContext()).load(pic_url).into(viewHolder.iv_order_pic);
+            Glide.with(UIUtils.getContext())
+                    .load(pic_url)
+                    .asBitmap().centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .placeholder(R.drawable.clock_wait)
+                    .error(R.drawable.clock_wait)
+                    .into(viewHolder.iv_order_pic);
         }
         viewHolder.tv_item_detail_count.setText(
                 String.format(
-                        UIUtils.getString(R.string.multiply),
+                        UIUtils.getString(R.string.multiply_jian),
                         o.getRoom_count()
                 ));
         viewHolder.tv_item_detail_sname.setText(o.getSname());
 //        viewHolder.tv_item_detail_use_desc.setText(o.getType_desc());
         viewHolder.tv_item_detail_room_type.setText(o.getType_desc());
+        Set<Date> dates = new HashSet<>();
+        for (Order3 order3:o.getOrder3()) {
+            Date date = DateUtil.strToDate(order3.getDate());
+            dates.add(date);
+        }
+        if(dates.size() == 1){
+            viewHolder.tv_sigle_more.setText("订单信息(单天)");
+            viewHolder.tv_item_detail_date.setText(
+                    String.format(
+                            UIUtils.getString(R.string.date_to_symbol_single),o.getStart_date()));
+        }else if(dates.size() > 1){
+            viewHolder.tv_sigle_more.setText("订单信息(多天)");
+            viewHolder.tv_item_detail_date.setText(
+                    String.format(
+                            UIUtils.getString(R.string.date_to_symbol),
+                            o.getStart_date(),
+                            o.getEnd_date()
+                    ));
+        }
         viewHolder.tv_item_detail_max_member.setText(
                 String.format(
                         UIUtils.getString(R.string.max_member_text),
@@ -240,12 +274,8 @@ public class OrderDetailAdapter extends BaseAdapter {
                         UIUtils.getString(R.string.total_hour_short_text),
                         o.getTotal_hour()
                 ));*/
-        viewHolder.tv_item_detail_date.setText(
-                String.format(
-                        UIUtils.getString(R.string.to_symbol),
-                        o.getStart_date(),
-                        o.getEnd_date()
-                ));
+        viewHolder.tv_day_price.setText("¥"+o.getAvailable_price().get(0).getPrice_weekday()+"/");
+        viewHolder.tv_week_price.setText("¥"+o.getAvailable_price().get(0).getPrice_weekend()+"/");
         if (o.getTime_group() != null && o.getTime_group().size() >= 0) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < o.getTime_group().size(); i++) {
@@ -265,9 +295,27 @@ public class OrderDetailAdapter extends BaseAdapter {
                     sb.append(dateShow).append("，");
                 }
             }
-            viewHolder.tv_item_detail_time.setText(sb.toString());
+            viewHolder.tv_item_detail_time.setText("使用时段: "+sb.toString());
         }
-        viewHolder.tv_item_detail_repeat.setText(StringUtils.getRepeatWeek(o.getRepeat()));
+        int weekEndCount = 0;
+        for (Date d:dates) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(d);
+            if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ||
+                    calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
+                weekEndCount++;
+            }
+        }
+        int weekCount = dates.size() - weekEndCount;
+        if(weekEndCount == 0 && weekCount != 0){
+            viewHolder.tv_item_detail_repeat.setText("使用天数: "+dates.size()+"天(平日"+(weekCount)+"天)");
+        }else if(weekEndCount != 0 && weekCount == 0){
+            viewHolder.tv_item_detail_repeat.setText("使用天数: "+dates.size()+"天(周末"+weekEndCount+"天)");
+        }else {
+            viewHolder.tv_item_detail_repeat.setText("使用天数: "+dates.size()+"天(平日"+
+                    (weekCount)+"天,周末"+weekEndCount+"天)");
+        }
+
         /*viewHolder.tv_item_detail_fee.setText(
                 String.format(
                         UIUtils.getString(R.string.how_much_money),
@@ -299,13 +347,13 @@ public class OrderDetailAdapter extends BaseAdapter {
         int date_result = DateUtil.compareDate(current_date, o.getEnd_date());
         if (date_result >= 0) {//超过最后日期
             viewHolder.tv_edit_classroom.setTextColor(UIUtils.getColor(R.color.color_gay_99));
-            Drawable nav_up = UIUtils.getDrawable(R.drawable.no_dark_more_btn);
+            Drawable nav_up = UIUtils.getDrawable(R.drawable.arrow);
             nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
             viewHolder.tv_edit_classroom.setCompoundDrawables(null, null, nav_up, null);
             viewHolder.ll_set_classroom_top.setClickable(false);
         } else {
             viewHolder.tv_edit_classroom.setTextColor(UIUtils.getColor(R.color.color_black_33));
-            Drawable nav_up = UIUtils.getDrawable(R.drawable.dark_more_btn);
+            Drawable nav_up = UIUtils.getDrawable(R.drawable.arrow);
             nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
             viewHolder.tv_edit_classroom.setCompoundDrawables(null, null, nav_up, null);
             viewHolder.ll_set_classroom_top.setClickable(true);
@@ -513,12 +561,15 @@ public class OrderDetailAdapter extends BaseAdapter {
         private RelativeLayout rl_all_course;//查看课室明细
         private RelativeLayout rl_course_nearly;//近期课室
         private TextView tv_course_nearly;//近期课室
-        private TextView tv_check_classroom_detail;
+//        private TextView tv_check_classroom_detail;
         private LinearLayout ll_set_classroom;//课室布置区域块
         private LinearLayout ll_set_classroom_top;//课室布置头
         private TextView tv_edit_classroom;//课室布置 修改
         //        private TextView tv_check_classroom_relevance;//课程是否关联
         private ImageView iv_item_detail_type;//旗舰店
+        private TextView tv_day_price;//平日价格
+        private TextView tv_week_price;//平日价格
+        private TextView tv_sigle_more;//订单信息(单天)
 
     }
 

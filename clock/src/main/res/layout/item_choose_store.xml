@@ -13,7 +13,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/DIMEN_12DP"
         android:contentDescription="@string/desc"
-        android:src="@drawable/choose_green" />
+        android:src="@drawable/check_icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"

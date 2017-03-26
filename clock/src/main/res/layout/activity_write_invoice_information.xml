@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/DIMEN_12DP"
                     android:layout_weight="1"
-                    android:drawableRight="@drawable/change"
+                    android:drawableRight="@drawable/arrow"
                     android:gravity="right"
                     android:text="@string/person_modify"
                     android:textColor="@color/color_black_33"

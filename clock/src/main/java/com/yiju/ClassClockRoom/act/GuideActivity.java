@@ -1,6 +1,7 @@
 package com.yiju.ClassClockRoom.act;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
@@ -40,21 +41,15 @@ public class GuideActivity extends BaseActivity implements OnClickListener {
     @Override
     protected void initData() {
         SharedPreferencesUtils.saveInt(this, "firstLogin", 1);
+        TypedArray ta = getResources().obtainTypedArray(R.array.guid_img);
         imageViews = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < ta.length(); i++) {
             ImageView imageView = new ImageView(this);
-            if (i == 0) {
-                imageView.setImageResource(R.drawable.guid_1);
-            } else if (i == 1) {
-                imageView.setImageResource(R.drawable.guid_2);
-            } else if (i == 2) {
-                imageView.setImageResource(R.drawable.guid_3);
-            } else {
-                imageView.setImageResource(R.drawable.guid_4);
-            }
+            imageView.setImageResource(ta.getResourceId(i, 0));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageViews.add(imageView);
         }
+        ta.recycle();
         adapter = new GuidePagerAdapter(imageViews);
         vp_guide.setAdapter(adapter);
         ((RadioButton) rg_guide.getChildAt(0)).setChecked(true);
@@ -74,11 +69,20 @@ public class GuideActivity extends BaseActivity implements OnClickListener {
             //页面滑动监听
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (tv_skip.getVisibility() == View.VISIBLE && position == 2) {
+                if (imageViews == null || imageViews.size() == 0) {
+                    return;
+                }
+                if (tv_skip.getVisibility() == View.VISIBLE && position == imageViews.size() - 2) {
+                    if (position < 0) {
+                        return;
+                    }
                     tv_experience.setVisibility(View.VISIBLE);
                     tv_skip.setAlpha(1.0f - (positionOffset > 1.0f ? 1.0f : positionOffset));
                     tv_experience.setAlpha(positionOffset > 1.0f ? 1.0f : positionOffset);
-                } else if (tv_skip.getVisibility() == View.GONE && position == 2) {
+                } else if (tv_skip.getVisibility() == View.GONE && position == imageViews.size() - 2) {
+                    if (position < 0) {
+                        return;
+                    }
                     tv_skip.setVisibility(View.VISIBLE);
                 }
             }
@@ -86,7 +90,10 @@ public class GuideActivity extends BaseActivity implements OnClickListener {
             @Override
             public void onPageSelected(int position) {
                 ((RadioButton) rg_guide.getChildAt(position)).setChecked(true);
-                if (position == 3) {
+                if (imageViews == null || imageViews.size() == 0) {
+                    return;
+                }
+                if (position == imageViews.size() - 1) {
                     rg_guide.setVisibility(View.GONE);
                     tv_skip.setVisibility(View.GONE);
                     tv_experience.setVisibility(View.VISIBLE);
@@ -94,7 +101,7 @@ public class GuideActivity extends BaseActivity implements OnClickListener {
                     tv_experience.setClickable(true);
 
                 } else {
-                    rg_guide.setVisibility(View.VISIBLE);
+                    rg_guide.setVisibility(View.GONE);
                     tv_skip.setVisibility(View.VISIBLE);
                     tv_experience.setVisibility(View.GONE);
                     tv_skip.setClickable(true);
@@ -128,4 +135,8 @@ public class GuideActivity extends BaseActivity implements OnClickListener {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

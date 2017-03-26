@@ -10,21 +10,25 @@ public class UrlUtils {
     // JAVA测试地址:http://172.28.70.47:8102
 
     public static String BASE_URL;
+    public static String WEB_BASE_URL;
     public static String EJU_PAY_URL;
     public static String JAVA_URL;
 
     static {
-        switch (BaseApplication.FORMAL_ENVIRONMENT){
+        switch (BaseApplication.FORMAL_ENVIRONMENT) {
             case 1:
                 BASE_URL = "http://172.28.70.47";
+                WEB_BASE_URL = "http://172.28.70.47";
                 JAVA_URL = "http://172.28.70.47:8102";
                 EJU_PAY_URL = "http://inte.ejupay.cn:8130/gateway-outrpc/acquirer/interact";
                 break;
             case 2:
             case 3:
-                BASE_URL = "http://api.51shizhong.com";
-                JAVA_URL = "http://api2.51shizhong.com";
+                BASE_URL = "https://api.51shizhong.com";
+                WEB_BASE_URL = "http://api.51shizhong.com";
+                JAVA_URL = "https://api2.51shizhong.com";
                 EJU_PAY_URL = "http://ejupay.17shihui.com/gateway-outrpc/acquirer/interact";
+
                 if (StringUtils.isNotNullString(HttpRemovalApi.getInstance().changeBaseUrl)) {
                     BASE_URL = HttpRemovalApi.getInstance().changeBaseUrl;
                 }
@@ -34,14 +38,20 @@ public class UrlUtils {
                 if (StringUtils.isNotNullString(HttpRemovalApi.getInstance().changeEjuPayUrl)) {
                     EJU_PAY_URL = HttpRemovalApi.getInstance().changeEjuPayUrl;
                 }
-
+                if (StringUtils.isNotNullString(HttpRemovalApi.getInstance().changeWebBaseUrl)) {
+                    WEB_BASE_URL = HttpRemovalApi.getInstance().changeWebBaseUrl;
+                }
                 break;
         }
     }
 
-    public static final String API_VERSION = "api_v8";
+    // 迁移接口
+    public static String REMOVAL_API = "http://101.231.84.177/weburl.html";
+
+    public static final String API_VERSION = "api_v9";
+    //    public static final String API_VERSION = "api_develop";//api_develop(测试环境打包时使用)
     private static String TEST_BASE_URL = BASE_URL + "/" + API_VERSION;
-    public static String H5_BASE_URL = BASE_URL + "/h5_v9";
+    public static String H5_BASE_URL = WEB_BASE_URL + "/h5_v9";
 
     private static String BASE_CALSS_ROOM = TEST_BASE_URL
             + "/classroom_api.php?";
@@ -65,6 +75,14 @@ public class UrlUtils {
     public static String SERVER_TEACHER_MORE_JAVA = JAVA_URL + "/dubboServiceConsumer/teacher/get_teacher_list.action";
     public static String SERVER_TEACHER_API_JAVA = JAVA_URL + "/dubboServiceConsumer/teacher/get_teacher_detail.action";
     public static String SERVER_TEACHER = JAVA_URL + "/dubboServiceConsumer/teacher/index.action?";
+    //体验课
+    public static String SERVER_EXPERIENCE_CLASS = JAVA_URL + "/dubboServiceConsumer/course/experienceCourse.action?";
+    //我的互动之 我赞过的
+    public static String SERVER_INTERACTION_PRAISE = JAVA_URL + "/dubboServiceConsumer/clickpraise/findall.action?";
+    //我的互动之 我的评论
+    public static String SERVER_INTERACTION_COMMENT = JAVA_URL + "/dubboServiceConsumer/comment/findMeComment.action?";
+    //我的互动之 我参与的活动
+    public static String SERVER_INTERACTION_ACTIVITY = JAVA_URL + "/dubboServiceConsumer/aactivityInteres/findArticleActivityInterest.action?";
     // 预订第三个页面返回
     public static String SERVER_RESERVATION_THREE_BACK = TEST_BASE_URL
             + "/schedule_api.php";
@@ -168,6 +186,10 @@ public class UrlUtils {
      */
     public static String SERVER_WEB_USERAGENT = H5_BASE_URL
             + "/useragent.html";
+    /**
+     * 充返活动协议
+     */
+    public static String SERVER_WEB_CHARGE_BACK = H5_BASE_URL + "/recharge.html";
 
     /*
      * 搜索结果页 url： /h5_v1/search.html
@@ -253,4 +275,36 @@ public class UrlUtils {
     public static String JAVA_MORE_STORE = JAVA_URL + "/dubboServiceConsumer/school/moreSchool.action";
     //门店详情
     public static String JAVA_STORE_DETAIL = JAVA_URL + "/dubboServiceConsumer/v2.6/school/findSchoolDetail.action";
+
+    // 主题
+    public static String H5_Theme = H5_BASE_URL + "/theme.html";
+    //往期主题
+    public static String H5_Past_Theme = H5_BASE_URL + "/pasttheme.html";
+    //往期主题详情
+    public static String H5_Past_Theme_Detail = H5_BASE_URL + "/pastthemedetail.html";
+    //活动详情
+    public static String H5_Theme_Activity = H5_BASE_URL + "/themeactivity.html";
+    //资讯详情
+    public static String H5_Theme_News = H5_BASE_URL + "/themenews.html";
+
+    //报名
+    public static String JAVA_SIGN_UP = JAVA_URL + "/dubboServiceConsumer/enroll/saveEnroll.action";
+    //评论
+    public static String JAVA_COMMENT = JAVA_URL + "/dubboServiceConsumer/comment/findComment.action";
+    //保存评论
+    public static String JAVA_SAVE_COMMENT = JAVA_URL + "/dubboServiceConsumer/comment/saveComment.action";
+    //删除评论
+    public static String JAVA_DELETE_COMMENT = JAVA_URL + "/dubboServiceConsumer/comment/deleteComment.action";
+    //取消点赞
+    public static String JAVA_DEL_PRAISE = JAVA_URL + "/dubboServiceConsumer/comment/delPraise.action";
+    //增加点赞
+    public static String JAVA_ADD_PRAISE = JAVA_URL + "/dubboServiceConsumer/comment/addPraise.action";
+    //splash
+    public static String JAVA_SPLASH = JAVA_URL + "/dubboServiceConsumer/foucePic/findFoucePic.action";
+    //活动/资讯详情是否被关注
+    public static String JAVA_NEWS_OR_ACTIVITY_GET_ATTENTION = JAVA_URL + "/dubboServiceConsumer/clickpraise/findClickPraise.action";
+    //关注资讯
+    public static String JAVA_NEWS_ATTENTION = JAVA_URL + "/dubboServiceConsumer/articlenews/clickNewsPraise.action";
+    //关注活动
+    public static String JAVA_ACTIVITY_CANCEL_ATTENTION = JAVA_URL + "/dubboServiceConsumer/aactivity/clickActivityPraise.action";
 }

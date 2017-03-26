@@ -6,12 +6,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yiju.ClassClockRoom.R;
-import com.yiju.ClassClockRoom.act.MainActivity;
 import com.yiju.ClassClockRoom.act.MemberDetailActivity;
 import com.yiju.ClassClockRoom.act.MineOrganizationActivity;
 import com.yiju.ClassClockRoom.act.OrderDetailActivity;
 import com.yiju.ClassClockRoom.act.OrganizationCertificationStatusActivity;
 import com.yiju.ClassClockRoom.act.PersonMineCourseDetailActivity;
+import com.yiju.ClassClockRoom.act.PersonalCenterActivity;
 import com.yiju.ClassClockRoom.act.ShopCartActivity;
 import com.yiju.ClassClockRoom.act.accompany.AccompanyReadStatusActivity;
 import com.yiju.ClassClockRoom.bean.MessageBox.MessageData;
@@ -110,7 +110,7 @@ public class MessageDetailHolder extends BaseRecyclerViewHolder {
                 break;
 
             case 8://机构移除老师(个人中心)
-                jumpMessageDetial("person", new Intent(UIUtils.getContext(), MainActivity.class));
+                jumpMessageDetial("person", new Intent(UIUtils.getContext(), PersonalCenterActivity.class));
                 break;
             case 13://机构审核失败
                 jumpMessageDetial("fail", new Intent(UIUtils.getContext(), OrganizationCertificationStatusActivity.class));

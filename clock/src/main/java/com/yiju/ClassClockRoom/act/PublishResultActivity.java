@@ -65,7 +65,7 @@ public class PublishResultActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         Intent intentIndex = new Intent(this, MainActivity.class);
-        intentIndex.putExtra("person", "3");
+//        intentIndex.putExtra("person", "3");
         startActivity(intentIndex);
     }
 }

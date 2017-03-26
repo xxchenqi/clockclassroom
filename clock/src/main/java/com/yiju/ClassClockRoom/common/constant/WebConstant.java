@@ -33,6 +33,8 @@ public class WebConstant {
     public static final String varinvoice = "varinvoice";
     // 单价一览表
     public static final String room_price = "room_price";
+    // 往期主题
+    public static final String past_theme = "pasttheme";
 
     // ==========================h5传值===============================
     // URL参数 老师ID
@@ -89,5 +91,18 @@ public class WebConstant {
     public static final int WEB_value_special_teacher_Page = 20;
     //课程专题
     public static final int WEB_value_special_course_Page = 21;
+    //充返活动协议
+    public static final int WEB_value_charge_back_Page = 22;
+
+    //往期主题
+    public static final int WEB_value_past_theme_Page = 23;
+    //往期主题详情
+    public static final int WEB_value_past_theme_detail_Page = 24;
+    //活动详情
+    public static final int WEB_value_theme_activity_Page = 25;
+    //资讯详情
+    public static final int WEB_value_theme_news_Page = 26;
+    //启动页跳转的app内部活动页
+    public static final int WEB_value_splash_news_Page = 27;
 
 }

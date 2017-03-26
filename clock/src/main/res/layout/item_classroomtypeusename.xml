@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/desc"
-            android:src="@drawable/order_choose_btn"
+            android:src="@drawable/check_icon"
             android:visibility="gone" />
     </LinearLayout>
 

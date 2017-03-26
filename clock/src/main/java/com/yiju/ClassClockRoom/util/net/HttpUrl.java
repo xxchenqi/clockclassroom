@@ -15,6 +15,7 @@ public class HttpUrl {
 
     // 迁移接口
     public static final String REMOVAL_API = "weburl.html";
+    public static final String REMOVAL_API_TEST = "/api/test_weburl.html";
 
     // 图片服务基类地址
     public static String BASE_PIC_WIRTE = "http://i.upload.file.dc.cric.com/";

@@ -60,7 +60,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/DIMEN_12DP"
                 android:contentDescription="@string/desc"
-                android:src="@drawable/down_pull" />
+                android:src="@drawable/arrow_down" />
 
             <TextView
                 android:id="@+id/head_right_text"
@@ -95,13 +95,16 @@
             android:paddingBottom="@dimen/DIMEN_10DP"
             ptr:ptrAnimationStyle="flip" />
 
-        <ImageView
-            android:id="@+id/iv_empty_stores"
+        <TextView
+            android:id="@+id/tv_empty_stores"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:contentDescription="@string/desc"
-            android:src="@drawable/empty_stores"
+            android:drawablePadding="@dimen/DIMEN_12DP"
+            android:drawableTop="@drawable/empty_stores"
+            android:text="@string/empty_store_info"
+            android:textColor="@color/color_black_33"
+            android:textSize="@dimen/DIMEN_15DP"
             android:visibility="gone" />
 
         <include

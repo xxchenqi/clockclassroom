@@ -13,15 +13,15 @@ public class CourseMoreData {
      * data : {"school":[{"id":"8","name":"测试徐汇虹梅商务大厦旗舰店"}],"course":[{"id":"14","name":"语文1","teacher_name":"张老湿","org_name":"学大教育","school_name":"测试徐汇虹梅商务大厦旗舰店","pic":"cc","single_price":"50.00"}]}
      */
 
-    private Integer code;
+    private String code;
     private String msg;
     private Course_School data;
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

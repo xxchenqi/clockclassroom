@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/DIMEN_44DP"
-    android:background="@drawable/top_shadow"
+    android:background="@drawable/black_gradient"
     android:orientation="horizontal"
     android:visibility="gone"
     android:baselineAligned="false">
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_black_33"
-            android:textSize="@dimen/DIMEN_17DP" />
+            android:textSize="@dimen/DIMEN_19DP" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -54,7 +54,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/DIMEN_12DP"
             android:contentDescription="@string/desc"
-            android:src="@drawable/share_btn_icon"
+            android:src="@drawable/new_share"
             android:visibility="invisible" />
     </RelativeLayout>
 

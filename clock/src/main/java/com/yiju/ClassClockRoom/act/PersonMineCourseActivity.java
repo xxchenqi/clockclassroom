@@ -27,7 +27,6 @@ import com.yiju.ClassClockRoom.bean.Course_Person;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
 import com.yiju.ClassClockRoom.common.callback.ListItemClickListener;
 import com.yiju.ClassClockRoom.control.ActivityControlManager;
-import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.util.GsonTools;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
 import com.yiju.ClassClockRoom.util.SharedPreferencesUtils;
@@ -427,8 +426,8 @@ public class PersonMineCourseActivity extends BaseActivity implements View.OnCli
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+            Intent intent = new Intent(this, PersonalCenterActivity.class);
+//            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {

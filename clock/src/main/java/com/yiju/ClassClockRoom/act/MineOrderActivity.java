@@ -2,6 +2,7 @@ package com.yiju.ClassClockRoom.act;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,11 +12,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ejupay.sdk.EjuPayManager;
 import com.ejupay.sdk.service.EjuPayResultCode;
+import com.ejupay.sdk.service.IEjuPayResult;
 import com.ejupay.sdk.service.IPayResult;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -36,31 +39,37 @@ import com.yiju.ClassClockRoom.bean.CommonMsgResult;
 import com.yiju.ClassClockRoom.bean.CreateOrderResult;
 import com.yiju.ClassClockRoom.bean.MineOrderData;
 import com.yiju.ClassClockRoom.bean.Order2;
+import com.yiju.ClassClockRoom.bean.SchoolLeft;
 import com.yiju.ClassClockRoom.bean.result.MineOrder;
 import com.yiju.ClassClockRoom.common.callback.IOnClickListener;
+import com.yiju.ClassClockRoom.common.callback.ListItemClickHelp;
+import com.yiju.ClassClockRoom.common.callback.PayWayOnClickListener;
 import com.yiju.ClassClockRoom.control.EjuPaySDKUtil;
-import com.yiju.ClassClockRoom.control.FragmentFactory;
 import com.yiju.ClassClockRoom.util.DateUtil;
 import com.yiju.ClassClockRoom.util.GsonTools;
+import com.yiju.ClassClockRoom.util.LogUtil;
 import com.yiju.ClassClockRoom.util.NetWorkUtils;
+import com.yiju.ClassClockRoom.util.PayWayUtil;
 import com.yiju.ClassClockRoom.util.StringUtils;
 import com.yiju.ClassClockRoom.util.UIUtils;
 import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.dialog.CustomDialog;
 import com.yiju.ClassClockRoom.widget.dialog.ProgressDialog;
+import com.yiju.ClassClockRoom.widget.windows.OrderStatusPopUpWindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * --------------------------------------
  * 注释:我的订单
  * 作者: cq
  * 时间: 2015-12-9 上午9:09:27
- * <p>
+ * <p/>
  * 订单状态    状态码
  * 待支付      0/9
  * 进行中      1
@@ -69,11 +78,11 @@ import java.util.ArrayList;
  * 已关闭      2/4/8
  * 已取消      100/11/12
  * 待确认      7/10
- * <p>
+ * <p/>
  * --------------------------------------
  */
 public class MineOrderActivity extends BaseActivity implements OnClickListener,
-        OnItemClickListener, MineOrderAdapter.OrderClickListener {
+        OnItemClickListener, MineOrderAdapter.OrderClickListener, ListItemClickHelp {
     //传参的状态
     public static final String STATUS = "status";
     //待支付的数量传参
@@ -84,6 +93,12 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     public static final String STATUS_USE = "1";
     // 已完成
     public static final String STATUS_FINISH = "99";
+    //"待确认",
+    public static final String STATUS_CONFIRM = "7";
+    //"已取消"
+    public static final String STATUS_CANCLE = "4";
+    //"已关闭"
+    public static final String STATUS_CLOSE = "2";
     // 全部订单
     public static final String STATUS_ALL = "ALL";
     //成功的状态码
@@ -98,6 +113,15 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
      */
     @ViewInject(R.id.head_title)
     private TextView head_title;
+    //批量开具发票
+    @ViewInject(R.id.head_right_text)
+    private TextView head_right_text;
+    //批量开具发票布局
+    @ViewInject(R.id.head_right_relative)
+    private RelativeLayout head_right_relative;
+    //view
+    @ViewInject(R.id.v_store_divider)
+    private View v_store_divider;
     /**
      * listview
      */
@@ -167,15 +191,12 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
      * 支付订单的数量
      */
     private String count;
-    //批量开具发票
-    @ViewInject(R.id.head_right_text)
-    private TextView head_right_text;
-    //批量开具发票布局
-    @ViewInject(R.id.head_right_relative)
-    private RelativeLayout head_right_relative;
 
-    private String order1_id;
-
+    //pop
+    private OrderStatusPopUpWindow popUpWindow;
+    //筛选数据
+    private List<SchoolLeft> datas_filtrate;
+    private String[] classroom_status = {"全部", "待支付", "进行中", "待确认", "已完成", "已取消", "已关闭"};
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -226,6 +247,17 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         }
 
     };
+    private String school_type;
+    private String balance;
+    private String fee;
+    private PopupWindow mPopupWindow;
+    private CartCommit conmmitInfo;
+    private String sid;
+    private String name;
+    private Order2 order2;
+    private String confirm_type;
+    private String pay_method;
+    private ArrayList<Order2> order2s;
 
 
     @Override
@@ -245,6 +277,16 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         data = new ArrayList<>();
         mineOrderAdapter = new MineOrderAdapter(this, data,
                 R.layout.item_mineorder, this, false);
+
+        datas_filtrate = new ArrayList<>();
+        for (int i = 0; i < classroom_status.length; i++) {
+            SchoolLeft schoolLeft = new SchoolLeft();
+            schoolLeft.setDist_name(classroom_status[i]);
+            schoolLeft.setId(i + "");
+            datas_filtrate.add(schoolLeft);
+        }
+        datas_filtrate.get(0).setFlag(true);
+        popUpWindow = new OrderStatusPopUpWindow(this, datas_filtrate, this, head_right_text);
     }
 
     @Override
@@ -259,11 +301,17 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void initData() {
-//        head_right_text.setText(UIUtils.getString(R.string.order_draw_up_invoices));
+        head_right_text.setText(UIUtils.getString(R.string.label_checkAllOrder));
+        Drawable drawable = UIUtils.getDrawable(R.drawable.arrow_down);
+        if (drawable != null) {
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            head_right_text.setCompoundDrawables(null, null, drawable, null);
+            head_right_text.setCompoundDrawablePadding(UIUtils.getDimens(R.dimen.DIMEN_5DP));
+        }
         lv_mineorder.setAdapter(mineOrderAdapter);
 
         //标题设置
-        if (STATUS_ALL.equals(status)) {
+        /*if (STATUS_ALL.equals(status)) {
             head_title.setText(UIUtils.getString(R.string.all_order));
         } else if (STATUS_FINISH.equals(status)) {
             head_title.setText(UIUtils.getString(R.string.finish_order));
@@ -275,13 +323,15 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
             } else {
                 head_title.setText(UIUtils.getString(R.string.wait_pay_order));
             }
-        }
+        }*/
+        head_title.setText(UIUtils.getString(R.string.txt_my_classroom_order));
 
         //请求
         if (NetWorkUtils.getNetworkStatus(MineOrderActivity.this)) {
             ly_wifi.setVisibility(View.GONE);
             lv_mineorder.setVisibility(View.VISIBLE);
             getHttpUtils();
+            getBalanceHttpUtils();
         } else {
             ly_wifi.setVisibility(View.VISIBLE);
             lv_mineorder.setVisibility(View.GONE);
@@ -324,6 +374,48 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
             }
         });
 
+    }
+
+    /**
+     * 获取余额
+     */
+    private void getBalanceHttpUtils() {
+        ProgressDialog.getInstance().show();
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "user_amount_remain");
+        if (!"-1".equals(StringUtils.getUid())) {
+            params.addBodyParameter("uid", StringUtils.getUid());
+        }
+        params.addBodyParameter("username", StringUtils.getUsername());
+        params.addBodyParameter("password", StringUtils.getPassword());
+        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, UrlUtils.SERVER_USER_API, params,
+                new RequestCallBack<String>() {
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                        ProgressDialog.getInstance().dismiss();
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        // 处理返回的数据
+                        ProgressDialog.getInstance().dismiss();
+                        JSONObject json;
+                        try {
+                            json = new JSONObject(arg0.result);
+                            String code = json.getString("code");
+                            if ("1".equals(code)) {
+                                balance = json.getString("data");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     /**
@@ -393,6 +485,8 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                 mineOrderAdapter.notifyDataSetChanged();
                 handler.sendEmptyMessage(1);
                 isFirst = false;
+                lv_mineorder.setVisibility(View.VISIBLE);
+                rl_mine_order3.setVisibility(View.GONE);
             } else {
                 //如果数量为0就显示无订单界面
                 if (is_down_refresh) {
@@ -407,7 +501,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
             }
 
             //重新请求后标题需要重新设置
-            if ("-1".equals(status)) {
+            /*if ("-1".equals(status)) {
                 String count = this.data.size() + "";
                 if (!"".equals(count) && !"0".equals(count)) {
                     head_title.setText(String.format(UIUtils.getString(R.string.wait_pay_sum), count));
@@ -415,7 +509,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                     head_title.setText(R.string.wait_pay_order);
                 }
 
-            }
+            }*/
 
         } else {
             UIUtils.showToastSafe(mineOrder.getMsg());
@@ -443,7 +537,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
             case R.id.btn_mineorder_stroll:
                 // 随便逛逛
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("backhome", "backhome");
+                intent.putExtra(MainActivity.Param_Start_Fragment, 0);
                 startActivity(intent);
                 break;
             case R.id.btn_no_wifi_refresh:
@@ -469,6 +563,15 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 //                i.putExtra(UIUtils.getString(R.string.get_page_name),
 //                        WebConstant.Draw_up_invoices_Page);
 //                startActivity(i);
+                if (popUpWindow != null) {
+                    Drawable drawable = UIUtils.getDrawable(R.drawable.arrow_up);
+                    if (drawable != null) {
+                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        head_right_text.setCompoundDrawables(null, null, drawable, null);
+                        head_right_text.setCompoundDrawablePadding(UIUtils.getDimens(R.dimen.DIMEN_5DP));
+                    }
+                    popUpWindow.showAsDropDown(v_store_divider);
+                }
                 break;
 
             default:
@@ -521,8 +624,9 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+//            Intent intent = new Intent(this, MainActivity.class);
+//            intent.putExtra(MainActivity.Param_Start_Fragment, FragmentFactory.TAB_MY);
+            Intent intent = new Intent(this, PersonalCenterActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
@@ -704,78 +808,17 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
     }
 
-//    /**
-//     * 订单详情请求
-//     *
-//     * @param oid     订单id
-//     * @param order2s 2级订单
-//     */
-//    private void getHttpUtils4(final String oid, final ArrayList<Order2> order2s) {
-//        ProgressDialog.getInstance().show();
-//        HttpUtils httpUtils = new HttpUtils();
-//        RequestParams params = new RequestParams();
-//        params.addBodyParameter("action", "order_detail");
-//        if (!"-1".equals(StringUtils.getUid())) {
-//            params.addBodyParameter("uid", StringUtils.getUid());
-//        }
-//        params.addBodyParameter("oid", oid);
-//        params.addBodyParameter("level", "1");
-//
-//        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_MINE_ORDER, params,
-//                new RequestCallBack<String>() {
-//                    @Override
-//                    public void onFailure(HttpException arg0, String arg1) {
-//                        UIUtils.showToastSafe(R.string.fail_network_request);
-//                        ProgressDialog.getInstance().dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(ResponseInfo<String> arg0) {
-//                        ProgressDialog.getInstance().dismiss();
-//                        // 处理返回的数据
-//                        processData4(arg0.result, oid, order2s);
-//                    }
-//                });
-//    }
-//
-//    private void processData4(String result, String oid, ArrayList<Order2> order2s) {
-//        // <!-- 0未支付 1已支付 2过期未支付 3已支付退款 4已取消 5支付失败 status是状态 -->
-//        MineOrder mineOrder = GsonTools.changeGsonToBean(result,
-//                MineOrder.class);
-//        if (mineOrder == null) {
-//            return;
-//        }
-//
-//        if ("1".equals(mineOrder.getCode())) {
-//            ArrayList<Order2> order2 = mineOrder.getData().get(0).getOrder2();
-//            if (order2.size() > 0) {
-//                //设置要传到支付结果的bean
-//                CartCommit conmmitInfo = new CartCommit();
-//                conmmitInfo.setTrade_id(mineOrder.getData().get(0).getTrade_id());
-//                conmmitInfo.setUse_desc(order2.get(0).getUse_desc());
-//                conmmitInfo.setType_desc(order2.get(0).getType_desc());
-//                conmmitInfo.setRoom_count(Integer.valueOf(order2.get(0)
-//                        .getRoom_count()));
-//                conmmitInfo.setOrder1_id(Integer.valueOf(mineOrder.getData().get(0).getId()));
-//                String sid = order2.get(0).getSid();
-//                String name = order2.get(0).getSname();
-//                parseData(oid, conmmitInfo, sid, name, order2s, mineOrder.getData().get(0).getConfirm_type());
-//            }
-//        } else {
-//            UIUtils.showToastSafe(mineOrder.getMsg());
-//        }
-//    }
 
     /**
      * 支付宝支付
      */
-    private void parseData(final CartCommit conmmitInfo, final String sid, final String name, final ArrayList<Order2> order2s, final String confirm_type) {
+    private void parseData() {
         //判断之前是否初始化
         EjuPaySDKUtil.initEjuPaySDK(new EjuPaySDKUtil.IEjuPayInit() {
             @Override
             public void onSuccess() {
                 //调取易支付创建订单报文签名接口
-                getRequestCreateOrder(conmmitInfo.getTrade_id(), conmmitInfo, sid, name, order2s, confirm_type);
+                getRequestCreateOrder();
             }
         });
         //支付宝支付相关处理
@@ -785,15 +828,21 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     /**
      * 请求 获取创建订单报文签名 接口
      */
-    private void getRequestCreateOrder(String trade_id, final CartCommit conmmitInfo,
-                                       final String sid, final String name,
-                                       final ArrayList<Order2> order2s, final String confirm_type) {
+    private void getRequestCreateOrder() {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "create_order");
-        params.addBodyParameter("trade_id", trade_id);
+        params.addBodyParameter("trade_id", conmmitInfo.getTrade_id());
         params.addBodyParameter("terminalType", "SDK");
 //        params.addBodyParameter("is_admin", "0");// 是否后台支付 默认0 ,可不传
+        if (StringUtils.isNotNullString(school_type)) {
+            if (school_type.equals("1")) {
+                params.addBodyParameter("businessId", "23");
+            } else if (school_type.equals("2")) {
+                params.addBodyParameter("businessId", "22");
+            }
+            params.addBodyParameter("cid", "0");
+        }
         httpUtils.send(HttpRequest.HttpMethod.POST,
                 UrlUtils.SERVER_API_PAY, params,
                 new RequestCallBack<String>() {
@@ -806,15 +855,13 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
                     @Override
                     public void onSuccess(ResponseInfo<String> arg0) {
-                        processDataForCreateOrder(arg0.result, conmmitInfo, sid, name, order2s, confirm_type);
+                        processDataForCreateOrder(arg0.result);
                     }
                 }
         );
     }
 
-    private void processDataForCreateOrder(String result, final CartCommit conmmitInfo,
-                                           final String sid, final String name,
-                                           final ArrayList<Order2> order2s, final String confirm_type) {
+    private void processDataForCreateOrder(String result) {
         CreateOrderResult createOrderResult = GsonTools.changeGsonToBean(
                 result,
                 CreateOrderResult.class
@@ -823,6 +870,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
             return;
         }
         if ("1".equals(createOrderResult.getCode())) {
+
             //调取EjuPay支付方法
             EjuPayManager.getInstance().startSelectPay(
                     MineOrderActivity.this,
@@ -832,14 +880,13 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                         @Override
                         public void payResult(int code, String msg, String dataJson) {
                             if (code == EjuPayResultCode.PAY_SUCCESS_CODE.getCode()) {
-                                //支付成功
                                 // 成功处理
                                 if ("0".equals(confirm_type) || "1".equals(confirm_type)) {
                                     //无需确认和支付前确认,可以布置课室
-                                    jumpSucess(conmmitInfo, sid, name, order2s);
+                                    jumpSucess();
                                 } else {
                                     //支付后确认,不可以布置课室
-                                    jumpNewResult(2, conmmitInfo);
+                                    jumpNewResult(2);
                                 }
                             } else if (code == EjuPayResultCode.PAY_FAIL_CODE.getCode()) {
                                 //支付失败
@@ -868,11 +915,53 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         }
     }
 
+    private void checkPassword() {
+        EjuPaySDKUtil.initEjuPaySDK(new EjuPaySDKUtil.IEjuPayInit() {
+            @Override
+            public void onSuccess() {
+                // 调取易支付创建订单报文签名接口
+                if (EjuPayManager.getInstance().isUserSetPwd()) {
+                    //跳转输入密码页面
+                    ProgressDialog.getInstance().dismiss();
+                    mPopupWindow.dismiss();
+                    jumpPayPage();
+
+                } else {
+                    //跳转设置支付密码页面
+//                    EjuPayManager.getInstance().startChangePassWord(UIUtils.getContext());
+                    ProgressDialog.getInstance().dismiss();
+                    EjuPayManager.getInstance().setEjuPayResult(new IEjuPayResult() {
+                        @Override
+                        public void callResult(int code, String msg, String dataJson) {
+                            if (code == EjuPayResultCode.SetPassWord_SUCCESS_CODE.getCode()) {
+                                LogUtil.d("test", "支付密码设置成功");
+                                jumpPayPage();
+                            } else if (code == EjuPayResultCode.SetPassWord_FAIL_CODE.getCode()) {
+                                LogUtil.d("test", "支付密码设置失败");
+                            }
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+    private void jumpPayPage() {
+        Intent intent = new Intent(MineOrderActivity.this, PayPasswordActivity.class);
+        intent.putExtra("conmmitInfo", conmmitInfo);
+        intent.putExtra("sid", sid);
+        intent.putExtra("name", name);
+        intent.putExtra("order2", order2s);
+        startActivity(intent);
+    }
+
     /**
      * type: 1 提交成功 2.支付成功 3.支付失败
      * 跳转到新的结果页
      */
-    private void jumpNewResult(int type, CartCommit conmmitInfo) {
+    private void jumpNewResult(int type) {
         Intent intent = new Intent(this,
                 NewPayResultActivity.class);
         intent.putExtra("conmmitInfo", conmmitInfo);
@@ -883,7 +972,7 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     /**
      * 成功跳转
      */
-    private void jumpSucess(CartCommit conmmitInfo, String sid, String name, ArrayList<Order2> order2s) {
+    private void jumpSucess() {
         Intent intentSucess = new Intent(this,
                 AliPay_PayOKActivity.class);
         intentSucess.putExtra("sucess", conmmitInfo);
@@ -893,137 +982,59 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
         startActivity(intentSucess);
     }
 
-    /**
-     * 获取AliPay密钥
-     */
-    /*private void getAliPaySign(String oid){
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("action", "alipay");
-        params.addBodyParameter("uid", uid);
-        params.addBodyParameter("oid", oid);
 
-        httpUtils.send(HttpMethod.POST, UrlUtils.SERVER_USER_COUPON, params,
-                new RequestCallBack<String>() {
-
-                    @Override
-                    public void onFailure(HttpException arg0, String arg1) {
-                        // 请求网络失败
-                        UIUtils.showToastSafe("请求数据失败");
-                    }
-
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        if (arg0.result == null) {
-                            UIUtils.showToastSafe(R.string.fail_data_request);
-                            return;
-                        }
-                        try {
-                            JSONObject jsonObject = new JSONObject(arg0.result);
-                            if (jsonObject.getInt("code") == 1
-                                    && jsonObject.getJSONObject("data") != null) {
-                                String rsasign = jsonObject.getJSONObject(
-                                        "data").getString("rsasign");
-                                String prestr = jsonObject
-                                        .getJSONObject("data").getString(
-                                                "prestr");
-                                String payInfo = prestr + "&sign=\"" + rsasign
-                                        + "\"&" + "sign_type=\"RSA\"";
-                                if (StringUtils.isNotNullString(payInfo)) {
-                                    *//*functionAliPay(payInfo, conmmitInfo, sid, name, order2s);*//*
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-        );
-    }*/
-
-    // 调用alipay
-    /*private void functionAliPay(final String payInfo, final CartCommit conmmitInfo, final String sid, final String name, final ArrayList<Order2> order2s) {
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                PayTask alipay = new PayTask(MineOrderActivity.this);
-                // 返回结果
-                final String resultData = alipay.pay(payInfo);
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        if (StringUtils.isNotNullString(resultData)) {
-                            AlipayResult result = new AlipayResult(resultData);
-                            String state = result.getResultStatus();
-                            switch (state) {
-                                case AlipayResult.AliPay_PayOK:
-                                    // 成功处理
-                                    Intent intentSucess = new Intent(
-                                            MineOrderActivity.this,
-                                            AliPay_PayOKActivity.class);
-                                    intentSucess.putExtra("sucess", conmmitInfo);
-                                    intentSucess.putExtra("sid", sid);
-                                    intentSucess.putExtra("order2", order2s);
-                                    intentSucess.putExtra("name", name);
-                                    startActivity(intentSucess);
-                                    break;
-                                case AlipayResult.AliPay_PayFail:
-                                case AlipayResult.AliPay_PayCancel:
-                                    Intent intentFail = new Intent(
-                                            MineOrderActivity.this,
-                                            AliPay_PayFailActivity.class);
-                                    intentFail.putExtra("fail", conmmitInfo);
-                                    intentFail.putExtra("sid", sid);
-                                    intentFail.putExtra("name", name);
-                                    startActivity(intentFail);
-
-                                    break;
-                                default:
-                                    UIUtils.showToastSafe(result.getHashMapV()
-                                            + "code:" + result.getResultStatus());
-                                    break;
-                            }
-                        } else {
-                            UIUtils.showToastSafe("启动支付宝失败");
-                        }
-                    }
-                });
-
-            }
-        }).start();
-    }
-*/
     //订单列表的，取消订单，删除订单等按钮
     @Override
-    public void orderClick(View view, int position) {
+    public void orderClick(View view, final int position) {
         String text = ((Button) view).getText().toString();
-        String id = data.get(position).getId();//o1的ID
+        final String id = data.get(position).getId();//o1的ID
 
         switch (view.getId()) {
             case R.id.btn_mine_order_right:
                 if (UIUtils.getString(R.string.order_immediate_pay).equals(text)) {
 
-                    MineOrderData o1 = data.get(position);//1级
-                    Order2 o2 = o1.getOrder2().get(0);//2级
+                    final MineOrderData o1 = data.get(position);//1级
+                    //2级
+                    order2s = o1.getOrder2();
+                    this.order2 = o1.getOrder2().get(0);
+                    pay_method = o1.getPay_method();
 //                    int coupon_id = Integer.valueOf(o2.getCoupon_id());//优惠券id
-
-                    CartCommit conmmitInfo = new CartCommit();
+                    school_type = this.order2.getSchool_type();
+                    fee = o1.getReal_fee();
+                    conmmitInfo = new CartCommit();
                     conmmitInfo.setTrade_id(o1.getTrade_id());
-                    conmmitInfo.setUse_desc(o2.getUse_desc());
-                    conmmitInfo.setType_desc(o2.getType_desc());
-                    conmmitInfo.setRoom_count(Integer.valueOf(o2.getRoom_count()));
+                    conmmitInfo.setUse_desc(this.order2.getUse_desc());
+                    conmmitInfo.setType_desc(this.order2.getType_desc());
+                    conmmitInfo.setRoom_count(Integer.valueOf(this.order2.getRoom_count()));
                     conmmitInfo.setOrder1_id(Integer.valueOf(id));
-                    String sid = o2.getSid();
-                    String name = o2.getSname();
-                    String confirm_type = o1.getConfirm_type();
-                    //修改无论有优惠券还是无优惠券都检测
-                    checkCoupon(id, conmmitInfo, sid, name, o1.getOrder2(), confirm_type, position);
-//                    if (coupon_id > 0 && coupon_id < 999999999) {
-//                        //检查优惠券是否失效
-//                    } else {
-//                        //没用优惠券直接去支付
-//                        parseData(conmmitInfo, sid, name, o1.getOrder2(), confirm_type);
-//                    }
+                    sid = this.order2.getSid();
+                    name = this.order2.getSname();
+                    confirm_type = o1.getConfirm_type();
+                    if("".equals(school_type)){
+                        mPopupWindow = PayWayUtil.getPopu(MineOrderActivity.this.getWindow(),
+                                MineOrderActivity.this,
+                                R.layout.activity_mineorder,
+                                balance, fee, new PayWayOnClickListener() {
+                                    @Override
+                                    public void onBalanceClick() {
+                                        mPopupWindow.dismiss();
+                                        checkCoupon(id, position, false);
+                                    }
+
+                                    @Override
+                                    public void onOtherClick() {
+                                        mPopupWindow.dismiss();
+                                        if("5".equals(pay_method)){
+                                            changePayWay(id,position);
+                                        }else{
+                                            checkCoupon(id, position, true);
+                                        }
+                                    }
+                                });
+                    }else{
+                        checkCoupon(id, position, true);
+                    }
+
 
                 } else if (UIUtils.getString(R.string.order_delete).equals(text)) {
                     deleteOrder(id);
@@ -1062,15 +1073,13 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
 
     /**
      * 检测优惠券
-     * @param id 订单id
-     * @param conmmitInfo 传到支付结果页的bean
-     * @param sid 门店id
-     * @param name 门店名字
-     * @param order2 布置课室
-     * @param confirm_type 确认类型
+     *
+     * @param id       订单id
      * @param position 点击列表的位置
+     * @param flag     是否是余额支付
      */
-    private void checkCoupon(final String id, final CartCommit conmmitInfo, final String sid, final String name, final ArrayList<Order2> order2, final String confirm_type, final int position) {
+    private void checkCoupon(final String id, final int position, final boolean flag) {
+        ProgressDialog.getInstance().show();
         HttpUtils httpUtils = new HttpUtils();
         RequestParams params = new RequestParams();
         params.addBodyParameter("action", "verify_order_coupon");
@@ -1084,11 +1093,13 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         UIUtils.showToastSafe(UIUtils.getString(R.string.fail_network_request));
+                        ProgressDialog.getInstance().show();
                     }
 
                     @Override
                     public void onSuccess(ResponseInfo<String> arg0) {
                         // 处理返回的数据
+                        ProgressDialog.getInstance().dismiss();
                         CartCommit cartCommit = GsonTools.changeGsonToBean(arg0.result, CartCommit.class);
                         if (cartCommit == null) {
                             return;
@@ -1109,11 +1120,18 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
                             });
                         } else if (cartCommit.getCode() == 1) {
                             //去支付
-                            if (!StringUtils.isNullString(cartCommit.getTrade_id())) {
-                                data.get(position).setTrade_id(cartCommit.getTrade_id());
+                            if (flag) {
+                                if (!StringUtils.isNullString(cartCommit.getTrade_id())) {
+                                    data.get(position).setTrade_id(cartCommit.getTrade_id());
+                                    conmmitInfo.setTrade_id(cartCommit.getTrade_id());
+                                }
+                                parseData();
+
+                            } else {
+                                checkPassword();
                             }
-                            parseData(conmmitInfo, sid, name, order2, confirm_type);
-                        }else{
+
+                        } else {
                             UIUtils.showLongToastSafe(cartCommit.getMsg());
                         }
                     }
@@ -1121,8 +1139,58 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     }
 
     /**
+     * 切换支付方式
+     *
+     * @param id
+     * @param position
+     */
+    private void changePayWay(final String id, final int position) {
+        ProgressDialog.getInstance().show();
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("action", "switch_paymethod");
+        params.addBodyParameter("order1_id", id);
+        params.addBodyParameter("uid", StringUtils.getUid());
+        params.addBodyParameter("username", StringUtils.getUsername());
+        params.addBodyParameter("password", StringUtils.getPassword());
+        params.addBodyParameter("third_source", StringUtils.getThirdSource());
+        params.addBodyParameter("pay_method", "6");
+        httpUtils.send(HttpRequest.HttpMethod.POST,
+                UrlUtils.SERVER_USER_COUPON, params,
+                new RequestCallBack<String>() {
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        // 请求网络失败
+                        UIUtils.showToastSafe(R.string.fail_network_request);
+                        ProgressDialog.getInstance().dismiss();
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        ProgressDialog.getInstance().dismiss();
+                        JSONObject json;
+                        try {
+                            json = new JSONObject(arg0.result);
+                            String code = json.getString("code");
+                            String trade_id = json.getString("trade_id");
+                            if ("1".equals(code)) {
+                                data.get(position).setTrade_id(trade_id);
+                                checkCoupon(id, position, true);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+    }
+
+    /**
      * 删除无效优惠券接口
-     * @param id 订单id
+     *
+     * @param id       订单id
      * @param position pos
      */
     private void cancelCoupon(String id, final int position) {
@@ -1213,5 +1281,33 @@ public class MineOrderActivity extends BaseActivity implements OnClickListener,
     @Override
     public void cbClick(boolean isChecked, String rr) {
 
+    }
+
+    @Override
+    public void onClickItem(int position) {
+        lv_mineorder.setMode(PullToRefreshBase.Mode.BOTH);
+//        datas.clear();
+//        adapter.notifyDataSetChanged();
+        String dist_id = datas_filtrate.get(position).getId();
+        if ("0".equals(dist_id)) {//全部
+            status = MineOrderActivity.STATUS_ALL;
+        } else if ("1".equals(dist_id)) {//待支付
+            status = MineOrderActivity.STATUS_WAIT_PAY;
+        } else if ("2".equals(dist_id)) {//进行中
+            status = MineOrderActivity.STATUS_USE;
+        } else if ("3".equals(dist_id)) {//待确认
+            status = MineOrderActivity.STATUS_CONFIRM;
+        } else if ("4".equals(dist_id)) {//已完成
+            status = MineOrderActivity.STATUS_FINISH;
+        } else if ("5".equals(dist_id)) {//已取消
+            status = MineOrderActivity.STATUS_CANCLE;
+        } else if ("6".equals(dist_id)) {//已关闭
+            status = MineOrderActivity.STATUS_CLOSE;
+        }
+        head_right_text.setText(datas_filtrate.get(position).getDist_name());
+        is_down_refresh = true;
+        limit = 0;
+        limit_end = 5;
+        getHttpUtils();
     }
 }

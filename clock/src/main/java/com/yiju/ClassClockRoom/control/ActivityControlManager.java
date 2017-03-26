@@ -66,6 +66,23 @@ public class ActivityControlManager {
         }
     }
 
+
+    /**
+     * 移除任意act
+     */
+    public void popMoreActivity(Class<?> cls) {
+        if (activityStack != null && activityStack.size() > 0) {
+            for (int i = 0; i < activityStack.size(); i++) {
+                Activity act = activityStack.get(i);
+                if (act.getClass().equals(cls)) {
+                    act.finish();
+                    activityStack.remove(act);
+                    break;
+                }
+            }
+        }
+    }
+
     /**
      * 退出所有activity
      */
@@ -99,7 +116,7 @@ public class ActivityControlManager {
      * 关闭当前页，打开首页
      *
      * @param activity act
-     * @param page     0首页,1课程首页,2老师首页,3个人中心
+     * @param page     0订课室，1主题，2体验课
      */
     public void finishCurrentAndOpenHome(Activity activity, int page) {
         if (checkMainActivity()) {//如果首页存在直接finish
@@ -121,7 +138,7 @@ public class ActivityControlManager {
      * 关闭所有页，打开首页
      *
      * @param activity act
-     * @param page 0首页,1课程首页,2老师首页,3个人中心
+     * @param page     0订课室，1主题，2体验课
      */
     public void finishAllAndOpenHome(Activity activity, int page) {
         if (!checkMainActivity()) {
@@ -147,11 +164,12 @@ public class ActivityControlManager {
         Intent intent = new Intent(activity, clz);
         activity.startActivity(intent);
     }
+
     /**
      * 关闭当前页面打开其他页面
      *
      * @param activity act
-     * @param intent i
+     * @param intent   i
      */
     public void finishCurrentAndOpenOther(Activity activity, Intent intent) {
         activity.finish();
@@ -181,7 +199,7 @@ public class ActivityControlManager {
      * 关闭所有页面打开其他页面
      *
      * @param activity act
-     * @param intent i
+     * @param intent   i
      */
     public void finishAllAndOpenOther(Activity activity, Intent intent) {
         if (!checkMainActivity()) {

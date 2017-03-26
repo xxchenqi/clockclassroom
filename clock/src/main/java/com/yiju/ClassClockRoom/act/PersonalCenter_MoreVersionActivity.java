@@ -32,6 +32,7 @@ import com.yiju.ClassClockRoom.util.net.UrlUtils;
 import com.yiju.ClassClockRoom.widget.dialog.VersionUpdateDialog;
 
 import java.io.File;
+import java.util.Locale;
 
 /**
  * ----------------------------------------
@@ -230,11 +231,11 @@ public class PersonalCenter_MoreVersionActivity extends BaseActivity implements
 
                                 String current_result;
                                 if (current > 1048576) {
-                                    current_result = String.format("%.2f", current / 1024.0 / 1024.0) + "MB";
+                                    current_result = String.format(Locale.CHINA,"%.2f", current / 1024.0 / 1024.0) + "MB";
                                 } else {
-                                    current_result = String.format("%.2f", current / 1024.0) + "KB";
+                                    current_result = String.format(Locale.CHINA,"%.2f", current / 1024.0) + "KB";
                                 }
-                                String total_result = String.format("%.2f", total / 1024.0 / 1024.0) + "MB";
+                                String total_result = String.format(Locale.CHINA,"%.2f", total / 1024.0 / 1024.0) + "MB";
                                 progressDialog.setProgressNumberFormat(current_result + "/" + total_result);
                             } else {
                                 download.cancel();

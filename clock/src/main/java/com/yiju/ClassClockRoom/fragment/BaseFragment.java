@@ -88,7 +88,7 @@ public abstract class BaseFragment extends Fragment implements InitView {
     @Override
     public void onStart() {
         super.onStart();
-        CountControl.getInstance().skipRuning(this);
+//        CountControl.getInstance().skipRuning(this);
     }
 
     @Override
@@ -100,7 +100,7 @@ public abstract class BaseFragment extends Fragment implements InitView {
     @Override
     public void onStop() {
         super.onStop();
-        CountControl.getInstance().skipUnRuning(fatherActivity);
+//        CountControl.getInstance().skipUnRuning(fatherActivity);
     }
 
     public abstract String getPageName();

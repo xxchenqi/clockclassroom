@@ -161,7 +161,7 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                     iv_item_cart_choose.setEnabled(true);
                     iv_sale_no.setVisibility(View.VISIBLE);
                     iv_sale_no.setImageResource(R.drawable.booked_off);
-                    iv_item_cart_choose.setBackgroundResource(R.drawable.order_cantchoose_btn);
+                    iv_item_cart_choose.setVisibility(View.GONE);
                     break;
 
                 default:
@@ -257,15 +257,15 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                 if (!info.getIs_valid().equals("1")) {
                     if (delete.equals(UIUtils.getString(R.string.label_finish))) {
                         iv_item_cart_choose.setEnabled(true);
-                        iv_item_cart_choose.setBackgroundResource(R.drawable.order_choose_btn);
+                        iv_item_cart_choose.setBackgroundResource(R.drawable.check_icon);
                     } else {
                         iv_item_cart_choose.setEnabled(false);
-                        iv_item_cart_choose.setBackgroundResource(R.drawable.order_cantchoose_btn);
+                        iv_item_cart_choose.setVisibility(View.GONE);
                         info.setCheck(false);
                     }
                 } else {
                     iv_item_cart_choose.setEnabled(true);
-                    iv_item_cart_choose.setBackgroundResource(R.drawable.order_choose_btn);
+                    iv_item_cart_choose.setBackgroundResource(R.drawable.check_icon);
                 }
                 isCheck = true;
                 bb.setCheck(true);
@@ -273,15 +273,12 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                 if (!info.getIs_valid().equals("1")) {
                     if (delete.equals(UIUtils.getString(R.string.label_finish))) {
                         iv_item_cart_choose.setEnabled(true);
-                        iv_item_cart_choose.setBackgroundResource(R.drawable.order_nonechoose_btn);
                     } else {
                         iv_item_cart_choose.setEnabled(false);
-                        iv_item_cart_choose.setBackgroundResource(R.drawable.order_cantchoose_btn);
                         info.setCheck(false);
                     }
                 } else {
                     iv_item_cart_choose.setEnabled(true);
-                    iv_item_cart_choose.setBackgroundResource(R.drawable.order_nonechoose_btn);
                 }
                 isCheck = false;
                 bb.setCheck(false);
@@ -359,8 +356,6 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                     //删除状态
                     if (isCheck) {
                         isCheck = false;
-                        iv_item_cart_choose
-                                .setBackgroundResource(R.drawable.order_nonechoose_btn);
                         info.setCheck(false);
                         int count = bb.getCount();
                         count--;
@@ -369,7 +364,6 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                             mPrice.setText(UIUtils.getString(R.string.rmb_equals_negative_zero));
                         }
                         bb.setCheck(false);
-                        mIv.setBackgroundResource(R.drawable.order_nonechoose_btn);
                         float pp = bb.getPrice() - Float.valueOf(info.getFee());
                         bb.setPrice(pp);
                         Map<String, Integer> order = bb.getmOrder();
@@ -390,14 +384,14 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                         isCheck = true;
                         info.setCheck(true);
                         iv_item_cart_choose
-                                .setBackgroundResource(R.drawable.order_choose_btn);
+                                .setBackgroundResource(R.drawable.check_icon);
                         int count = bb.getCount();
                         count++;
                         bb.setCount(count);
                         float pp = bb.getPrice() + Float.valueOf(info.getFee());
                         bb.setPrice(pp);
                         if (count == mLists.size()) {
-                            mIv.setBackgroundResource(R.drawable.order_choose_btn);
+                            mIv.setBackgroundResource(R.drawable.check_icon);
                             bb.setCheck(true);
                         } else {
                             bb.setCheck(false);
@@ -427,8 +421,6 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                     //提交状态
                     if (isCheck) {
                         isCheck = false;
-                        iv_item_cart_choose
-                                .setBackgroundResource(R.drawable.order_nonechoose_btn);
                         info.setCheck(false);
                         int count = bb.getCount();
                         count--;
@@ -437,7 +429,6 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                             mPrice.setText(UIUtils.getString(R.string.rmb_equals_negative_zero));
                         }
                         bb.setCheck(false);
-                        mIv.setBackgroundResource(R.drawable.order_nonechoose_btn);
                         float pp = bb.getPrice() - Float.valueOf(info.getFee());
                         bb.setPrice(pp);
                         Map<String, Integer> order = bb.getmOrder();
@@ -461,14 +452,14 @@ public class ShopCartHolder extends BaseHolder<Order2> implements
                         isCheck = true;
                         info.setCheck(true);
                         iv_item_cart_choose
-                                .setBackgroundResource(R.drawable.order_choose_btn);
+                                .setBackgroundResource(R.drawable.check_icon);
                         int count = bb.getCount();
                         count++;
                         bb.setCount(count);
                         float pp = bb.getPrice() + Float.valueOf(info.getFee());
                         bb.setPrice(pp);
                         if (count == yesOrders.size()) {
-                            mIv.setBackgroundResource(R.drawable.order_choose_btn);
+                            mIv.setBackgroundResource(R.drawable.check_icon);
 //						bb.setCheck(true);
 //					}else{
 //						bb.setCheck(false);

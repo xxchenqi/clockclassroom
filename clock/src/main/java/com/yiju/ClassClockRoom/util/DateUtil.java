@@ -76,19 +76,15 @@ public class DateUtil {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
         return f.format(today);
     }
+
     /**
      * 判断两个时间段是否有重叠
      *
-     * @param beginDate1
-     *            时间段1 开始时间
-     * @param endDate1
-     *            时间段1 结束时间
-     * @param beginDate2
-     *            时间段2 开始时间
-     * @param endDate2
-     *            时间段2 结束时间
-     * @param dateformat
-     *            时间格式
+     * @param beginDate1 时间段1 开始时间
+     * @param endDate1   时间段1 结束时间
+     * @param beginDate2 时间段2 开始时间
+     * @param endDate2   时间段2 结束时间
+     * @param dateformat 时间格式
      * @return true 存在重叠 false 不重叠
      */
 
@@ -113,4 +109,94 @@ public class DateUtil {
             return false;
         }
     }
+
+    /**
+     * 时间戳转换日期格式
+     * 1480677188 -- > 2016-12-08 (周四)
+     *
+     * @param timestamp 时间戳
+     * @return str
+     */
+    public static String getDateAndWeek(String timestamp) {
+        String result = "";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        long lt = Long.valueOf(timestamp + "000");
+        Date date = new Date(lt);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int w = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        String[] weekOfDays = {"(周日)", "(周一)", "(周二)", "(周三)", "(周四)", "(周五)", "(周六)"};
+        if (w < 0) {
+            w = 0;
+        }
+        result = simpleDateFormat.format(date) + " " + weekOfDays[w];
+        return result;
+    }
+
+    /**
+     * 离现在不到1小时的，显示xx分钟前，超过1小时的，显示xx小时前。非当天的，显示月日。
+     *
+     * @param time 2016-12-12 18:11:14
+     */
+    public static String getDateFormat(String time) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df2 = new SimpleDateFormat("MM月dd日");
+        SimpleDateFormat df3 = new SimpleDateFormat("yyyy年MM月dd日");
+        Date now;
+        StringBuilder sb = new StringBuilder();
+        try {
+            now = df.parse(df.format(new Date()));
+            Date date = df.parse(time);
+
+            long l = now.getTime() - date.getTime();
+            long day = l / (24 * 60 * 60 * 1000);
+            long hour = (l / (60 * 60 * 1000) - day * 24);
+            long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+
+            if (day > 0) {
+                // 显示月日
+                String format;
+                if (day > 365) {
+                    format = df3.format(date);
+                } else {
+                    format = df2.format(date);
+                }
+                sb.append(format);
+            } else {
+                if (hour > 0) {
+                    // 显示xx小时前
+                    sb.append(hour + "小时前");
+                } else {
+                    // 显示xx分钟前
+                    if (min > 0) {
+                        sb.append(min + "分钟前");
+                    }else{
+                        sb.append("1分钟前");
+                    }
+                }
+            }
+        } catch (ParseException ignored) {
+            return "";
+        }
+        return sb.toString();
+    }
+
+    /** 
+      * 将字符串 yyyy-MM-dd转换为date
+      *  
+      * @param dateStr 
+      * @return 
+      */
+    public static Date strToDate(String dateStr) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
 }
